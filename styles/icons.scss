@@ -1,0 +1,120 @@
+@font-face {
+    font-family: 'master-tort';
+    src: url('../fonts/master-tort.eot?kbio3s');
+    src: url('../fonts/master-tort.eot?kbio3s#iefix')
+            format('embedded-opentype'),
+        url('../fonts/master-tort.ttf?kbio3s') format('truetype'),
+        url('../fonts/master-tort.woff?kbio3s') format('woff'),
+        url('../fonts/master-tort.svg?kbio3s#master-tort') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^='icon-']::before,
+[class*=' icon-']::before {
+    font-family: 'master-tort' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-30:before {
+    content: '\e91c';
+}
+.icon-29:before {
+    content: '\e91d';
+}
+.icon-28:before {
+    content: '\e91b';
+}
+.icon-17:before {
+    content: '\e91a';
+}
+.icon-27:before {
+    content: '\e910';
+}
+.icon-26:before {
+    content: '\e911';
+}
+.icon-25:before {
+    content: '\e912';
+    color: #f80;
+}
+.icon-24:before {
+    content: '\e913';
+    color: #0768e1;
+}
+.icon-23:before {
+    content: '\e914';
+    color: #2683ed;
+}
+.icon-22:before {
+    content: '\e915';
+}
+.icon-21:before {
+    content: '\e916';
+}
+.icon-20:before {
+    content: '\e917';
+}
+.icon-19:before {
+    content: '\e918';
+}
+.icon-18:before {
+    content: '\e919';
+}
+.icon-16:before {
+    content: '\e908';
+}
+.icon-12:before {
+    content: '\e909';
+}
+.icon-13:before {
+    content: '\e90a';
+}
+.icon-14:before {
+    content: '\e90b';
+}
+.icon-11:before {
+    content: '\e90c';
+}
+.icon-15:before {
+    content: '\e90d';
+}
+.icon-9:before {
+    content: '\e90e';
+}
+.icon-10:before {
+    content: '\e90f';
+}
+.icon-8:before {
+    content: '\e901';
+}
+.icon-7:before {
+    content: '\e902';
+}
+.icon-6:before {
+    content: '\e903';
+}
+.icon-5:before {
+    content: '\e904';
+}
+.icon-4:before {
+    content: '\e905';
+}
+.icon-3:before {
+    content: '\e906';
+}
+.icon-2:before {
+    content: '\e907';
+}
+.icon-1:before {
+    content: '\e900';
+}

@@ -1,0 +1,71 @@
+:root {
+    --fontFamily: 'Hauora', sans-serif;
+    --textColor: #002222;
+    --mainColor: #009998;
+    --secondaryColor: #ffffff;
+    --lightGreyColor: #f4f2f1;
+}
+
+@import 'null';
+@import 'fonts';
+@import 'icons';
+
+body.lock {
+    overflow: hidden !important;
+}
+.text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    color: var(--textColor);
+    @media (max-width: 576px) {
+        font-size: 14px;
+    }
+}
+.small-text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--textColor);
+    @media (max-width: 576px) {
+        font-size: 10px;
+    }
+}
+.title {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 30px;
+    color: var(--textColor);
+    @media (max-width: 576px) {
+        font-size: 18px;
+    }
+}
+
+.icon-1:before {
+    font-size: 18px;
+}
+.icon-2:before {
+    font-size: 14px;
+}
+.icon-3:before,
+.icon-4:before {
+    font-size: 24px;
+}
+.icon-5:before {
+    font-size: 19px;
+}
+.icon-6:before,
+.icon-7:before {
+    font-size: 20px;
+}
+.icon-9:before,
+.icon-16:before {
+    font-size: 22px;
+}
+.icon-26:before {
+    color: red;
+}
+.icon-29:before,
+.icon-30:before {
+    font-size: 8px;
+}

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
-import styles from './personalSettings.module.scss';
+import styles from './PersonalSettings.module.scss';
 
 export default function personalSettings() {
     return (

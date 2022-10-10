@@ -1,0 +1,54 @@
+.table {
+    &__overflow {
+        overflow: auto;
+        border-radius: 8px;
+    }
+    &__title {
+        margin-bottom: 5px;
+        padding: 5px 20px 0 20px;
+        @media (max-width: 576px) {
+            padding: 5px 10px 0 10px;
+        }
+    }
+    &Thead {
+        display: grid;
+        align-items: center;
+        background-color: var(--mainColor);
+        color: var(--secondaryColor);
+        padding: 5px 15px;
+        word-wrap: break-word;
+        @media (max-width: 576px) {
+            padding: 5px 5px;
+        }
+    }
+    &Tr {
+        display: grid;
+        align-items: center;
+    }
+    &Tbody {
+        background-color: var(--secondaryColor);
+        padding: 10px 15px 10px 15px;
+        @media (max-width: 576px) {
+            padding: 10px 5px 10px 5px;
+        }
+    }
+    &Td {
+        padding: 5px;
+        &__delete {
+            text-align: right;
+        }
+    }
+    &Th {
+        padding: 5px;
+    }
+    &Delete {
+        color: red;
+        cursor: pointer;
+    }
+    &__block {
+        background-color: var(--secondaryColor);
+        & .add-block {
+            padding: 0 20px 15px 20px;
+        }
+    }
+}

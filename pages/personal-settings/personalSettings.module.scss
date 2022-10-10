@@ -1,0 +1,76 @@
+.personalSettings {
+    display: flex;
+    gap: 20px;
+    align-items: baseline;
+    @media (max-width: 950px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+.mainInfo {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    flex: 0 1 520px;
+    &__title {
+        margin-bottom: 20px;
+    }
+    &__avatar {
+        border: 1px dashed #cccccc;
+        border-radius: 8px;
+        min-width: 140px;
+        text-align: center;
+        padding: 65px 0;
+        span:before {
+            font-size: 41px;
+            color: rgba(204, 204, 204, 1);
+        }
+    }
+    &__columns {
+        display: flex;
+        gap: 20px;
+    }
+    &__inputs {
+        flex: 1 1 auto;
+    }
+    &__input {
+        padding: 12px;
+        margin-bottom: 20px;
+    }
+}
+.mainSecurity {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    flex: 0 1 360px;
+    min-width: 290px;
+    &__input {
+        margin-bottom: 10px;
+        padding: 12px;
+    }
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+}
+.mainOrder {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    flex: 0 1 266px;
+    &__block {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    &__tooltip span {
+        color: var(--textColor);
+        i:before {
+            color: rgba(241, 99, 99, 1);
+        }
+    }
+}

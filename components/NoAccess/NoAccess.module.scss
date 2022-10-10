@@ -1,0 +1,23 @@
+.registration__wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.noAccess {
+    &__title {
+        color: #7a7a7a;
+        margin-bottom: 20px;
+        display: block;
+    }
+    &__text {
+        width: 300px;
+        text-align: center;
+        color: #7a7a7a;
+        margin-bottom: 20px;
+    }
+    &__btn {
+        color: white;
+    }
+}

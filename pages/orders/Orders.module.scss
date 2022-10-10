@@ -39,7 +39,7 @@
             }
         }
     }
-    &__nav-wrapper {
+    &__navWrapper {
         display: flex;
         justify-content: space-between;
         margin-bottom: 20px;
@@ -53,26 +53,26 @@
         @media (max-width: 375px) {
             grid-template-columns: 1fr;
         }
-        &-title {
+        &Title {
             color: white;
             display: block;
             background-color: var(--mainColor);
             padding: 10px 20px;
             text-align: center;
         }
-        &-orders {
+        &Orders {
             padding: 22px 10px 22px 10px;
             background-color: white;
             height: calc(100vh - 86px);
         }
-        &-wrapper {
+        &Wrapper {
             overflow-y: auto;
             height: 100%;
             & > div:not(:last-of-type) {
                 margin-bottom: 20px;
             }
         }
-        &-cake {
+        &Cake {
             @media (max-width: 1040px) {
                 grid-template-columns: 1fr;
             }
@@ -171,7 +171,7 @@
         @media (max-width: 768px) {
             grid-template-columns: 1fr;
         }
-        &-block {
+        &Block {
             flex: 0 1 740px;
             background-color: white;
             padding: 140px 20px;
@@ -180,11 +180,11 @@
                 padding: 26px 20px;
             }
         }
-        &-header {
+        &Header {
             display: flex;
             justify-content: space-between;
         }
-        &-orders {
+        &Orders {
             flex: 0 1 780px;
             &_no {
                 display: flex;
@@ -204,17 +204,17 @@
                 }
             }
         }
-        &-container {
+        &Container {
             max-width: 464px;
             margin: 0 auto;
             @media (max-width: 576px) {
                 max-width: 284px;
             }
         }
-        &-header {
+        &Header {
             margin-bottom: 18px;
         }
-        &-table {
+        &Table {
             border-spacing: unset;
             @media (max-width: 576px) {
                 font-size: 14px;
@@ -251,7 +251,7 @@
                 }
             }
         }
-        &-status {
+        &Status {
             width: 32px;
             height: 32px;
             display: flex;
@@ -298,15 +298,15 @@
                 }
             }
         }
-        &-small-text {
+        &SmallText {
             color: var(--textColor);
         }
-        &-orders {
+        &Orders {
             background-color: white;
             padding: 20px;
             border-radius: 16px;
         }
-        &-overflow {
+        &Overflow {
             max-height: 780.31px;
             overflow: auto;
             display: grid;
@@ -323,7 +323,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        &-cake {
+        &Cake {
             @media (max-width: 1100px) {
                 grid-template-columns: 1fr;
             }

@@ -11,42 +11,64 @@ export default function Orders() {
             <div className="content">
                 <Header title={'Заказы'} />
                 <main className="main">
-                    <div class="orders__nav-wrapper">
-                        <div class="orders__links text">
-                            <a href="#" class="active">
+                    <div className={styles.orders__navWrapper}>
+                        <div
+                            className={classNames('text', styles.orders__links)}
+                        >
+                            <a href="#" className="active">
                                 Активные
                             </a>
                             <a href="#">Архив</a>
                         </div>
-                        <div class="orders__tabs text">
-                            <a href="#" class="active icon-16">
+                        <div
+                            className={classNames('text', styles.orders__tabs)}
+                        >
+                            <a
+                                href="#"
+                                className={classNames('active', 'icon-16')}
+                            >
                                 Доска заказов
                             </a>
-                            <a href="#" class="icon-9">
+                            <a href="#" className="icon-9">
                                 Календарь
                             </a>
                         </div>
                     </div>
-                    <div class="orders__kanban">
-                        <div class="orders__kanban-column">
-                            <span class="text orders__kanban-title">
+                    <div className={styles.orders__kanban}>
+                        <div className={styles.orders__kanbanColumn}>
+                            <span
+                                className={classNames(
+                                    'text',
+                                    styles.orders__kanbanTitle
+                                )}
+                            >
                                 Предстоящие
                             </span>
-                            <div class="orders__kanban-orders">
-                                <div class="orders__kanban-wrapper">
-                                    <OrderCake />
+                            <div className={styles.orders__kanbanOrders}>
+                                <div className={styles.orders__kanbanWrapper}>
+                                    <OrderCake style="orders__kanbanCake" />
                                 </div>
                             </div>
                         </div>
-                        <div class="orders__kanban-column">
-                            <span class="text orders__kanban-title">
+                        <div className={styles.orders__kanbanColumn}>
+                            <span
+                                className={classNames(
+                                    'text',
+                                    styles.orders__kanbanTitle
+                                )}
+                            >
                                 Закупка
                             </span>
-                            <div class="orders__kanban-orders">
-                                <div class="orders__kanban-wrapper">
+                            <div className={styles.orders__kanbanOrders}>
+                                <div className={styles.orders__kanbanWrapper}>
                                     <OrderCake />
-                                    <div class="add-block">
-                                        <span class="small-text icon-8">
+                                    <div className="addBlock">
+                                        <span
+                                            className={classNames(
+                                                'small-text',
+                                                'icon-8'
+                                            )}
+                                        >
                                             Составить список продуктов для
                                             закупки
                                         </span>
@@ -54,25 +76,45 @@ export default function Orders() {
                                 </div>
                             </div>
                         </div>
-                        <div class="orders__kanban-column">
-                            <span class="text orders__kanban-title">
+                        <div className={styles.orders__kanbanColumn}>
+                            <span
+                                className={classNames(
+                                    'text',
+                                    styles.orders__kanbanTitle
+                                )}
+                            >
                                 В работе
                             </span>
-                            <div class="orders__kanban-orders">
-                                <div class="orders__kanban-wrapper">
+                            <div className={styles.orders__kanbanOrders}>
+                                <div className={styles.orders__kanbanWrapper}>
                                     <OrderCake />
                                 </div>
                             </div>
                         </div>
-                        <div class="orders__kanban-column">
-                            <span class="text orders__kanban-title">
+                        <div className={styles.orders__kanbanColumn}>
+                            <span
+                                className={classNames(
+                                    'text',
+                                    styles.orders__kanbanTitle
+                                )}
+                            >
                                 Готово
                             </span>
-                            <div class="orders__kanban-orders">
-                                <div class="orders__kanban-wrapper">
+                            <div className={styles.orders__kanbanOrders}>
+                                <div className={styles.orders__kanbanWrapper}>
                                     <OrderCake />
-                                    <div class="add-block add-block__no-icon">
-                                        <span class="small-text icon-8">
+                                    <div
+                                        className={classNames(
+                                            'addBlock',
+                                            'addBlock__noIcon'
+                                        )}
+                                    >
+                                        <span
+                                            className={classNames(
+                                                'small-text',
+                                                'icon-8'
+                                            )}
+                                        >
                                             Составить список продуктов для
                                             закупки
                                         </span>

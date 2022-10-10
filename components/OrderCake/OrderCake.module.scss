@@ -1,4 +1,4 @@
-.order-cake {
+.orderCake {
     display: grid;
     gap: 10px;
     grid-template-columns: 0.8fr 1fr;
@@ -17,7 +17,7 @@
     &__content {
         display: flex;
         flex-direction: column;
-        &-number {
+        &Number {
             font-size: 10px;
             font-weight: 400;
             text-transform: uppercase;
@@ -25,31 +25,31 @@
             display: block;
             color: #7a7a7a;
         }
-        &-text {
-            color: $textColor;
+        &Text {
+            color: var(--textColor);
             flex: 1 1 auto;
             margin-bottom: 10px;
             &_archive {
                 color: #7a7a7a;
             }
         }
-        &-block {
+        &Block {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
         }
-        &-date.icon-9:before {
+        &Date.icon-9:before {
             font-size: 14px;
             margin-right: 6px;
         }
-        &-date {
+        &Date {
             display: flex;
             align-items: center;
             &_archive {
                 color: #7a7a7a;
             }
         }
-        &-time {
+        &Time {
             &_archive {
                 color: #7a7a7a;
             }

@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import styles from './NoAccess.module.scss';
+import stylesLogin from '../../pages/login/Login.module.scss';
 
 function NoAccess() {
     return (
-        <div className={styles.registration__wrapper}>
+        <div className={stylesLogin.registration__wrapper}>
             <h2 className={classNames('title', styles.noAccess__title)}>
                 Доступ закрыт
             </h2>

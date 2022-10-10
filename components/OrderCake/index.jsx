@@ -1,22 +1,45 @@
 import classNames from 'classnames';
 import styles from './OrderCake.module.scss';
+import stylesOrders from '../../pages/orders/Orders.module.scss';
 
 function OrderCake() {
     return (
-        <div class="order-cake orders__kanban-cake">
-            <div class="order-cake__img">
-                <img src="./img/sidebar/1.jpg" alt="" />
+        <div
+            className={classNames(
+                styles.orderCake,
+                stylesOrders.orders__kanbanCake
+            )}
+        >
+            <div className={styles.orderCake__img}>
+                <img src="1.jpg" alt="" />
             </div>
-            <div class="order-cake__content">
-                <span class="order-cake__content-number">№123</span>
-                <p class="order-cake__content-text small-text orders__kanban-text">
+            <div className={styles.orderCake__content}>
+                <span className={styles.orderCake__contentNumber}>№123</span>
+                <p
+                    className={classNames(
+                        styles.orderCake__contentText,
+                        styles.orders__kanbanText,
+                        'small-text'
+                    )}
+                >
                     Торт “Красный бархат” на день рождения с белковым кремом
                 </p>
-                <div class="order-cake__content-block">
-                    <span class="order-cake__content-date small-text icon-9">
+                <div className={styles.orderCake__contentBlock}>
+                    <span
+                        className={classNames(
+                            styles.orderCake__contentDate,
+                            'icon-9',
+                            'small-text'
+                        )}
+                    >
                         22/09/2022
                     </span>
-                    <span class="order-cake__content-time small-text">
+                    <span
+                        className={classNames(
+                            styles.orderCake__contentTime,
+                            'small-text'
+                        )}
+                    >
                         9:00
                     </span>
                 </div>

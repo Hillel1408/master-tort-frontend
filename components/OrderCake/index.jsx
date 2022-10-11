@@ -2,12 +2,13 @@ import classNames from 'classnames';
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 
-function OrderCake() {
+function OrderCake({ type, style }) {
     return (
         <div
             className={classNames(
                 styles.orderCake,
-                stylesOrders.orders__kanbanCake
+                styles[type],
+                stylesOrders[style]
             )}
         >
             <div className={styles.orderCake__img}>

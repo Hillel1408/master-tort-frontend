@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import { OrderCake } from '../../components/OrderCake';
+import { OrdersNav } from '../../components/OrdersNav';
 import styles from './Orders.module.scss';
 
 export default function Orders() {
@@ -11,29 +12,7 @@ export default function Orders() {
             <div className="content">
                 <Header title={'Заказы'} />
                 <main className="main">
-                    <div className={styles.orders__navWrapper}>
-                        <div
-                            className={classNames('text', styles.orders__links)}
-                        >
-                            <a href="#" className="active">
-                                Активные
-                            </a>
-                            <a href="#">Архив</a>
-                        </div>
-                        <div
-                            className={classNames('text', styles.orders__tabs)}
-                        >
-                            <a
-                                href="#"
-                                className={classNames('active', 'icon-16')}
-                            >
-                                Доска заказов
-                            </a>
-                            <a href="#" className="icon-9">
-                                Календарь
-                            </a>
-                        </div>
-                    </div>
+                    <OrdersNav visibleTabs={true} />
                     <div className={styles.orders__kanban}>
                         <div className={styles.orders__kanbanColumn}>
                             <span
@@ -61,7 +40,7 @@ export default function Orders() {
                             </span>
                             <div className={styles.orders__kanbanOrders}>
                                 <div className={styles.orders__kanbanWrapper}>
-                                    <OrderCake />
+                                    <OrderCake style="orders__kanbanCake" />
                                     <div className="addBlock">
                                         <span
                                             className={classNames(
@@ -87,7 +66,7 @@ export default function Orders() {
                             </span>
                             <div className={styles.orders__kanbanOrders}>
                                 <div className={styles.orders__kanbanWrapper}>
-                                    <OrderCake />
+                                    <OrderCake style="orders__kanbanCake" />
                                 </div>
                             </div>
                         </div>
@@ -102,7 +81,7 @@ export default function Orders() {
                             </span>
                             <div className={styles.orders__kanbanOrders}>
                                 <div className={styles.orders__kanbanWrapper}>
-                                    <OrderCake />
+                                    <OrderCake style="orders__kanbanCake" />
                                     <div
                                         className={classNames(
                                             'addBlock',

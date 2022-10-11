@@ -162,6 +162,24 @@ export default function Registration() {
                             </div>
                         </div>
                     </div>
+                    <div className={styles.settings__buttons}>
+                        <button
+                            className={classNames('btn', 'small-text')}
+                            href="#"
+                        >
+                            Сбросить настройки
+                        </button>
+                        <button
+                            className={classNames(
+                                'btn',
+                                'btn__secondary',
+                                'small-text'
+                            )}
+                            href="#"
+                        >
+                            Сохранить
+                        </button>
+                    </div>
                 </main>
                 <br></br>
                 <br></br>

@@ -2,15 +2,14 @@ import classNames from 'classnames';
 import styles from './NoAccess.module.scss';
 import stylesLogin from '../../pages/login/Login.module.scss';
 
-function NoAccess() {
+function NoAccess({ title, text, linkBtn, textBtn }) {
     return (
         <div className={stylesLogin.registration__wrapper}>
             <h2 className={classNames('title', styles.noAccess__title)}>
-                Доступ закрыт
+                {title}
             </h2>
             <p className={classNames('small-text', styles.noAccess__text)}>
-                Зарегистрируйтесь или войдите в учетную запись, чтобы
-                использовать все возможности сервиса
+                {text}
             </p>
             <button
                 className={classNames(
@@ -19,9 +18,9 @@ function NoAccess() {
                     'btn__secondary',
                     styles.noAccess__btn
                 )}
-                href="#"
+                href={linkBtn}
             >
-                Войти
+                {textBtn}
             </button>
         </div>
     );

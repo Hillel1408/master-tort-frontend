@@ -4,7 +4,7 @@ import { Header } from '../../components/Header';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Settings.module.scss';
 
-export default function Registration() {
+export default function Settings() {
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />

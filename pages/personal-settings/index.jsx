@@ -3,7 +3,7 @@ import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import styles from './PersonalSettings.module.scss';
 
-export default function personalSettings() {
+export default function PersonalSettings() {
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />

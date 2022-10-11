@@ -5,7 +5,7 @@ import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
 import styles from './CalendarOrders.module.scss';
 
-export default function Orders() {
+export default function CalendarOrders() {
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />

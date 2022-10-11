@@ -28,6 +28,7 @@
     &Tbody {
         background-color: var(--secondaryColor);
         padding: 10px 15px 10px 15px;
+        overflow: hidden;
         @media (max-width: 576px) {
             padding: 10px 5px 10px 5px;
         }

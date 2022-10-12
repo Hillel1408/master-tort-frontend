@@ -1,7 +1,17 @@
 import classNames from 'classnames';
+import { useEffect } from 'react';
 import styles from './Modal.module.scss';
 
 function Modal({ active, setActive, children }) {
+    useEffect(() => {
+        const closeModal = (e) => {
+            if (e.keyCode === 27) {
+                setActive(false);
+            }
+        };
+        window.addEventListener('keydown', closeModal);
+        return () => window.removeEventListener('keydown', closeModal);
+    }, []);
     return (
         <div
             className={

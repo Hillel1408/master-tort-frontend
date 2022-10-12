@@ -109,9 +109,9 @@ body.lock {
 .addBlock {
     color: var(--mainColor);
     margin-top: 10px;
-    cursor: pointer;
-    display: inline-block;
+    display: block;
     span {
+        cursor: pointer;
         display: flex;
         align-items: center;
         &:before {

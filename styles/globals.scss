@@ -47,13 +47,6 @@ body.lock {
     border-radius: 12px;
     padding: 20px;
     flex: 1 1 auto;
-    &__block {
-        display: flex;
-        gap: 20px;
-        @media (max-width: 768px) {
-            flex-direction: column;
-        }
-    }
     @media (max-width: 1280px) {
         margin: 0 -20px;
         border-radius: 0;
@@ -117,6 +110,7 @@ body.lock {
     color: var(--mainColor);
     margin-top: 10px;
     cursor: pointer;
+    display: inline-block;
     span {
         display: flex;
         align-items: center;
@@ -132,42 +126,6 @@ body.lock {
 }
 .select {
     padding: 8px;
-}
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
-.tooltip .tooltiptext {
-    transition: all 0.3s ease 0s;
-    top: 0;
-    left: -300px;
-    visibility: hidden;
-    opacity: 0;
-    width: 120px;
-    color: var(--textColor);
-    border-radius: 6px;
-    padding: 20px;
-    position: absolute;
-    z-index: 1;
-    width: 280px;
-    background: #ffffff;
-    box-shadow: 0px 0px 20px rgba(0, 34, 34, 0.1);
-    border-radius: 8px;
-}
-.tooltip:hover .tooltiptext {
-    opacity: 1;
-    visibility: visible;
-}
-.tooltiptext {
-    display: grid;
-    grid-template-columns: 6fr 1fr;
-    font-size: 10px;
-    span {
-        display: block;
-    }
-    span:not(:last-child) {
-        margin-bottom: 4px;
-    }
 }
 
 .text {

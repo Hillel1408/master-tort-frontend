@@ -10,7 +10,7 @@ export default function CalendarOrders() {
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title={'Заказы'} />
+                <Header title="Заказы" />
                 <main className="main">
                     <OrdersNav visibleTabs={true} />
                     <div className={styles.orders__calendar}>

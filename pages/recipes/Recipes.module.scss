@@ -1,0 +1,154 @@
+.recipes {
+    &Link {
+        color: var(--textColor);
+    }
+    &Groups {
+        background-color: var(--secondaryColor);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+        &Text {
+            margin-bottom: 20px;
+        }
+        &__block {
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 20px;
+            display: grid;
+            @media (max-width: 768px) {
+                grid-template-columns: repeat(auto-fit, minmax(157px, 1fr));
+            }
+            @media (max-width: 375px) {
+                grid-template-columns: repeat(auto-fit, minmax(137px, 1fr));
+                gap: 11px;
+            }
+        }
+        &__item {
+            text-align: center;
+            padding: 20px 10px 10px 10px;
+            background-color: #f4f2f1;
+            border-radius: 8px;
+            position: relative;
+            span:before {
+                font-size: 30px;
+                margin-bottom: 20px;
+                display: inline-block;
+                transition: all 0.3s ease 0s;
+            }
+            @media (any-hover: hover) {
+                &:hover {
+                    .recipes__smallText,
+                    .recipesGroups__icon:before {
+                        color: var(--mainColor);
+                    }
+                }
+            }
+        }
+        &__count {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 10px;
+            line-height: 14px;
+            color: var(--secondaryColor);
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--mainColor);
+        }
+    }
+    &__smallText {
+        color: var(--textColor);
+        transition: all 0.3s ease 0s;
+    }
+    &Cakes {
+        background-color: var(--secondaryColor);
+        border-radius: 16px;
+        padding: 20px;
+        &__block {
+            grid-template-columns: repeat(auto-fit, minmax(233px, 1fr));
+            gap: 20px;
+            display: grid;
+            @media (max-width: 768px) {
+                grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+            }
+            @media (max-width: 375px) {
+                grid-template-columns: repeat(auto-fit, minmax(142px, 1fr));
+                gap: 11px;
+            }
+        }
+        &__item {
+            background-color: #f4f2f1;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            @media (max-width: 375px) {
+                padding: 10px;
+            }
+        }
+        &__image {
+            width: 100%;
+            margin-top: 20px;
+            img {
+                border-radius: 8px;
+                width: 100%;
+                height: 120px;
+                object-fit: cover;
+            }
+        }
+    }
+}
+.addRecipe {
+    &__modal {
+        background: var(--secondaryColor);
+        border-radius: 16px;
+        width: 440px;
+        padding: 80px 20px;
+        text-align: center;
+        @media (max-width: 576px) {
+            width: auto;
+            border-radius: 0;
+        }
+    }
+    &__title {
+        display: block;
+        margin-bottom: 40px;
+    }
+    &__input {
+        max-width: 280px;
+        margin-bottom: 20px;
+        padding: 12px;
+    }
+    &__select {
+        max-width: 280px;
+        padding: 12px;
+    }
+    &__block {
+        margin-top: 20px;
+    }
+    &__addBlock {
+        margin-bottom: 10px;
+        span {
+            justify-content: center;
+        }
+    }
+    &__text {
+        font-size: 10px;
+        color: #7a7a7a;
+        margin-bottom: 40px;
+    }
+}
+.icon12 {
+    margin: 0 auto;
+    border: 1px dashed #cccccc;
+    border-radius: 8px;
+    width: 130px;
+    display: block;
+    font-size: 40px;
+    color: rgba(244, 242, 241, 1);
+    padding: 20px 36px;
+    margin-bottom: 10px;
+}

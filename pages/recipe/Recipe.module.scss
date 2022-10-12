@@ -1,0 +1,36 @@
+.backLink {
+    margin-bottom: 20px;
+    display: block;
+    a {
+        color: var(--mainColor);
+    }
+    &:before {
+        margin-right: 13px;
+    }
+}
+.recipe {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+    &__image {
+        background-color: var(--secondaryColor);
+        padding: 20px;
+        border-radius: 16px;
+        &Block {
+            width: 100%;
+            margin-bottom: 10px;
+            img {
+                width: 100%;
+                height: 694px;
+                object-fit: cover;
+                border-radius: 16px;
+                @media (max-width: 576px) {
+                    grid-template-columns: 1fr;
+                }
+            }
+        }
+    }
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}

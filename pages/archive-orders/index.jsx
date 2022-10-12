@@ -10,7 +10,7 @@ export default function ArchiveOrders() {
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title={'Заказы'} />
+                <Header title="Заказы" />
                 <main className="main">
                     <OrdersNav visibleTabs={false} />
                     <div className={styles.purchase__orders}>

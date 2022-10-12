@@ -10,7 +10,7 @@ export default function Purchase() {
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title={'Закупка'} />
+                <Header title="Закупка" />
                 <main className="main">
                     <div className={styles.purchase__columns}>
                         <div className={styles.purchase__column}>

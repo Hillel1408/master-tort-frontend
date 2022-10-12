@@ -4,7 +4,7 @@ import styles from './Header.module.scss';
 function Header({ title }) {
     return (
         <header className={styles.header}>
-            <h1 className={classNames('text', styles.header__title)}>
+            <h1 className={classNames('title', styles.header__title)}>
                 {title}
             </h1>
             <div className={styles.header__login}>

@@ -8,7 +8,7 @@ export default function Registration() {
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title={'Регистрация'} />
+                <Header title="Регистрация" />
                 <main className="main">
                     <div className={styles.registration__wrapper}>
                         <div className={styles.registration}>

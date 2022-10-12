@@ -2,13 +2,14 @@ import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import styles from './PersonalSettings.module.scss';
+import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
 
 export default function PersonalSettings() {
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title={'Личный кабинет'} />
+                <Header title="Личный кабинет" />
                 <main className="main">
                     <div className={styles.personalSettings}>
                         <div className={styles.mainInfo}>
@@ -133,12 +134,12 @@ export default function PersonalSettings() {
                                 </select>
                                 <div
                                     className={classNames(
-                                        'tooltip',
+                                        stylesTooltip.tooltip,
                                         styles.mainOrder__tooltip
                                     )}
                                 >
                                     <span className="icon-22"></span>
-                                    <div className="tooltiptext">
+                                    <div className={stylesTooltip.tooltiptext}>
                                         <span className="small-text">
                                             Помечать заказ как “Срочный” (
                                             <i className="icon-27"></i>) за 2

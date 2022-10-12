@@ -8,7 +8,7 @@ export default function Login() {
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title={'Вход'} />
+                <Header title="Вход" />
                 <main className="main">
                     <div className={styles.registration__wrapper}>
                         <div className={styles.registration}>

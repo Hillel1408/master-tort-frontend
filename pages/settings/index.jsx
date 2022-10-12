@@ -9,7 +9,7 @@ export default function Settings() {
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title={'Настройки'} />
+                <Header title="Настройки" />
                 <main className="main">
                     <div className={styles.settings__info}>
                         <h2

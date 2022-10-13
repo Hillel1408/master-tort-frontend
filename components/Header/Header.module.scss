@@ -2,9 +2,13 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 20px;
     align-items: center;
-    margin-top: 7px;
+    min-height: 60px;
+    @media (max-width: 1920px) {
+        margin-top: 7px;
+        margin-bottom: 20px;
+        min-height: auto;
+    }
 }
 .login {
     &Link {

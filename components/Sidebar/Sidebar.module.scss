@@ -68,29 +68,29 @@
                     bottom: 0px;
                 }
             }
-            &.active {
-                span {
-                    transform: scale(0);
-                    &:first-child {
-                        transform: rotate(-45deg);
-                        top: calc(50% - 1px);
-                    }
-                    &:last-child {
-                        transform: rotate(45deg);
-                        bottom: calc(50% - 1px);
-                    }
-                }
-            }
         }
     }
 }
-.listActive {
+.navListActive {
     @media (max-width: 1920px) {
         transform: translate(0px, 0%);
     }
 }
 .navLinkActive {
     color: var(--mainColor);
+}
+.navIconActive {
+    span {
+        transform: scale(0);
+        &:first-child {
+            transform: rotate(-45deg);
+            top: calc(50% - 1px);
+        }
+        &:last-child {
+            transform: rotate(45deg);
+            bottom: calc(50% - 1px);
+        }
+    }
 }
 .logo {
     margin-bottom: 29px;

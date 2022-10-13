@@ -156,6 +156,10 @@ body.lock {
     }
 }
 
+#nprogress .spinner {
+    display: none !important;
+}
+
 .icon-1:before {
     font-size: 18px;
 }

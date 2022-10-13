@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useEffect } from 'react';
 import styles from './Modal.module.scss';
 
-function Modal({ active, setActive, children }) {
+function Modal({ active, setActive, children, closeIcon }) {
     useEffect(() => {
         const closeModalEsc = (e) => {
             if (e.keyCode === 27) {
@@ -36,10 +36,12 @@ function Modal({ active, setActive, children }) {
                             : styles.content
                     }
                 >
-                    <span
-                        className={styles.close}
-                        onClick={() => closeModal()}
-                    ></span>
+                    {closeIcon && (
+                        <span
+                            className={styles.close}
+                            onClick={() => closeModal()}
+                        ></span>
+                    )}
                     {children}
                 </div>
             </div>

@@ -1,18 +1,27 @@
+import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Sidebar.module.scss';
 import { NavLink } from './NavLink';
+import { useState } from 'react';
+import { Modal } from '../Modal';
 
 function Sidebar() {
+    const [navActive, setNavActive] = useState(false);
+    const clickHandler = () => {
+        setNavActive(!navActive);
+        navActive && document.body.classList.remove('lock');
+    };
+
     const navItems = [
-        {
-            href: '/orders',
-            name: 'Заказы',
-            icon: 'icon-1',
-        },
         {
             href: '/',
             name: 'Расчет торта',
             icon: 'icon-2',
+        },
+        {
+            href: '/orders',
+            name: 'Заказы',
+            icon: 'icon-1',
         },
         {
             href: '/products',
@@ -38,23 +47,43 @@ function Sidebar() {
     return (
         <aside className={styles.root}>
             <div className={styles.logo}>
-                <a href="/" className={classNames('text', styles.logoLink)}>
-                    <img src="logo.svg" alt="" />
-                    Помощник кондитеру
-                </a>
+                <Link href="/">
+                    <a className={classNames('text', styles.logoLink)}>
+                        <img src="logo.svg" alt="" />
+                        Помощник кондитеру
+                    </a>
+                </Link>
             </div>
             <div className={styles.nav}>
-                <div className={styles.navIcon}>
+                <div
+                    className={
+                        navActive
+                            ? classNames(styles.navIconActive, styles.navIcon)
+                            : styles.navIcon
+                    }
+                    onClick={() => clickHandler()}
+                >
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-                <ul className={styles.navList}>
+                <ul
+                    className={
+                        navActive
+                            ? classNames(styles.navListActive, styles.navList)
+                            : styles.navList
+                    }
+                >
                     {navItems.map((item) => (
                         <NavLink key={item.href} item={item} />
                     ))}
                 </ul>
             </div>
+            <Modal
+                active={navActive}
+                setActive={setNavActive}
+                closeIcon={false}
+            ></Modal>
         </aside>
     );
 }

@@ -98,7 +98,11 @@ export default function Recipes() {
                 <br></br>
                 <br></br>
             </div>
-            <Modal active={modalActiveGroup} setActive={setModalActiveGroup}>
+            <Modal
+                active={modalActiveGroup}
+                setActive={setModalActiveGroup}
+                closeIcon={true}
+            >
                 <div className={styles.addRecipeModal}>
                     <span
                         className={classNames('title', styles.addRecipeTitle)}
@@ -147,7 +151,11 @@ export default function Recipes() {
                     </button>
                 </div>
             </Modal>
-            <Modal active={modalActiveRecipe} setActive={setModalActiveRecipe}>
+            <Modal
+                active={modalActiveRecipe}
+                setActive={setModalActiveRecipe}
+                closeIcon={true}
+            >
                 <div className={styles.addRecipeModal}>
                     <span
                         className={classNames('title', styles.addRecipeTitle)}

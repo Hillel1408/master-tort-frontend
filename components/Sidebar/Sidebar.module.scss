@@ -33,9 +33,6 @@
                 color: var(--mainColor);
             }
         }
-        &.active {
-            color: var(--mainColor);
-        }
         @media (max-width: 1920px) {
             padding: 11px 0;
         }
@@ -92,6 +89,9 @@
         transform: translate(0px, 0%);
     }
 }
+.navLinkActive {
+    color: var(--mainColor);
+}
 .logo {
     margin-bottom: 29px;
     @media (max-width: 1920px) {
@@ -103,6 +103,6 @@
     }
     img {
         margin-right: 10px;
-        height: 54px;
+        height: 60px;
     }
 }

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
 
@@ -6,13 +7,15 @@ function Header({ title }) {
         <header className={styles.root}>
             <h1 className={classNames('title', styles.title)}>{title}</h1>
             <div className={styles.login}>
-                <a className={classNames('text', styles.loginLink)} href="#">
-                    Вход
-                </a>
+                <Link href="/login">
+                    <a className={classNames('text', styles.loginLink)}>Вход</a>
+                </Link>
                 <span className={styles.text}>|</span>
-                <a className={classNames('text', styles.loginLink)} href="#">
-                    Регистрация
-                </a>
+                <Link href="registration">
+                    <a className={classNames('text', styles.loginLink)}>
+                        Регистрация
+                    </a>
+                </Link>
             </div>
         </header>
     );

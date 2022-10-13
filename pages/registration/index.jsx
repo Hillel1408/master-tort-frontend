@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
@@ -23,7 +24,9 @@ export default function Registration() {
                             >
                                 Уже есть учетная запись?
                                 <span>
-                                    <a href="#">Войти</a>
+                                    <Link href="/login">
+                                        <a>Войти</a>
+                                    </Link>
                                 </span>
                             </p>
                             <input

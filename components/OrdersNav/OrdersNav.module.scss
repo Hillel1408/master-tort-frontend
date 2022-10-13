@@ -4,10 +4,6 @@
         &:not(:last-child) {
             margin-right: 20px;
         }
-        &.active {
-            color: var(--mainColor);
-            border-bottom: 1px solid #009998;
-        }
     }
 }
 .tabs {
@@ -27,9 +23,6 @@
                 margin-right: 0;
             }
         }
-        &.active {
-            color: var(--mainColor);
-        }
         &:before {
             margin-right: 13px;
         }
@@ -42,4 +35,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+}
+.linksActive {
+    color: var(--mainColor) !important;
+    border-bottom: 1px solid #009998;
+}
+.tabsActive {
+    color: var(--mainColor) !important;
 }

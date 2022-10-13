@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
@@ -62,21 +63,23 @@ export default function Recipes() {
                             Торты
                         </h2>
                         <div className={styles.cakesBlock}>
-                            <a href="#" className={styles.link}>
-                                <div className={styles.cakesItem}>
-                                    <span
-                                        className={classNames(
-                                            'small-text',
-                                            styles.smallText
-                                        )}
-                                    >
-                                        Красный бархат
-                                    </span>
-                                    <div className={styles.cakesImage}>
-                                        <img src="1.jpg" />
+                            <Link href="/recipe">
+                                <a className={styles.link}>
+                                    <div className={styles.cakesItem}>
+                                        <span
+                                            className={classNames(
+                                                'small-text',
+                                                styles.smallText
+                                            )}
+                                        >
+                                            Красный бархат
+                                        </span>
+                                        <div className={styles.cakesImage}>
+                                            <img src="1.jpg" />
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </Link>
                         </div>
                         <div
                             className="addBlock"

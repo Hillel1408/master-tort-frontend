@@ -74,9 +74,6 @@ body.lock {
     &:active {
         border: 1px solid #009998;
     }
-    &:invalid {
-        border: 1px solid #f16363;
-    }
     @media (max-width: 576px) {
         font-size: 10px;
     }

@@ -1,9 +1,9 @@
+import Router from 'next/router';
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Recipe.module.scss';
-import { NextFetchEvent } from 'next/server';
 
 export default function Recipe() {
     return (
@@ -12,15 +12,23 @@ export default function Recipe() {
             <div className="content">
                 <Header title="Красный бархат" />
                 <main className="main">
-                    <span
-                        className={classNames(
-                            'icon-28',
-                            'small-text',
-                            styles.backLink
-                        )}
+                    <a
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault;
+                            Router.back();
+                        }}
                     >
-                        <a href="#">Вернуться к рецептам</a>
-                    </span>
+                        <span
+                            className={classNames(
+                                'icon-28',
+                                'small-text',
+                                styles.backLink
+                            )}
+                        >
+                            Вернуться к рецептам
+                        </span>
+                    </a>
                     <div className={styles.root}>
                         <div className={styles.products}>
                             <div className={stylesTable.overflow}>

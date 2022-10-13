@@ -114,10 +114,10 @@ export default function Registration() {
                                 Регистрация с помощью:
                             </p>
                             <div className={styles.socialLinks}>
-                                <a href="#" class="icon-23"></a>
-                                <a href="#" class="icon-24"></a>
-                                <a href="#" class="icon-25"></a>
-                                <a href="#" class="icon-26"></a>
+                                <a href="#" className="icon-23"></a>
+                                <a href="#" className="icon-24"></a>
+                                <a href="#" className="icon-25"></a>
+                                <a href="#" className="icon-26"></a>
                             </div>
                         </div>
                     </div>

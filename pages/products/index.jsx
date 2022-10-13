@@ -10,7 +10,7 @@ export default function Products() {
             <div className="content">
                 <Header title="Продукты" />
                 <main className="main">
-                    <div className={stylesTable.table__overflow}>
+                    <div className={stylesTable.overflow}>
                         <div
                             className={classNames(
                                 stylesTable.table,
@@ -21,46 +21,44 @@ export default function Products() {
                             <div
                                 className={classNames(
                                     'text',
-                                    stylesTable.tableThead
+                                    stylesTable.thead
                                 )}
                                 style={{
                                     gridTemplateColumns:
                                         '32% 16% 16% 16% 16% 4%',
                                 }}
                             >
-                                <div className={stylesTable.tableTh}>
+                                <div className={stylesTable.th}>
                                     Наименование
                                 </div>
-                                <div className={stylesTable.tableTh}>
+                                <div className={stylesTable.th}>
                                     Единица измерения
                                 </div>
-                                <div className={stylesTable.tableTh}>
+                                <div className={stylesTable.th}>
                                     Упаковка lb
                                 </div>
-                                <div className={stylesTable.tableTh}>
+                                <div className={stylesTable.th}>
                                     Упаковка oz
                                 </div>
-                                <div className={stylesTable.tableTh}>
-                                    Цена, ₽
-                                </div>
-                                <div className={stylesTable.tableTh}></div>
+                                <div className={stylesTable.th}>Цена, ₽</div>
+                                <div className={stylesTable.th}></div>
                             </div>
-                            <div className={stylesTable.tableTbody}>
+                            <div className={stylesTable.tbody}>
                                 <div
-                                    className={stylesTable.tableTr}
+                                    className={stylesTable.tr}
                                     style={{
                                         gridTemplateColumns:
                                             '32% 16% 16% 16% 16% 4%',
                                     }}
                                 >
-                                    <div className={stylesTable.tableTd}>
+                                    <div className={stylesTable.td}>
                                         <input
                                             type="text"
                                             name=""
                                             className="input"
                                         />
                                     </div>
-                                    <div className={stylesTable.tableTd}>
+                                    <div className={stylesTable.td}>
                                         <select
                                             className={classNames(
                                                 'input',
@@ -73,21 +71,21 @@ export default function Products() {
                                             <option>гр</option>
                                         </select>
                                     </div>
-                                    <div className={stylesTable.tableTd}>
+                                    <div className={stylesTable.td}>
                                         <input
                                             type="number"
                                             name=""
                                             className="input"
                                         />
                                     </div>
-                                    <div className={stylesTable.tableTd}>
+                                    <div className={stylesTable.td}>
                                         <input
                                             type="number"
                                             name=""
                                             className="input"
                                         />
                                     </div>
-                                    <div className={stylesTable.tableTd}>
+                                    <div className={stylesTable.td}>
                                         <input
                                             type="number"
                                             name=""
@@ -96,14 +94,14 @@ export default function Products() {
                                     </div>
                                     <div
                                         className={classNames(
-                                            stylesTable.tableTd,
-                                            stylesTable.tableTd__delete
+                                            stylesTable.td,
+                                            stylesTable.tdDelete
                                         )}
                                     >
                                         <span
                                             className={classNames(
                                                 'icon-11',
-                                                stylesTable.tableDelete
+                                                stylesTable.delete
                                             )}
                                         ></span>
                                     </div>

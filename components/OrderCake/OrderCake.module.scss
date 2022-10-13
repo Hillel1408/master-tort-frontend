@@ -1,4 +1,4 @@
-.orderCake {
+.root {
     display: grid;
     gap: 10px;
     grid-template-columns: 0.8fr 1fr;
@@ -6,51 +6,51 @@
     padding: 10px;
     border-radius: 8px;
     height: max-content;
-    &__img {
-        img {
-            width: 100%;
-            height: 120px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
+}
+.img {
+    img {
+        width: 100%;
+        height: 120px;
+        border-radius: 8px;
+        object-fit: cover;
     }
-    &__content {
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    &Number {
+        font-size: 10px;
+        font-weight: 400;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+        display: block;
+        color: #7a7a7a;
+    }
+    &Text {
+        color: var(--textColor);
+        flex: 1 1 auto;
+        margin-bottom: 10px;
+    }
+    &Block {
         display: flex;
-        flex-direction: column;
-        &Number {
-            font-size: 10px;
-            font-weight: 400;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            display: block;
-            color: #7a7a7a;
-        }
-        &Text {
-            color: var(--textColor);
-            flex: 1 1 auto;
-            margin-bottom: 10px;
-        }
-        &Block {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        &Date:before {
-            font-size: 14px;
-            margin-right: 6px;
-        }
-        &Date {
-            display: flex;
-            align-items: center;
-        }
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
     }
-    &_archive {
-        background-color: white;
-        .orderCake__contentText,
-        .orderCake__contentDate,
-        .orderCake__contentTime {
-            color: #7a7a7a;
-        }
+    &Date:before {
+        font-size: 14px;
+        margin-right: 6px;
+    }
+    &Date {
+        display: flex;
+        align-items: center;
+    }
+}
+.archive {
+    background-color: white;
+    .contentText,
+    .contentDate,
+    .contentTime {
+        color: #7a7a7a;
     }
 }

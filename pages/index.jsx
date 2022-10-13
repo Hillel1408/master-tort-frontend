@@ -12,13 +12,13 @@ export default function Home() {
             <div className="content">
                 <Header title="Расчет торта" />
                 <main className="main">
-                    <div className={styles.main__block}>
+                    <div className={styles.mainBlock}>
                         <div className={styles.tabs}>
                             <div className={styles.tab}>
                                 <div
                                     className={classNames(
                                         'text',
-                                        styles.tab__item
+                                        styles.tabItem
                                     )}
                                 >
                                     Вариант 1
@@ -26,7 +26,7 @@ export default function Home() {
                                 <div
                                     className={classNames(
                                         'text',
-                                        styles.tab__item,
+                                        styles.tabItem,
                                         styles.tabActive
                                     )}
                                 >
@@ -35,9 +35,7 @@ export default function Home() {
                                 <span className="icon-8"></span>
                             </div>
                             <section className={styles.tabContent}>
-                                <div
-                                    className={styles.tabContent__gridContainer}
-                                >
+                                <div className={styles.tabContentGridContainer}>
                                     <div
                                         className={styles.information}
                                         style={{ maxHeigh: '280px' }}
@@ -45,7 +43,7 @@ export default function Home() {
                                         <h3
                                             className={classNames(
                                                 'text',
-                                                styles.information__text
+                                                styles.informationText
                                             )}
                                         >
                                             Основная информация
@@ -55,13 +53,13 @@ export default function Home() {
                                             name="name-project"
                                             className={classNames(
                                                 'input',
-                                                styles.information__input
+                                                styles.informationInput
                                             )}
                                             placeholder="Название проекта"
                                         />
                                         <div
                                             className={
-                                                styles.information__inputBlock
+                                                styles.informationInputBlock
                                             }
                                         >
                                             <input
@@ -69,7 +67,7 @@ export default function Home() {
                                                 name="date-project"
                                                 className={classNames(
                                                     'input',
-                                                    styles.information__input
+                                                    styles.informationInput
                                                 )}
                                             />
                                             <input
@@ -77,14 +75,14 @@ export default function Home() {
                                                 name="time-project"
                                                 className={classNames(
                                                     'input',
-                                                    styles.information__input
+                                                    styles.informationInput
                                                 )}
                                             />
                                         </div>
                                         <textarea
                                             className={classNames(
                                                 'input',
-                                                styles.information__textarea
+                                                styles.informationTextarea
                                             )}
                                             placeholder="Комментарий к заказу"
                                         ></textarea>
@@ -93,7 +91,7 @@ export default function Home() {
                                         <h3
                                             className={classNames(
                                                 'text',
-                                                styles.information__text
+                                                styles.informationText
                                             )}
                                         >
                                             Вес 1 порции
@@ -104,7 +102,7 @@ export default function Home() {
                                             max="100"
                                             value="50"
                                             className={classNames(
-                                                styles.information__slider,
+                                                styles.informationSlider,
                                                 styles.slider
                                             )}
                                             id="myRange"
@@ -112,22 +110,22 @@ export default function Home() {
                                     </div>
                                     <div
                                         className={classNames(
-                                            styles.information__inputBlock,
-                                            styles.information__inputBlock_gap
+                                            styles.informationInputBlock,
+                                            styles.informationInputBlockGap
                                         )}
                                     >
                                         <div className={styles.information}>
                                             <h3
                                                 className={classNames(
                                                     'text',
-                                                    styles.information__text
+                                                    styles.informationText
                                                 )}
                                             >
                                                 Подставка
                                             </h3>
                                             <div
                                                 className={
-                                                    styles.information__inputBlock
+                                                    styles.informationInputBlock
                                                 }
                                             >
                                                 <input
@@ -148,7 +146,7 @@ export default function Home() {
                                             <h3
                                                 className={classNames(
                                                     'text',
-                                                    styles.information__text
+                                                    styles.informationText
                                                 )}
                                             >
                                                 Стоимость, ₽
@@ -165,20 +163,20 @@ export default function Home() {
                                         <h3
                                             className={classNames(
                                                 'text',
-                                                styles.information__text
+                                                styles.informationText
                                             )}
                                         >
                                             Форма торта
                                         </h3>
                                         <div
                                             className={
-                                                styles.information__labelBlock
+                                                styles.informationLabelBlock
                                             }
                                         >
                                             <label
                                                 className={classNames(
                                                     'small-text',
-                                                    styles.information__label
+                                                    styles.informationLabel
                                                 )}
                                             >
                                                 <input
@@ -194,7 +192,7 @@ export default function Home() {
                                             <label
                                                 className={classNames(
                                                     'small-text',
-                                                    styles.information__label
+                                                    styles.informationLabel
                                                 )}
                                             >
                                                 <input
@@ -209,7 +207,7 @@ export default function Home() {
                                             <label
                                                 className={classNames(
                                                     'small-text',
-                                                    styles.information__label
+                                                    styles.informationLabel
                                                 )}
                                             >
                                                 <input
@@ -227,20 +225,20 @@ export default function Home() {
                                         <h3
                                             className={classNames(
                                                 'text',
-                                                styles.information__text
+                                                styles.informationText
                                             )}
                                         >
                                             Вид торта
                                         </h3>
                                         <div
                                             className={
-                                                styles.information__labelBlock
+                                                styles.informationLabelBlock
                                             }
                                         >
                                             <label
                                                 className={classNames(
                                                     'small-text',
-                                                    styles.information__label
+                                                    styles.informationLabel
                                                 )}
                                             >
                                                 <input
@@ -256,7 +254,7 @@ export default function Home() {
                                             <label
                                                 className={classNames(
                                                     'small-text',
-                                                    styles.information__label
+                                                    styles.informationLabel
                                                 )}
                                             >
                                                 <input
@@ -271,7 +269,7 @@ export default function Home() {
                                             <label
                                                 className={classNames(
                                                     'small-text',
-                                                    styles.information__label
+                                                    styles.informationLabel
                                                 )}
                                             >
                                                 <input
@@ -289,24 +287,24 @@ export default function Home() {
                                         <h3
                                             className={classNames(
                                                 'text',
-                                                styles.information__text
+                                                styles.informationText
                                             )}
                                         >
                                             Фотографии
                                         </h3>
                                         <div
                                             className={
-                                                styles.information__imageBlock
+                                                styles.informationImageBlock
                                             }
                                         >
                                             <div
                                                 className={
-                                                    styles.information__image
+                                                    styles.informationImage
                                                 }
                                             >
                                                 <div
                                                     className={
-                                                        styles.information__imageImg
+                                                        styles.informationImageImg
                                                     }
                                                 >
                                                     <img src="1.jpg" alt="" />
@@ -314,12 +312,12 @@ export default function Home() {
                                             </div>
                                             <div
                                                 className={
-                                                    styles.information__image
+                                                    styles.informationImage
                                                 }
                                             >
                                                 <div
                                                     className={
-                                                        styles.information__imageImg
+                                                        styles.informationImageImg
                                                     }
                                                 >
                                                     <img src="1.jpg" alt="" />
@@ -327,12 +325,12 @@ export default function Home() {
                                             </div>
                                             <div
                                                 className={
-                                                    styles.information__image
+                                                    styles.informationImage
                                                 }
                                             >
                                                 <div
                                                     className={
-                                                        styles.information__imageImg
+                                                        styles.informationImageImg
                                                     }
                                                 >
                                                     <img src="1.jpg" alt="" />
@@ -355,14 +353,12 @@ export default function Home() {
                                     <h3
                                         className={classNames(
                                             'text',
-                                            styles.information__text
+                                            styles.informationText
                                         )}
                                     >
                                         Ярусы
                                     </h3>
-                                    <div
-                                        className={stylesTable.table__overflow}
-                                    >
+                                    <div className={stylesTable.overflow}>
                                         <div
                                             className={classNames(
                                                 'small-text',
@@ -373,57 +369,35 @@ export default function Home() {
                                             <div
                                                 className={classNames(
                                                     'text',
-                                                    stylesTable.tableThead
+                                                    stylesTable.thead
                                                 )}
                                                 style={{
                                                     gridTemplateColumns:
                                                         '20% 20% 20% 36% 4%',
                                                 }}
                                             >
-                                                <div
-                                                    className={
-                                                        stylesTable.tableTh
-                                                    }
-                                                >
+                                                <div className={stylesTable.th}>
                                                     Диаметр, см.
                                                 </div>
-                                                <div
-                                                    className={
-                                                        stylesTable.tableTh
-                                                    }
-                                                >
+                                                <div className={stylesTable.th}>
                                                     Высота, см.
                                                 </div>
-                                                <div
-                                                    className={
-                                                        stylesTable.tableTh
-                                                    }
-                                                >
+                                                <div className={stylesTable.th}>
                                                     Отступ, см.
                                                 </div>
-                                                <div
-                                                    className={
-                                                        stylesTable.tableTh
-                                                    }
-                                                >
+                                                <div className={stylesTable.th}>
                                                     Рецепт
                                                 </div>
                                                 <div
                                                     className={classNames(
-                                                        stylesTable.tableTh,
-                                                        stylesTable.tableTh__delete
+                                                        stylesTable.th,
+                                                        stylesTable.thDelete
                                                     )}
                                                 ></div>
                                             </div>
-                                            <div
-                                                className={
-                                                    stylesTable.tableTbody
-                                                }
-                                            >
+                                            <div className={stylesTable.tbody}>
                                                 <div
-                                                    className={
-                                                        stylesTable.tableTr
-                                                    }
+                                                    className={stylesTable.tr}
                                                     style={{
                                                         gridTemplateColumns:
                                                             '20% 20% 20% 36% 4%',
@@ -431,7 +405,7 @@ export default function Home() {
                                                 >
                                                     <div
                                                         className={
-                                                            stylesTable.tableTd
+                                                            stylesTable.td
                                                         }
                                                     >
                                                         <input
@@ -442,7 +416,7 @@ export default function Home() {
                                                     </div>
                                                     <div
                                                         className={
-                                                            stylesTable.tableTd
+                                                            stylesTable.td
                                                         }
                                                     >
                                                         <input
@@ -453,7 +427,7 @@ export default function Home() {
                                                     </div>
                                                     <div
                                                         className={
-                                                            stylesTable.tableTd
+                                                            stylesTable.td
                                                         }
                                                     >
                                                         <input
@@ -464,7 +438,7 @@ export default function Home() {
                                                     </div>
                                                     <div
                                                         className={
-                                                            stylesTable.tableTd
+                                                            stylesTable.td
                                                         }
                                                     >
                                                         <select
@@ -484,14 +458,14 @@ export default function Home() {
                                                     </div>
                                                     <div
                                                         className={classNames(
-                                                            stylesTable.tableTd,
-                                                            stylesTable.tableTd__delete
+                                                            stylesTable.td,
+                                                            stylesTable.tdDelete
                                                         )}
                                                     >
                                                         <span
                                                             className={classNames(
                                                                 'icon-11',
-                                                                stylesTable.tableDelete
+                                                                stylesTable.delete
                                                             )}
                                                         ></span>
                                                     </div>
@@ -510,7 +484,7 @@ export default function Home() {
                                         </span>
                                     </div>
                                 </div>
-                                <div className={styles.tabContent__buttons}>
+                                <div className={styles.tabContentButtons}>
                                     <button
                                         className={classNames(
                                             'btn',
@@ -538,7 +512,7 @@ export default function Home() {
                                 <h2
                                     className={classNames(
                                         'title',
-                                        styles.cake__title
+                                        styles.cakeTitle
                                     )}
                                 >
                                     Визуализация силуэта
@@ -560,42 +534,42 @@ export default function Home() {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.cake__image}>
+                            <div className={styles.cakeImage}>
                                 <img src="2.jpg" alt="" />
                             </div>
                             <div className={classNames('total', 'small-text')}>
                                 <h2
                                     className={classNames(
                                         'title',
-                                        styles.cake__columnTitle
+                                        styles.cakeColumnTitle
                                     )}
                                 >
                                     Итого
                                 </h2>
-                                <div className={styles.cake__columns}>
-                                    <div className={styles.cake__column}>
+                                <div className={styles.cakeColumns}>
+                                    <div className={styles.cakeColumn}>
                                         <div>Порций в торте</div>
                                         <div>16</div>
                                     </div>
-                                    <div className={styles.cake__column}>
+                                    <div className={styles.cakeColumn}>
                                         <div>
                                             Общий вес выравнивающего крема
                                         </div>
                                         <div>400 г</div>
                                     </div>
-                                    <div className={styles.cake__column}>
+                                    <div className={styles.cakeColumn}>
                                         <div>Порций в торте</div>
                                         <div>16</div>
                                     </div>
-                                    <div className={styles.cake__column}>
+                                    <div className={styles.cakeColumn}>
                                         <div>Общий вес мастики</div>
                                         <div>420 г</div>
                                     </div>
-                                    <div className={styles.cake__column}>
+                                    <div className={styles.cakeColumn}>
                                         <div>Общий вес торта</div>
                                         <div>3800 г</div>
                                     </div>
-                                    <div className={styles.cake__column}>
+                                    <div className={styles.cakeColumn}>
                                         <div>Себестоимость торта</div>
                                         <div>5000 ₽</div>
                                     </div>

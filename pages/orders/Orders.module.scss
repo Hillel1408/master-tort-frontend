@@ -1,132 +1,130 @@
-.orders {
-    &__kanban {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+.kanban {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 375px) {
+        grid-template-columns: 1fr;
+    }
+    &Title {
+        color: white;
+        display: block;
+        background-color: var(--mainColor);
+        padding: 10px 20px;
+        text-align: center;
+    }
+    &Orders {
+        padding: 22px 10px 22px 10px;
+        background-color: white;
+        height: calc(100vh - 86px);
+    }
+    &Wrapper {
+        overflow-y: auto;
+        height: 100%;
+        & > div:not(:last-of-type) {
+            margin-bottom: 20px;
+        }
+    }
+    &Cake {
+        @media (max-width: 1040px) {
+            grid-template-columns: 1fr;
+        }
         @media (max-width: 768px) {
             grid-template-columns: 1fr 1fr;
         }
-        @media (max-width: 375px) {
+        @media (max-width: 576px) {
             grid-template-columns: 1fr;
         }
-        &Title {
-            color: white;
-            display: block;
-            background-color: var(--mainColor);
-            padding: 10px 20px;
-            text-align: center;
+        @media (max-width: 375px) {
+            grid-template-columns: 1fr 1fr;
         }
-        &Orders {
-            padding: 22px 10px 22px 10px;
-            background-color: white;
-            height: calc(100vh - 86px);
-        }
-        &Wrapper {
-            overflow-y: auto;
-            height: 100%;
-            & > div:not(:last-of-type) {
-                margin-bottom: 20px;
-            }
-        }
-        &Cake {
-            @media (max-width: 1040px) {
-                grid-template-columns: 1fr;
-            }
-            @media (max-width: 768px) {
-                grid-template-columns: 1fr 1fr;
-            }
-            @media (max-width: 576px) {
-                grid-template-columns: 1fr;
-            }
+    }
+    div:nth-child(1) {
+        span {
+            border-top-left-radius: 16px;
             @media (max-width: 375px) {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        div:nth-child(1) {
-            span {
-                border-top-left-radius: 16px;
-                @media (max-width: 375px) {
-                    border-top-right-radius: 16px;
-                }
-            }
-        }
-        div:nth-child(2) {
-            span {
-                @media (max-width: 768px) {
-                    border-top-right-radius: 16px;
-                }
-                @media (max-width: 375px) {
-                    border-top-left-radius: 16px;
-                }
-            }
-        }
-        div:nth-child(3) {
-            span {
-                @media (max-width: 768px) {
-                    border-top-left-radius: 16px;
-                }
-                @media (max-width: 375px) {
-                    border-top-right-radius: 16px;
-                }
-            }
-        }
-        div:nth-child(4) {
-            span {
                 border-top-right-radius: 16px;
-                @media (max-width: 375px) {
-                    border-top-left-radius: 16px;
-                }
-            }
-        }
-        & > div:nth-child(1) > div {
-            padding-left: 20px;
-            border-bottom-left-radius: 16px;
-            @media (max-width: 768px) {
-                margin-bottom: 20px;
-            }
-            @media (max-width: 375px) {
-                padding-right: 20px;
-                border-bottom-right-radius: 16px;
-            }
-        }
-        & > div:nth-child(2) > div {
-            @media (max-width: 768px) {
-                padding-right: 20px;
-                border-bottom-right-radius: 16px;
-                margin-bottom: 20px;
-            }
-            @media (max-width: 375px) {
-                padding-left: 20px;
-                border-bottom-left-radius: 16px;
-            }
-        }
-        & > div:nth-child(3) > div {
-            @media (max-width: 768px) {
-                padding-left: 20px;
-                border-bottom-left-radius: 16px;
-            }
-            @media (max-width: 375px) {
-                padding-right: 20px;
-                border-bottom-right-radius: 16px;
-                margin-bottom: 20px;
-            }
-        }
-        & > div:nth-child(4) > div {
-            padding-right: 20px;
-            border-bottom-right-radius: 16px;
-            @media (max-width: 375px) {
-                padding-left: 20px;
-                border-bottom-left-radius: 16px;
             }
         }
     }
-    &__calendar {
-        &Cake {
-            @media (max-width: 1100px) {
-                grid-template-columns: 1fr;
-            }
+    div:nth-child(2) {
+        span {
             @media (max-width: 768px) {
-                grid-template-columns: 1fr 1fr;
+                border-top-right-radius: 16px;
             }
+            @media (max-width: 375px) {
+                border-top-left-radius: 16px;
+            }
+        }
+    }
+    div:nth-child(3) {
+        span {
+            @media (max-width: 768px) {
+                border-top-left-radius: 16px;
+            }
+            @media (max-width: 375px) {
+                border-top-right-radius: 16px;
+            }
+        }
+    }
+    div:nth-child(4) {
+        span {
+            border-top-right-radius: 16px;
+            @media (max-width: 375px) {
+                border-top-left-radius: 16px;
+            }
+        }
+    }
+    & > div:nth-child(1) > div {
+        padding-left: 20px;
+        border-bottom-left-radius: 16px;
+        @media (max-width: 768px) {
+            margin-bottom: 20px;
+        }
+        @media (max-width: 375px) {
+            padding-right: 20px;
+            border-bottom-right-radius: 16px;
+        }
+    }
+    & > div:nth-child(2) > div {
+        @media (max-width: 768px) {
+            padding-right: 20px;
+            border-bottom-right-radius: 16px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 375px) {
+            padding-left: 20px;
+            border-bottom-left-radius: 16px;
+        }
+    }
+    & > div:nth-child(3) > div {
+        @media (max-width: 768px) {
+            padding-left: 20px;
+            border-bottom-left-radius: 16px;
+        }
+        @media (max-width: 375px) {
+            padding-right: 20px;
+            border-bottom-right-radius: 16px;
+            margin-bottom: 20px;
+        }
+    }
+    & > div:nth-child(4) > div {
+        padding-right: 20px;
+        border-bottom-right-radius: 16px;
+        @media (max-width: 375px) {
+            padding-left: 20px;
+            border-bottom-left-radius: 16px;
+        }
+    }
+}
+.calendar {
+    &Cake {
+        @media (max-width: 1100px) {
+            grid-template-columns: 1fr;
+        }
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr 1fr;
         }
     }
 }

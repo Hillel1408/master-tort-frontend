@@ -13,12 +13,12 @@ export default function ArchiveOrders() {
                 <Header title="Заказы" />
                 <main className="main">
                     <OrdersNav visibleTabs={false} />
-                    <div className={styles.purchase__orders}>
-                        <OrderCake type="orderCake_archive" />
-                        <OrderCake type="orderCake_archive" />
-                        <OrderCake type="orderCake_archive" />
-                        <OrderCake type="orderCake_archive" />
-                        <OrderCake type="orderCake_archive" />
+                    <div className={styles.orders}>
+                        <OrderCake type="archive" />
+                        <OrderCake type="archive" />
+                        <OrderCake type="archive" />
+                        <OrderCake type="archive" />
+                        <OrderCake type="archive" />
                     </div>
                 </main>
                 <br></br>

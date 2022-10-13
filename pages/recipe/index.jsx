@@ -21,9 +21,9 @@ export default function Recipe() {
                     >
                         <a href="#">Вернуться к рецептам</a>
                     </span>
-                    <div className={styles.recipe}>
-                        <div className={styles.recipe__products}>
-                            <div className={stylesTable.table__overflow}>
+                    <div className={styles.root}>
+                        <div className={styles.products}>
+                            <div className={stylesTable.overflow}>
                                 <div
                                     className={classNames(
                                         stylesTable.table,
@@ -33,70 +33,56 @@ export default function Recipe() {
                                     <div
                                         className={classNames(
                                             'text',
-                                            stylesTable.tableThead
+                                            stylesTable.thead
                                         )}
                                         style={{
                                             gridTemplateColumns:
                                                 '44% 25% 25% 6%',
                                         }}
                                     >
-                                        <div className={stylesTable.tableTh}>
+                                        <div className={stylesTable.th}>
                                             Продукты
                                         </div>
-                                        <div className={stylesTable.tableTh}>
+                                        <div className={stylesTable.th}>
                                             Брутто
                                         </div>
-                                        <div className={stylesTable.tableTh}>
+                                        <div className={stylesTable.th}>
                                             Нетто
                                         </div>
-                                        <div
-                                            className={stylesTable.tableTh}
-                                        ></div>
+                                        <div className={stylesTable.th}></div>
                                     </div>
-                                    <div className={stylesTable.table__block}>
+                                    <div className={stylesTable.block}>
                                         <div
                                             className={classNames(
                                                 'text',
-                                                stylesTable.table__title
+                                                stylesTable.title
                                             )}
                                         >
                                             Бисквит
                                         </div>
-                                        <div className={stylesTable.tableTbody}>
+                                        <div className={stylesTable.tbody}>
                                             <div
-                                                className={stylesTable.tableTr}
+                                                className={stylesTable.tr}
                                                 style={{
                                                     gridTemplateColumns:
                                                         '44% 25% 25% 6%',
                                                 }}
                                             >
-                                                <div
-                                                    className={
-                                                        stylesTable.tableTd
-                                                    }
-                                                >
+                                                <div className={stylesTable.td}>
                                                     <input
                                                         type="number"
                                                         name=""
                                                         className="input"
                                                     />
                                                 </div>
-                                                <div
-                                                    className={
-                                                        stylesTable.tableTd
-                                                    }
-                                                >
+                                                <div className={stylesTable.td}>
                                                     <input
                                                         type="number"
                                                         name=""
                                                         className="input"
                                                     />
                                                 </div>
-                                                <div
-                                                    className={
-                                                        stylesTable.tableTd
-                                                    }
-                                                >
+                                                <div className={stylesTable.td}>
                                                     <input
                                                         type="number"
                                                         name=""
@@ -105,14 +91,14 @@ export default function Recipe() {
                                                 </div>
                                                 <div
                                                     className={classNames(
-                                                        stylesTable.tableTd,
-                                                        stylesTable.tableTd__delete
+                                                        stylesTable.td,
+                                                        stylesTable.tdDelete
                                                     )}
                                                 >
                                                     <span
                                                         className={classNames(
                                                             'icon-11',
-                                                            stylesTable.tableDelete
+                                                            stylesTable.delete
                                                         )}
                                                     ></span>
                                                 </div>
@@ -147,8 +133,8 @@ export default function Recipe() {
                                 </span>
                             </div>
                         </div>
-                        <div className={styles.recipe__image}>
-                            <div className={styles.recipe__imageBlock}>
+                        <div className={styles.image}>
+                            <div className={styles.imageBlock}>
                                 <img src="3.jpg" />
                             </div>
                             <div className="addBlock">

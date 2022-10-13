@@ -12,17 +12,12 @@ export default function Purchase() {
             <div className="content">
                 <Header title="Закупка" />
                 <main className="main">
-                    <div className={styles.purchase__columns}>
-                        <div className={styles.purchase__column}>
-                            <h2
-                                className={classNames(
-                                    'text',
-                                    styles.purchase__title
-                                )}
-                            >
+                    <div className={styles.columns}>
+                        <div className={styles.column}>
+                            <h2 className={classNames('text', styles.title)}>
                                 Выбранные заказы
                             </h2>
-                            <div className={styles.purchase__orders}>
+                            <div className={styles.orders}>
                                 <OrderCake />
                                 <OrderCake />
                                 <OrderCake />
@@ -38,80 +33,72 @@ export default function Purchase() {
                                 </span>
                             </div>
                         </div>
-                        <div className={styles.purchase__column}>
-                            <div className={stylesTable.table__overflow}>
+                        <div className={styles.column}>
+                            <div className={stylesTable.overflow}>
                                 <div
                                     className={classNames(
                                         stylesTable.table,
                                         'small-text',
-                                        styles.purchase__table
+                                        styles.table
                                     )}
                                     style={{ minWidth: '470px' }}
                                 >
                                     <div
                                         className={classNames(
                                             'text',
-                                            stylesTable.tableThead
+                                            stylesTable.thead
                                         )}
                                         style={{
                                             gridTemplateColumns:
                                                 '4% 32% 32% 32%',
                                         }}
                                     >
-                                        <div className={stylesTable.tableTh}>
+                                        <div className={stylesTable.th}>
                                             <input type="checkbox" />
                                         </div>
-                                        <div className={stylesTable.tableTh}>
+                                        <div className={stylesTable.th}>
                                             Наименование
                                         </div>
-                                        <div className={stylesTable.tableTh}>
+                                        <div className={stylesTable.th}>
                                             Количество
                                         </div>
-                                        <div className={stylesTable.tableTh}>
+                                        <div className={stylesTable.th}>
                                             Стоимость, ₽
                                         </div>
                                     </div>
-                                    <div className={stylesTable.tableTbody}>
+                                    <div className={stylesTable.tbody}>
                                         <div
                                             className={classNames(
-                                                stylesTable.tableTr,
+                                                stylesTable.tr,
                                                 styles.active,
-                                                styles.purchase__tableTr
+                                                styles.tableTr
                                             )}
                                             style={{
                                                 gridTemplateColumns:
                                                     '4% 32% 32% 32%',
                                             }}
                                         >
-                                            <div
-                                                className={stylesTable.tableTd}
-                                            >
+                                            <div className={stylesTable.td}>
                                                 <input
                                                     type="checkbox"
                                                     checked
                                                 />
                                             </div>
-                                            <div
-                                                className={stylesTable.tableTd}
-                                            >
+                                            <div className={stylesTable.td}>
                                                 <input
                                                     type="number"
                                                     name=""
                                                     className="input"
                                                 />
                                             </div>
-                                            <div
-                                                className={stylesTable.tableTd}
-                                            >
+                                            <div className={stylesTable.td}>
                                                 <input
                                                     type="number"
                                                     name=""
                                                     className="input"
                                                 />
                                             </div>
-                                            <div
-                                                className={stylesTable.tableTd}
-                                            >
+                                            <div className={stylesTable.td}>
                                                 <input
                                                     type="number"
                                                     name=""
@@ -122,11 +109,11 @@ export default function Purchase() {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.purchase__total}>
+                            <div className={styles.total}>
                                 <p
                                     className={classNames(
                                         'text',
-                                        styles.purchase__totalText
+                                        styles.totalText
                                     )}
                                 >
                                     Итоговая стоимость продуктов
@@ -134,7 +121,7 @@ export default function Purchase() {
                                 <span
                                     className={classNames(
                                         'text',
-                                        styles.purchase__totalPrice
+                                        styles.totalPrice
                                     )}
                                 >
                                     4260.80 ₽

@@ -1,67 +1,67 @@
-.registration {
+.root {
     background: var(--secondaryColor);
     border-radius: 16px;
     max-width: 480px;
     padding: 80px 47px;
     text-align: center;
-    &__title {
-        margin-bottom: 10px;
-    }
-    &__wrapper {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-    &__text {
-        color: var(--textColor);
-        margin-bottom: 40px;
-        span {
-            margin-left: 10px;
-            a {
-                color: var(--mainColor);
-            }
-        }
-        &Bottom {
-            margin-bottom: 20px;
-            color: var(--textColor);
+}
+.title {
+    margin-bottom: 10px;
+}
+.wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.text {
+    color: var(--textColor);
+    margin-bottom: 40px;
+    span {
+        margin-left: 10px;
+        a {
+            color: var(--mainColor);
         }
     }
-    &__input {
-        max-width: 320px;
-        padding: 12px;
+    &Bottom {
         margin-bottom: 20px;
+        color: var(--textColor);
     }
-    &__btn {
-        margin-bottom: 40px;
+}
+.input {
+    max-width: 320px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+.btn {
+    margin-bottom: 40px;
+}
+.or {
+    max-width: 320px;
+    height: 1px;
+    background-color: var(--greyColor);
+    margin: 0 auto;
+    position: relative;
+    margin-bottom: 40px;
+    span {
+        position: absolute;
+        font-size: 12px;
+        padding: 0 3px;
+        color: rgba(204, 204, 204, 1);
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background-color: white;
     }
-    &__or {
-        max-width: 320px;
-        height: 1px;
-        background-color: var(--greyColor);
-        margin: 0 auto;
-        position: relative;
-        margin-bottom: 40px;
-        span {
-            position: absolute;
-            font-size: 12px;
-            padding: 0 3px;
-            color: rgba(204, 204, 204, 1);
-            left: 50%;
-            transform: translateX(-50%) translateY(-50%);
-            background-color: white;
-        }
+}
+.socialLinks {
+    font-size: 24px;
+    a:not(:last-child) {
+        margin-right: 20px;
     }
-    &__socialLinks {
-        font-size: 24px;
-        a:not(:last-child) {
-            margin-right: 20px;
-        }
-    }
-    &__link {
-        display: block;
-        margin-bottom: 40px;
-        margin-top: -20px;
-    }
+}
+.link {
+    display: block;
+    margin-bottom: 40px;
+    margin-top: -20px;
 }

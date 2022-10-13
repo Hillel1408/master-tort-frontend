@@ -1,4 +1,4 @@
-.personalSettings {
+.root {
     display: flex;
     gap: 20px;
     align-items: baseline;
@@ -10,15 +10,15 @@
         grid-template-columns: 1fr;
     }
 }
-.mainInfo {
+.info {
     background: #ffffff;
     border-radius: 16px;
     padding: 20px;
     flex: 0 1 520px;
-    &__title {
+    &Title {
         margin-bottom: 20px;
     }
-    &__avatar {
+    &Avatar {
         border: 1px dashed #cccccc;
         border-radius: 8px;
         min-width: 140px;
@@ -29,45 +29,45 @@
             color: rgba(204, 204, 204, 1);
         }
     }
-    &__columns {
+    &Columns {
         display: flex;
         gap: 20px;
     }
-    &__inputs {
+    &Inputs {
         flex: 1 1 auto;
     }
-    &__input {
+    &Input {
         padding: 12px;
         margin-bottom: 20px;
     }
 }
-.mainSecurity {
+.security {
     background: #ffffff;
     border-radius: 16px;
     padding: 20px;
     flex: 0 1 360px;
     min-width: 290px;
-    &__input {
+    &Input {
         margin-bottom: 10px;
         padding: 12px;
     }
-    &__buttons {
+    &Buttons {
         display: flex;
         justify-content: space-between;
         margin-top: 10px;
     }
 }
-.mainOrder {
+.order {
     background: #ffffff;
     border-radius: 16px;
     padding: 20px;
     flex: 0 1 266px;
-    &__block {
+    &Block {
         display: flex;
         align-items: center;
         gap: 12px;
     }
-    &__tooltip span {
+    &Tooltip span {
         color: var(--textColor);
         i:before {
             color: rgba(241, 99, 99, 1);

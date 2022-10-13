@@ -1,108 +1,106 @@
-.recipes {
-    &Link {
-        color: var(--textColor);
-    }
-    &Groups {
-        background-color: var(--secondaryColor);
-        border-radius: 16px;
-        padding: 20px;
+.link {
+    color: var(--textColor);
+}
+.groups {
+    background-color: var(--secondaryColor);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    &Text {
         margin-bottom: 20px;
-        &Text {
+    }
+    &Block {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 20px;
+        display: grid;
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(auto-fill, minmax(157px, 1fr));
+        }
+        @media (max-width: 375px) {
+            grid-template-columns: repeat(auto-fill, minmax(137px, 1fr));
+            gap: 11px;
+        }
+    }
+    &Item {
+        text-align: center;
+        padding: 20px 10px 10px 10px;
+        background-color: #f4f2f1;
+        border-radius: 8px;
+        position: relative;
+        span:before {
+            font-size: 30px;
             margin-bottom: 20px;
+            display: inline-block;
+            transition: all 0.3s ease 0s;
         }
-        &__block {
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 20px;
-            display: grid;
-            @media (max-width: 768px) {
-                grid-template-columns: repeat(auto-fill, minmax(157px, 1fr));
-            }
-            @media (max-width: 375px) {
-                grid-template-columns: repeat(auto-fill, minmax(137px, 1fr));
-                gap: 11px;
-            }
-        }
-        &__item {
-            text-align: center;
-            padding: 20px 10px 10px 10px;
-            background-color: #f4f2f1;
-            border-radius: 8px;
-            position: relative;
-            span:before {
-                font-size: 30px;
-                margin-bottom: 20px;
-                display: inline-block;
-                transition: all 0.3s ease 0s;
-            }
-            @media (any-hover: hover) {
-                &:hover {
-                    .recipes__smallText,
-                    .recipesGroups__icon:before {
-                        color: var(--mainColor);
-                    }
+        @media (any-hover: hover) {
+            &:hover {
+                .smallText,
+                .groupsIcon:before {
+                    color: var(--mainColor);
                 }
             }
         }
-        &__count {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            font-size: 10px;
-            line-height: 14px;
-            color: var(--secondaryColor);
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: var(--mainColor);
+    }
+    &Count {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        font-size: 10px;
+        line-height: 14px;
+        color: var(--secondaryColor);
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: var(--mainColor);
+    }
+}
+.smallText {
+    color: var(--textColor);
+    transition: all 0.3s ease 0s;
+}
+.cakes {
+    background-color: var(--secondaryColor);
+    border-radius: 16px;
+    padding: 20px;
+    &Block {
+        grid-template-columns: repeat(auto-fill, minmax(233px, 1fr));
+        gap: 20px;
+        display: grid;
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
+        }
+        @media (max-width: 375px) {
+            grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
+            gap: 11px;
         }
     }
-    &__smallText {
-        color: var(--textColor);
-        transition: all 0.3s ease 0s;
-    }
-    &Cakes {
-        background-color: var(--secondaryColor);
-        border-radius: 16px;
+    &Item {
+        background-color: #f4f2f1;
+        border-radius: 8px;
         padding: 20px;
-        &__block {
-            grid-template-columns: repeat(auto-fill, minmax(233px, 1fr));
-            gap: 20px;
-            display: grid;
-            @media (max-width: 768px) {
-                grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
-            }
-            @media (max-width: 375px) {
-                grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
-                gap: 11px;
-            }
+        text-align: center;
+        @media (max-width: 375px) {
+            padding: 10px;
         }
-        &__item {
-            background-color: #f4f2f1;
+    }
+    &Image {
+        width: 100%;
+        margin-top: 20px;
+        img {
             border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            @media (max-width: 375px) {
-                padding: 10px;
-            }
-        }
-        &__image {
             width: 100%;
-            margin-top: 20px;
-            img {
-                border-radius: 8px;
-                width: 100%;
-                height: 120px;
-                object-fit: cover;
-            }
+            height: 120px;
+            object-fit: cover;
         }
     }
 }
 .addRecipe {
-    &__modal {
+    &Modal {
         background: var(--secondaryColor);
         border-radius: 16px;
         width: 440px;
@@ -113,29 +111,29 @@
             border-radius: 0;
         }
     }
-    &__title {
+    &Title {
         display: block;
         margin-bottom: 40px;
     }
-    &__input {
+    &Input {
         max-width: 280px;
         margin-bottom: 20px;
         padding: 12px;
     }
-    &__select {
+    &Select {
         max-width: 280px;
         padding: 12px;
     }
-    &__block {
+    &Block {
         margin-top: 20px;
     }
-    &__addBlock {
+    &AddBlock {
         margin-bottom: 10px;
         span {
             justify-content: center;
         }
     }
-    &__text {
+    &Text {
         font-size: 10px;
         color: #7a7a7a;
         margin-bottom: 40px;

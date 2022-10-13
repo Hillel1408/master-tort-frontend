@@ -6,29 +6,23 @@ function OrderCake({ type, style }) {
     return (
         <div
             className={classNames(
-                styles.orderCake,
+                styles.root,
                 styles[type],
                 stylesOrders[style]
             )}
         >
-            <div className={styles.orderCake__img}>
+            <div className={styles.img}>
                 <img src="1.jpg" alt="" />
             </div>
-            <div className={styles.orderCake__content}>
-                <span className={styles.orderCake__contentNumber}>№123</span>
-                <p
-                    className={classNames(
-                        styles.orderCake__contentText,
-                        styles.orders__kanbanText,
-                        'small-text'
-                    )}
-                >
+            <div className={styles.content}>
+                <span className={styles.contentNumber}>№123</span>
+                <p className={classNames(styles.contentText, 'small-text')}>
                     Торт “Красный бархат” на день рождения с белковым кремом
                 </p>
-                <div className={styles.orderCake__contentBlock}>
+                <div className={styles.contentBlock}>
                     <span
                         className={classNames(
-                            styles.orderCake__contentDate,
+                            styles.contentDate,
                             'icon-9',
                             'small-text'
                         )}
@@ -36,10 +30,7 @@ function OrderCake({ type, style }) {
                         22/09/2022
                     </span>
                     <span
-                        className={classNames(
-                            styles.orderCake__contentTime,
-                            'small-text'
-                        )}
+                        className={classNames(styles.contentTime, 'small-text')}
                     >
                         9:00
                     </span>

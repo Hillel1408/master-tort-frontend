@@ -14,35 +14,28 @@ export default function Recipes() {
             <div className="content">
                 <Header title="Рецепты" />
                 <main className="main">
-                    <div className={styles.recipesGroups}>
-                        <h2
-                            className={classNames(
-                                'text',
-                                styles.recipesGroupsText
-                            )}
-                        >
+                    <div className={styles.groups}>
+                        <h2 className={classNames('text', styles.groupsText)}>
                             Группы
                         </h2>
-                        <div className={styles.recipesGroups__block}>
-                            <a href="#" className={styles.recipesLink}>
-                                <div className={styles.recipesGroups__item}>
+                        <div className={styles.groupsBlock}>
+                            <a href="#" className={styles.link}>
+                                <div className={styles.groupsItem}>
                                     <span
                                         className={classNames(
                                             'icon-13',
-                                            styles.recipesGroups__icon
+                                            styles.groupsIcon
                                         )}
                                     ></span>
                                     <p
                                         className={classNames(
                                             'small-text',
-                                            styles.recipes__smallText
+                                            styles.smallText
                                         )}
                                     >
                                         Торты
                                     </p>
-                                    <span
-                                        className={styles.recipesGroups__count}
-                                    >
+                                    <span className={styles.groupsCount}>
                                         21
                                     </span>
                                 </div>
@@ -64,27 +57,22 @@ export default function Recipes() {
                             </span>
                         </div>
                     </div>
-                    <div className={styles.recipesCakes}>
-                        <h2
-                            className={classNames(
-                                'text',
-                                styles.recipesGroupsText
-                            )}
-                        >
+                    <div className={styles.cakes}>
+                        <h2 className={classNames('text', styles.groupsText)}>
                             Торты
                         </h2>
-                        <div className={styles.recipesCakes__block}>
-                            <a href="#" className={styles.recipesLink}>
-                                <div className={styles.recipesCakes__item}>
+                        <div className={styles.cakesBlock}>
+                            <a href="#" className={styles.link}>
+                                <div className={styles.cakesItem}>
                                     <span
                                         className={classNames(
                                             'small-text',
-                                            styles.recipes__smallText
+                                            styles.smallText
                                         )}
                                     >
                                         Красный бархат
                                     </span>
-                                    <div className={styles.recipesCakes__image}>
+                                    <div className={styles.cakesImage}>
                                         <img src="1.jpg" />
                                     </div>
                                 </div>
@@ -111,14 +99,14 @@ export default function Recipes() {
                 <br></br>
             </div>
             <Modal active={modalActiveGroup} setActive={setModalActiveGroup}>
-                <div className={styles.addRecipe__modal}>
+                <div className={styles.addRecipeModal}>
                     <span
-                        className={classNames('title', styles.addRecipe__title)}
+                        className={classNames('title', styles.addRecipeTitle)}
                     >
                         Создание группы
                     </span>
                     <input
-                        className={classNames('input', styles.addRecipe__input)}
+                        className={classNames('input', styles.addRecipeInput)}
                         type="text"
                         name="group-name"
                         placeholder="Название"
@@ -127,7 +115,7 @@ export default function Recipes() {
                         className={classNames(
                             'input',
                             'select',
-                            styles.addRecipe__select
+                            styles.addRecipeSelect
                         )}
                     >
                         <option>Торты</option>
@@ -137,14 +125,14 @@ export default function Recipes() {
                     <div
                         className={classNames(
                             'addBlock',
-                            styles.addRecipe__addBlock
+                            styles.addRecipeAddBlock
                         )}
                     >
                         <span className={classNames('small-text', 'icon-8')}>
                             Загрузить миниатюру
                         </span>
                     </div>
-                    <p className={styles.addRecipe__text}>
+                    <p className={styles.addRecipeText}>
                         (.png, .jpg, .jpeg, не более 5Мб)
                     </p>
                     <button
@@ -160,14 +148,14 @@ export default function Recipes() {
                 </div>
             </Modal>
             <Modal active={modalActiveRecipe} setActive={setModalActiveRecipe}>
-                <div className={styles.addRecipe__modal}>
+                <div className={styles.addRecipeModal}>
                     <span
-                        className={classNames('title', styles.addRecipe__title)}
+                        className={classNames('title', styles.addRecipeTitle)}
                     >
                         Создание рецепта
                     </span>
                     <input
-                        className={classNames('input', styles.addRecipe__input)}
+                        className={classNames('input', styles.addRecipeInput)}
                         type="text"
                         name="recipe-name"
                         placeholder="Название"
@@ -176,14 +164,14 @@ export default function Recipes() {
                         className={classNames(
                             'input',
                             'select',
-                            styles.addRecipe__select
+                            styles.addRecipeSelect
                         )}
                     >
                         <option>Торты</option>
                         <option>Десерты</option>
                         <option>Хлеб</option>
                     </select>
-                    <div className={styles.addRecipe__block}>
+                    <div className={styles.addRecipeBlock}>
                         <span
                             className={classNames('icon-12', styles.icon12)}
                         ></span>
@@ -191,14 +179,14 @@ export default function Recipes() {
                     <div
                         className={classNames(
                             'addBlock',
-                            styles.addRecipe__addBlock
+                            styles.addRecipeAddBlock
                         )}
                     >
                         <span className={classNames('small-text', 'icon-8')}>
                             Загрузить фото
                         </span>
                     </div>
-                    <p className={styles.addRecipe__text}>
+                    <p className={styles.addRecipeText}>
                         (.png, .jpg, .jpeg, не более 5Мб)
                     </p>
                     <button

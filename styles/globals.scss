@@ -112,7 +112,7 @@ body.lock {
     display: block;
     span {
         cursor: pointer;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         &:before {
             margin-right: 13px;

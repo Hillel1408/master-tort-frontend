@@ -1,4 +1,4 @@
-.popup {
+.root {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -13,59 +13,59 @@
     overflow-x: hidden;
     cursor: default;
     pointer-events: none;
-    &__body {
-        min-height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 30px 0;
-        transition: all 0.8s ease 0s;
+}
+.body {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    transition: all 0.8s ease 0s;
+}
+.content {
+    @media (max-width: 576px) {
+        width: 100%;
     }
-    &__content {
-        @media (max-width: 576px) {
-            width: 100%;
+    transition: all 0.8s ease 0s;
+    opacity: 0;
+    transform: perspective(600px) translate(0px, -100%) rotateX(45deg);
+}
+.close {
+    position: absolute;
+    right: 28px;
+    top: 28px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    transition: transform 0.3s ease 0s;
+    z-index: 1;
+    @media (any-hover: hover) {
+        &:hover {
+            transform: rotate(90deg);
         }
-        transition: all 0.8s ease 0s;
-        opacity: 0;
-        transform: perspective(600px) translate(0px, -100%) rotateX(45deg);
     }
-    &__close {
+    &:before,
+    &:after {
         position: absolute;
-        right: 28px;
-        top: 28px;
-        width: 22px;
+        left: 10px;
+        content: ' ';
         height: 22px;
-        cursor: pointer;
-        transition: transform 0.3s ease 0s;
-        z-index: 1;
-        @media (any-hover: hover) {
-            &:hover {
-                transform: rotate(90deg);
-            }
-        }
-        &:before,
-        &:after {
-            position: absolute;
-            left: 10px;
-            content: ' ';
-            height: 22px;
-            width: 2px;
-            background-color: black;
-        }
-        &:before {
-            transform: rotate(45deg);
-        }
-        &:after {
-            transform: rotate(-45deg);
-        }
+        width: 2px;
+        background-color: black;
+    }
+    &:before {
+        transform: rotate(45deg);
+    }
+    &:after {
+        transform: rotate(-45deg);
     }
 }
-.popupOpen {
+.open {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
 }
-.popup__contentOpen {
+.contentOpen {
     transform: perspective(600px) translate(0px, 0%) rotateX(0deg);
     opacity: 1;
 }

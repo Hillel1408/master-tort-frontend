@@ -11,23 +11,15 @@ export default function Settings() {
             <div className="content">
                 <Header title="Настройки" />
                 <main className="main">
-                    <div className={styles.settings__info}>
-                        <h2
-                            className={classNames(
-                                'text',
-                                styles.settings__title
-                            )}
-                        >
+                    <div className={styles.info}>
+                        <h2 className={classNames('text', styles.title)}>
                             Информация о настройках
                         </h2>
                         <div
-                            className={classNames(
-                                'small-text',
-                                styles.settings__columns
-                            )}
+                            className={classNames('small-text', styles.columns)}
                         >
-                            <div className={styles.settings__column}>
-                                <p className={styles.settings__text}>
+                            <div className={styles.column}>
+                                <p className={styles.text}>
                                     Energistically recaptiualize pandemic
                                     innovation through web-enabled networks.
                                     Conveniently engineer leveraged internal or
@@ -40,21 +32,21 @@ export default function Settings() {
                                     other's quality resources with customized
                                     technologies.
                                 </p>
-                                <p className={styles.settings__text}>
+                                <p className={styles.text}>
                                     Enthusiastically empower dynamic internal or
                                     "organic" sources without high-quality
                                     platforms. Progressively whiteboard
                                     ubiquitous outsourcing vis-a-vis fully
                                     tested data.
                                 </p>
-                                <p className={styles.settings__text}>
+                                <p className={styles.text}>
                                     Completely enable strategic collaboration
                                     and idea-sharing after effective
                                     collaboration and.
                                 </p>
                             </div>
-                            <div className={styles.settings__column}>
-                                <p className={styles.settings__text}>
+                            <div className={styles.column}>
+                                <p className={styles.text}>
                                     Holisticly embrace resource-leveling
                                     platforms and e-business internal or
                                     "organic" sources. Professionally extend
@@ -67,7 +59,7 @@ export default function Settings() {
                                     Completely facilitate compelling users
                                     vis-a-vis plug-and-play e-business.
                                 </p>
-                                <p className={styles.settings__text}>
+                                <p className={styles.text}>
                                     Objectively transition team driven web
                                     services before multifunctional catalysts
                                     for change. Authoritatively mesh inexpensive
@@ -80,37 +72,37 @@ export default function Settings() {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.settings__tables}>
-                        <div className={stylesTable.table__overflow}>
+                    <div className={styles.tables}>
+                        <div className={stylesTable.overflow}>
                             <div className={classNames('table', 'small-text')}>
                                 <div
                                     className={classNames(
                                         'text',
-                                        stylesTable.tableThead
+                                        stylesTable.thead
                                     )}
                                     style={{
                                         gridTemplateColumns: '1fr',
                                     }}
                                 >
-                                    <div className={stylesTable.tableTh}>
+                                    <div className={stylesTable.th}>
                                         Проработка толщины мастики
                                     </div>
                                 </div>
-                                <div className={stylesTable.tableTbody}>
+                                <div className={stylesTable.tbody}>
                                     <div
-                                        className={stylesTable.tableTr}
+                                        className={stylesTable.tr}
                                         style={{
                                             gridTemplateColumns: '2fr 1fr',
                                         }}
                                     >
-                                        <div className={stylesTable.tableTd}>
+                                        <div className={stylesTable.td}>
                                             <input
                                                 type="text"
                                                 name=""
                                                 class="input"
                                             />
                                         </div>
-                                        <div className={stylesTable.tableTd}>
+                                        <div className={stylesTable.td}>
                                             <input
                                                 type="number"
                                                 name=""
@@ -121,36 +113,36 @@ export default function Settings() {
                                 </div>
                             </div>
                         </div>
-                        <div className={stylesTable.table__overflow}>
+                        <div className={stylesTable.overflow}>
                             <div className={classNames('table', 'small-text')}>
                                 <div
                                     className={classNames(
                                         'text',
-                                        stylesTable.tableThead
+                                        stylesTable.thead
                                     )}
                                     style={{
                                         gridTemplateColumns: '1fr',
                                     }}
                                 >
-                                    <div className={stylesTable.tableTh}>
+                                    <div className={stylesTable.th}>
                                         Проработка толщины крема
                                     </div>
                                 </div>
-                                <div className={stylesTable.tableTbody}>
+                                <div className={stylesTable.tbody}>
                                     <div
-                                        className={stylesTable.tableTr}
+                                        className={stylesTable.tr}
                                         style={{
                                             gridTemplateColumns: '2fr 1fr',
                                         }}
                                     >
-                                        <div className={stylesTable.tableTd}>
+                                        <div className={stylesTable.td}>
                                             <input
                                                 type="text"
                                                 name=""
                                                 class="input"
                                             />
                                         </div>
-                                        <div className={stylesTable.tableTd}>
+                                        <div className={stylesTable.td}>
                                             <input
                                                 type="number"
                                                 name=""
@@ -162,7 +154,7 @@ export default function Settings() {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.settings__buttons}>
+                    <div className={styles.buttons}>
                         <button
                             className={classNames('btn', 'small-text')}
                             href="#"

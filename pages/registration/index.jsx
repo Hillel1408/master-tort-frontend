@@ -10,20 +10,15 @@ export default function Registration() {
             <div className="content">
                 <Header title="Регистрация" />
                 <main className="main">
-                    <div className={styles.registration__wrapper}>
-                        <div className={styles.registration}>
-                            <h2
-                                className={classNames(
-                                    'title',
-                                    styles.registration__title
-                                )}
-                            >
+                    <div className={styles.wrapper}>
+                        <div className={styles.root}>
+                            <h2 className={classNames('title', styles.title)}>
                                 Регистрация
                             </h2>
                             <p
                                 className={classNames(
                                     'small-text',
-                                    styles.registration__text
+                                    styles.text
                                 )}
                             >
                                 Уже есть учетная запись?
@@ -32,37 +27,25 @@ export default function Registration() {
                                 </span>
                             </p>
                             <input
-                                className={classNames(
-                                    'input',
-                                    styles.registration__input
-                                )}
+                                className={classNames('input', styles.input)}
                                 type="text"
                                 name="name"
                                 placeholder="Имя пользователя"
                             />
                             <input
-                                className={classNames(
-                                    'input',
-                                    styles.registration__input
-                                )}
+                                className={classNames('input', styles.input)}
                                 type="text"
                                 name="city"
                                 placeholder="Город"
                             />
                             <input
-                                className={classNames(
-                                    'input',
-                                    styles.registration__input
-                                )}
+                                className={classNames('input', styles.input)}
                                 type="email"
                                 name="email"
                                 placeholder="Электронная почта"
                             />
                             <input
-                                className={classNames(
-                                    'input',
-                                    styles.registration__input
-                                )}
+                                className={classNames('input', styles.input)}
                                 type="password"
                                 name="password"
                                 placeholder="Пароль"
@@ -71,25 +54,25 @@ export default function Registration() {
                                 className={classNames(
                                     'small-text',
                                     'btn',
-                                    styles.registration__btn,
+                                    styles.btn,
                                     'btn__secondary'
                                 )}
                                 href="#"
                             >
                                 Зарегистрироваться
                             </button>
-                            <div className={styles.registration__or}>
+                            <div className={styles.or}>
                                 <span>или</span>
                             </div>
                             <p
                                 className={classNames(
                                     'small-text',
-                                    styles.registration__textBottom
+                                    styles.textBottom
                                 )}
                             >
                                 Регистрация с помощью:
                             </p>
-                            <div className={styles.registration__socialLinks}>
+                            <div className={styles.socialLinks}>
                                 <a href="#" class="icon-23"></a>
                                 <a href="#" class="icon-24"></a>
                                 <a href="#" class="icon-25"></a>

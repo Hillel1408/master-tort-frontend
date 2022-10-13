@@ -4,38 +4,41 @@ import styles from './Modal.module.scss';
 
 function Modal({ active, setActive, children }) {
     useEffect(() => {
-        const closeModal = (e) => {
+        const closeModalEsc = (e) => {
             if (e.keyCode === 27) {
-                setActive(false);
+                closeModal();
             }
         };
-        window.addEventListener('keydown', closeModal);
-        return () => window.removeEventListener('keydown', closeModal);
+        window.addEventListener('keydown', closeModalEsc);
+        return () => window.removeEventListener('keydown', closeModalEsc);
     }, []);
+
+    const closeModal = () => {
+        setActive(false);
+        document.body.classList.remove('lock');
+    };
+
+    active ? document.body.classList.add('lock') : '';
+
     return (
         <div
             className={
-                active
-                    ? classNames(styles.popup, styles.popupOpen)
-                    : styles.popup
+                active ? classNames(styles.root, styles.open) : styles.root
             }
-            onClick={() => setActive(false)}
+            onClick={() => closeModal()}
         >
-            <div className={styles.popup__body}>
+            <div className={styles.body}>
                 <div
                     onClick={(e) => e.stopPropagation()}
                     className={
                         active
-                            ? classNames(
-                                  styles.popup__content,
-                                  styles.popup__contentOpen
-                              )
-                            : styles.popup__content
+                            ? classNames(styles.content, styles.contentOpen)
+                            : styles.content
                     }
                 >
                     <span
-                        className={styles.popup__close}
-                        onClick={() => setActive(false)}
+                        className={styles.close}
+                        onClick={() => closeModal()}
                     ></span>
                     {children}
                 </div>

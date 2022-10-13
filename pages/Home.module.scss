@@ -1,4 +1,4 @@
-.main__block {
+.mainBlock {
     display: flex;
     gap: 20px;
     @media (max-width: 768px) {
@@ -14,7 +14,7 @@
 .tab {
     display: flex;
     align-items: center;
-    &__item {
+    &Item {
         cursor: pointer;
         padding: 4px 20px;
         display: inline-block;
@@ -34,7 +34,7 @@
     padding: 20px;
     background: var(--secondaryColor);
     border-radius: 0px 16px 16px 16px;
-    &__gridContainer {
+    &GridContainer {
         display: flex;
         gap: 20px;
         flex-flow: column wrap;
@@ -49,7 +49,7 @@
         }
         & > .information:nth-child(1),
         & > .information:nth-child(2),
-        & > .information__inputBlock {
+        & > .informationInputBlock {
             width: calc(55% - 10px);
         }
         & > .information:nth-child(4),
@@ -66,7 +66,7 @@
                 order: 4;
                 width: calc(62% - 10px);
             }
-            & > .information__inputBlock {
+            & > .informationInputBlock {
                 grid-template-columns: 1fr;
                 order: 5;
                 width: calc(38% - 10px);
@@ -93,7 +93,7 @@
                 order: 4;
                 width: 100%;
             }
-            & > .information__inputBlock {
+            & > .informationInputBlock {
                 grid-template-columns: 1fr 1fr;
                 order: 5;
                 width: 100%;
@@ -112,7 +112,7 @@
             }
         }
     }
-    &__buttons {
+    &Buttons {
         margin-top: 20px;
         display: flex;
         justify-content: space-between;
@@ -131,10 +131,10 @@
     @media (max-width: 1280px) {
         padding: 40px 20px 20px 20px;
     }
-    &__title {
+    &Title {
         margin-bottom: 40px;
     }
-    &__image {
+    &Image {
         overflow: auto;
         margin-bottom: 40px;
         text-align: center;
@@ -143,11 +143,11 @@
         }
     }
 }
-.cake__columns {
+.cakeColumns {
     color: var(--textColor);
     width: 100%;
 }
-.cake__column {
+.cakeColumn {
     display: flex;
     &Title {
         margin-bottom: 10px;
@@ -177,19 +177,19 @@
     padding: 20px;
     align-self: start;
     overflow: auto;
-    &__text {
+    &Text {
         margin-bottom: 10px;
     }
-    &__input {
+    &Input {
         margin-bottom: 10px;
     }
-    &__textarea {
+    &Textarea {
         height: 114px;
         @media (max-width: 768px) {
             height: 68px;
         }
     }
-    &__inputBlock {
+    &InputBlock {
         display: grid;
         grid-template-columns: 1fr 1fr;
         overflow: auto;
@@ -197,22 +197,22 @@
         & > .information {
             min-width: 150px;
         }
-        &_gap {
+        &Gap {
             gap: 20px;
             @media (max-width: 576px) {
                 grid-template-columns: 1fr !important;
             }
         }
     }
-    &__labelBlock,
-    &__imageBlock {
+    &LabelBlock,
+    &ImageBlock {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 10px;
         overflow: auto;
         padding: 2px;
     }
-    &__imageBlock {
+    &ImageBlock {
         @media (max-width: 768px) {
             grid-template-columns: 1fr;
         }
@@ -220,7 +220,7 @@
             grid-template-columns: 1fr 1fr;
         }
     }
-    &__label {
+    &Label {
         span {
             display: flex;
             flex-direction: column;
@@ -249,10 +249,10 @@
             }
         }
     }
-    &__slider {
+    &Slider {
         margin-bottom: 25px;
     }
-    &__image {
+    &Image {
         min-width: 120px;
         height: 81px;
         background: var(--secondaryColor);

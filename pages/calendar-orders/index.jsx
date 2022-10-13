@@ -13,41 +13,39 @@ export default function CalendarOrders() {
                 <Header title="Заказы" />
                 <main className="main">
                     <OrdersNav visibleTabs={true} />
-                    <div className={styles.orders__calendar}>
-                        <div className={styles.orders__calendarBlock}>
-                            <div className={styles.orders__calendarContainer}>
-                                <div className={styles.orders__calendarHeader}>
+                    <div className={styles.root}>
+                        <div className={styles.block}>
+                            <div className={styles.container}>
+                                <div className={styles.header}>
                                     <span
                                         className={classNames(
                                             'text',
-                                            styles.orders__calendarTitle
+                                            styles.title
                                         )}
                                     >
                                         Сентябрь 2022
                                     </span>
-                                    <div className={styles.orders__calendarNav}>
+                                    <div className={styles.nav}>
                                         <span
                                             className={classNames(
                                                 'icon-29',
-                                                styles.orders__calendarNext
+                                                styles.next
                                             )}
                                         ></span>
                                         <span
                                             className={classNames(
                                                 'icon-30',
-                                                styles.orders__calendarPrev
+                                                styles.prev
                                             )}
                                         ></span>
                                     </div>
                                 </div>
-                                <table className={styles.orders__calendarTable}>
-                                    <thead
-                                        className={styles.orders__calendarThead}
-                                    >
+                                <table className={styles.table}>
+                                    <thead className={styles.thead}>
                                         <tr
                                             className={classNames(
                                                 'small-text',
-                                                styles.orders__calendarSmallText
+                                                styles.smallText
                                             )}
                                         >
                                             <th>пн</th>
@@ -65,7 +63,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     26
@@ -75,7 +73,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     27
@@ -85,7 +83,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     28
@@ -95,7 +93,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     29
@@ -105,7 +103,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     30
@@ -115,7 +113,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     31
@@ -124,8 +122,8 @@ export default function CalendarOrders() {
                                             <td>
                                                 <div
                                                     className={classNames(
-                                                        styles.orders__calendarStatus_archive,
-                                                        styles.orders__calendarStatus
+                                                        styles.statusArchive,
+                                                        styles.status
                                                     )}
                                                 >
                                                     1<div>4</div>
@@ -152,112 +150,72 @@ export default function CalendarOrders() {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     4
                                                 </div>
                                             </td>
                                             <td>
                                                 <div
                                                     className={classNames(
-                                                        styles.orders__calendarStatus_ordinary,
-                                                        styles.orders__calendarStatus
+                                                        styles.statusOrdinary,
+                                                        styles.status
                                                     )}
                                                 >
                                                     5<div>4</div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     6
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     7
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     8
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     9
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     10
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     11
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     12
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     13
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     14
                                                 </div>
                                             </td>
                                             <td>
                                                 <div
                                                     className={classNames(
-                                                        styles.orders__calendarStatus_archive,
-                                                        styles.orders__calendarStatus
+                                                        styles.statusArchive,
+                                                        styles.status
                                                     )}
                                                 >
                                                     15<div>4</div>
@@ -266,66 +224,42 @@ export default function CalendarOrders() {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     16
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     17
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     18
                                                 </div>
                                             </td>
                                             <td>
                                                 <div
                                                     className={classNames(
-                                                        styles.orders__calendarStatus_ordinary,
-                                                        styles.orders__calendarStatus
+                                                        styles.statusOrdinary,
+                                                        styles.status
                                                     )}
                                                 >
                                                     19<div>4</div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     20
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     21
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     22
                                                 </div>
                                             </td>
@@ -334,63 +268,43 @@ export default function CalendarOrders() {
                                             <td>
                                                 <div
                                                     className={classNames(
-                                                        styles.orders__calendarStatus_urgent,
-                                                        styles.orders__calendarStatus
+                                                        styles.statusUrgent,
+                                                        styles.status
                                                     )}
                                                 >
                                                     23<div>4</div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     24
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     25
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     26
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     27
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     28
                                                 </div>
                                             </td>
                                             <td>
                                                 <div
                                                     className={classNames(
-                                                        styles.orders__calendarStatus_urgent,
-                                                        styles.orders__calendarStatus
+                                                        styles.statusUrgent,
+                                                        styles.status
                                                     )}
                                                 >
                                                     29<div>4</div>
@@ -399,20 +313,12 @@ export default function CalendarOrders() {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     30
                                                 </div>
                                             </td>
                                             <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
+                                                <div className={styles.status}>
                                                     31
                                                 </div>
                                             </td>
@@ -420,7 +326,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     1
@@ -430,7 +336,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     2
@@ -440,7 +346,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     3
@@ -450,7 +356,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     4
@@ -460,7 +366,7 @@ export default function CalendarOrders() {
                                                 <div
                                                     className={classNames(
                                                         styles.st,
-                                                        styles.orders__calendarStatus
+                                                        styles.status
                                                     )}
                                                 >
                                                     5
@@ -471,16 +377,16 @@ export default function CalendarOrders() {
                                 </table>
                             </div>
                         </div>
-                        <div className={styles.orders__calendarOrders}>
-                            <div className={styles.orders__calendarOverflow}>
-                                <OrderCake style="orders__calendarCake" />
-                                <OrderCake style="orders__calendarCake" />
-                                <OrderCake style="orders__calendarCake" />
-                                <OrderCake style="orders__calendarCake" />
-                                <OrderCake style="orders__calendarCake" />
+                        <div className={styles.orders}>
+                            <div className={styles.overflow}>
+                                <OrderCake style="calendarCake" />
+                                <OrderCake style="calendarCake" />
+                                <OrderCake style="calendarCake" />
+                                <OrderCake style="calendarCake" />
+                                <OrderCake style="calendarCake" />
                             </div>
                             <div
-                                className={styles.orders__calendarOrders_no}
+                                className={styles.ordersNo}
                                 style={{ display: 'none' }}
                             >
                                 <span className="icon-9"></span>

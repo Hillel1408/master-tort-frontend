@@ -11,25 +11,22 @@ export default function PersonalSettings() {
             <div className="content">
                 <Header title="Личный кабинет" />
                 <main className="main">
-                    <div className={styles.personalSettings}>
-                        <div className={styles.mainInfo}>
+                    <div className={styles.root}>
+                        <div className={styles.info}>
                             <h2
-                                className={classNames(
-                                    'text',
-                                    styles.mainInfo__title
-                                )}
+                                className={classNames('text', styles.infoTitle)}
                             >
                                 Основная информация
                             </h2>
-                            <div className={styles.mainInfo__columns}>
-                                <div className={styles.mainInfo__avatar}>
+                            <div className={styles.infoColumns}>
+                                <div className={styles.infoAvatar}>
                                     <span className="icon-21"></span>
                                 </div>
-                                <div className={styles.mainInfo__inputs}>
+                                <div className={styles.infoInputs}>
                                     <input
                                         className={classNames(
                                             'input',
-                                            styles.mainInfo__input
+                                            styles.infoInput
                                         )}
                                         type="text"
                                         name="user-name"
@@ -38,7 +35,7 @@ export default function PersonalSettings() {
                                     <input
                                         className={classNames(
                                             'input',
-                                            styles.mainInfo__input
+                                            styles.infoInput
                                         )}
                                         type="text"
                                         name="user-email"
@@ -57,19 +54,16 @@ export default function PersonalSettings() {
                                 </span>
                             </div>
                         </div>
-                        <div className={styles.mainSecurity}>
+                        <div className={styles.security}>
                             <h2
-                                className={classNames(
-                                    'text',
-                                    styles.mainInfo__title
-                                )}
+                                className={classNames('text', styles.infoTitle)}
                             >
                                 Безопасность
                             </h2>
                             <input
                                 className={classNames(
                                     'input',
-                                    styles.mainSecurity__input
+                                    styles.securityInput
                                 )}
                                 type="password"
                                 name="user-old-password"
@@ -78,7 +72,7 @@ export default function PersonalSettings() {
                             <input
                                 className={classNames(
                                     'input',
-                                    styles.mainSecurity__input
+                                    styles.securityInput
                                 )}
                                 type="password"
                                 name="user-new-password"
@@ -87,13 +81,13 @@ export default function PersonalSettings() {
                             <input
                                 className={classNames(
                                     'input',
-                                    styles.mainSecurity__input
+                                    styles.securityInput
                                 )}
                                 type="password"
                                 name="user-repeat-new-password"
                                 placeholder="Повторите пароль"
                             />
-                            <div className={styles.mainSecurity__buttons}>
+                            <div className={styles.securityButtons}>
                                 <button
                                     className={classNames('btn', 'small-text')}
                                     href="#"
@@ -112,16 +106,13 @@ export default function PersonalSettings() {
                                 </button>
                             </div>
                         </div>
-                        <div className={styles.mainOrder}>
+                        <div className={styles.order}>
                             <h2
-                                className={classNames(
-                                    'text',
-                                    styles.mainInfo__title
-                                )}
+                                className={classNames('text', styles.infoTitle)}
                             >
                                 Управление заказами
                             </h2>
-                            <div className={styles.mainOrder__block}>
+                            <div className={styles.orderBlock}>
                                 <select
                                     className={classNames('input', 'select')}
                                 >

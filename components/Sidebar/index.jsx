@@ -50,8 +50,8 @@ function Sidebar() {
                     <span></span>
                 </div>
                 <ul className={styles.navList}>
-                    {navItems.map((item, index) => (
-                        <NavLink key={index} item={item} />
+                    {navItems.map((item) => (
+                        <NavLink key={item.href} item={item} />
                     ))}
                 </ul>
             </div>

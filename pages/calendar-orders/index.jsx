@@ -194,11 +194,11 @@ export default function CalendarOrders() {
                                                                             1 &&
                                                                         indexTd >=
                                                                             item.length -
-                                                                                6 -
-                                                                                getLastWeekDay(
-                                                                                    year,
-                                                                                    month
-                                                                                ))
+                                                                                (6 -
+                                                                                    getLastWeekDay(
+                                                                                        year,
+                                                                                        month
+                                                                                    )))
                                                                         ? true
                                                                         : false
                                                                 }

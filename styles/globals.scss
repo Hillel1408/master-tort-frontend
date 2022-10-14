@@ -100,6 +100,7 @@ body.lock {
         }
         &:disabled {
             background-color: #99dddd;
+            cursor: default;
         }
     }
 }
@@ -183,5 +184,5 @@ body.lock {
 }
 .icon-29:before,
 .icon-30:before {
-    font-size: 8px;
+    font-size: 9px;
 }

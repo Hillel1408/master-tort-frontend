@@ -3,8 +3,23 @@ import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import styles from './Login.module.scss';
+import { useForm } from 'react-hook-form';
 
 export default function Login() {
+    const {
+        register,
+        handleSubmit,
+        formState: { isValid },
+    } = useForm({
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+        mode: 'onChange',
+    });
+    const onSubmit = async (values) => {
+        console.log(values);
+    };
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
@@ -29,29 +44,42 @@ export default function Login() {
                                     </Link>
                                 </span>
                             </p>
-                            <input
-                                className={classNames('input', styles.input)}
-                                type="email"
-                                name="email"
-                                placeholder="Электронная почта"
-                            />
-                            <input
-                                className={classNames('input', styles.input)}
-                                type="password"
-                                name="password"
-                                placeholder="Пароль"
-                            />
-                            <button
-                                className={classNames(
-                                    'small-text',
-                                    'btn',
-                                    styles.btn,
-                                    'btn__secondary'
-                                )}
-                                href="#"
-                            >
-                                Войти
-                            </button>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <input
+                                    className={classNames(
+                                        'input',
+                                        styles.input
+                                    )}
+                                    type="email"
+                                    placeholder="Электронная почта"
+                                    {...register('email', {
+                                        required: true,
+                                    })}
+                                />
+                                <input
+                                    className={classNames(
+                                        'input',
+                                        styles.input
+                                    )}
+                                    type="password"
+                                    placeholder="Пароль"
+                                    {...register('password', {
+                                        required: true,
+                                    })}
+                                />
+                                <button
+                                    className={classNames(
+                                        'small-text',
+                                        'btn',
+                                        styles.btn,
+                                        'btn__secondary'
+                                    )}
+                                    type="submit"
+                                    disabled={!isValid}
+                                >
+                                    Войти
+                                </button>
+                            </form>
                             <a
                                 href="#"
                                 className={classNames(

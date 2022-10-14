@@ -1,11 +1,126 @@
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
 import styles from './CalendarOrders.module.scss';
+import { Td } from './Td';
 
 export default function CalendarOrders() {
+    const [nums, setNums] = useState();
+    const [year, setYear] = useState();
+    const [month, setMonth] = useState();
+    const [dateNow, setDateNow] = useState();
+    const monthArr = [
+        'Январь',
+        'Февраль',
+        'Март',
+        'Апрель',
+        'Май',
+        'Июнь',
+        'Июль',
+        'Август',
+        'Сентябрь',
+        'Октябрь',
+        'Ноябрь',
+        'Декабрь',
+    ];
+
+    const range = (count) => {
+        let mas = [];
+        for (let i = 1; i <= count; i++) {
+            mas.push(i);
+        }
+        return mas;
+    };
+    const getLastDayPrewMonth = (year, month) => {
+        let date = new Date(year, month, 0);
+        return date.getDate();
+    };
+    const getLastDay = (year, month) => {
+        let date = new Date(year, month + 1, 0);
+        return date.getDate();
+    };
+    const getFirstWeekDay = (year, month) => {
+        let date = new Date(year, month, 1);
+        let num = date.getDay();
+        if (num == 0) {
+            return 6;
+        } else {
+            return num - 1;
+        }
+    };
+    const getLastWeekDay = (year, month) => {
+        let date = new Date(year, month + 1, 0);
+        let num = date.getDay();
+        if (num == 0) {
+            return 6;
+        } else {
+            return num - 1;
+        }
+    };
+    const normalize = (arr, left, right) => {
+        const LastDayPrewMonth = getLastDayPrewMonth(year, month);
+        for (let i = LastDayPrewMonth; i > LastDayPrewMonth - left; i--) {
+            arr.unshift(i);
+        }
+        for (let i = 1; i <= right; i++) {
+            arr.push(i);
+        }
+        return arr;
+    };
+    const chunk = (arr, n) => {
+        let result = [];
+        let count = Math.ceil(arr.length / n);
+        for (let i = 0; i < count; i++) {
+            let elems = arr.splice(0, n);
+            result.push(elems);
+        }
+        return result;
+    };
+    const draw = (year, month) => {
+        let arr = range(getLastDay(year, month));
+        let firstWeekDay = getFirstWeekDay(year, month);
+        let lastWeekDay = getLastWeekDay(year, month);
+        setDateNow(monthArr[month] + ' ' + year);
+        return chunk(normalize(arr, firstWeekDay, 6 - lastWeekDay), 7);
+    };
+    const getNextYear = (year, month) => {
+        if (month == 11) return ++year;
+        else return year;
+    };
+    const getNextMonth = (month) => {
+        if (month == 11) return 0;
+        else return ++month;
+    };
+    const getPrevYear = (year, month) => {
+        if (month == 0) return --year;
+        else return year;
+    };
+    const getPrevMonth = (month) => {
+        if (month == 0) return 11;
+        else return --month;
+    };
+    const nextClickHandler = () => {
+        setYear(getNextYear(year, month));
+        setMonth(getNextMonth(month));
+    };
+    const prevClickHandler = () => {
+        setYear(getPrevYear(year, month));
+        setMonth(getPrevMonth(month));
+    };
+
+    useEffect(() => {
+        let date = new Date();
+        setYear(date.getFullYear());
+        setMonth(date.getMonth());
+    }, []);
+
+    useEffect(() => {
+        setNums(draw(year, month));
+    }, [month]);
+
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
@@ -23,358 +138,79 @@ export default function CalendarOrders() {
                                             styles.title
                                         )}
                                     >
-                                        Сентябрь 2022
+                                        {dateNow}
                                     </span>
                                     <div className={styles.nav}>
                                         <span
                                             className={classNames(
                                                 'icon-29',
-                                                styles.next
+                                                styles.prev
                                             )}
+                                            onClick={() => prevClickHandler()}
                                         ></span>
                                         <span
                                             className={classNames(
                                                 'icon-30',
-                                                styles.prev
+                                                styles.next
                                             )}
+                                            onClick={() => nextClickHandler()}
                                         ></span>
                                     </div>
                                 </div>
-                                <table className={styles.table}>
-                                    <thead className={styles.thead}>
-                                        <tr
-                                            className={classNames(
-                                                'small-text',
-                                                styles.smallText
-                                            )}
-                                        >
-                                            <th>пн</th>
-                                            <th>вт</th>
-                                            <th>ср</th>
-                                            <th>чт</th>
-                                            <th>пт</th>
-                                            <th>сб</th>
-                                            <th>вс</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
+                                {nums && (
+                                    <table className={styles.table}>
+                                        <thead className={styles.thead}>
+                                            <tr
+                                                className={classNames(
+                                                    'small-text',
+                                                    styles.smallText
+                                                )}
+                                            >
+                                                <th>пн</th>
+                                                <th>вт</th>
+                                                <th>ср</th>
+                                                <th>чт</th>
+                                                <th>пт</th>
+                                                <th>сб</th>
+                                                <th>вс</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {nums.map((item, indexTr) => (
+                                                <tr>
+                                                    {item.map(
+                                                        (amount, indexTd) => (
+                                                            <Td
+                                                                st={
+                                                                    (indexTr ===
+                                                                        0 &&
+                                                                        indexTd <
+                                                                            getFirstWeekDay(
+                                                                                year,
+                                                                                month
+                                                                            )) ||
+                                                                    (indexTr ===
+                                                                        nums.length -
+                                                                            1 &&
+                                                                        indexTd >=
+                                                                            item.length -
+                                                                                (6 -
+                                                                                    getLastWeekDay(
+                                                                                        year,
+                                                                                        month
+                                                                                    )))
+                                                                        ? true
+                                                                        : false
+                                                                }
+                                                                amount={amount}
+                                                            />
+                                                        )
                                                     )}
-                                                >
-                                                    26
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    27
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    28
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    29
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    30
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    31
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.statusArchive,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    1<div>4</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
-                                                    2
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={
-                                                        styles.orders__calendarStatus
-                                                    }
-                                                >
-                                                    3
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    4
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.statusOrdinary,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    5<div>4</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    6
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    7
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    8
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    9
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    10
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    11
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    12
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    13
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    14
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.statusArchive,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    15<div>4</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    16
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    17
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    18
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.statusOrdinary,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    19<div>4</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    20
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    21
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    22
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.statusUrgent,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    23<div>4</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    24
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    25
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    26
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    27
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    28
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.statusUrgent,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    29<div>4</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    30
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className={styles.status}>
-                                                    31
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    1
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    2
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    3
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    4
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    className={classNames(
-                                                        styles.st,
-                                                        styles.status
-                                                    )}
-                                                >
-                                                    5
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                )}
                             </div>
                         </div>
                         <div className={styles.orders}>

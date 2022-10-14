@@ -158,3 +158,10 @@
 .st {
     color: #cccccc;
 }
+.next,
+.prev {
+    cursor: pointer;
+}
+.next {
+    margin-left: 26px;
+}

@@ -4,13 +4,32 @@ import { Header } from '../components/Header';
 import styles from './Home.module.scss';
 import stylesTable from '../components/Table/Table.module.scss';
 import stylesTooltip from '../components/Tooltip/Tooltip.module.scss';
+import { wrapper } from '../redux/store';
+import axios from 'axios';
+import { API_URL } from '../http';
+import $api from '../http';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+    const [isAuth, setIsAuth] = useState(false);
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const response = await axios.get(`${API_URL}/refresh`, {
+                    withCredentials: true,
+                });
+                setIsAuth(true);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
+        };
+        if (localStorage.getItem('token')) checkAuth();
+    }, []);
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title="Расчет торта" />
+                <Header title="Расчет торта" isAuth={isAuth} />
                 <main className="main">
                     <div className={styles.mainBlock}>
                         <div className={styles.tabs}>
@@ -584,3 +603,6 @@ export default function Home() {
         </div>
     );
 }
+export const getServerSideProps = wrapper.getServerSideProps(
+    (store) => async () => {}
+);

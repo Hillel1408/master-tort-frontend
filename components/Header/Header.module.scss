@@ -19,3 +19,21 @@
         color: var(--mainColor);
     }
 }
+.avatar {
+    background-color: var(--mainColor);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    margin-right: 10px;
+}
+.menu {
+    display: flex;
+    align-items: center;
+}
+.userName {
+    margin-right: 7px;
+}

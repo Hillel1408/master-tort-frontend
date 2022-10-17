@@ -1,9 +1,12 @@
 .root {
     background: var(--secondaryColor);
     border-radius: 16px;
-    max-width: 480px;
+    width: 480px;
     padding: 80px 47px;
     text-align: center;
+    @media (max-width: 520px) {
+        width: 100%;
+    }
 }
 .title {
     margin-bottom: 10px;
@@ -30,9 +33,15 @@
     }
 }
 .input {
-    max-width: 320px;
+    width: 320px;
+    display: block;
+    margin: 0 auto;
     padding: 12px;
     margin-bottom: 20px;
+    @media (max-width: 520px) {
+        max-width: 320px;
+        width: 100%;
+    }
 }
 .btn {
     margin-bottom: 40px;

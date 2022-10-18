@@ -126,7 +126,7 @@ export default function PersonalSettings() {
                                 <div
                                     className={classNames(
                                         stylesTooltip.tooltip,
-                                        styles.mainOrder__tooltip
+                                        styles.orderTooltip
                                     )}
                                 >
                                     <span className="icon-22"></span>

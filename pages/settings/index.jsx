@@ -11,13 +11,12 @@ import { API_URL } from '../../http';
 export default function Settings() {
     const [isAuth, setIsAuth] = useState(false);
     useEffect(() => {
-        const checkAuth = async (values) => {
+        const checkAuth = async () => {
             try {
                 const response = await axios.get(`${API_URL}/refresh`, {
                     withCredentials: true,
                 });
                 setIsAuth(true);
-                console.log(response);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -28,7 +27,11 @@ export default function Settings() {
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title="Настройки" isAuth={isAuth} />
+                <Header
+                    title="Настройки"
+                    isAuth={isAuth}
+                    setIsAuth={setIsAuth}
+                />
                 <main className="main">
                     {isAuth ? (
                         <>

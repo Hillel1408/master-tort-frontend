@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
+    const [error, setError] = useState();
     const router = useRouter();
     const {
         register,
@@ -31,6 +32,7 @@ export default function Login() {
             router.push('/');
         } catch (e) {
             console.log(e.response?.data?.message);
+            setError(e.response?.data?.message);
         }
     };
     return (
@@ -86,6 +88,14 @@ export default function Login() {
                                             required: true,
                                         })}
                                     />
+                                    <p
+                                        className={classNames(
+                                            styles.error,
+                                            'small-text'
+                                        )}
+                                    >
+                                        {error}
+                                    </p>
                                     <button
                                         className={classNames(
                                             'small-text',

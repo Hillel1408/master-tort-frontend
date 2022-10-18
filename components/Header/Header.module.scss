@@ -29,11 +29,53 @@
     border-radius: 50%;
     color: white;
     margin-right: 10px;
+    cursor: pointer;
 }
 .menu {
     display: flex;
     align-items: center;
+    position: relative;
 }
 .userName {
     margin-right: 7px;
+    cursor: pointer;
+}
+.tooltip {
+    transition: all 0.3s ease 0s;
+    color: var(--textColor);
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 0;
+    width: 216.36px;
+    background: #ffffff;
+    box-shadow: 0px 0px 20px rgba(0, 34, 34, 0.1);
+    border-radius: 8px;
+    top: 45px;
+    visibility: hidden;
+    opacity: 0;
+}
+.tooltipActive {
+    opacity: 1;
+    visibility: visible;
+}
+.block {
+    cursor: pointer;
+}
+.icon:before {
+    transition: all 0.3s ease 0s;
+    display: inline-block;
+}
+.iconActive {
+    &:before {
+        transform: rotate(180deg);
+    }
+}
+.link {
+    display: block;
+    color: var(--textColor);
+    padding: 10px;
+    &:not(:last-child) {
+        border-bottom: 1px solid #f4f2f1;
+    }
 }

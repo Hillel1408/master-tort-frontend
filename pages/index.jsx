@@ -18,7 +18,9 @@ export default function Home() {
                 const response = await axios.get(`${API_URL}/refresh`, {
                     withCredentials: true,
                 });
+                localStorage.setItem('token', response.data.accessToken);
                 setIsAuth(true);
+                console.log(response);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -29,7 +31,11 @@ export default function Home() {
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title="Расчет торта" isAuth={isAuth} />
+                <Header
+                    title="Расчет торта"
+                    isAuth={isAuth}
+                    setIsAuth={setIsAuth}
+                />
                 <main className="main">
                     <div className={styles.mainBlock}>
                         <div className={styles.tabs}>

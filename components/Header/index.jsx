@@ -1,20 +1,72 @@
 import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
+import { useState } from 'react';
+import $api from '../../http';
 
-function Header({ title, isAuth }) {
+function Header({ title, isAuth, setIsAuth }) {
+    const [tooltipActive, setTooltipActive] = useState(false);
+    const logout = async () => {
+        try {
+            const response = await $api.post('/logout');
+            localStorage.removeItem('token');
+            setIsAuth(false);
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
     return (
         <header className={styles.root}>
             <h1 className={classNames('title', styles.title)}>{title}</h1>
             {isAuth ? (
                 <div className={styles.menu}>
-                    <div className={styles.avatar}>
-                        <span className="icon-21"></span>
+                    <Link href="/personal-settings">
+                        <div className={styles.avatar}>
+                            <span className="icon-21"></span>
+                        </div>
+                    </Link>
+                    <div
+                        className={styles.block}
+                        onClick={() => setTooltipActive(!tooltipActive)}
+                    >
+                        <span className={classNames('text', styles.userName)}>
+                            Имя пользователя
+                        </span>
+                        <span
+                            className={classNames(
+                                'icon-30',
+                                styles.icon,
+                                tooltipActive ? styles.iconActive : ''
+                            )}
+                        ></span>
                     </div>
-                    <span className={classNames('text', styles.userName)}>
-                        Имя пользователя
-                    </span>
-                    <span className="icon-30"></span>
+                    <div
+                        className={classNames(
+                            styles.tooltip,
+                            tooltipActive ? styles.tooltipActive : ''
+                        )}
+                    >
+                        <Link href="/personal-settings">
+                            <a
+                                className={classNames(
+                                    styles.link,
+                                    'small-text'
+                                )}
+                            >
+                                Личный кабинет
+                            </a>
+                        </Link>
+                        <a
+                            onClick={(e) => {
+                                e.preventDefault();
+                                logout();
+                            }}
+                            href=""
+                            className={classNames(styles.link, 'small-text')}
+                        >
+                            Выход
+                        </a>
+                    </div>
                 </div>
             ) : (
                 <div className={styles.login}>

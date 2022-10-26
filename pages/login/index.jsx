@@ -6,13 +6,14 @@ import styles from './Login.module.scss';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EmailForm } from './EmailForm';
-import $api from '../../http';
+import AuthService from '../../services/AuthService';
 import { useRouter } from 'next/router';
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState();
     const router = useRouter();
+
     const {
         register,
         handleSubmit,
@@ -26,8 +27,7 @@ export default function Login() {
     });
     const onSubmit = async (values) => {
         try {
-            const response = await $api.post('/login', values);
-            console.log(response);
+            const response = await AuthService.login(values);
             localStorage.setItem('token', response.data.accessToken);
             router.push('/');
         } catch (e) {

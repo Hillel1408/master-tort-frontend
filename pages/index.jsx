@@ -4,38 +4,41 @@ import { Header } from '../components/Header';
 import styles from './Home.module.scss';
 import stylesTable from '../components/Table/Table.module.scss';
 import stylesTooltip from '../components/Tooltip/Tooltip.module.scss';
-import { wrapper } from '../redux/store';
-import axios from 'axios';
-import { API_URL } from '../http';
-import $api from '../http';
 import { useEffect, useState } from 'react';
+import AuthService from '../services/AuthService';
+import stylesHeader from '../components/Header/Header.module.scss';
 
 export default function Home() {
-    const [isAuth, setIsAuth] = useState(false);
+    const [isAuth, setIsAuth] = useState();
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await axios.get(`${API_URL}/refresh`, {
-                    withCredentials: true,
-                });
+                const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
-                setIsAuth(true);
                 console.log(response);
+                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
+                setIsAuth(false);
             }
         };
         if (localStorage.getItem('token')) checkAuth();
+        else setIsAuth(false);
     }, []);
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header
-                    title="Расчет торта"
-                    isAuth={isAuth}
-                    setIsAuth={setIsAuth}
-                />
+                <header className={stylesHeader.root}>
+                    <h1 className={classNames('title', stylesHeader.title)}>
+                        Расчет тортов
+                    </h1>
+                    {isAuth !== undefined ? (
+                        <Header isAuth={isAuth} setIsAuth={setIsAuth} />
+                    ) : (
+                        'Загрузка...'
+                    )}
+                </header>
                 <main className="main">
                     <div className={styles.mainBlock}>
                         <div className={styles.tabs}>
@@ -609,6 +612,3 @@ export default function Home() {
         </div>
     );
 }
-export const getServerSideProps = wrapper.getServerSideProps(
-    (store) => async () => {}
-);

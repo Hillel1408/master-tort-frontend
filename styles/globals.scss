@@ -65,6 +65,10 @@ body.lock {
         font-weight: 400;
         line-height: 150%;
     }
+    &:disabled {
+        background-color: white;
+        cursor: default;
+    }
     @media (any-hover: hover) {
         &:hover {
             border: 1px solid #7a7a7a;

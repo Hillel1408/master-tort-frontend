@@ -2,13 +2,13 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
 import { useState } from 'react';
-import $api from '../../http';
+import AuthService from '../../services/AuthService';
 
-function Header({ title, isAuth, setIsAuth }) {
+function Header({ isAuth, setIsAuth }) {
     const [tooltipActive, setTooltipActive] = useState(false);
     const logout = async () => {
         try {
-            const response = await $api.post('/logout');
+            const response = await AuthService.logout();
             localStorage.removeItem('token');
             setIsAuth(false);
         } catch (e) {
@@ -16,8 +16,7 @@ function Header({ title, isAuth, setIsAuth }) {
         }
     };
     return (
-        <header className={styles.root}>
-            <h1 className={classNames('title', styles.title)}>{title}</h1>
+        <>
             {isAuth ? (
                 <div className={styles.menu}>
                     <Link href="/personal-settings">
@@ -83,7 +82,7 @@ function Header({ title, isAuth, setIsAuth }) {
                     </Link>
                 </div>
             )}
-        </header>
+        </>
     );
 }
 

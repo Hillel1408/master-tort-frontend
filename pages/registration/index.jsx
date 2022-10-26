@@ -4,29 +4,52 @@ import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import styles from '../login/Login.module.scss';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import AuthService from '../../services/AuthService';
+import stylesHeader from '../../components/Header/Header.module.scss';
 
 export default function Registration() {
+    const [error, setError] = useState();
+    const [isAuth, setIsAuth] = useState();
+    const router = useRouter();
     const {
         register,
         handleSubmit,
         formState: { isValid },
     } = useForm({
         defaultValues: {
-            fullName: '',
-            city: '',
             email: '',
             password: '',
+            fullName: '',
+            city: '',
         },
         mode: 'onChange',
     });
     const onSubmit = async (values) => {
-        console.log(values);
+        try {
+            const response = await AuthService.registration(values);
+            localStorage.setItem('token', response.data.accessToken);
+            router.push('/');
+        } catch (e) {
+            console.log(e.response?.data?.message);
+            setError(e.response?.data?.message);
+        }
     };
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />
             <div className="content">
-                <Header title="Регистрация" />
+                <header className={stylesHeader.root}>
+                    <h1 className={classNames('title', stylesHeader.title)}>
+                        Регистрация
+                    </h1>
+                    {isAuth !== undefined ? (
+                        <Header isAuth={isAuth} setIsAuth={setIsAuth} />
+                    ) : (
+                        'Загрузка...'
+                    )}
+                </header>
                 <main className="main">
                     <div className={styles.wrapper}>
                         <div className={styles.root}>
@@ -89,6 +112,14 @@ export default function Registration() {
                                         required: true,
                                     })}
                                 />
+                                <p
+                                    className={classNames(
+                                        styles.error,
+                                        'small-text'
+                                    )}
+                                >
+                                    {error}
+                                </p>
                                 <button
                                     className={classNames(
                                         'small-text',

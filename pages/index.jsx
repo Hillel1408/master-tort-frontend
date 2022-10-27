@@ -15,7 +15,6 @@ export default function Home() {
             try {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
-                console.log(response);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);

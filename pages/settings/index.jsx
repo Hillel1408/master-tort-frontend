@@ -9,12 +9,13 @@ import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Settings.module.scss';
 import { NoAccess } from '../../components/NoAccess';
 import stylesLogin from '../login/Login.module.scss';
-import { TableTd } from '../../components/TableTd';
+import { TableTr } from '../../components/TableTr';
+import { Oval } from 'react-loader-spinner';
 
 export default function Settings() {
-    const [isAuth, setIsAuth] = useState();
-    const [settings, setSettings] = useState();
-    const [dataUser, setDataUser] = useState();
+    const [isAuth, setIsAuth] = useState('');
+    const [settings, setSettings] = useState('');
+    const [dataUser, setDataUser] = useState('');
 
     const saveSettings = async () => {
         try {
@@ -22,10 +23,17 @@ export default function Settings() {
                 ...settings,
                 userId: dataUser.id,
             });
-            console.log(response);
         } catch (e) {
             console.log(e.response?.data?.message);
         }
+    };
+
+    const resetSettings = () => {
+        const newObj = {};
+        Object.keys(settings).map((key) => {
+            newObj[key] = '';
+        });
+        setSettings(newObj);
     };
 
     useEffect(() => {
@@ -41,8 +49,8 @@ export default function Settings() {
             try {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
-                setIsAuth(true);
                 setDataUser(response.data.user);
+                setIsAuth(true);
                 getSettings(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -60,14 +68,29 @@ export default function Settings() {
                     <h1 className={classNames('title', stylesHeader.title)}>
                         Настройки
                     </h1>
-                    {isAuth !== undefined ? (
-                        <Header isAuth={isAuth} setIsAuth={setIsAuth} />
+                    {isAuth !== '' ? (
+                        <Header
+                            userName={dataUser.fullName}
+                            isAuth={isAuth}
+                            setIsAuth={setIsAuth}
+                        />
                     ) : (
-                        'Загрузка...'
+                        <Oval
+                            height={40}
+                            width={40}
+                            color="#009998"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                            ariaLabel="oval-loading"
+                            secondaryColor="#7a7a7a"
+                            strokeWidth={2}
+                            strokeWidthSecondary={2}
+                        />
                     )}
                 </header>
                 <main className="main">
-                    {isAuth !== undefined ? (
+                    {isAuth !== '' ? (
                         isAuth ? (
                             <>
                                 <div className={styles.info}>
@@ -174,50 +197,15 @@ export default function Settings() {
                                                 </div>
                                             </div>
                                             <div className={stylesTable.tbody}>
-                                                {settings &&
-                                                    Object.keys(settings).map(
-                                                        (key) => (
-                                                            <div
-                                                                className={
-                                                                    stylesTable.tr
-                                                                }
-                                                                style={{
-                                                                    gridTemplateColumns:
-                                                                        '2fr 1fr',
-                                                                }}
-                                                            >
-                                                                <TableTd
-                                                                    value={key}
-                                                                    disabled={
-                                                                        true
-                                                                    }
-                                                                    thValue={
-                                                                        key
-                                                                    }
-                                                                />
-                                                                <TableTd
-                                                                    value={
-                                                                        settings[
-                                                                            key
-                                                                        ]
-                                                                    }
-                                                                    thValue={
-                                                                        key
-                                                                    }
-                                                                    disabled={
-                                                                        false
-                                                                    }
-                                                                    setSettings={
-                                                                        setSettings
-                                                                    }
-                                                                    settings={
-                                                                        settings
-                                                                    }
-                                                                    type="number"
-                                                                />
-                                                            </div>
-                                                        )
-                                                    )}
+                                                {settings && (
+                                                    <TableTr
+                                                        key={Math.random()}
+                                                        settings={settings}
+                                                        setSettings={
+                                                            setSettings
+                                                        }
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -283,6 +271,7 @@ export default function Settings() {
                                             'small-text'
                                         )}
                                         href="#"
+                                        onClick={() => resetSettings()}
                                     >
                                         Сбросить настройки
                                     </button>
@@ -310,7 +299,20 @@ export default function Settings() {
                             />
                         )
                     ) : (
-                        <div className={stylesLogin.wrapper}>Загрузка...</div>
+                        <div className={stylesLogin.wrapper}>
+                            <Oval
+                                height={40}
+                                width={40}
+                                color="#009998"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                                visible={true}
+                                ariaLabel="oval-loading"
+                                secondaryColor="#7a7a7a"
+                                strokeWidth={2}
+                                strokeWidthSecondary={2}
+                            />
+                        </div>
                     )}
                 </main>
                 <br></br>

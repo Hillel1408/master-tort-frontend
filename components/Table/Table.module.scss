@@ -34,6 +34,9 @@
 }
 .td {
     padding: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
     &Delete {
         text-align: right;
     }

@@ -58,20 +58,21 @@ body.lock {
     border: 1px solid #cccccc;
     border-radius: 8px;
     padding: 8px;
-    cursor: pointer;
+    cursor: auto;
     font-size: 12px;
     &__btn {
         position: absolute;
-        right: 5px;
-        font-size: 10px;
-        padding: 0 10px;
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-        background-color: var(--mainColor);
-        color: white;
-        height: 35px;
-        &:before {
-            content: '\2713';
+        right: 10px;
+        & svg {
+            background-color: white;
+            margin-bottom: -5px;
+            fill: var(--mainColor);
+            transition: all 0.2s ease 0s;
+            @media (any-hover: hover) {
+                &:hover {
+                    fill: darken(#009998, 20%);
+                }
+            }
         }
     }
     &::placeholder {
@@ -119,10 +120,6 @@ input::-webkit-inner-spin-button {
             &:hover {
                 background-color: #00aaa9;
             }
-        }
-        &:focus,
-        &:active {
-            background-color: #33bbba;
         }
         &:disabled {
             background-color: #99dddd;
@@ -177,6 +174,34 @@ input::-webkit-inner-spin-button {
     color: var(--textColor);
     @media (max-width: 576px) {
         font-size: 18px;
+    }
+}
+#toast-container {
+    border-radius: 4px;
+    background-color: #62ac62;
+    padding: 10px 25px;
+    color: white;
+    z-index: 1;
+    position: fixed;
+    min-width: 250px;
+    display: none;
+    top: 20px;
+    right: 20px;
+    z-index: 30;
+    animation: fade-in 350ms ease-in-out;
+    &.active {
+        display: block;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        top: 50px;
+    }
+    to {
+        opacity: 1;
+        top: 20px;
     }
 }
 

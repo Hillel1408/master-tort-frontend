@@ -4,23 +4,23 @@ import { HYDRATE } from 'next-redux-wrapper';
 const cakeSlice = createSlice({
     name: 'cakes',
     initialState: {
-        data: null,
-        status: 'loading',
+        alertName: '',
     },
     reducers: {
-        checkAuth(state, action) {
-            state.data = action.payload;
-            localStorage.setItem('token', action.payload.accessToken);
+        setAlert(state, action) {
+            state.alertName = action.payload;
+        },
+        resetAlert(state, action) {
+            state.alertName = '';
         },
     },
     extraReducers: {
         [HYDRATE]: (state, action) => {
-            state.data = action.payload.cakes.data;
-            state.status = action.payload.cakes.status;
+            state.alertName = action.payload.cakes.alertName;
         },
     },
 });
 
-export const { checkAuth } = cakeSlice.actions;
+export const { setAlert, resetAlert } = cakeSlice.actions;
 
 export default cakeSlice.reducer;

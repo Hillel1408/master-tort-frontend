@@ -11,11 +11,15 @@ import { NoAccess } from '../../components/NoAccess';
 import stylesLogin from '../login/Login.module.scss';
 import { TableTr } from '../../components/TableTr';
 import { Oval } from 'react-loader-spinner';
+import { Alert } from '../../components/Alert';
+import { useDispatch } from 'react-redux';
+import { setAlert } from '../../redux/cakeSlice';
 
 export default function Settings() {
     const [isAuth, setIsAuth] = useState('');
     const [settings, setSettings] = useState('');
     const [dataUser, setDataUser] = useState('');
+    const dispatch = useDispatch();
 
     const saveSettings = async () => {
         try {
@@ -23,8 +27,10 @@ export default function Settings() {
                 ...settings,
                 userId: dataUser.id,
             });
+            dispatch(setAlert('Настройки успешно сохранены'));
         } catch (e) {
             console.log(e.response?.data?.message);
+            dispatch(setAlert('Ошибка'));
         }
     };
 
@@ -62,6 +68,7 @@ export default function Settings() {
     }, []);
     return (
         <div className={classNames('wrapper', 'container')}>
+            <Alert />
             <Sidebar />
             <div className="content">
                 <header className={stylesHeader.root}>

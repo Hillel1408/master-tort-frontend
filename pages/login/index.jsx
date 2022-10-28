@@ -25,6 +25,7 @@ export default function Login() {
         },
         mode: 'onChange',
     });
+
     const onSubmit = async (values) => {
         try {
             const response = await AuthService.login(values);
@@ -35,6 +36,7 @@ export default function Login() {
             setError(e.response?.data?.message);
         }
     };
+
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />

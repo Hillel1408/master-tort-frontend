@@ -5,6 +5,7 @@ import { resetAlert } from '../../redux/cakeSlice';
 function Alert() {
     const alertName = useSelector((state) => state.cakes.alertName);
     const dispatch = useDispatch();
+
     useEffect(() => {
         const timerId = setTimeout(() => {
             dispatch(resetAlert(''));

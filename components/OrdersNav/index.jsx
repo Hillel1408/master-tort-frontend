@@ -5,6 +5,7 @@ import styles from './OrdersNav.module.scss';
 
 function OrdersNav({ visibleTabs }) {
     const router = useRouter();
+
     return (
         <div className={styles.navWrapper}>
             <div className={classNames('text', styles.links)}>

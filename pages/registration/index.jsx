@@ -13,6 +13,7 @@ export default function Registration() {
     const [error, setError] = useState();
     const [isAuth, setIsAuth] = useState();
     const router = useRouter();
+
     const {
         register,
         handleSubmit,
@@ -26,6 +27,7 @@ export default function Registration() {
         },
         mode: 'onChange',
     });
+
     const onSubmit = async (values) => {
         try {
             const response = await AuthService.registration(values);
@@ -36,6 +38,7 @@ export default function Registration() {
             setError(e.response?.data?.message);
         }
     };
+
     return (
         <div className={classNames('wrapper', 'container')}>
             <Sidebar />

@@ -10,7 +10,7 @@ const cakeSlice = createSlice({
         setAlert(state, action) {
             state.alertName = action.payload;
         },
-        resetAlert(state, action) {
+        resetAlert(state) {
             state.alertName = '';
         },
     },

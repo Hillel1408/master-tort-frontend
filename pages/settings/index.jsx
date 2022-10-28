@@ -30,7 +30,7 @@ export default function Settings() {
             dispatch(setAlert('Настройки успешно сохранены'));
         } catch (e) {
             console.log(e.response?.data?.message);
-            dispatch(setAlert('Ошибка'));
+            dispatch(setAlert('Возникла ошибка'));
         }
     };
 
@@ -66,6 +66,7 @@ export default function Settings() {
         if (localStorage.getItem('token')) checkAuth();
         else setIsAuth(false);
     }, []);
+
     return (
         <div className={classNames('wrapper', 'container')}>
             <Alert />

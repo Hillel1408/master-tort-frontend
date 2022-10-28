@@ -6,6 +6,7 @@ import AuthService from '../../services/AuthService';
 
 function Header({ isAuth, setIsAuth, userName }) {
     const [tooltipActive, setTooltipActive] = useState(false);
+
     const logout = async () => {
         try {
             const response = await AuthService.logout();
@@ -15,6 +16,7 @@ function Header({ isAuth, setIsAuth, userName }) {
             console.log(e.response?.data?.message);
         }
     };
+
     return (
         <>
             {isAuth ? (

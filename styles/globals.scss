@@ -70,7 +70,7 @@ body.lock {
             transition: all 0.2s ease 0s;
             @media (any-hover: hover) {
                 &:hover {
-                    fill: darken(#009998, 20%);
+                    fill: darken(#009998, 10%);
                 }
             }
         }

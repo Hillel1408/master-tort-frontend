@@ -37,7 +37,7 @@ function TableTd({ value, type, disabled, setSettings, settings, thValue }) {
                             : setItem(target.value);
                     }}
                     onClick={() => setToggleBtn(true)}
-                    onBlur={(e) => {
+                    onBlur={() => {
                         setToggleBtn(false);
                         setItem(value);
                     }}

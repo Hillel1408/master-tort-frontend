@@ -13,6 +13,7 @@ function EmailForm({ setIsLogin }) {
         },
         mode: 'onChange',
     });
+
     const onSubmit = async (values) => {
         console.log(values);
     };

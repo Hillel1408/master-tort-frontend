@@ -7,6 +7,7 @@ import { Modal } from '../Modal';
 
 function Sidebar() {
     const [navActive, setNavActive] = useState(false);
+
     const clickHandler = () => {
         setNavActive(!navActive);
         navActive && document.body.classList.remove('lock');
@@ -44,6 +45,7 @@ function Sidebar() {
             icon: 'icon-7',
         },
     ];
+
     return (
         <aside className={styles.root}>
             <div className={styles.logo}>

@@ -1,11 +1,10 @@
 const settingsMastic = {
-    userId: '634eca5887c5ee9fc8fa9937',
-    diameter: 12123,
-    height: 12123,
-    cakeWeightUpToTight: 12123,
-    standWeight: 1232,
-    leveledCakeWeight: 1223,
-    weightOfCoveredCake: 1223,
+    diameter: [1, 2],
+    height: [1, 2],
+    cakeWeightUpToTight: [1, 2],
+    standWeight: [1, 2],
+    leveledCakeWeight: [1, 2],
+    weightOfCoveredCake: [1, 2],
 };
 
 const settingsNameTh = {
@@ -17,4 +16,16 @@ const settingsNameTh = {
     weightOfCoveredCake: 'Вес обтянутого торта',
 };
 
-export { settingsMastic, settingsNameTh };
+const settingsText = [
+    [
+        'Energistically recaptiualize pandemic innovation through web-enabled networks. Conveniently engineer leveraged internal or "organic" sources through frictionless benefits. Monotonectally synergize integrated core competencies and cross-unit "outside the box" thinking. Rapidiously empower professional interfaces through effective bandwidth. Uniquely leverage others quality resources with customized technologies.',
+        'Enthusiastically empower dynamic internal or "organic" sources without high-quality platforms. Progressively whiteboard ubiquitous outsourcing vis-a-vis fully tested data.',
+        'Completely enable strategic collaboration and idea-sharing after effective collaboration and.',
+    ],
+    [
+        'Holisticly embrace resource-leveling platforms and e-business internal or "organic" sources. Professionally extend accurate process improvements via progressive technologies. Efficiently promote clicks-and-mortar intellectual capital without installed base results. Distinctively fabricate premier mindshare and cross functional core competencies. Completely facilitate compelling users vis-a-vis plug-and-play e-business.',
+        'Objectively transition team driven web services before multifunctional catalysts for change. Authoritatively mesh inexpensive manufactured products vis-a-vis future-proof methods of empowerment. Proactively customize prospective infomediaries via professional e-services. Authoritatively strategize.',
+    ],
+];
+
+export { settingsMastic, settingsNameTh, settingsText };

@@ -1,19 +1,31 @@
-import styles from '../Table/Table.module.scss';
 import { useState } from 'react';
 import { settingsNameTh } from '../../data/settings';
+import styles from '../../components/Table/Table.module.scss';
 
-function TableTd({ value, type, disabled, setSettings, settings, thValue }) {
+function TableCell({
+    value,
+    type,
+    disabled,
+    setSettings,
+    settings,
+    thValue,
+    index,
+}) {
     const [item, setItem] = useState(value);
     const [toggleBtn, setToggleBtn] = useState(false);
 
+    const saveSettings = () => {
+        let newValue = settings[thValue];
+        newValue[index] = Number(item);
+        setSettings({
+            ...settings,
+            [thValue]: newValue,
+        });
+    };
+
     const handleKey = (e) => {
-        if (e.key === 'Enter') {
-            item != value
-                ? setSettings({
-                      ...settings,
-                      [thValue]: item,
-                  })
-                : '';
+        if (e.key === 'Enter' && item != value) {
+            saveSettings();
         }
     };
 
@@ -49,12 +61,9 @@ function TableTd({ value, type, disabled, setSettings, settings, thValue }) {
                 <button
                     class="input__btn"
                     onMouseDown={() => {
-                        item != value
-                            ? setSettings({
-                                  ...settings,
-                                  [thValue]: item,
-                              })
-                            : '';
+                        if (item != value) {
+                            saveSettings();
+                        }
                     }}
                 >
                     <svg
@@ -71,4 +80,4 @@ function TableTd({ value, type, disabled, setSettings, settings, thValue }) {
     );
 }
 
-export { TableTd };
+export { TableCell };

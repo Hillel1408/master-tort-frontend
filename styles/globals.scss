@@ -100,11 +100,11 @@ body.lock {
 input[type='number'] {
     -moz-appearance: textfield;
 }
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
+
 .btn {
     display: inline-block;
     padding: 6px 28px;
@@ -174,34 +174,6 @@ input::-webkit-inner-spin-button {
     color: var(--textColor);
     @media (max-width: 576px) {
         font-size: 18px;
-    }
-}
-#toast-container {
-    border-radius: 4px;
-    background-color: #62ac62;
-    padding: 10px 25px;
-    color: white;
-    z-index: 1;
-    position: fixed;
-    min-width: 250px;
-    display: none;
-    top: 20px;
-    right: 20px;
-    z-index: 30;
-    animation: fade-in 350ms ease-in-out;
-    &.active {
-        display: block;
-    }
-}
-
-@keyframes fade-in {
-    from {
-        opacity: 0;
-        top: 50px;
-    }
-    to {
-        opacity: 1;
-        top: 20px;
     }
 }
 

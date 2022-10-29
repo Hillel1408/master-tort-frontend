@@ -7,7 +7,9 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import AuthService from '../../services/AuthService';
+import SettingsService from '../../services/SettingsService';
 import stylesHeader from '../../components/Header/Header.module.scss';
+import { settingsMastic } from '../../data/settings';
 
 export default function Registration() {
     const [error, setError] = useState();
@@ -28,11 +30,23 @@ export default function Registration() {
         mode: 'onChange',
     });
 
+    const saveSettings = async (id) => {
+        try {
+            const response = await SettingsService.set({
+                ...settingsMastic,
+                userId: id,
+            });
+            router.push('/');
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
     const onSubmit = async (values) => {
         try {
             const response = await AuthService.registration(values);
             localStorage.setItem('token', response.data.accessToken);
-            router.push('/');
+            saveSettings(response.data.user.id);
         } catch (e) {
             console.log(e.response?.data?.message);
             setError(e.response?.data?.message);

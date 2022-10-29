@@ -1,19 +1,20 @@
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Oval } from 'react-loader-spinner';
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
-import { useState, useEffect } from 'react';
+import { BodyTable } from './BodyTable';
+import { Alert } from '../../components/Alert';
+import { setAlert } from '../../redux/cakeSlice';
+import { NoAccess } from '../../components/NoAccess';
 import AuthService from '../../services/AuthService';
 import SettingsService from '../../services/SettingsService';
+import { settingsText } from '../../data/settings';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Settings.module.scss';
-import { NoAccess } from '../../components/NoAccess';
 import stylesLogin from '../login/Login.module.scss';
-import { TableTr } from '../../components/TableTr';
-import { Oval } from 'react-loader-spinner';
-import { Alert } from '../../components/Alert';
-import { useDispatch } from 'react-redux';
-import { setAlert } from '../../redux/cakeSlice';
 
 export default function Settings() {
     const [isAuth, setIsAuth] = useState('');
@@ -27,17 +28,22 @@ export default function Settings() {
                 ...settings,
                 userId: dataUser.id,
             });
-            dispatch(setAlert('Настройки успешно сохранены'));
+            dispatch(
+                setAlert({
+                    text: 'Настройки успешно сохранены',
+                    color: '#62ac62',
+                })
+            );
         } catch (e) {
             console.log(e.response?.data?.message);
-            dispatch(setAlert('Возникла ошибка'));
+            dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
         }
     };
 
     const resetSettings = () => {
         const newObj = {};
         Object.keys(settings).map((key) => {
-            newObj[key] = '';
+            newObj[key] = ['', ''];
         });
         setSettings(newObj);
     };
@@ -69,7 +75,6 @@ export default function Settings() {
 
     return (
         <div className={classNames('wrapper', 'container')}>
-            <Alert />
             <Sidebar />
             <div className="content">
                 <header className={stylesHeader.root}>
@@ -117,69 +122,18 @@ export default function Settings() {
                                         )}
                                     >
                                         <div className={styles.column}>
-                                            <p className={styles.text}>
-                                                Energistically recaptiualize
-                                                pandemic innovation through
-                                                web-enabled networks.
-                                                Conveniently engineer leveraged
-                                                internal or "organic" sources
-                                                through frictionless benefits.
-                                                Monotonectally synergize
-                                                integrated core competencies and
-                                                cross-unit "outside the box"
-                                                thinking. Rapidiously empower
-                                                professional interfaces through
-                                                effective bandwidth. Uniquely
-                                                leverage other's quality
-                                                resources with customized
-                                                technologies.
-                                            </p>
-                                            <p className={styles.text}>
-                                                Enthusiastically empower dynamic
-                                                internal or "organic" sources
-                                                without high-quality platforms.
-                                                Progressively whiteboard
-                                                ubiquitous outsourcing vis-a-vis
-                                                fully tested data.
-                                            </p>
-                                            <p className={styles.text}>
-                                                Completely enable strategic
-                                                collaboration and idea-sharing
-                                                after effective collaboration
-                                                and.
-                                            </p>
+                                            {settingsText[0].map((item) => (
+                                                <p className={styles.text}>
+                                                    {item}
+                                                </p>
+                                            ))}
                                         </div>
                                         <div className={styles.column}>
-                                            <p className={styles.text}>
-                                                Holisticly embrace
-                                                resource-leveling platforms and
-                                                e-business internal or "organic"
-                                                sources. Professionally extend
-                                                accurate process improvements
-                                                via progressive technologies.
-                                                Efficiently promote
-                                                clicks-and-mortar intellectual
-                                                capital without installed base
-                                                results. Distinctively fabricate
-                                                premier mindshare and cross
-                                                functional core competencies.
-                                                Completely facilitate compelling
-                                                users vis-a-vis plug-and-play
-                                                e-business.
-                                            </p>
-                                            <p className={styles.text}>
-                                                Objectively transition team
-                                                driven web services before
-                                                multifunctional catalysts for
-                                                change. Authoritatively mesh
-                                                inexpensive manufactured
-                                                products vis-a-vis future-proof
-                                                methods of empowerment.
-                                                Proactively customize
-                                                prospective infomediaries via
-                                                professional e-services.
-                                                Authoritatively strategize.
-                                            </p>
+                                            {settingsText[1].map((item) => (
+                                                <p className={styles.text}>
+                                                    {item}
+                                                </p>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
@@ -206,12 +160,13 @@ export default function Settings() {
                                             </div>
                                             <div className={stylesTable.tbody}>
                                                 {settings && (
-                                                    <TableTr
+                                                    <BodyTable
                                                         key={Math.random()}
                                                         settings={settings}
                                                         setSettings={
                                                             setSettings
                                                         }
+                                                        index="0"
                                                     />
                                                 )}
                                             </div>
@@ -238,36 +193,16 @@ export default function Settings() {
                                                 </div>
                                             </div>
                                             <div className={stylesTable.tbody}>
-                                                <div
-                                                    className={stylesTable.tr}
-                                                    style={{
-                                                        gridTemplateColumns:
-                                                            '2fr 1fr',
-                                                    }}
-                                                >
-                                                    <div
-                                                        className={
-                                                            stylesTable.td
+                                                {settings && (
+                                                    <BodyTable
+                                                        key={Math.random()}
+                                                        settings={settings}
+                                                        setSettings={
+                                                            setSettings
                                                         }
-                                                    >
-                                                        <input
-                                                            type="text"
-                                                            name=""
-                                                            class="input"
-                                                        />
-                                                    </div>
-                                                    <div
-                                                        className={
-                                                            stylesTable.td
-                                                        }
-                                                    >
-                                                        <input
-                                                            type="number"
-                                                            name=""
-                                                            class="input"
-                                                        />
-                                                    </div>
-                                                </div>
+                                                        index="1"
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -326,6 +261,7 @@ export default function Settings() {
                 <br></br>
                 <br></br>
             </div>
+            <Alert />
         </div>
     );
 }

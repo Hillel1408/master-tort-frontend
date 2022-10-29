@@ -1,9 +1,7 @@
-import stylesTable from '../Table/Table.module.scss';
-import { useState } from 'react';
-import { settingsNameTh } from '../../data/settings';
-import { TableTd } from '../TableTd';
+import { TableCell } from './TableCell';
+import stylesTable from '../../components/Table/Table.module.scss';
 
-function TableTr({ settings, setSettings }) {
+function BodyTable({ settings, setSettings, index }) {
     return (
         <div
             className={stylesTable.tr}
@@ -13,20 +11,20 @@ function TableTr({ settings, setSettings }) {
         >
             {Object.keys(settings).map((keyObj) => (
                 <>
-                    <TableTd
+                    <TableCell
                         key={Math.random()}
-                        value={keyObj}
                         disabled={true}
                         thValue={keyObj}
                     />
-                    <TableTd
+                    <TableCell
                         key={Math.random()}
-                        value={String(settings[keyObj])}
+                        value={settings[keyObj][index]}
                         thValue={keyObj}
                         disabled={false}
                         setSettings={setSettings}
                         settings={settings}
                         type="number"
+                        index={index}
                     />
                 </>
             ))}
@@ -34,4 +32,4 @@ function TableTr({ settings, setSettings }) {
     );
 }
 
-export { TableTr };
+export { BodyTable };

@@ -63,18 +63,13 @@
         background-color: white;
     }
 }
-.socialLinks {
-    font-size: 24px;
-    a:not(:last-child) {
-        margin-right: 20px;
-    }
-}
 .link {
     display: block;
     margin-bottom: 40px;
     margin-top: -20px;
 }
 .error {
-    margin-bottom: 20px;
     color: var(--redColor);
+    width: 320px;
+    margin: 0 auto 20px auto;
 }

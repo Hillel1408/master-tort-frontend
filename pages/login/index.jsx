@@ -2,6 +2,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
+import { SocialLinks } from '../../components/SocialLinks';
 import styles from './Login.module.scss';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -135,12 +136,7 @@ export default function Login() {
                                 >
                                     Вход с помощью:
                                 </p>
-                                <div className={styles.socialLinks}>
-                                    <a href="#" className="icon-23"></a>
-                                    <a href="#" className="icon-24"></a>
-                                    <a href="#" className="icon-25"></a>
-                                    <a href="#" className="icon-26"></a>
-                                </div>
+                                <SocialLinks />
                             </div>
                         ) : (
                             <EmailForm setIsLogin={setIsLogin} />

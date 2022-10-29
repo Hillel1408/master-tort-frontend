@@ -1,19 +1,22 @@
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import classNames from 'classnames';
+import { Oval } from 'react-loader-spinner';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
-import styles from '../login/Login.module.scss';
-import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { SocialLinks } from '../../components/SocialLinks';
 import AuthService from '../../services/AuthService';
 import SettingsService from '../../services/SettingsService';
-import stylesHeader from '../../components/Header/Header.module.scss';
 import { settingsMastic } from '../../data/settings';
+import styles from '../login/Login.module.scss';
+import stylesHeader from '../../components/Header/Header.module.scss';
+import stylesLogin from '../login/Login.module.scss';
 
 export default function Registration() {
-    const [error, setError] = useState();
-    const [isAuth, setIsAuth] = useState();
+    const [error, setError] = useState('');
+    const [isAuth, setIsAuth] = useState('');
     const router = useRouter();
 
     const {
@@ -49,9 +52,26 @@ export default function Registration() {
             saveSettings(response.data.user.id);
         } catch (e) {
             console.log(e.response?.data?.message);
-            setError(e.response?.data?.message);
+            e.response?.data[0]
+                ? setError(e.response?.data[0]?.msg)
+                : setError(e.response?.data?.message);
         }
     };
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const response = await AuthService.refresh();
+                localStorage.setItem('token', response.data.accessToken);
+                router.push('/');
+            } catch (e) {
+                console.log(e.response?.data?.message);
+                setIsAuth(false);
+            }
+        };
+        if (localStorage.getItem('token')) checkAuth();
+        else setIsAuth(false);
+    }, []);
 
     return (
         <div className={classNames('wrapper', 'container')}>
@@ -61,114 +81,142 @@ export default function Registration() {
                     <h1 className={classNames('title', stylesHeader.title)}>
                         Регистрация
                     </h1>
-                    {isAuth !== undefined ? (
-                        <Header isAuth={isAuth} setIsAuth={setIsAuth} />
+                    {isAuth !== '' ? (
+                        <Header isAuth={isAuth} />
                     ) : (
-                        'Загрузка...'
+                        <Oval
+                            height={40}
+                            width={40}
+                            color="#009998"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                            ariaLabel="oval-loading"
+                            secondaryColor="#7a7a7a"
+                            strokeWidth={2}
+                            strokeWidthSecondary={2}
+                        />
                     )}
                 </header>
                 <main className="main">
-                    <div className={styles.wrapper}>
-                        <div className={styles.root}>
-                            <h2 className={classNames('title', styles.title)}>
-                                Регистрация
-                            </h2>
-                            <p
-                                className={classNames(
-                                    'small-text',
-                                    styles.text
-                                )}
-                            >
-                                Уже есть учетная запись?
-                                <span>
-                                    <Link href="/login">
-                                        <a>Войти</a>
-                                    </Link>
-                                </span>
-                            </p>
-                            <form onSubmit={handleSubmit(onSubmit)}>
-                                <input
-                                    placeholder="Имя"
+                    {isAuth !== '' ? (
+                        <div className={styles.wrapper}>
+                            <div className={styles.root}>
+                                <h2
                                     className={classNames(
-                                        'input',
-                                        styles.input
+                                        'title',
+                                        styles.title
                                     )}
-                                    {...register('fullName', {
-                                        required: true,
-                                    })}
-                                />
-                                <input
-                                    placeholder="Город"
-                                    className={classNames(
-                                        'input',
-                                        styles.input
-                                    )}
-                                    {...register('city', {
-                                        required: true,
-                                    })}
-                                />
-                                <input
-                                    placeholder="Электронная почта"
-                                    type="email"
-                                    className={classNames(
-                                        'input',
-                                        styles.input
-                                    )}
-                                    {...register('email', {
-                                        required: true,
-                                    })}
-                                />
-                                <input
-                                    placeholder="Пароль"
-                                    type="password"
-                                    className={classNames(
-                                        'input',
-                                        styles.input
-                                    )}
-                                    {...register('password', {
-                                        required: true,
-                                    })}
-                                />
+                                >
+                                    Регистрация
+                                </h2>
                                 <p
                                     className={classNames(
-                                        styles.error,
-                                        'small-text'
+                                        'small-text',
+                                        styles.text
                                     )}
                                 >
-                                    {error}
+                                    Уже есть учетная запись?
+                                    <span>
+                                        <Link href="/login">
+                                            <a>Войти</a>
+                                        </Link>
+                                    </span>
                                 </p>
-                                <button
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <input
+                                        placeholder="Имя"
+                                        className={classNames(
+                                            'input',
+                                            styles.input
+                                        )}
+                                        {...register('fullName', {
+                                            required: true,
+                                        })}
+                                    />
+                                    <input
+                                        placeholder="Город"
+                                        className={classNames(
+                                            'input',
+                                            styles.input
+                                        )}
+                                        {...register('city', {
+                                            required: true,
+                                        })}
+                                    />
+                                    <input
+                                        placeholder="Электронная почта"
+                                        type="email"
+                                        className={classNames(
+                                            'input',
+                                            styles.input
+                                        )}
+                                        {...register('email', {
+                                            required: true,
+                                        })}
+                                    />
+                                    <input
+                                        placeholder="Пароль"
+                                        type="password"
+                                        className={classNames(
+                                            'input',
+                                            styles.input
+                                        )}
+                                        {...register('password', {
+                                            required: true,
+                                        })}
+                                    />
+                                    <p
+                                        className={classNames(
+                                            styles.error,
+                                            'small-text'
+                                        )}
+                                    >
+                                        {error}
+                                    </p>
+                                    <button
+                                        className={classNames(
+                                            'small-text',
+                                            'btn',
+                                            styles.btn,
+                                            'btn__secondary'
+                                        )}
+                                        type="submit"
+                                        disabled={!isValid}
+                                    >
+                                        Зарегистрироваться
+                                    </button>
+                                </form>
+                                <div className={styles.or}>
+                                    <span>или</span>
+                                </div>
+                                <p
                                     className={classNames(
                                         'small-text',
-                                        'btn',
-                                        styles.btn,
-                                        'btn__secondary'
+                                        styles.textBottom
                                     )}
-                                    type="submit"
-                                    disabled={!isValid}
                                 >
-                                    Зарегистрироваться
-                                </button>
-                            </form>
-                            <div className={styles.or}>
-                                <span>или</span>
-                            </div>
-                            <p
-                                className={classNames(
-                                    'small-text',
-                                    styles.textBottom
-                                )}
-                            >
-                                Регистрация с помощью:
-                            </p>
-                            <div className={styles.socialLinks}>
-                                <a href="#" className="icon-23"></a>
-                                <a href="#" className="icon-24"></a>
-                                <a href="#" className="icon-25"></a>
-                                <a href="#" className="icon-26"></a>
+                                    Регистрация с помощью:
+                                </p>
+                                <SocialLinks />
                             </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className={stylesLogin.wrapper}>
+                            <Oval
+                                height={40}
+                                width={40}
+                                color="#009998"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                                visible={true}
+                                ariaLabel="oval-loading"
+                                secondaryColor="#7a7a7a"
+                                strokeWidth={2}
+                                strokeWidthSecondary={2}
+                            />
+                        </div>
+                    )}
                 </main>
                 <br></br>
                 <br></br>

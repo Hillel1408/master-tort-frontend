@@ -9,6 +9,7 @@ import Link from 'next/link';
 function EmailForm({ setIsLogin }) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const {
         register,
@@ -23,9 +24,11 @@ function EmailForm({ setIsLogin }) {
 
     const onSubmit = async (values) => {
         try {
+            setIsLoading(true);
             const response = await AuthService.reset(values);
             setSuccess(true);
         } catch (e) {
+            setIsLoading(false);
             console.log(e.response?.data?.message);
             setError(e.response?.data?.message);
         }
@@ -82,7 +85,7 @@ function EmailForm({ setIsLogin }) {
                             type="submit"
                             disabled={!isValid}
                         >
-                            Отправить
+                            {isLoading ? 'Отправка...' : 'Отправить'}
                         </button>
                     </form>
                     <a

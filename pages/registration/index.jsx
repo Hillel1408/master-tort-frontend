@@ -17,6 +17,7 @@ import stylesLogin from '../login/Login.module.scss';
 export default function Registration() {
     const [error, setError] = useState('');
     const [isAuth, setIsAuth] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
     const {
@@ -41,17 +42,20 @@ export default function Registration() {
             });
             router.push('/');
         } catch (e) {
+            setIsLoading(false);
             console.log(e.response?.data?.message);
         }
     };
 
     const onSubmit = async (values) => {
         try {
+            setIsLoading(true);
             const response = await AuthService.registration(values);
             localStorage.setItem('token', response.data.accessToken);
             saveSettings(response.data.user.id);
         } catch (e) {
             console.log(e.response?.data?.message);
+            setIsLoading(false);
             e.response?.data[0]
                 ? setError(e.response?.data[0]?.msg)
                 : setError(e.response?.data?.message);
@@ -184,7 +188,9 @@ export default function Registration() {
                                         type="submit"
                                         disabled={!isValid}
                                     >
-                                        Зарегистрироваться
+                                        {isLoading
+                                            ? 'Регистрация...'
+                                            : 'Зарегистрироваться'}
                                     </button>
                                 </form>
                                 <div className={styles.or}>

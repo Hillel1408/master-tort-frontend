@@ -7,14 +7,17 @@ import stylesTooltip from '../components/Tooltip/Tooltip.module.scss';
 import { useEffect, useState } from 'react';
 import AuthService from '../services/AuthService';
 import stylesHeader from '../components/Header/Header.module.scss';
+import { Oval } from 'react-loader-spinner';
 
 export default function Home() {
-    const [isAuth, setIsAuth] = useState();
+    const [isAuth, setIsAuth] = useState('');
+    const [dataUser, setDataUser] = useState('');
     useEffect(() => {
         const checkAuth = async () => {
             try {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
+                setDataUser(response.data.user);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -32,10 +35,25 @@ export default function Home() {
                     <h1 className={classNames('title', stylesHeader.title)}>
                         Расчет тортов
                     </h1>
-                    {isAuth !== undefined ? (
-                        <Header isAuth={isAuth} setIsAuth={setIsAuth} />
+                    {isAuth !== '' ? (
+                        <Header
+                            userName={dataUser.fullName}
+                            isAuth={isAuth}
+                            setIsAuth={setIsAuth}
+                        />
                     ) : (
-                        'Загрузка...'
+                        <Oval
+                            height={40}
+                            width={40}
+                            color="#009998"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                            ariaLabel="oval-loading"
+                            secondaryColor="#7a7a7a"
+                            strokeWidth={2}
+                            strokeWidthSecondary={2}
+                        />
                     )}
                 </header>
                 <main className="main">

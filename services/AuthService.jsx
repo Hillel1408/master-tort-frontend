@@ -17,4 +17,7 @@ export default class AuthService {
             withCredentials: true,
         });
     }
+    static async reset(values) {
+        return $api.post('/reset-password', values);
+    }
 }

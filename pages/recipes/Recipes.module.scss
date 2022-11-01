@@ -118,7 +118,7 @@
     &Input {
         max-width: 280px;
         margin-bottom: 20px;
-        padding: 12px;
+        padding: 12px !important;
     }
     &Select {
         max-width: 280px;
@@ -149,4 +149,32 @@
     color: rgba(244, 242, 241, 1);
     padding: 20px 36px;
     margin-bottom: 10px;
+}
+.selectFlex {
+    display: grid;
+    grid-template-columns: 30px auto;
+    color: black;
+    & span {
+        margin-left: 4px;
+    }
+    & i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+.icon2:before {
+    font-size: 12px;
+}
+.icon17:before {
+    font-size: 10px;
+}
+.icon18:before {
+    font-size: 9px;
+}
+.icon19:before {
+    font-size: 13px;
+}
+.icon20:before {
+    font-size: 18px;
 }

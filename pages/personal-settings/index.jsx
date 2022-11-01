@@ -3,6 +3,7 @@ import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import styles from './PersonalSettings.module.scss';
 import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
+import stylesInput from '../../components/Input/Input.module.scss';
 
 export default function PersonalSettings() {
     return (
@@ -25,7 +26,7 @@ export default function PersonalSettings() {
                                 <div className={styles.infoInputs}>
                                     <input
                                         className={classNames(
-                                            'input',
+                                            stylesInput.input,
                                             styles.infoInput
                                         )}
                                         type="text"
@@ -34,7 +35,7 @@ export default function PersonalSettings() {
                                     />
                                     <input
                                         className={classNames(
-                                            'input',
+                                            stylesInput.input,
                                             styles.infoInput
                                         )}
                                         type="text"
@@ -62,7 +63,7 @@ export default function PersonalSettings() {
                             </h2>
                             <input
                                 className={classNames(
-                                    'input',
+                                    stylesInput.input,
                                     styles.securityInput
                                 )}
                                 type="password"
@@ -71,7 +72,7 @@ export default function PersonalSettings() {
                             />
                             <input
                                 className={classNames(
-                                    'input',
+                                    stylesInput.input,
                                     styles.securityInput
                                 )}
                                 type="password"
@@ -80,7 +81,7 @@ export default function PersonalSettings() {
                             />
                             <input
                                 className={classNames(
-                                    'input',
+                                    stylesInput.input,
                                     styles.securityInput
                                 )}
                                 type="password"
@@ -114,7 +115,10 @@ export default function PersonalSettings() {
                             </h2>
                             <div className={styles.orderBlock}>
                                 <select
-                                    className={classNames('input', 'select')}
+                                    className={classNames(
+                                        stylesInput.input,
+                                        'select'
+                                    )}
                                 >
                                     <option disabled selected hidden>
                                         Срочный заказ

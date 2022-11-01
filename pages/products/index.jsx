@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import stylesTable from '../../components/Table/Table.module.scss';
+import stylesInput from '../../components/Input/Input.module.scss';
 
 export default function Products() {
     return (
@@ -55,13 +56,13 @@ export default function Products() {
                                         <input
                                             type="text"
                                             name=""
-                                            className="input"
+                                            className={stylesInput.input}
                                         />
                                     </div>
                                     <div className={stylesTable.td}>
                                         <select
                                             className={classNames(
-                                                'input',
+                                                stylesInput.input,
                                                 'select'
                                             )}
                                         >
@@ -75,21 +76,21 @@ export default function Products() {
                                         <input
                                             type="number"
                                             name=""
-                                            className="input"
+                                            className={stylesInput.input}
                                         />
                                     </div>
                                     <div className={stylesTable.td}>
                                         <input
                                             type="number"
                                             name=""
-                                            className="input"
+                                            className={stylesInput.input}
                                         />
                                     </div>
                                     <div className={stylesTable.td}>
                                         <input
                                             type="number"
                                             name=""
-                                            className="input"
+                                            className={stylesInput.input}
                                         />
                                     </div>
                                     <div

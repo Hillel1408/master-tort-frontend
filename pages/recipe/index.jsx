@@ -4,6 +4,7 @@ import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Recipe.module.scss';
+import stylesInput from '../../components/Input/Input.module.scss';
 
 export default function Recipe() {
     return (
@@ -80,21 +81,27 @@ export default function Recipe() {
                                                     <input
                                                         type="number"
                                                         name=""
-                                                        className="input"
+                                                        className={
+                                                            stylesInput.input
+                                                        }
                                                     />
                                                 </div>
                                                 <div className={stylesTable.td}>
                                                     <input
                                                         type="number"
                                                         name=""
-                                                        className="input"
+                                                        className={
+                                                            stylesInput.input
+                                                        }
                                                     />
                                                 </div>
                                                 <div className={stylesTable.td}>
                                                     <input
                                                         type="number"
                                                         name=""
-                                                        className="input"
+                                                        className={
+                                                            stylesInput.input
+                                                        }
                                                     />
                                                 </div>
                                                 <div

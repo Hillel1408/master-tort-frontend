@@ -1,15 +1,17 @@
+import React from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import styles from './Login.module.scss';
 import AuthService from '../../services/AuthService';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import stylesInput from '../../components/Input/Input.module.scss';
 
 function EmailForm({ setIsLogin }) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const btnRef = React.useRef(null);
 
     const {
         register,
@@ -24,10 +26,12 @@ function EmailForm({ setIsLogin }) {
 
     const onSubmit = async (values) => {
         try {
+            btnRef.current.disabled = true;
             setIsLoading(true);
             const response = await AuthService.reset(values);
             setSuccess(true);
         } catch (e) {
+            btnRef.current.disabled = false;
             setIsLoading(false);
             console.log(e.response?.data?.message);
             setError(e.response?.data?.message);
@@ -65,7 +69,10 @@ function EmailForm({ setIsLogin }) {
                     </p>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <input
-                            className={classNames('input', styles.input)}
+                            className={classNames(
+                                stylesInput.input,
+                                styles.input
+                            )}
                             type="email"
                             placeholder="Электронная почта"
                             {...register('email', {
@@ -76,6 +83,7 @@ function EmailForm({ setIsLogin }) {
                             {error}
                         </p>
                         <button
+                            ref={btnRef}
                             className={classNames(
                                 'small-text',
                                 'btn',

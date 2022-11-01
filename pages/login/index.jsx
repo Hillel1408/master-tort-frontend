@@ -12,6 +12,7 @@ import AuthService from '../../services/AuthService';
 import { useRouter } from 'next/router';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesLogin from '../login/Login.module.scss';
+import stylesInput from '../../components/Input/Input.module.scss';
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
@@ -111,7 +112,7 @@ export default function Login() {
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <input
                                             className={classNames(
-                                                'input',
+                                                stylesInput.input,
                                                 styles.input
                                             )}
                                             type="email"
@@ -122,7 +123,7 @@ export default function Login() {
                                         />
                                         <input
                                             className={classNames(
-                                                'input',
+                                                stylesInput.input,
                                                 styles.input
                                             )}
                                             type="password"

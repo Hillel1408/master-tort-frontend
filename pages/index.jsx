@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import AuthService from '../services/AuthService';
 import stylesHeader from '../components/Header/Header.module.scss';
 import { Oval } from 'react-loader-spinner';
+import stylesInput from '../components/Input/Input.module.scss';
 
 export default function Home() {
     const [isAuth, setIsAuth] = useState('');
@@ -97,7 +98,7 @@ export default function Home() {
                                             type="text"
                                             name="name-project"
                                             className={classNames(
-                                                'input',
+                                                stylesInput.input,
                                                 styles.informationInput
                                             )}
                                             placeholder="Название проекта"
@@ -111,7 +112,7 @@ export default function Home() {
                                                 type="date"
                                                 name="date-project"
                                                 className={classNames(
-                                                    'input',
+                                                    stylesInput.input,
                                                     styles.informationInput
                                                 )}
                                             />
@@ -119,14 +120,14 @@ export default function Home() {
                                                 type="time"
                                                 name="time-project"
                                                 className={classNames(
-                                                    'input',
+                                                    stylesInput.input,
                                                     styles.informationInput
                                                 )}
                                             />
                                         </div>
                                         <textarea
                                             className={classNames(
-                                                'input',
+                                                stylesInput.input,
                                                 styles.informationTextarea
                                             )}
                                             placeholder="Комментарий к заказу"
@@ -176,13 +177,17 @@ export default function Home() {
                                                 <input
                                                     type="number"
                                                     name="stand-width"
-                                                    className="input"
+                                                    className={
+                                                        stylesInput.input
+                                                    }
                                                     placeholder="Ширина"
                                                 />
                                                 <input
                                                     type="number"
                                                     name="stand-length"
-                                                    className="input"
+                                                    className={
+                                                        stylesInput.input
+                                                    }
                                                     placeholder="Длина"
                                                 />
                                             </div>
@@ -199,7 +204,7 @@ export default function Home() {
                                             <input
                                                 type="number"
                                                 name="price"
-                                                className="input"
+                                                className={stylesInput.input}
                                                 placeholder="Стоимость торта"
                                             />
                                         </div>
@@ -456,7 +461,9 @@ export default function Home() {
                                                         <input
                                                             type="number"
                                                             name=""
-                                                            className="input"
+                                                            className={
+                                                                stylesInput.input
+                                                            }
                                                         />
                                                     </div>
                                                     <div
@@ -467,7 +474,9 @@ export default function Home() {
                                                         <input
                                                             type="number"
                                                             name=""
-                                                            className="input"
+                                                            className={
+                                                                stylesInput.input
+                                                            }
                                                         />
                                                     </div>
                                                     <div
@@ -478,7 +487,9 @@ export default function Home() {
                                                         <input
                                                             type="number"
                                                             name=""
-                                                            className="input"
+                                                            className={
+                                                                stylesInput.input
+                                                            }
                                                         />
                                                     </div>
                                                     <div
@@ -488,7 +499,7 @@ export default function Home() {
                                                     >
                                                         <select
                                                             className={classNames(
-                                                                'input',
+                                                                stylesInput.input,
                                                                 'select'
                                                             )}
                                                         >

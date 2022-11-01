@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { settingsNameTh } from '../../data/settings';
 import styles from '../../components/Table/Table.module.scss';
+import stylesInput from '../../components/Input/Input.module.scss';
 
 function TableCell({
     value,
@@ -33,13 +34,13 @@ function TableCell({
         <div className={styles.td}>
             {disabled ? (
                 <input
-                    class="input"
+                    className={stylesInput.input}
                     value={settingsNameTh[thValue]}
                     disabled={disabled}
                 />
             ) : (
                 <input
-                    class="input"
+                    class={stylesInput.input}
                     value={item}
                     type={type}
                     disabled={disabled}
@@ -59,7 +60,7 @@ function TableCell({
             )}
             {toggleBtn && (
                 <button
-                    class="input__btn"
+                    className={stylesInput.input__btn}
                     onMouseDown={() => {
                         if (item != value) {
                             saveSettings();

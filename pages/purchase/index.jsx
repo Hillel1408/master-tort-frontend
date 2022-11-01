@@ -4,6 +4,7 @@ import { Header } from '../../components/Header';
 import { OrderCake } from '../../components/OrderCake';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Purchase.module.scss';
+import stylesInput from '../../components/Input/Input.module.scss';
 
 export default function Purchase() {
     return (
@@ -88,21 +89,27 @@ export default function Purchase() {
                                                 <input
                                                     type="number"
                                                     name=""
-                                                    className="input"
+                                                    className={
+                                                        stylesInput.input
+                                                    }
                                                 />
                                             </div>
                                             <div className={stylesTable.td}>
                                                 <input
                                                     type="number"
                                                     name=""
-                                                    className="input"
+                                                    className={
+                                                        stylesInput.input
+                                                    }
                                                 />
                                             </div>
                                             <div className={stylesTable.td}>
                                                 <input
                                                     type="number"
                                                     name=""
-                                                    className="input"
+                                                    className={
+                                                        stylesInput.input
+                                                    }
                                                 />
                                             </div>
                                         </div>

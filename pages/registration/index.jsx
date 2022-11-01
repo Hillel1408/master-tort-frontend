@@ -13,6 +13,7 @@ import { settingsMastic } from '../../data/settings';
 import styles from '../login/Login.module.scss';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesLogin from '../login/Login.module.scss';
+import stylesInput from '../../components/Input/Input.module.scss';
 
 export default function Registration() {
     const [error, setError] = useState('');
@@ -131,7 +132,7 @@ export default function Registration() {
                                     <input
                                         placeholder="Имя"
                                         className={classNames(
-                                            'input',
+                                            stylesInput.input,
                                             styles.input
                                         )}
                                         {...register('fullName', {
@@ -141,7 +142,7 @@ export default function Registration() {
                                     <input
                                         placeholder="Город"
                                         className={classNames(
-                                            'input',
+                                            stylesInput.input,
                                             styles.input
                                         )}
                                         {...register('city', {
@@ -152,7 +153,7 @@ export default function Registration() {
                                         placeholder="Электронная почта"
                                         type="email"
                                         className={classNames(
-                                            'input',
+                                            stylesInput.input,
                                             styles.input
                                         )}
                                         {...register('email', {
@@ -163,7 +164,7 @@ export default function Registration() {
                                         placeholder="Пароль"
                                         type="password"
                                         className={classNames(
-                                            'input',
+                                            stylesInput.input,
                                             styles.input
                                         )}
                                         {...register('password', {

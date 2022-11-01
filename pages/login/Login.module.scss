@@ -33,10 +33,10 @@
     }
 }
 .input {
-    width: 320px;
+    width: 320px !important;
     display: block;
     margin: 0 auto;
-    padding: 12px;
+    padding: 12px !important;
     margin-bottom: 20px;
     @media (max-width: 520px) {
         max-width: 320px;

@@ -152,10 +152,10 @@
 }
 .selectFlex {
     display: grid;
-    grid-template-columns: 30px auto;
+    grid-template-columns: 20px auto;
     color: black;
     & span {
-        margin-left: 4px;
+        margin-left: 10px;
     }
     & i {
         display: flex;

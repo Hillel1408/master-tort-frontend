@@ -11,6 +11,7 @@ function EmailForm({ setIsLogin }) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
     const btnRef = React.useRef(null);
 
     const {

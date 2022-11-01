@@ -33,7 +33,7 @@ const customStyles = {
         fontSize: '12px',
         lineHeight: '150%',
         textAlign: 'left',
-        padding: '8px 0 8px 10px',
+        padding: '8px 0 8px 12px',
         backgroundColor: state.isSelected ? '#F4F2F1' : '',
         color: state.isSelected ? '#002222' : '',
         '&:active': {

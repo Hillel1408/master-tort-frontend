@@ -5,6 +5,7 @@ import { OrderCake } from '../../components/OrderCake';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Purchase.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Purchase() {
     return (
@@ -135,7 +136,10 @@ export default function Purchase() {
                                 </span>
                             </div>
                             <button
-                                className={classNames('btn', 'small-text')}
+                                className={classNames(
+                                    stylesBtn.btn,
+                                    'small-text'
+                                )}
                                 href="#"
                             >
                                 Печать

@@ -15,6 +15,7 @@ import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Settings.module.scss';
 import stylesLogin from '../login/Login.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Settings() {
     const [isAuth, setIsAuth] = useState('');
@@ -210,7 +211,7 @@ export default function Settings() {
                                 <div className={styles.buttons}>
                                     <button
                                         className={classNames(
-                                            'btn',
+                                            stylesBtn.btn,
                                             'small-text'
                                         )}
                                         href="#"
@@ -220,8 +221,8 @@ export default function Settings() {
                                     </button>
                                     <button
                                         className={classNames(
-                                            'btn',
-                                            'btn__secondary',
+                                            stylesBtn.btn,
+                                            stylesBtn.btn__secondary,
                                             'small-text'
                                         )}
                                         href="#"

@@ -9,6 +9,7 @@ import AuthService from '../services/AuthService';
 import stylesHeader from '../components/Header/Header.module.scss';
 import { Oval } from 'react-loader-spinner';
 import stylesInput from '../components/Input/Input.module.scss';
+import stylesBtn from '../components/Btn/Btn.module.scss';
 
 export default function Home() {
     const [isAuth, setIsAuth] = useState('');
@@ -543,7 +544,7 @@ export default function Home() {
                                 <div className={styles.tabContentButtons}>
                                     <button
                                         className={classNames(
-                                            'btn',
+                                            stylesBtn.btn,
                                             'small-text'
                                         )}
                                         href="#"
@@ -552,8 +553,8 @@ export default function Home() {
                                     </button>
                                     <button
                                         className={classNames(
-                                            'btn',
-                                            'btn__secondary',
+                                            stylesBtn.btn,
+                                            stylesBtn.btn__secondary,
                                             'small-text'
                                         )}
                                         href="order"

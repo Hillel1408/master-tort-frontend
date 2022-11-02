@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesLogin from '../login/Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
@@ -143,9 +144,9 @@ export default function Login() {
                                         <button
                                             className={classNames(
                                                 'small-text',
-                                                'btn',
+                                                stylesBtn.btn,
                                                 styles.btn,
-                                                'btn__secondary'
+                                                stylesBtn.btn__secondary
                                             )}
                                             type="submit"
                                             disabled={!isValid}

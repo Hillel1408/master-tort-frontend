@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import styles from './NoAccess.module.scss';
 import stylesLogin from '../../pages/login/Login.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 import Link from 'next/link';
 
 function NoAccess({ title, text, linkBtn, textBtn }) {
@@ -11,9 +12,9 @@ function NoAccess({ title, text, linkBtn, textBtn }) {
             <Link href={linkBtn}>
                 <button
                     className={classNames(
-                        'btn',
+                        stylesBtn.btn,
                         'small-text',
-                        'btn__secondary',
+                        stylesBtn.btn__secondary,
                         styles.btn
                     )}
                 >

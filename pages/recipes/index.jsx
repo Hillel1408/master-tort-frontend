@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import classNames from 'classnames';
 import { Oval } from 'react-loader-spinner';
 import { Sidebar } from '../../components/Sidebar';
@@ -9,12 +8,14 @@ import { Modal } from '../../components/Modal';
 import { CustomSelect } from '../../components/CustomSelect';
 import { NoAccess } from '../../components/NoAccess';
 import { Group } from './Group';
+import { Recipe } from './Recipe';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import styles from './Recipes.module.scss';
 import stylesLogin from '../login/Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Recipes() {
     const [isAuth, setIsAuth] = useState('');
@@ -24,8 +25,13 @@ export default function Recipes() {
     const [groupIcon, setGroupIcon] = useState('');
     const [groupName, setGroupName] = useState('');
     const [group, setGroup] = useState('');
+    const [groupSelect, setGroupSelect] = useState('');
+    const [recipeName, setRecipeName] = useState('');
+    const [groupId, setGroupId] = useState('');
+    const [recipe, setRecipe] = useState('');
 
     const btnRef = React.useRef('');
+    const btnRefRecipe = React.useRef('');
 
     const handleSubmit = async () => {
         try {
@@ -46,11 +52,45 @@ export default function Recipes() {
         }
     };
 
+    const handleSubmitRecipe = async () => {
+        try {
+            const newRecipe = {
+                userId: dataUser.id,
+                group: groupId.value,
+                recipeName: recipeName,
+                recipeUrl:
+                    'https://e0.edimdoma.ru/data/posts/0002/3966/23966-ed4_wide.jpg?1631191583',
+            };
+            const response = await RecipeService.setRecipe(newRecipe);
+            setRecipe([...recipe, newRecipe]);
+            setModalActiveRecipe(false);
+            document.body.classList.remove('lock');
+            setRecipeName('');
+            setGroupId('');
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
+    useEffect(() => {
+        if (group) {
+            const newGroup = group.map((item) => {
+                const newItem = {
+                    value: item._id,
+                    label: item.groupName,
+                };
+                return newItem;
+            });
+            setGroupSelect(newGroup);
+        }
+    }, [group]);
+
     const options = [
         {
             value: 'icon-2',
             label: 'Торты',
             icon: <i className={classNames('icon-2', styles.icon2)}></i>,
+            id: '123124',
         },
         {
             value: 'icon-17',
@@ -81,10 +121,24 @@ export default function Recipes() {
     }, [groupIcon, groupName]);
 
     useEffect(() => {
+        recipeName !== '' && groupId !== ''
+            ? (btnRefRecipe.current.disabled = false)
+            : (btnRefRecipe.current.disabled = true);
+    }, [recipeName, groupId]);
+
+    useEffect(() => {
         const getGroup = async (userId) => {
             try {
                 const response = await RecipeService.getGroup(userId);
                 setGroup(response.data);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
+        };
+        const getRecipe = async (userId) => {
+            try {
+                const response = await RecipeService.getRecipe(userId);
+                setRecipe(response.data);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -96,6 +150,7 @@ export default function Recipes() {
                 setDataUser(response.data.user);
                 setIsAuth(true);
                 getGroup(response.data.user.id);
+                getRecipe(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);
@@ -157,6 +212,7 @@ export default function Recipes() {
                                                     countRecipe={
                                                         item.countRecipe
                                                     }
+                                                    dataset={item._id}
                                                 />
                                             ))}
                                     </div>
@@ -178,58 +234,50 @@ export default function Recipes() {
                                         </span>
                                     </div>
                                 </div>
-                                <div className={styles.cakes}>
-                                    <h2
-                                        className={classNames(
-                                            'text',
-                                            styles.groupsText
-                                        )}
-                                    >
-                                        Торты
-                                    </h2>
-                                    <div className={styles.cakesBlock}>
-                                        <Link href="/recipe">
-                                            <a className={styles.link}>
-                                                <div
-                                                    className={styles.cakesItem}
-                                                >
-                                                    <span
-                                                        className={classNames(
-                                                            'small-text',
-                                                            styles.smallText
-                                                        )}
-                                                    >
-                                                        Красный бархат
-                                                    </span>
-                                                    <div
-                                                        className={
-                                                            styles.cakesImage
-                                                        }
-                                                    >
-                                                        <img src="1.jpg" />
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </Link>
-                                    </div>
-                                    <div
-                                        className="addBlock"
-                                        onClick={() =>
-                                            setModalActiveRecipe(true)
-                                        }
-                                    >
-                                        <span
+                                {group && (
+                                    <div className={styles.cakes}>
+                                        <h2
                                             className={classNames(
-                                                'small-text',
-                                                'icon-8',
-                                                'popup-link'
+                                                'text',
+                                                styles.groupsText
                                             )}
-                                            href="add-recipe"
                                         >
-                                            Создать рецепт
-                                        </span>
+                                            Торты
+                                        </h2>
+                                        <div className={styles.cakesBlock}>
+                                            {recipe &&
+                                                recipe.map((item) => (
+                                                    <Recipe
+                                                        recipeName={
+                                                            item.recipeName
+                                                        }
+                                                        recipeUrl={
+                                                            item.recipeUrl
+                                                        }
+                                                        key={item._id}
+                                                        id={item._id}
+                                                    />
+                                                ))}
+                                        </div>
+                                        <div
+                                            className="addBlock"
+                                            onClick={() =>
+                                                setModalActiveRecipe(true)
+                                            }
+                                        >
+                                            <span
+                                                className={classNames(
+                                                    'small-text',
+                                                    'icon-8',
+                                                    'popup-link'
+                                                )}
+                                                href="add-recipe"
+                                            >
+                                                Создать рецепт
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </>
                         ) : (
                             <NoAccess
@@ -316,8 +364,8 @@ export default function Recipes() {
                         <button
                             ref={btnRef}
                             className={classNames(
-                                'btn',
-                                'btn__secondary',
+                                stylesBtn.btn,
+                                stylesBtn.btn__secondary,
                                 'small-text'
                             )}
                             onClick={(e) => {
@@ -346,21 +394,19 @@ export default function Recipes() {
                             stylesInput.input,
                             styles.addRecipeInput
                         )}
-                        type="text"
-                        name="recipe-name"
                         placeholder="Название"
+                        value={recipeName}
+                        onChange={(e) => setRecipeName(e.target.value)}
                     />
-                    <select
-                        className={classNames(
-                            stylesInput.input,
-                            'select',
-                            styles.addRecipeSelect
-                        )}
-                    >
-                        <option>Торты</option>
-                        <option>Десерты</option>
-                        <option>Хлеб</option>
-                    </select>
+                    {groupSelect && (
+                        <CustomSelect
+                            options={groupSelect}
+                            placeholder="Группа"
+                            isSearchable={false}
+                            value={groupId}
+                            setGroupIcon={setGroupId}
+                        />
+                    )}
                     <div className={styles.addRecipeBlock}>
                         <span
                             className={classNames('icon-12', styles.icon12)}
@@ -380,12 +426,17 @@ export default function Recipes() {
                         (.png, .jpg, .jpeg, не более 5Мб)
                     </p>
                     <button
+                        ref={btnRefRecipe}
                         className={classNames(
-                            'btn',
-                            'btn__secondary',
+                            stylesBtn.btn,
+                            stylesBtn.btn__secondary,
                             'small-text'
                         )}
                         href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleSubmitRecipe();
+                        }}
                     >
                         Создать рецепт
                     </button>

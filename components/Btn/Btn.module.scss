@@ -1,0 +1,22 @@
+.btn {
+    display: inline-block;
+    padding: 6px 28px;
+    border: 1px solid var(--mainColor);
+    border-radius: 8px;
+    background-color: transparent;
+    &__secondary {
+        background-color: var(--mainColor);
+        color: white !important;
+        transition: all 0.8s ease 0s;
+        border: 1px solid transparent;
+        @media (any-hover: hover) {
+            &:hover {
+                background-color: #00aaa9;
+            }
+        }
+        &:disabled {
+            background-color: #99dddd;
+            cursor: default;
+        }
+    }
+}

@@ -14,6 +14,7 @@ import styles from '../login/Login.module.scss';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesLogin from '../login/Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Registration() {
     const [error, setError] = useState('');
@@ -182,9 +183,9 @@ export default function Registration() {
                                     <button
                                         className={classNames(
                                             'small-text',
-                                            'btn',
+                                            stylesBtn.btn,
                                             styles.btn,
-                                            'btn__secondary'
+                                            stylesBtn.btn__secondary
                                         )}
                                         type="submit"
                                         disabled={!isValid}

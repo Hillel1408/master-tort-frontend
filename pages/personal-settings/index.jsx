@@ -4,6 +4,7 @@ import { Header } from '../../components/Header';
 import styles from './PersonalSettings.module.scss';
 import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function PersonalSettings() {
     return (
@@ -90,16 +91,19 @@ export default function PersonalSettings() {
                             />
                             <div className={styles.securityButtons}>
                                 <button
-                                    className={classNames('btn', 'small-text')}
+                                    className={classNames(
+                                        stylesBtn.btn,
+                                        'small-text'
+                                    )}
                                     href="#"
                                 >
                                     Сбросить
                                 </button>
                                 <button
                                     className={classNames(
-                                        'btn',
+                                        stylesBtn.btn,
                                         'small-text',
-                                        'btn__secondary'
+                                        stylesBtn.btn__secondary
                                     )}
                                     href="#"
                                 >

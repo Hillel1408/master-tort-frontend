@@ -6,6 +6,7 @@ import AuthService from '../../services/AuthService';
 import { useState } from 'react';
 import Link from 'next/link';
 import stylesInput from '../../components/Input/Input.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 function EmailForm({ setIsLogin }) {
     const [error, setError] = useState('');
@@ -87,9 +88,9 @@ function EmailForm({ setIsLogin }) {
                             ref={btnRef}
                             className={classNames(
                                 'small-text',
-                                'btn',
+                                stylesBtn.btn,
                                 styles.btn,
-                                'btn__secondary'
+                                stylesBtn.btn__secondary
                             )}
                             type="submit"
                             disabled={!isValid}

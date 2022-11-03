@@ -228,9 +228,10 @@ export default function Recipes() {
                                             countRecipe="12"
                                             groupClickHandler={(e) => {
                                                 e.preventDefault();
-                                                count.classList.remove(
-                                                    styles.groupsItemActive
-                                                );
+                                                count &&
+                                                    count.classList.remove(
+                                                        styles.groupsItemActive
+                                                    );
                                                 setCount(e.currentTarget);
                                                 e.currentTarget.classList.add(
                                                     styles.groupsItemActive

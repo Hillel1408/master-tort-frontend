@@ -75,6 +75,14 @@ export default function Recipes() {
         }
     };
 
+    const allGroupClickHandler = (e) => {
+        e.preventDefault();
+        count && count.classList.remove(styles.groupsItemActive);
+        setCount(e.currentTarget);
+        e.currentTarget.classList.add(styles.groupsItemActive);
+        setFilterRecipe('');
+    };
+
     const groupClickHandler = (e) => {
         if (e.target.closest('.groupLink')) {
             if (count) {
@@ -226,18 +234,9 @@ export default function Recipes() {
                                             groupIcon="icon-1"
                                             groupName="Все рецепты"
                                             countRecipe="12"
-                                            groupClickHandler={(e) => {
-                                                e.preventDefault();
-                                                count &&
-                                                    count.classList.remove(
-                                                        styles.groupsItemActive
-                                                    );
-                                                setCount(e.currentTarget);
-                                                e.currentTarget.classList.add(
-                                                    styles.groupsItemActive
-                                                );
-                                                setFilterRecipe('');
-                                            }}
+                                            groupClickHandler={
+                                                allGroupClickHandler
+                                            }
                                             activeClass={
                                                 styles.groupsItemActive
                                             }

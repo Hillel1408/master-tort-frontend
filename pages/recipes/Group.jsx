@@ -1,9 +1,25 @@
 import styles from './Recipes.module.scss';
 import classNames from 'classnames';
 
-function Group({ groupIcon, groupName, countRecipe, dataset }) {
+function Group({
+    groupIcon,
+    groupName,
+    countRecipe,
+    dataset,
+    groupClickHandler,
+    groupRef,
+    activeClass,
+}) {
     return (
-        <a href="#" className={styles.link} data-id={dataset}>
+        <a
+            href="#"
+            className={classNames(styles.link, 'groupLink', activeClass)}
+            data-id={dataset}
+            onClick={(e) => {
+                groupClickHandler(e);
+            }}
+            ref={groupRef}
+        >
             <div className={styles.groupsItem}>
                 <span
                     className={classNames(`${groupIcon}`, styles.groupsIcon)}

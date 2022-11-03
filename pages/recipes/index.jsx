@@ -29,9 +29,12 @@ export default function Recipes() {
     const [recipeName, setRecipeName] = useState('');
     const [groupId, setGroupId] = useState('');
     const [recipe, setRecipe] = useState('');
+    const [filterRecipe, setFilterRecipe] = useState('');
+    const [count, setCount] = useState('');
 
     const btnRef = React.useRef('');
     const btnRefRecipe = React.useRef('');
+    const groupRef = React.useRef('');
 
     const handleSubmit = async () => {
         try {
@@ -69,6 +72,22 @@ export default function Recipes() {
             setGroupId('');
         } catch (e) {
             console.log(e.response?.data?.message);
+        }
+    };
+
+    const groupClickHandler = (e) => {
+        if (e.target.closest('.groupLink')) {
+            if (count) {
+                count.classList.remove(styles.groupsItemActive);
+            } else groupRef.current.classList.remove(styles.groupsItemActive);
+            setCount(e.currentTarget);
+            e.preventDefault();
+            e.currentTarget.classList.add(styles.groupsItemActive);
+            const groupId = e.currentTarget.dataset.id;
+            const newRecipe = recipe.filter((val) => {
+                return val.group == groupId;
+            });
+            setFilterRecipe(newRecipe);
         }
     };
 
@@ -203,6 +222,26 @@ export default function Recipes() {
                                         Группы
                                     </h2>
                                     <div className={styles.groupsBlock}>
+                                        <Group
+                                            groupIcon="icon-1"
+                                            groupName="Все рецепты"
+                                            countRecipe="12"
+                                            groupClickHandler={(e) => {
+                                                e.preventDefault();
+                                                count.classList.remove(
+                                                    styles.groupsItemActive
+                                                );
+                                                setCount(e.currentTarget);
+                                                e.currentTarget.classList.add(
+                                                    styles.groupsItemActive
+                                                );
+                                                setFilterRecipe('');
+                                            }}
+                                            activeClass={
+                                                styles.groupsItemActive
+                                            }
+                                            groupRef={groupRef}
+                                        />
                                         {group &&
                                             group.map((item) => (
                                                 <Group
@@ -213,6 +252,9 @@ export default function Recipes() {
                                                         item.countRecipe
                                                     }
                                                     dataset={item._id}
+                                                    groupClickHandler={
+                                                        groupClickHandler
+                                                    }
                                                 />
                                             ))}
                                     </div>
@@ -245,19 +287,32 @@ export default function Recipes() {
                                             Торты
                                         </h2>
                                         <div className={styles.cakesBlock}>
-                                            {recipe &&
-                                                recipe.map((item) => (
-                                                    <Recipe
-                                                        recipeName={
-                                                            item.recipeName
-                                                        }
-                                                        recipeUrl={
-                                                            item.recipeUrl
-                                                        }
-                                                        key={item._id}
-                                                        id={item._id}
-                                                    />
-                                                ))}
+                                            {filterRecipe
+                                                ? filterRecipe.map((item) => (
+                                                      <Recipe
+                                                          recipeName={
+                                                              item.recipeName
+                                                          }
+                                                          recipeUrl={
+                                                              item.recipeUrl
+                                                          }
+                                                          key={item._id}
+                                                          id={item._id}
+                                                      />
+                                                  ))
+                                                : recipe &&
+                                                  recipe.map((item) => (
+                                                      <Recipe
+                                                          recipeName={
+                                                              item.recipeName
+                                                          }
+                                                          recipeUrl={
+                                                              item.recipeUrl
+                                                          }
+                                                          key={item._id}
+                                                          id={item._id}
+                                                      />
+                                                  ))}
                                         </div>
                                         <div
                                             className="addBlock"

@@ -59,6 +59,12 @@
         background-color: var(--mainColor);
     }
 }
+.groupsItemActive {
+    .smallText,
+    .groupsIcon:before {
+        color: var(--mainColor);
+    }
+}
 .smallText {
     color: var(--textColor);
     transition: all 0.3s ease 0s;

@@ -52,7 +52,7 @@ const customStyles = {
     }),
     menuList: (provided) => ({
         ...provided,
-        maxHeight: '140px',
+        maxHeight: '120px',
     }),
 };
 

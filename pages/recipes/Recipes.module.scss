@@ -35,6 +35,10 @@
         }
         @media (any-hover: hover) {
             &:hover {
+                .groupsDelete {
+                    opacity: 1;
+                    visibility: visible;
+                }
                 .smallText,
                 .groupsIcon:before {
                     color: var(--mainColor);
@@ -42,27 +46,37 @@
             }
         }
     }
-    &Count {
+    &Delete {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease 0s;
         position: absolute;
         top: 4px;
         right: 4px;
-        font-size: 10px;
-        line-height: 14px;
-        color: var(--secondaryColor);
-        display: inline-block;
         width: 18px;
-        height: 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background-color: var(--mainColor);
+        svg {
+            path {
+                transition: all 0.3s ease 0s;
+                fill: var(--mainColor);
+            }
+            @media (any-hover: hover) {
+                &:hover {
+                    path {
+                        fill: darken(#009998, 10%);
+                    }
+                }
+            }
+        }
     }
 }
 .groupsItemActive {
     .smallText,
     .groupsIcon:before {
         color: var(--mainColor);
+    }
+    .groupsDelete {
+        opacity: 1;
+        visibility: visible;
     }
 }
 .smallText {

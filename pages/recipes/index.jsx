@@ -42,122 +42,6 @@ export default function Recipes() {
     const groupRef = useRef('');
     const inputFileRef = useRef('');
 
-    const handleSubmit = async () => {
-        try {
-            const newGroup = {
-                userId: dataUser.id,
-                groupName: groupName,
-                groupIcon: groupIcon.value,
-                countRecipe: 0,
-            };
-            const response = await RecipeService.setGroup(newGroup);
-            console.log(response);
-            setGroup([...group, response.data]);
-            setModalActiveGroup(false);
-            document.body.classList.remove('lock');
-            setGroupIcon('');
-            setGroupName('');
-        } catch (e) {
-            console.log(e.response?.data?.message);
-        }
-    };
-
-    const dragStartHandler = (e) => {
-        e.preventDefault();
-        setDrag(true);
-    };
-
-    const dragLeaveHandler = (e) => {
-        e.preventDefault();
-        setDrag(false);
-    };
-
-    const onDropHandler = async (e) => {
-        try {
-            e.preventDefault();
-            const file = e.dataTransfer.files[0];
-            const formData = new FormData();
-            formData.append('image', file);
-            setText(file.name);
-            const response = await UploadService.set(formData);
-            setImage(response.data.url);
-        } catch (e) {
-            console.log(e.response?.data?.message);
-        }
-    };
-
-    const handleChangeFile = async (e) => {
-        try {
-            const formData = new FormData();
-            const file = e.target.files[0];
-            formData.append('image', file);
-            const response = await UploadService.set(formData);
-            setImage(response.data.url);
-        } catch (e) {
-            console.log(e.response?.data?.message);
-        }
-    };
-
-    const handleSubmitRecipe = async () => {
-        console.log(groupId);
-        try {
-            const newRecipe = {
-                userId: dataUser.id,
-                group: groupId.value,
-                recipeName: recipeName,
-                recipeUrl: `http://localhost:5000${image}`,
-            };
-            const response = await RecipeService.setRecipe(newRecipe);
-            setRecipe([...recipe, newRecipe]);
-            setModalActiveRecipe(false);
-            document.body.classList.remove('lock');
-            setRecipeName('');
-            setGroupId('');
-            setDrag(false);
-            setText('Отпустите');
-            setImage('');
-        } catch (e) {
-            console.log(e.response?.data?.message);
-        }
-    };
-
-    const allGroupClickHandler = (e) => {
-        e.preventDefault();
-        count && count.classList.remove(styles.groupsItemActive);
-        setCount(e.currentTarget);
-        e.currentTarget.classList.add(styles.groupsItemActive);
-        setFilterRecipe('');
-    };
-
-    const groupClickHandler = (e) => {
-        if (e.target.closest('.groupLink')) {
-            if (count) {
-                count.classList.remove(styles.groupsItemActive);
-            } else groupRef.current.classList.remove(styles.groupsItemActive);
-            setCount(e.currentTarget);
-            e.preventDefault();
-            e.currentTarget.classList.add(styles.groupsItemActive);
-            const groupId = e.currentTarget.dataset.id;
-            const newRecipe = recipe.filter((val) => {
-                return val.group == groupId;
-            });
-            setFilterRecipe(newRecipe);
-        }
-    };
-
-    useEffect(() => {
-        if (group) {
-            const newGroup = group.map((item) => {
-                const newItem = {
-                    value: item._id,
-                    label: item.groupName,
-                };
-                return newItem;
-            });
-            setGroupSelect(newGroup);
-        }
-    }, [group]);
-
     const options = [
         {
             value: 'icon-2',
@@ -186,6 +70,120 @@ export default function Recipes() {
             icon: <i className={classNames('icon-20', styles.icon20)}></i>,
         },
     ];
+
+    const handleSubmit = async () => {
+        try {
+            const newGroup = {
+                userId: dataUser.id,
+                groupName: groupName,
+                groupIcon: groupIcon.value,
+                countRecipe: 0,
+            };
+            const response = await RecipeService.setGroup(newGroup);
+            setGroup([...group, response.data]);
+            setModalActiveGroup(false);
+            document.body.classList.remove('lock');
+            setGroupIcon('');
+            setGroupName('');
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
+    const handleSubmitRecipe = async () => {
+        try {
+            const newRecipe = {
+                userId: dataUser.id,
+                group: groupId.value,
+                recipeName: recipeName,
+                recipeUrl: `http://localhost:5000${image}`,
+            };
+            const response = await RecipeService.setRecipe(newRecipe);
+            setRecipe([...recipe, newRecipe]);
+            setModalActiveRecipe(false);
+            document.body.classList.remove('lock');
+            if (count && count.dataset.id === groupId.value) {
+                setFilterRecipe([...filterRecipe, newRecipe]);
+            }
+            setRecipeName('');
+            setGroupId('');
+            setDrag(false);
+            setText('Отпустите');
+            setImage('');
+        } catch (e) {
+            console.log(e.response);
+        }
+    };
+
+    const allGroupClickHandler = (e) => {
+        e.preventDefault();
+        count && count.classList.remove(styles.groupsItemActive);
+        setCount(e.currentTarget);
+        e.currentTarget.classList.add(styles.groupsItemActive);
+        setFilterRecipe('');
+    };
+
+    const groupClickHandler = (e) => {
+        if (e.target.closest('.groupLink')) {
+            if (count) {
+                count.classList.remove(styles.groupsItemActive);
+            } else groupRef.current.classList.remove(styles.groupsItemActive);
+            setCount(e.currentTarget);
+            e.preventDefault();
+            e.currentTarget.classList.add(styles.groupsItemActive);
+            const groupId = e.currentTarget.dataset.id;
+            const newRecipe = recipe.filter((val) => {
+                return val.group == groupId;
+            });
+            setFilterRecipe(newRecipe);
+        }
+    };
+
+    const sendImage = async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            setText(file.name);
+            const response = await UploadService.set(formData);
+            setImage(response.data.url);
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
+    const onDropHandler = async (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        sendImage(file);
+    };
+
+    const handleChangeFile = async (e) => {
+        const file = e.target.files[0];
+        sendImage(file);
+    };
+
+    const dragStartHandler = (e) => {
+        e.preventDefault();
+        setDrag(true);
+    };
+
+    const dragLeaveHandler = (e) => {
+        e.preventDefault();
+        setDrag(false);
+    };
+
+    useEffect(() => {
+        if (group) {
+            const newGroup = group.map((item) => {
+                const newItem = {
+                    value: item._id,
+                    label: item.groupName,
+                };
+                return newItem;
+            });
+            setGroupSelect(newGroup);
+        }
+    }, [group]);
 
     useEffect(() => {
         groupIcon !== '' && groupName !== ''
@@ -447,21 +445,7 @@ export default function Recipes() {
                             value={groupIcon}
                             setGroupIcon={setGroupIcon}
                         />
-                        <div
-                            className={classNames(
-                                'addBlock',
-                                styles.addRecipeAddBlock
-                            )}
-                        >
-                            <span
-                                className={classNames('small-text', 'icon-8')}
-                            >
-                                Загрузить миниатюру
-                            </span>
-                        </div>
-                        <p className={styles.addRecipeText}>
-                            (.png, .jpg, .jpeg, не более 5Мб)
-                        </p>
+                        <p className={styles.addRecipeText}></p>
                         <button
                             ref={btnRef}
                             className={classNames(

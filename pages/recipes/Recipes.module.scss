@@ -150,11 +150,13 @@
     border: 1px dashed #cccccc;
     border-radius: 8px;
     width: 130px;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 40px;
     color: rgba(244, 242, 241, 1);
-    padding: 20px 36px;
     margin-bottom: 10px;
+    height: 84px;
 }
 .selectFlex {
     display: grid;

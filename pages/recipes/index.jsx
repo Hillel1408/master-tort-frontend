@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { Oval } from 'react-loader-spinner';
 import { Sidebar } from '../../components/Sidebar';
@@ -11,6 +11,7 @@ import { Group } from './Group';
 import { Recipe } from './Recipe';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
+import UploadService from '../../services/UploadService';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import styles from './Recipes.module.scss';
 import stylesLogin from '../login/Login.module.scss';
@@ -31,10 +32,15 @@ export default function Recipes() {
     const [recipe, setRecipe] = useState('');
     const [filterRecipe, setFilterRecipe] = useState('');
     const [count, setCount] = useState('');
+    const [image, setImage] = useState('');
+    const [text, setText] = useState('Отпустите');
 
-    const btnRef = React.useRef('');
-    const btnRefRecipe = React.useRef('');
-    const groupRef = React.useRef('');
+    const [drag, setDrag] = useState(false);
+
+    const btnRef = useRef('');
+    const btnRefRecipe = useRef('');
+    const groupRef = useRef('');
+    const inputFileRef = useRef('');
 
     const handleSubmit = async () => {
         try {
@@ -45,7 +51,8 @@ export default function Recipes() {
                 countRecipe: 0,
             };
             const response = await RecipeService.setGroup(newGroup);
-            setGroup([...group, newGroup]);
+            console.log(response);
+            setGroup([...group, response.data]);
             setModalActiveGroup(false);
             document.body.classList.remove('lock');
             setGroupIcon('');
@@ -55,14 +62,50 @@ export default function Recipes() {
         }
     };
 
+    const dragStartHandler = (e) => {
+        e.preventDefault();
+        setDrag(true);
+    };
+
+    const dragLeaveHandler = (e) => {
+        e.preventDefault();
+        setDrag(false);
+    };
+
+    const onDropHandler = async (e) => {
+        try {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+            setText(file.name);
+            const response = await UploadService.set(formData);
+            setImage(response.data.url);
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
+    const handleChangeFile = async (e) => {
+        try {
+            const formData = new FormData();
+            const file = e.target.files[0];
+            formData.append('image', file);
+            const response = await UploadService.set(formData);
+            setImage(response.data.url);
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
     const handleSubmitRecipe = async () => {
+        console.log(groupId);
         try {
             const newRecipe = {
                 userId: dataUser.id,
                 group: groupId.value,
                 recipeName: recipeName,
-                recipeUrl:
-                    'https://e0.edimdoma.ru/data/posts/0002/3966/23966-ed4_wide.jpg?1631191583',
+                recipeUrl: `http://localhost:5000${image}`,
             };
             const response = await RecipeService.setRecipe(newRecipe);
             setRecipe([...recipe, newRecipe]);
@@ -70,6 +113,9 @@ export default function Recipes() {
             document.body.classList.remove('lock');
             setRecipeName('');
             setGroupId('');
+            setDrag(false);
+            setText('Отпустите');
+            setImage('');
         } catch (e) {
             console.log(e.response?.data?.message);
         }
@@ -148,10 +194,10 @@ export default function Recipes() {
     }, [groupIcon, groupName]);
 
     useEffect(() => {
-        recipeName !== '' && groupId !== ''
+        recipeName !== '' && groupId !== '' && image !== ''
             ? (btnRefRecipe.current.disabled = false)
             : (btnRefRecipe.current.disabled = true);
-    }, [recipeName, groupId]);
+    }, [recipeName, groupId, image]);
 
     useEffect(() => {
         const getGroup = async (userId) => {
@@ -462,20 +508,57 @@ export default function Recipes() {
                             setGroupIcon={setGroupId}
                         />
                     )}
-                    <div className={styles.addRecipeBlock}>
-                        <span
-                            className={classNames('icon-12', styles.icon12)}
-                        ></span>
-                    </div>
+                    {drag ? (
+                        <div
+                            className={styles.addRecipeBlock}
+                            onDragStart={(e) => dragStartHandler(e)}
+                            onDragLeave={(e) => dragLeaveHandler(e)}
+                            onDragOver={(e) => dragStartHandler(e)}
+                            onDrop={(e) => onDropHandler(e)}
+                        >
+                            <span
+                                style={{
+                                    fontSize: '14px',
+                                    color: 'var(--textColor)',
+                                    borderColor: 'var(--textColor)',
+                                }}
+                                className={classNames(styles.icon12)}
+                            >
+                                {text}
+                            </span>
+                        </div>
+                    ) : (
+                        <div
+                            className={styles.addRecipeBlock}
+                            onDragStart={(e) => dragStartHandler(e)}
+                            onDragLeave={(e) => dragLeaveHandler(e)}
+                            onDragOver={(e) => dragStartHandler(e)}
+                        >
+                            <span
+                                className={classNames('icon-12', styles.icon12)}
+                            ></span>
+                        </div>
+                    )}
                     <div
                         className={classNames(
                             'addBlock',
                             styles.addRecipeAddBlock
                         )}
                     >
-                        <span className={classNames('small-text', 'icon-8')}>
+                        <span
+                            onClick={() => inputFileRef.current.click()}
+                            className={classNames('small-text', 'icon-8')}
+                        >
                             Загрузить фото
                         </span>
+                        <input
+                            ref={inputFileRef}
+                            type="file"
+                            onChange={(e) => {
+                                handleChangeFile(e);
+                            }}
+                            hidden
+                        />
                     </div>
                     <p className={styles.addRecipeText}>
                         (.png, .jpg, .jpeg, не более 5Мб)

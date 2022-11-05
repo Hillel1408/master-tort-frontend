@@ -107,13 +107,13 @@ export default function Recipes() {
         try {
             const response = await RecipeService.deleteRecipe(recipeId);
             const newRecipe = recipe.filter((item) => {
-                return item._id != recipeId;
+                return item._id !== recipeId;
             });
             setRecipe(newRecipe);
             if (filterRecipe) {
                 //если рубрика удаленного рецепта в данный момент активна то удаляем рецепт и из нее
                 const newRecipe = filterRecipe.filter((item) => {
-                    return item._id != recipeId;
+                    return item._id !== recipeId;
                 });
                 setFilterRecipe(newRecipe);
             }
@@ -129,10 +129,10 @@ export default function Recipes() {
             const response = await RecipeService.deleteGroup(groupId);
             const newRecipe = recipe.filter((item) => {
                 //удаляем все рецепты удаленной группы
-                return item.group != groupId;
+                return item.group !== groupId;
             });
             const newGroup = group.filter((item) => {
-                return item._id != groupId;
+                return item._id !== groupId;
             });
             setGroup(newGroup);
             setRecipe(newRecipe);

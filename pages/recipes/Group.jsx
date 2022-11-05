@@ -12,7 +12,7 @@ function Group({
     deleteGroup,
 }) {
     return (
-        <a
+        <div
             href="#"
             onClick={(e) => {
                 setActive(groupId);
@@ -23,7 +23,12 @@ function Group({
                 active === groupId ? styles.groupsItemActive : ''
             )}
         >
-            <div className={styles.groupsItem}>
+            <div
+                className={classNames(
+                    styles.groupsItem,
+                    groupId === '' ? styles.allRecipe : ''
+                )}
+            >
                 <span
                     className={classNames(`${groupIcon}`, styles.groupsIcon)}
                 ></span>
@@ -54,7 +59,7 @@ function Group({
                     ''
                 )}
             </div>
-        </a>
+        </div>
     );
 }
 

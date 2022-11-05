@@ -1,5 +1,6 @@
 .link {
     color: var(--textColor);
+    cursor: pointer;
 }
 .groups {
     background-color: var(--secondaryColor);
@@ -222,6 +223,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+}
+.allRecipe {
+    @media (any-hover: hover) {
+        &:hover {
+            .groupsDelete {
+                opacity: 0;
+                visibility: hidden;
+            }
+            .groupsCount {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     }
 }
 .icon2:before {

@@ -33,6 +33,7 @@ export default function Recipes() {
     const [filterRecipe, setFilterRecipe] = useState('');
     const [image, setImage] = useState('');
     const [text, setText] = useState('Отпустите');
+    const [textImage, setTextImage] = useState('');
     const [active, setActive] = useState('');
 
     const [drag, setDrag] = useState(false);
@@ -42,6 +43,7 @@ export default function Recipes() {
     const inputFileRef = useRef('');
 
     const options = [
+        //опции для выпадающего списка выбора рубрики рецепта
         {
             value: 'icon-2',
             label: 'Торты',
@@ -71,6 +73,7 @@ export default function Recipes() {
     ];
 
     const handleSubmit = async () => {
+        //отправляем созданную рубрику на сервер и в стейт
         try {
             const newGroup = {
                 userId: dataUser.id,
@@ -89,18 +92,60 @@ export default function Recipes() {
         }
     };
 
-    const updateCountRecipe = () => {
+    const updateCountRecipe = (groupId, iter) => {
+        //обновляем количество рецептов в рубрике +/-
         const item = group.find((item) => {
-            return item._id === groupId.value;
+            return item._id === groupId;
         });
-        item.countRecipe = item.countRecipe + 1;
+        iter
+            ? (item.countRecipe = item.countRecipe + 1)
+            : (item.countRecipe = item.countRecipe - 1);
     };
 
-    const deleteRecipe = () => {};
+    const deleteRecipe = async (recipeId, groupId) => {
+        //удаляем рецепт с сервера и стейта
+        try {
+            const response = await RecipeService.deleteRecipe(recipeId);
+            const newRecipe = recipe.filter((item) => {
+                return item._id != recipeId;
+            });
+            setRecipe(newRecipe);
+            if (filterRecipe) {
+                //если рубрика удаленного рецепта в данный момент активна то удаляем рецепт и из нее
+                const newRecipe = filterRecipe.filter((item) => {
+                    return item._id != recipeId;
+                });
+                setFilterRecipe(newRecipe);
+            }
+            updateCountRecipe(groupId, false);
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
 
-    const deleteGroup = () => {};
+    const deleteGroup = async (groupId) => {
+        //удаляем рубрику на сервере и в стейте
+        try {
+            const response = await RecipeService.deleteGroup(groupId);
+            const newRecipe = recipe.filter((item) => {
+                //удаляем все рецепты удаленной группы
+                return item.group != groupId;
+            });
+            const newGroup = group.filter((item) => {
+                return item._id != groupId;
+            });
+            setGroup(newGroup);
+            setRecipe(newRecipe);
+            //делаем рубрику "все рецепты" активной и убираем сортировку
+            setFilterRecipe('');
+            setActive('');
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
 
     const handleSubmitRecipe = async () => {
+        //отправляем рецепт на сервер и в стейты
         try {
             const newRecipe = {
                 userId: dataUser.id,
@@ -110,38 +155,40 @@ export default function Recipes() {
             };
             const response = await RecipeService.setRecipe(newRecipe);
             setRecipe([...recipe, response.data]);
-            updateCountRecipe();
+            updateCountRecipe(groupId.value, true);
             setModalActiveRecipe(false);
             document.body.classList.remove('lock');
-            if (active === groupId.value) {
-                setFilterRecipe([...filterRecipe, response.data]);
-            }
+            if (active === groupId.value)
+                setFilterRecipe([...filterRecipe, response.data]); //если рубрика добавленного рецепта в данный момент активна то добавляем рецепт и в нее
             setRecipeName('');
             setGroupId('');
             setDrag(false);
             setText('Отпустите');
+            setTextImage('');
             setImage('');
         } catch (e) {
             console.log(e.response);
         }
     };
 
-    const groupClickHandler = (e, dataset) => {
-        if (e.target.closest('.groupLink')) {
-            if (dataset) {
+    const groupClickHandler = (e, groupId) => {
+        //фильтруем рецепты в зависимости от выбранной рубрики
+        if (e.target.closest(`.${styles.link}`)) {
+            if (groupId) {
+                //если клик не по рубрике "все рецепты"
                 const newRecipe = recipe.filter((item) => {
-                    return item.group === dataset;
+                    return item.group === groupId;
                 });
                 setFilterRecipe(newRecipe);
-            } else setFilterRecipe('');
+            } else setFilterRecipe(''); //если клик по рубрике "все рецепты"
         }
     };
 
     const sendImage = async (file) => {
+        //отправляем картинку рецепта на сервер
         try {
             const formData = new FormData();
             formData.append('image', file);
-            setText(file.name);
             const response = await UploadService.set(formData);
             setImage(response.data.url);
         } catch (e) {
@@ -150,13 +197,17 @@ export default function Recipes() {
     };
 
     const onDropHandler = async (e) => {
+        //получаем картинку рецепта
         e.preventDefault();
         const file = e.dataTransfer.files[0];
+        setText(file.name); //сохраняем название картинки для отображения на экране после загрузки
         sendImage(file);
     };
 
     const handleChangeFile = async (e) => {
+        //получаем картинку рецепта
         const file = e.target.files[0];
+        setTextImage(file.name); //сохраняем название картинки для отображения на экране после загрузки
         sendImage(file);
     };
 
@@ -171,6 +222,7 @@ export default function Recipes() {
     };
 
     useEffect(() => {
+        //формируем выпадающий список для выбора рубрики при создании рецепта
         if (group) {
             const newGroup = group.map((item) => {
                 const newItem = {
@@ -184,12 +236,14 @@ export default function Recipes() {
     }, [group]);
 
     useEffect(() => {
+        //если какое-то поле из формы создания рубрики не заполнено, делаем кнопку не активной
         groupIcon !== '' && groupName !== ''
             ? (btnRef.current.disabled = false)
             : (btnRef.current.disabled = true);
     }, [groupIcon, groupName]);
 
     useEffect(() => {
+        //если какое-то поле из формы создания рецепта не заполнено, делаем кнопку не активной
         recipeName !== '' && groupId !== '' && image !== ''
             ? (btnRefRecipe.current.disabled = false)
             : (btnRefRecipe.current.disabled = true);
@@ -197,6 +251,7 @@ export default function Recipes() {
 
     useEffect(() => {
         const getGroup = async (userId) => {
+            //получаем рубрики пользователя
             try {
                 const response = await RecipeService.getGroup(userId);
                 setGroup(response.data);
@@ -205,6 +260,7 @@ export default function Recipes() {
             }
         };
         const getRecipe = async (userId) => {
+            //получаем рецепты пользователя
             try {
                 const response = await RecipeService.getRecipe(userId);
                 setRecipe(response.data);
@@ -213,6 +269,7 @@ export default function Recipes() {
             }
         };
         const checkAuth = async () => {
+            //проверяем авторизован ли пользователь
             try {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
@@ -276,7 +333,7 @@ export default function Recipes() {
                                             groupIcon="icon-1"
                                             groupName="Все рецепты"
                                             countRecipe={recipe.length}
-                                            dataset=""
+                                            groupId=""
                                             active={active}
                                             setActive={setActive}
                                             groupClickHandler={
@@ -292,12 +349,13 @@ export default function Recipes() {
                                                     countRecipe={
                                                         item.countRecipe
                                                     }
-                                                    dataset={item._id}
+                                                    groupId={item._id}
                                                     active={active}
                                                     setActive={setActive}
                                                     groupClickHandler={
                                                         groupClickHandler
                                                     }
+                                                    deleteGroup={deleteGroup}
                                                 />
                                             ))}
                                     </div>
@@ -340,6 +398,11 @@ export default function Recipes() {
                                                               item.recipeUrl
                                                           }
                                                           key={item._id}
+                                                          deleteRecipe={
+                                                              deleteRecipe
+                                                          }
+                                                          recipeId={item._id}
+                                                          groupId={item.group}
                                                       />
                                                   ))
                                                 : recipe &&
@@ -352,6 +415,11 @@ export default function Recipes() {
                                                               item.recipeUrl
                                                           }
                                                           key={item._id}
+                                                          deleteRecipe={
+                                                              deleteRecipe
+                                                          }
+                                                          recipeId={item._id}
+                                                          groupId={item.group}
                                                       />
                                                   ))}
                                         </div>
@@ -497,9 +565,9 @@ export default function Recipes() {
                                 onDragOver={(e) => dragStartHandler(e)}
                                 onDrop={(e) => onDropHandler(e)}
                                 style={{
-                                    fontSize: '14px',
-                                    color: 'var(--textColor)',
-                                    borderColor: 'var(--textColor)',
+                                    fontSize: '12px',
+                                    color: '#7a7a7a',
+                                    borderColor: '#7a7a7a',
                                 }}
                                 className={classNames(styles.icon12)}
                             >
@@ -516,30 +584,39 @@ export default function Recipes() {
                             ></span>
                         </div>
                     )}
-                    <div
-                        className={classNames(
-                            'addBlock',
-                            styles.addRecipeAddBlock
-                        )}
-                    >
-                        <span
-                            onClick={() => inputFileRef.current.click()}
-                            className={classNames('small-text', 'icon-8')}
-                        >
-                            Загрузить фото
-                        </span>
-                        <input
-                            ref={inputFileRef}
-                            type="file"
-                            onChange={(e) => {
-                                handleChangeFile(e);
-                            }}
-                            hidden
-                        />
-                    </div>
-                    <p className={styles.addRecipeText}>
-                        (.png, .jpg, .jpeg, не более 5Мб)
-                    </p>
+                    {textImage ? (
+                        <p className={styles.addRecipeTextImage}>{textImage}</p>
+                    ) : (
+                        <>
+                            <div
+                                className={classNames(
+                                    'addBlock',
+                                    styles.addRecipeAddBlock
+                                )}
+                            >
+                                <span
+                                    onClick={() => inputFileRef.current.click()}
+                                    className={classNames(
+                                        'small-text',
+                                        'icon-8'
+                                    )}
+                                >
+                                    Загрузить фото
+                                </span>
+                                <input
+                                    ref={inputFileRef}
+                                    type="file"
+                                    onChange={(e) => {
+                                        handleChangeFile(e);
+                                    }}
+                                    hidden
+                                />
+                            </div>
+                            <p className={styles.addRecipeTextImage}>
+                                (.png, .jpg, .jpeg, не более 5Мб)
+                            </p>
+                        </>
+                    )}
                     <button
                         ref={btnRefRecipe}
                         className={classNames(

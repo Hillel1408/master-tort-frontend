@@ -9,11 +9,19 @@ export default class RecipeService {
         return $api.get(`/recipe-groups/${userId}`);
     }
 
+    static async deleteGroup(groupId) {
+        return $api.delete(`/recipe-groups/${groupId}`);
+    }
+
     static async setRecipe(values) {
         return $api.post('/recipe', values);
     }
 
     static async getRecipe(userId) {
         return $api.get(`/recipe/${userId}`);
+    }
+
+    static async deleteRecipe(recipeId) {
+        return $api.delete(`/recipe/${recipeId}`);
     }
 }

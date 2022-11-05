@@ -5,22 +5,22 @@ function Group({
     groupIcon,
     groupName,
     countRecipe,
-    dataset,
+    groupId,
     groupClickHandler,
     active,
     setActive,
+    deleteGroup,
 }) {
     return (
         <a
             href="#"
             onClick={(e) => {
-                setActive(dataset);
-                groupClickHandler(e, dataset);
+                setActive(groupId);
+                groupClickHandler(e, groupId);
             }}
             className={classNames(
                 styles.link,
-                'groupLink',
-                active === dataset ? styles.groupsItemActive : ''
+                active === groupId ? styles.groupsItemActive : ''
             )}
         >
             <div className={styles.groupsItem}>
@@ -30,7 +30,11 @@ function Group({
                 <p className={classNames('small-text', styles.smallText)}>
                     {groupName}
                 </p>
-                <span className={styles.groupsDelete} title="Удалить">
+                <span
+                    className={styles.groupsDelete}
+                    title="Удалить"
+                    onClick={() => deleteGroup(groupId)}
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path
                             d="M12,24A12,12,0,1,1,24,12,12,12,0,0,1,12,24ZM12,1.88A10.13,10.13,0,1,0,22.15,12,10.13,10.13,0,0,0,12,1.88Z"

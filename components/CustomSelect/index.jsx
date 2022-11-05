@@ -49,10 +49,18 @@ const customStyles = {
         boxShadow: 'none',
         overflow: 'hidden',
         border: '1px solid #009998',
+        minHeight: '43px',
     }),
     menuList: (provided) => ({
         ...provided,
         maxHeight: '120px',
+    }),
+    noOptionsMessage: (provided) => ({
+        ...provided,
+        marginTop: '3px',
+        textAlign: 'left',
+        fontSize: '12px',
+        color: '#cccccc',
     }),
 };
 
@@ -68,6 +76,7 @@ function CustomSelect(props) {
             value={props.value}
             onChange={props.setGroupIcon}
             required
+            noOptionsMessage={() => 'Добавьте группу'}
         />
     );
 }

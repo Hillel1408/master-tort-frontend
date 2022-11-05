@@ -7,18 +7,21 @@ function Group({
     countRecipe,
     dataset,
     groupClickHandler,
-    groupRef,
-    activeClass,
+    active,
+    setActive,
 }) {
     return (
         <a
             href="#"
-            className={classNames(styles.link, 'groupLink', activeClass)}
-            data-id={dataset}
             onClick={(e) => {
-                groupClickHandler(e);
+                setActive(dataset);
+                groupClickHandler(e, dataset);
             }}
-            ref={groupRef}
+            className={classNames(
+                styles.link,
+                'groupLink',
+                active === dataset ? styles.groupsItemActive : ''
+            )}
         >
             <div className={styles.groupsItem}>
                 <span
@@ -41,6 +44,11 @@ function Group({
                         />
                     </svg>
                 </span>
+                {countRecipe != 0 ? (
+                    <span className={styles.groupsCount}>{countRecipe}</span>
+                ) : (
+                    ''
+                )}
             </div>
         </a>
     );

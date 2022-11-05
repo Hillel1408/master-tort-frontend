@@ -17,7 +17,7 @@ function TableCell({
 
     const saveSettings = () => {
         let newValue = settings[thValue];
-        newValue[index] = Number(item);
+        newValue[index] = item;
         setSettings({
             ...settings,
             [thValue]: newValue,

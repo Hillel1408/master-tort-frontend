@@ -31,15 +31,14 @@ export default function Recipes() {
     const [groupId, setGroupId] = useState('');
     const [recipe, setRecipe] = useState('');
     const [filterRecipe, setFilterRecipe] = useState('');
-    const [count, setCount] = useState('');
     const [image, setImage] = useState('');
     const [text, setText] = useState('Отпустите');
+    const [active, setActive] = useState('');
 
     const [drag, setDrag] = useState(false);
 
     const btnRef = useRef('');
     const btnRefRecipe = useRef('');
-    const groupRef = useRef('');
     const inputFileRef = useRef('');
 
     const options = [
@@ -90,6 +89,17 @@ export default function Recipes() {
         }
     };
 
+    const updateCountRecipe = () => {
+        const item = group.find((item) => {
+            return item._id === groupId.value;
+        });
+        item.countRecipe = item.countRecipe + 1;
+    };
+
+    const deleteRecipe = () => {};
+
+    const deleteGroup = () => {};
+
     const handleSubmitRecipe = async () => {
         try {
             const newRecipe = {
@@ -99,11 +109,12 @@ export default function Recipes() {
                 recipeUrl: `http://localhost:5000${image}`,
             };
             const response = await RecipeService.setRecipe(newRecipe);
-            setRecipe([...recipe, newRecipe]);
+            setRecipe([...recipe, response.data]);
+            updateCountRecipe();
             setModalActiveRecipe(false);
             document.body.classList.remove('lock');
-            if (count && count.dataset.id === groupId.value) {
-                setFilterRecipe([...filterRecipe, newRecipe]);
+            if (active === groupId.value) {
+                setFilterRecipe([...filterRecipe, response.data]);
             }
             setRecipeName('');
             setGroupId('');
@@ -115,27 +126,14 @@ export default function Recipes() {
         }
     };
 
-    const allGroupClickHandler = (e) => {
-        e.preventDefault();
-        count && count.classList.remove(styles.groupsItemActive);
-        setCount(e.currentTarget);
-        e.currentTarget.classList.add(styles.groupsItemActive);
-        setFilterRecipe('');
-    };
-
-    const groupClickHandler = (e) => {
+    const groupClickHandler = (e, dataset) => {
         if (e.target.closest('.groupLink')) {
-            if (count) {
-                count.classList.remove(styles.groupsItemActive);
-            } else groupRef.current.classList.remove(styles.groupsItemActive);
-            setCount(e.currentTarget);
-            e.preventDefault();
-            e.currentTarget.classList.add(styles.groupsItemActive);
-            const groupId = e.currentTarget.dataset.id;
-            const newRecipe = recipe.filter((val) => {
-                return val.group == groupId;
-            });
-            setFilterRecipe(newRecipe);
+            if (dataset) {
+                const newRecipe = recipe.filter((item) => {
+                    return item.group === dataset;
+                });
+                setFilterRecipe(newRecipe);
+            } else setFilterRecipe('');
         }
     };
 
@@ -277,14 +275,13 @@ export default function Recipes() {
                                         <Group
                                             groupIcon="icon-1"
                                             groupName="Все рецепты"
-                                            countRecipe="12"
+                                            countRecipe={recipe.length}
+                                            dataset=""
+                                            active={active}
+                                            setActive={setActive}
                                             groupClickHandler={
-                                                allGroupClickHandler
+                                                groupClickHandler
                                             }
-                                            activeClass={
-                                                styles.groupsItemActive
-                                            }
-                                            groupRef={groupRef}
                                         />
                                         {group &&
                                             group.map((item) => (
@@ -296,6 +293,8 @@ export default function Recipes() {
                                                         item.countRecipe
                                                     }
                                                     dataset={item._id}
+                                                    active={active}
+                                                    setActive={setActive}
                                                     groupClickHandler={
                                                         groupClickHandler
                                                     }
@@ -341,7 +340,6 @@ export default function Recipes() {
                                                               item.recipeUrl
                                                           }
                                                           key={item._id}
-                                                          id={item._id}
                                                       />
                                                   ))
                                                 : recipe &&
@@ -354,7 +352,6 @@ export default function Recipes() {
                                                               item.recipeUrl
                                                           }
                                                           key={item._id}
-                                                          id={item._id}
                                                       />
                                                   ))}
                                         </div>
@@ -493,14 +490,12 @@ export default function Recipes() {
                         />
                     )}
                     {drag ? (
-                        <div
-                            className={styles.addRecipeBlock}
-                            onDragStart={(e) => dragStartHandler(e)}
-                            onDragLeave={(e) => dragLeaveHandler(e)}
-                            onDragOver={(e) => dragStartHandler(e)}
-                            onDrop={(e) => onDropHandler(e)}
-                        >
+                        <div className={styles.addRecipeBlock}>
                             <span
+                                onDragStart={(e) => dragStartHandler(e)}
+                                onDragLeave={(e) => dragLeaveHandler(e)}
+                                onDragOver={(e) => dragStartHandler(e)}
+                                onDrop={(e) => onDropHandler(e)}
                                 style={{
                                     fontSize: '14px',
                                     color: 'var(--textColor)',
@@ -512,13 +507,11 @@ export default function Recipes() {
                             </span>
                         </div>
                     ) : (
-                        <div
-                            className={styles.addRecipeBlock}
-                            onDragStart={(e) => dragStartHandler(e)}
-                            onDragLeave={(e) => dragLeaveHandler(e)}
-                            onDragOver={(e) => dragStartHandler(e)}
-                        >
+                        <div className={styles.addRecipeBlock}>
                             <span
+                                onDragStart={(e) => dragStartHandler(e)}
+                                onDragLeave={(e) => dragLeaveHandler(e)}
+                                onDragOver={(e) => dragStartHandler(e)}
                                 className={classNames('icon-12', styles.icon12)}
                             ></span>
                         </div>

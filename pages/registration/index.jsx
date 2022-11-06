@@ -40,7 +40,7 @@ export default function Registration() {
         try {
             const response = await SettingsService.set({
                 ...settingsMastic,
-                userId: id,
+                user: id,
             });
             router.push('/');
         } catch (e) {

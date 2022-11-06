@@ -27,7 +27,7 @@ export default function Settings() {
         try {
             const response = await SettingsService.set({
                 ...settings,
-                userId: dataUser.id,
+                user: dataUser.id,
             });
             dispatch(
                 setAlert({
@@ -50,9 +50,9 @@ export default function Settings() {
     };
 
     useEffect(() => {
-        const getSettings = async (userId) => {
+        const getSettings = async (user) => {
             try {
-                const response = await SettingsService.get(userId);
+                const response = await SettingsService.get(user);
                 setSettings(response.data);
             } catch (e) {
                 console.log(e.response?.data?.message);

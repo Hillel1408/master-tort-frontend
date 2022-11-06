@@ -126,19 +126,25 @@ export default function Recipes() {
     const deleteGroup = async (groupId) => {
         //удаляем рубрику на сервере и в стейте
         try {
-            const response = await RecipeService.deleteGroup(groupId);
-            const newRecipe = recipe.filter((item) => {
-                //удаляем все рецепты удаленной группы
-                return item.group !== groupId;
-            });
-            const newGroup = group.filter((item) => {
-                return item._id !== groupId;
-            });
-            setGroup(newGroup);
-            setRecipe(newRecipe);
-            //делаем рубрику "все рецепты" активной и убираем сортировку
-            setFilterRecipe('');
-            setActive('');
+            if (
+                window.confirm(
+                    'Вы действительно хотите удалить группу? Все рецепты данной группы будут удалены'
+                )
+            ) {
+                const response = await RecipeService.deleteGroup(groupId);
+                const newRecipe = recipe.filter((item) => {
+                    //удаляем все рецепты удаленной группы
+                    return item.group !== groupId;
+                });
+                const newGroup = group.filter((item) => {
+                    return item._id !== groupId;
+                });
+                setGroup(newGroup);
+                setRecipe(newRecipe);
+                //делаем рубрику "все рецепты" активной и убираем сортировку
+                setFilterRecipe('');
+                setActive('');
+            }
         } catch (e) {
             console.log(e.response?.data?.message);
         }
@@ -158,8 +164,9 @@ export default function Recipes() {
             updateCountRecipe(groupId.value, true);
             setModalActiveRecipe(false);
             document.body.classList.remove('lock');
+            //если рубрика добавленного рецепта в данный момент активна то добавляем рецепт и в нее
             if (active === groupId.value)
-                setFilterRecipe([...filterRecipe, response.data]); //если рубрика добавленного рецепта в данный момент активна то добавляем рецепт и в нее
+                setFilterRecipe([...filterRecipe, response.data]);
             setRecipeName('');
             setGroupId('');
             setDrag(false);

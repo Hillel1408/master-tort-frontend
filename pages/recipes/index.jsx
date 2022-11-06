@@ -139,11 +139,11 @@ export default function Recipes() {
                 const newGroup = group.filter((item) => {
                     return item._id !== groupId;
                 });
+                //делаем рубрику "все рецепты" активной и убираем сортировку
+                setActive('');
+                setFilterRecipe('');
                 setGroup(newGroup);
                 setRecipe(newRecipe);
-                //делаем рубрику "все рецепты" активной и убираем сортировку
-                setFilterRecipe('');
-                setActive('');
             }
         } catch (e) {
             console.log(e.response?.data?.message);

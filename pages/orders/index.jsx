@@ -24,9 +24,7 @@ export default function Orders() {
                                 Предстоящие
                             </span>
                             <div className={styles.kanbanOrders}>
-                                <div className={styles.kanbanWrapper}>
-                                    <OrderCake style="kanbanCake" />
-                                </div>
+                                <div className={styles.kanbanWrapper}></div>
                             </div>
                         </div>
                         <div className={styles.kanbanColumn}>
@@ -40,7 +38,6 @@ export default function Orders() {
                             </span>
                             <div className={styles.kanbanOrders}>
                                 <div className={styles.kanbanWrapper}>
-                                    <OrderCake style="kanbanCake" />
                                     <div className="addBlock">
                                         <span
                                             className={classNames(
@@ -65,9 +62,7 @@ export default function Orders() {
                                 В работе
                             </span>
                             <div className={styles.kanbanOrders}>
-                                <div className={styles.kanbanWrapper}>
-                                    <OrderCake style="kanbanCake" />
-                                </div>
+                                <div className={styles.kanbanWrapper}></div>
                             </div>
                         </div>
                         <div className={styles.kanbanColumn}>
@@ -81,7 +76,6 @@ export default function Orders() {
                             </span>
                             <div className={styles.kanbanOrders}>
                                 <div className={styles.kanbanWrapper}>
-                                    <OrderCake style="kanbanCake" />
                                     <div
                                         className={classNames(
                                             'addBlock',

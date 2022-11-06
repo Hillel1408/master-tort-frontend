@@ -2,7 +2,9 @@ import classNames from 'classnames';
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 
-function OrderCake({ type, style }) {
+function OrderCake({ type, style, name, number, date, image }) {
+    const dateSplit = date.split('T');
+
     return (
         <div
             className={classNames(
@@ -12,12 +14,12 @@ function OrderCake({ type, style }) {
             )}
         >
             <div className={styles.img}>
-                <img src="1.jpg" alt="" />
+                <img src={image} alt="" />
             </div>
             <div className={styles.content}>
-                <span className={styles.contentNumber}>№123</span>
+                <span className={styles.contentNumber}>№{number}</span>
                 <p className={classNames(styles.contentText, 'small-text')}>
-                    Торт “Красный бархат” на день рождения с белковым кремом
+                    {name}
                 </p>
                 <div className={styles.contentBlock}>
                     <span
@@ -27,12 +29,12 @@ function OrderCake({ type, style }) {
                             'small-text'
                         )}
                     >
-                        22/09/2022
+                        {dateSplit[0]}
                     </span>
                     <span
                         className={classNames(styles.contentTime, 'small-text')}
                     >
-                        9:00
+                        {dateSplit[1].substr(0, 5)}
                     </span>
                 </div>
             </div>

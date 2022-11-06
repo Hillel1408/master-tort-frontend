@@ -214,17 +214,8 @@ export default function CalendarOrders() {
                             </div>
                         </div>
                         <div className={styles.orders}>
-                            <div className={styles.overflow}>
-                                <OrderCake style="calendarCake" />
-                                <OrderCake style="calendarCake" />
-                                <OrderCake style="calendarCake" />
-                                <OrderCake style="calendarCake" />
-                                <OrderCake style="calendarCake" />
-                            </div>
-                            <div
-                                className={styles.ordersNo}
-                                style={{ display: 'none' }}
-                            >
+                            <div className={styles.overflow}></div>
+                            <div className={styles.ordersNo}>
                                 <span className="icon-9"></span>
                                 <p className="text">
                                     Выберите дату, чтобы посмотреть заказы

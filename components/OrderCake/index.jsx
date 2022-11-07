@@ -2,7 +2,22 @@ import classNames from 'classnames';
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 
-function OrderCake({ type, style, name, number, date, image, draggable }) {
+function OrderCake({
+    type,
+    style,
+    name,
+    number,
+    date,
+    image,
+    draggable,
+    dragOverHandler,
+    dragLeaveHandler,
+    dragStartHandler,
+    dragEndHandler,
+    dropHandler,
+    item,
+    board,
+}) {
     const dateSplit = date.split('T');
 
     return (
@@ -10,9 +25,15 @@ function OrderCake({ type, style, name, number, date, image, draggable }) {
             className={classNames(
                 styles.root,
                 styles[type],
-                stylesOrders[style]
+                stylesOrders[style],
+                'item'
             )}
             draggable={draggable}
+            onDragOver={(e) => dragOverHandler(e)}
+            onDragLeave={(e) => dragLeaveHandler(e)}
+            onDragStart={(e) => dragStartHandler(e, board, item)}
+            onDragEnd={(e) => dragEndHandler(e)}
+            onDrop={(e) => dropHandler(e, board, item)}
         >
             <div className={styles.img}>
                 <img src={image} alt="" draggable="false" />

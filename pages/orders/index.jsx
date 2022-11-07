@@ -11,11 +11,73 @@ import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesLogin from '../login/Login.module.scss';
+import stylesOrder from '../../components/OrderCake/OrderCake.module.scss';
 
 export default function Orders() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [boards, setBoards] = useState('');
+    const [currentBoard, setCurrentBoard] = useState('');
+    const [currentItem, setCurrentItem] = useState('');
+
+    const dragOverHandler = (e) => {
+        e.preventDefault();
+        if (e.currentTarget.closest(`.item`)) {
+            e.currentTarget.style.boxShadow = '0 4px 3px grey';
+        }
+    };
+
+    const dragLeaveHandler = (e) => {
+        e.currentTarget.style.boxShadow = 'none';
+    };
+
+    const dragStartHandler = (e, board, item) => {
+        setCurrentBoard(board);
+        setCurrentItem(item);
+    };
+
+    const dragEndHandler = (e) => {
+        e.currentTarget.style.boxShadow = 'none';
+    };
+
+    const dropHandler = (e, board, item) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.currentTarget.style.boxShadow = 'none';
+        const currentIndex = currentBoard.items.indexOf(currentItem);
+        currentBoard.items.splice(currentIndex, 1);
+        const droptIndex = board.items.indexOf(item);
+        board.items.splice(droptIndex + 1, 0, currentItem);
+        setBoards(
+            boards.map((b) => {
+                if (b.id === board.id) {
+                    return board;
+                }
+                if (b.id === currentBoard.id) {
+                    return currentBoard;
+                }
+                return b;
+            })
+        );
+    };
+
+    const dropCardHandler = (e, board) => {
+        board.items.push(currentItem);
+        const currentIndex = currentBoard.items.indexOf(currentItem);
+        currentBoard.items.splice(currentIndex, 1);
+        setBoards(
+            boards.map((b) => {
+                if (b.id === board.id) {
+                    return board;
+                }
+                if (b.id === currentBoard.id) {
+                    return currentBoard;
+                }
+                return b;
+            })
+        );
+        e.currentTarget.style.boxShadow = 'none';
+    };
 
     useEffect(() => {
         const filterOrders = async (orders) => {
@@ -132,7 +194,16 @@ export default function Orders() {
                                     {boards &&
                                         boards.map((board) => (
                                             <div
-                                                className={styles.kanbanColumn}
+                                                className={classNames(
+                                                    styles.kanbanColumn,
+                                                    'column'
+                                                )}
+                                                onDragOver={(e) =>
+                                                    dragOverHandler(e)
+                                                }
+                                                onDrop={(e) =>
+                                                    dropCardHandler(e, board)
+                                                }
                                             >
                                                 <span
                                                     className={classNames(
@@ -175,6 +246,27 @@ export default function Orders() {
                                                                         style="kanbanCake"
                                                                         draggable={
                                                                             true
+                                                                        }
+                                                                        dragOverHandler={
+                                                                            dragOverHandler
+                                                                        }
+                                                                        dragLeaveHandler={
+                                                                            dragLeaveHandler
+                                                                        }
+                                                                        dragStartHandler={
+                                                                            dragStartHandler
+                                                                        }
+                                                                        dragEndHandler={
+                                                                            dragEndHandler
+                                                                        }
+                                                                        dropHandler={
+                                                                            dropHandler
+                                                                        }
+                                                                        item={
+                                                                            item
+                                                                        }
+                                                                        board={
+                                                                            board
                                                                         }
                                                                     />
                                                                 )

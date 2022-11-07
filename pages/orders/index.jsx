@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
-import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
+import { OrderCake } from '../../components/OrderCake';
 import styles from './Orders.module.scss';
 import { useState, useEffect } from 'react';
 import { Oval } from 'react-loader-spinner';
@@ -15,15 +15,57 @@ import stylesLogin from '../login/Login.module.scss';
 export default function Orders() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
-    const [orders, setOrders] = useState('');
+    const [boards, setBoards] = useState('');
 
     useEffect(() => {
         const filterOrders = async (orders) => {
-            //забираем в стейт только архивные заказы
-            const archiveOrders = orders.filter((item) => {
-                return item.type !== 'archive';
+            //создаем доску с заказами
+            const ordersFiltered = [
+                {
+                    id: 1,
+                    title: 'Предстоящие',
+                    textLink: 'Добавить заказы',
+                    items: [],
+                },
+                {
+                    id: 2,
+                    title: 'Закупка',
+                    textLink: 'Составить закупку',
+                    items: [],
+                },
+                {
+                    id: 3,
+                    title: 'В работе',
+                    textLink: '',
+                    items: [],
+                },
+                {
+                    id: 4,
+                    title: 'Готово',
+                    textLink: 'Отправить в архив',
+                    items: [],
+                },
+            ];
+            //забираем не архивные заказы и фильтруем их по статусу заказа
+            orders.forEach((item) => {
+                if (item.type !== 'archive') {
+                    switch (item.type) {
+                        case 'upcoming':
+                            ordersFiltered[0].items.push(item);
+                            break;
+                        case 'purchase':
+                            ordersFiltered[1].items.push(item);
+                            break;
+                        case 'in-work':
+                            ordersFiltered[2].items.push(item);
+                            break;
+                        case 'ready':
+                            ordersFiltered[3].items.push(item);
+                            break;
+                    }
+                }
             });
-            setOrders(archiveOrders);
+            setBoards(ordersFiltered);
         };
 
         const getOrders = async (userId) => {
@@ -87,94 +129,75 @@ export default function Orders() {
                             <>
                                 <OrdersNav visibleTabs={true} />
                                 <div className={styles.kanban}>
-                                    <div className={styles.kanbanColumn}>
-                                        <span
-                                            className={classNames(
-                                                'text',
-                                                styles.kanbanTitle
-                                            )}
-                                        >
-                                            Предстоящие
-                                        </span>
-                                        <div className={styles.kanbanOrders}>
+                                    {boards &&
+                                        boards.map((board) => (
                                             <div
-                                                className={styles.kanbanWrapper}
-                                            ></div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.kanbanColumn}>
-                                        <span
-                                            className={classNames(
-                                                'text',
-                                                styles.kanbanTitle
-                                            )}
-                                        >
-                                            Закупка
-                                        </span>
-                                        <div className={styles.kanbanOrders}>
-                                            <div
-                                                className={styles.kanbanWrapper}
+                                                className={styles.kanbanColumn}
                                             >
-                                                <div className="addBlock">
-                                                    <span
-                                                        className={classNames(
-                                                            'small-text',
-                                                            'icon-8'
-                                                        )}
-                                                    >
-                                                        Составить список
-                                                        продуктов для закупки
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.kanbanColumn}>
-                                        <span
-                                            className={classNames(
-                                                'text',
-                                                styles.kanbanTitle
-                                            )}
-                                        >
-                                            В работе
-                                        </span>
-                                        <div className={styles.kanbanOrders}>
-                                            <div
-                                                className={styles.kanbanWrapper}
-                                            ></div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.kanbanColumn}>
-                                        <span
-                                            className={classNames(
-                                                'text',
-                                                styles.kanbanTitle
-                                            )}
-                                        >
-                                            Готово
-                                        </span>
-                                        <div className={styles.kanbanOrders}>
-                                            <div
-                                                className={styles.kanbanWrapper}
-                                            >
-                                                <div
+                                                <span
                                                     className={classNames(
-                                                        'addBlock',
-                                                        'addBlock__noIcon'
+                                                        'text',
+                                                        styles.kanbanTitle
                                                     )}
                                                 >
-                                                    <span
-                                                        className={classNames(
-                                                            'small-text',
-                                                            'icon-8'
-                                                        )}
+                                                    {board.title}
+                                                </span>
+                                                <div
+                                                    className={
+                                                        styles.kanbanOrders
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.kanbanWrapper
+                                                        }
                                                     >
-                                                        Отправить в архив
-                                                    </span>
+                                                        {board.items &&
+                                                            board.items.map(
+                                                                (item) => (
+                                                                    <OrderCake
+                                                                        key={
+                                                                            item._id
+                                                                        }
+                                                                        name={
+                                                                            item.orderName
+                                                                        }
+                                                                        number={
+                                                                            item.number
+                                                                        }
+                                                                        date={
+                                                                            item.date
+                                                                        }
+                                                                        image={
+                                                                            item
+                                                                                .imagesUrl[0]
+                                                                        }
+                                                                        style="kanbanCake"
+                                                                        draggable={
+                                                                            true
+                                                                        }
+                                                                    />
+                                                                )
+                                                            )}
+                                                        <div
+                                                            className={classNames(
+                                                                'addBlock',
+                                                                'addBlock__noIcon'
+                                                            )}
+                                                        >
+                                                            <span
+                                                                className={classNames(
+                                                                    'small-text',
+                                                                    'icon-8'
+                                                                )}
+                                                            >
+                                                                {board.textLink}
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        ))}
                                 </div>
                             </>
                         ) : (

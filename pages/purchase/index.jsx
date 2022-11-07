@@ -19,11 +19,7 @@ export default function Purchase() {
                             <h2 className={classNames('text', styles.title)}>
                                 Выбранные заказы
                             </h2>
-                            <div className={styles.orders}>
-                                <OrderCake />
-                                <OrderCake />
-                                <OrderCake />
-                            </div>
+                            <div className={styles.orders}></div>
                             <div className="addBlock">
                                 <span
                                     className={classNames(

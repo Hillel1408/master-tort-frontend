@@ -207,14 +207,16 @@ export default function Recipes() {
         //получаем картинку рецепта
         e.preventDefault();
         const file = e.dataTransfer.files[0];
-        setText(file.name); //сохраняем название картинки для отображения на экране после загрузки
+        //сохраняем название картинки для отображения на экране после загрузки
+        setText(file.name);
         sendImage(file);
     };
 
     const handleChangeFile = async (e) => {
         //получаем картинку рецепта
         const file = e.target.files[0];
-        setTextImage(file.name); //сохраняем название картинки для отображения на экране после загрузки
+        //сохраняем название картинки для отображения на экране после загрузки
+        setTextImage(file.name);
         sendImage(file);
     };
 

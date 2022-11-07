@@ -25,6 +25,7 @@ export default function ArchiveOrders() {
             });
             setOrders(archiveOrders);
         };
+
         const getOrders = async (userId) => {
             //получаем заказы пользователя
             try {
@@ -34,6 +35,7 @@ export default function ArchiveOrders() {
                 console.log(e.response?.data?.message);
             }
         };
+
         const checkAuth = async () => {
             //проверяем авторизован ли пользователь
             try {

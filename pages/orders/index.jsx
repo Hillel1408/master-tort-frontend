@@ -36,6 +36,7 @@ export default function Orders() {
     };
 
     const checkKanbanOrders = (boards) => {
+        //проверяем остались ли у нас заказы на досках,
         let flag = false;
         boards.forEach((item) => {
             if (item.items.length > 0) flag = true;
@@ -54,7 +55,7 @@ export default function Orders() {
                 );
                 let copy = Object.assign([], boards);
                 copy[3].items = [];
-                //проверяем остались ли у нас заказы на досках, если нет то скрываем доски и выводим сообщение
+                //если заказов на досках не осталось то скрываем доски и выводим сообщение
                 if (checkKanbanOrders(boards)) setBoards(copy);
                 else setBoards('');
             }

@@ -14,8 +14,6 @@ function OrderCake({
     item,
     board,
 }) {
-    const dateSplit = item.date.split('T');
-
     return (
         <div
             className={classNames(
@@ -47,12 +45,12 @@ function OrderCake({
                             'small-text'
                         )}
                     >
-                        {dateSplit[0]}
+                        {item.date}
                     </span>
                     <span
                         className={classNames(styles.contentTime, 'small-text')}
                     >
-                        {dateSplit[1].substr(0, 5)}
+                        {item.time}
                     </span>
                 </div>
             </div>

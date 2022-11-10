@@ -140,10 +140,10 @@ export default function Recipes() {
                     return item._id !== groupId;
                 });
                 //делаем рубрику "все рецепты" активной и убираем сортировку
-                setActive('');
-                setFilterRecipe('');
                 setGroup(newGroup);
                 setRecipe(newRecipe);
+                setActive('');
+                setFilterRecipe('');
             }
         } catch (e) {
             console.log(e.response?.data?.message);
@@ -167,6 +167,7 @@ export default function Recipes() {
             //если рубрика добавленного рецепта в данный момент активна то добавляем рецепт и в нее
             if (active === groupId.value)
                 setFilterRecipe([...filterRecipe, response.data]);
+            //обнуляем стейты
             setRecipeName('');
             setGroupId('');
             setDrag(false);

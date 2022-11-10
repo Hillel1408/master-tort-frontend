@@ -11,11 +11,12 @@ import { NoAccess } from '../../components/NoAccess';
 import stylesLogin from '../login/Login.module.scss';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
+import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
 
 export default function ArchiveOrders() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
-    const [orders, setOrders] = useState('');
+    const [orders, setOrders] = useState();
 
     useEffect(() => {
         const filterOrders = async (orders) => {
@@ -23,7 +24,7 @@ export default function ArchiveOrders() {
             const archiveOrders = orders.filter((item) => {
                 return item.status === 'archive';
             });
-            setOrders(archiveOrders);
+            archiveOrders.length > 0 ? setOrders(archiveOrders) : setOrders('');
         };
 
         const getOrders = async (userId) => {
@@ -87,16 +88,29 @@ export default function ArchiveOrders() {
                         isAuth ? (
                             <>
                                 <OrdersNav visibleTabs={false} />
-                                <div className={styles.orders}>
-                                    {orders &&
-                                        orders.map((item) => (
+                                {orders ? (
+                                    <div className={styles.orders}>
+                                        {orders.map((item) => (
                                             <OrderCake
                                                 key={item._id}
                                                 type="archive"
                                                 item={item}
                                             />
                                         ))}
-                                </div>
+                                    </div>
+                                ) : (
+                                    orders !== undefined && (
+                                        <h2
+                                            className={classNames(
+                                                'title',
+                                                stylesNoAccess.noOrders,
+                                                stylesNoAccess.title
+                                            )}
+                                        >
+                                            У вас нет архивных заказов
+                                        </h2>
+                                    )
+                                )}
                             </>
                         ) : (
                             <NoAccess

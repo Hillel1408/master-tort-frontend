@@ -347,7 +347,7 @@ export default function Orders() {
                                         <h2
                                             className={classNames(
                                                 'title',
-                                                styles.noOrders,
+                                                stylesNoAccess.noOrders,
                                                 stylesNoAccess.title
                                             )}
                                         >

@@ -21,7 +21,7 @@ export default function ArchiveOrders() {
         const filterOrders = async (orders) => {
             //забираем в стейт только архивные заказы
             const archiveOrders = orders.filter((item) => {
-                return item.type === 'archive';
+                return item.status === 'archive';
             });
             setOrders(archiveOrders);
         };
@@ -69,8 +69,8 @@ export default function ArchiveOrders() {
                         />
                     ) : (
                         <Oval
-                            height={40}
-                            width={40}
+                            height={34}
+                            width={34}
                             color="#009998"
                             wrapperStyle={{}}
                             wrapperClass=""
@@ -92,11 +92,8 @@ export default function ArchiveOrders() {
                                         orders.map((item) => (
                                             <OrderCake
                                                 key={item._id}
-                                                name={item.orderName}
                                                 type="archive"
-                                                number={item.number}
-                                                date={item.date}
-                                                image={item.imagesUrl[0]}
+                                                item={item}
                                             />
                                         ))}
                                 </div>

@@ -5,10 +5,6 @@ import stylesOrders from '../../pages/orders/Orders.module.scss';
 function OrderCake({
     type,
     style,
-    name,
-    number,
-    date,
-    image,
     draggable,
     dragOverHandler,
     dragLeaveHandler,
@@ -18,7 +14,7 @@ function OrderCake({
     item,
     board,
 }) {
-    const dateSplit = date.split('T');
+    const dateSplit = item.date.split('T');
 
     return (
         <div
@@ -36,12 +32,12 @@ function OrderCake({
             onDrop={(e) => dropHandler(e, board, item)}
         >
             <div className={styles.img}>
-                <img src={image} alt="" draggable="false" />
+                <img src={item.imagesUrl[0]} alt="" draggable="false" />
             </div>
             <div className={styles.content}>
-                <span className={styles.contentNumber}>№{number}</span>
+                <span className={styles.contentNumber}>№{item.number}</span>
                 <p className={classNames(styles.contentText, 'small-text')}>
-                    {name}
+                    {item.orderName}
                 </p>
                 <div className={styles.contentBlock}>
                     <span

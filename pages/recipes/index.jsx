@@ -311,8 +311,8 @@ export default function Recipes() {
                         />
                     ) : (
                         <Oval
-                            height={40}
-                            width={40}
+                            height={34}
+                            width={34}
                             color="#009998"
                             wrapperStyle={{}}
                             wrapperClass=""

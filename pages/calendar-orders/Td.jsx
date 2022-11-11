@@ -1,15 +1,21 @@
 import styles from './CalendarOrders.module.scss';
 import classNames from 'classnames';
 
-function Td({ amount, st }) {
+function Td({ amount, st, count, activeDay, setActiveDay, today }) {
     return (
-        <td>
+        <td
+            onClick={() => count && setActiveDay(amount)}
+            className={classNames(activeDay == amount && styles.tdActive)}
+        >
             <div
                 className={classNames(
-                    st == true ? styles.st : '',
-                    styles.status
+                    st && styles.st,
+                    styles.status,
+                    count && styles.statusOrdinary,
+                    today && styles.today
                 )}
             >
+                {count && <div>{count}</div>}
                 {amount}
             </div>
         </td>

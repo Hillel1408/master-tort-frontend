@@ -40,7 +40,7 @@
     }
 }
 .container {
-    max-width: 464px;
+    max-width: max-content;
     margin: 0 auto;
     @media (max-width: 576px) {
         max-width: 284px;
@@ -62,27 +62,14 @@
                 padding: 5px;
             }
         }
-        th:first-child {
-            padding-left: 0;
-        }
-        th:last-child {
-            padding-right: 0;
-        }
     }
     tr {
         td {
             padding: 20px;
             text-align: center;
-            cursor: pointer;
             @media (max-width: 576px) {
                 padding: 5px;
             }
-        }
-        td:first-child {
-            padding-left: 0;
-        }
-        td:last-child {
-            padding-right: 0;
         }
     }
 }
@@ -110,6 +97,7 @@
     &Urgent,
     &Ordinary {
         border-radius: 50%;
+        cursor: pointer;
     }
     &Archive {
         border: 1px solid #cccccc;
@@ -164,4 +152,13 @@
 }
 .next {
     margin-left: 26px;
+}
+.tdActive {
+    background: #cceeee;
+    border-radius: 8px;
+}
+.today {
+    background-color: #f16363;
+    border-radius: 50%;
+    color: white;
 }

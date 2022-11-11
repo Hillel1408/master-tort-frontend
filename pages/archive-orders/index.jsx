@@ -93,7 +93,7 @@ export default function ArchiveOrders() {
                                         {orders.map((item) => (
                                             <OrderCake
                                                 key={item._id}
-                                                type="archive"
+                                                type={item.status}
                                                 item={item}
                                             />
                                         ))}

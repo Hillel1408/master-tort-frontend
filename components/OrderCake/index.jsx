@@ -13,6 +13,7 @@ function OrderCake({
     dropHandler,
     item,
     board,
+    bg,
 }) {
     return (
         <div
@@ -22,6 +23,7 @@ function OrderCake({
                 stylesOrders[style],
                 'item'
             )}
+            style={{ backgroundColor: `${bg}` }}
             draggable={draggable}
             onDragOver={(e) => dragOverHandler(e)}
             onDragLeave={(e) => dragLeaveHandler(e)}

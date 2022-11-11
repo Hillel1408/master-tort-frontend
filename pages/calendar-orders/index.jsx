@@ -17,25 +17,28 @@ export default function CalendarOrders() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [nums, setNums] = useState();
+    const [day, setDay] = useState();
     const [year, setYear] = useState();
     const [month, setMonth] = useState();
     const [dateNow, setDateNow] = useState();
     const [orders, setOrders] = useState();
     const [filteredOrders, setFilteredOrders] = useState();
+    const [activeDay, setActiveDay] = useState('');
+    const [isActive, setIsActive] = useState('');
 
     const monthArr = [
-        'Январь',
-        'Февраль',
-        'Март',
-        'Апрель',
-        'Май',
-        'Июнь',
-        'Июль',
-        'Август',
-        'Сентябрь',
-        'Октябрь',
-        'Ноябрь',
-        'Декабрь',
+        ['январь', 'января'],
+        ['февраль', 'февраля'],
+        ['март', 'марта'],
+        ['апрель', 'апреля'],
+        ['май', 'мая'],
+        ['июнь', 'июня'],
+        ['июль', 'июля'],
+        ['август', 'августа'],
+        ['сентябрь', 'сентября'],
+        ['октябрь', 'октября'],
+        ['ноябрь', 'ноября'],
+        ['декабрь', 'декабря'],
     ];
 
     //формируем массив с днями месяца
@@ -104,12 +107,18 @@ export default function CalendarOrders() {
         return result;
     };
 
+    const toUpperCase = (str) => {
+        //делаем первую букву заглавной
+        let newStr = str[0].toUpperCase() + str.slice(1);
+        return newStr;
+    };
+
     const draw = (year, month) => {
         let arr = range(getLastDay(year, month));
         let firstWeekDay = getFirstWeekDay(year, month);
         let lastWeekDay = getLastWeekDay(year, month);
         //записываем в стейт текущий месяц и год для отображения на календаре
-        setDateNow(monthArr[month] + ' ' + year);
+        setDateNow(toUpperCase(monthArr[month][0]) + ' ' + year);
         return chunk(normalize(arr, firstWeekDay, 6 - lastWeekDay), 7);
     };
 
@@ -137,12 +146,14 @@ export default function CalendarOrders() {
         //получаем следующий месяц, и когда нужно меняем год
         setYear(getNextYear(year, month));
         setMonth(getNextMonth(month));
+        setActiveDay('');
     };
 
     const prevClickHandler = () => {
         //получаем предыдущий месяц, и когда нужно меняем год
         setYear(getPrevYear(year, month));
         setMonth(getPrevMonth(month));
+        setActiveDay('');
     };
 
     useEffect(() => {
@@ -151,10 +162,11 @@ export default function CalendarOrders() {
             try {
                 const response = await OrdersService.getOrders(userId);
                 setOrders(response.data);
-                //получаем текущий год и месяц
+                //получаем текущий год, месяц и день
                 const date = new Date();
                 setYear(date.getFullYear());
                 setMonth(date.getMonth());
+                setDay(date.getDate());
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -179,17 +191,31 @@ export default function CalendarOrders() {
 
     const filterOrders = (orders, year, month) => {
         //фильтруем и получаем в стейт заказы текущего месяца на календаре
-        const newOrders = orders.filter((item) => {
+        const asd = {};
+        orders.forEach((item) => {
             const date = new Date(item.date);
-            return date.getMonth() === month && date.getFullYear() === year;
+            if (date.getMonth() === month && date.getFullYear() === year) {
+                const day = date.getDate();
+                asd[day]
+                    ? (asd[day] = [...asd[day], item])
+                    : (asd[day] = [item]);
+            }
         });
-        setFilteredOrders(newOrders);
+        setFilteredOrders(asd);
     };
 
     useEffect(() => {
-        //записываем в стейт массив с днями месяца для отображения на календаре
-        setNums(draw(year, month));
-        orders && filterOrders(orders, year, month);
+        if (month) {
+            console.log(123);
+            const date = new Date();
+            //записываем в стейт массив с днями месяца для отображения на календаре
+            setNums(draw(year, month));
+            filterOrders(orders, year, month);
+            //проверяем является ли отображаемые месяц и год текущими, чтобы выделить текущий день
+            year === date.getFullYear() && month === date.getMonth()
+                ? setIsActive(true)
+                : setIsActive(false);
+        }
     }, [month]);
 
     return (
@@ -313,6 +339,26 @@ export default function CalendarOrders() {
                                                                                 amount={
                                                                                     amount
                                                                                 }
+                                                                                count={
+                                                                                    filteredOrders[
+                                                                                        amount
+                                                                                    ] &&
+                                                                                    filteredOrders[
+                                                                                        amount
+                                                                                    ]
+                                                                                        .length
+                                                                                }
+                                                                                today={
+                                                                                    amount ===
+                                                                                        day &&
+                                                                                    isActive
+                                                                                }
+                                                                                activeDay={
+                                                                                    activeDay
+                                                                                }
+                                                                                setActiveDay={
+                                                                                    setActiveDay
+                                                                                }
                                                                             />
                                                                         )
                                                                     )}
@@ -325,14 +371,44 @@ export default function CalendarOrders() {
                                         </div>
                                     </div>
                                     <div className={styles.orders}>
-                                        <div className={styles.overflow}></div>
-                                        <div className={styles.ordersNo}>
-                                            <span className="icon-9"></span>
-                                            <p className="text">
-                                                Выберите дату, чтобы посмотреть
-                                                заказы
-                                            </p>
-                                        </div>
+                                        {activeDay ? (
+                                            <>
+                                                <h2
+                                                    className="text"
+                                                    style={{
+                                                        marginBottom: '20px',
+                                                    }}
+                                                >
+                                                    {`Заказы ${activeDay} ${monthArr[month][1]} ${year}`}
+                                                </h2>
+                                                <div
+                                                    className={styles.overflow}
+                                                >
+                                                    {filteredOrders[
+                                                        activeDay
+                                                    ].map((item) => (
+                                                        <OrderCake
+                                                            key={item._id}
+                                                            item={item}
+                                                            type={item.status} //archive или kanban
+                                                            bg={
+                                                                item.status ===
+                                                                    'archive' &&
+                                                                '#f4f2f1'
+                                                            }
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <div className={styles.ordersNo}>
+                                                <span className="icon-9"></span>
+                                                <p className="text">
+                                                    Выберите дату, чтобы
+                                                    посмотреть заказы
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </>

@@ -396,6 +396,7 @@ export default function CalendarOrders() {
                                                                     'archive' &&
                                                                 '#f4f2f1'
                                                             }
+                                                            style="calendarCake"
                                                         />
                                                     ))}
                                                 </div>

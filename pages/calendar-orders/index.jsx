@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { Oval } from 'react-loader-spinner';
 import { Sidebar } from '../../components/Sidebar';
+import { NoAccess } from '../../components/NoAccess';
 import { Header } from '../../components/Header';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
-import styles from './CalendarOrders.module.scss';
 import { Td } from './Td';
 import AuthService from '../../services/AuthService';
-import stylesHeader from '../../components/Header/Header.module.scss';
-import { Oval } from 'react-loader-spinner';
-import stylesLogin from '../login/Login.module.scss';
-import { NoAccess } from '../../components/NoAccess';
 import OrdersService from '../../services/OrdersService';
+import styles from './CalendarOrders.module.scss';
+import stylesHeader from '../../components/Header/Header.module.scss';
+import stylesLogin from '../login/Login.module.scss';
 
 export default function CalendarOrders() {
     const [isAuth, setIsAuth] = useState('');
@@ -123,29 +123,34 @@ export default function CalendarOrders() {
     };
 
     const getNextYear = (year, month) => {
+        //следующий год
         if (month == 11) return ++year;
         else return year;
     };
 
     const getNextMonth = (month) => {
+        //следующий месяц
         if (month == 11) return 0;
         else return ++month;
     };
 
     const getPrevYear = (year, month) => {
+        //предыдущий год
         if (month == 0) return --year;
         else return year;
     };
 
     const getPrevMonth = (month) => {
+        //предыдущий месяц
         if (month == 0) return 11;
         else return --month;
     };
 
     const nextClickHandler = () => {
         //получаем следующий месяц, и когда нужно меняем год
+        const month2 = getNextMonth(month);
         setYear(getNextYear(year, month));
-        setMonth(getNextMonth(month));
+        setMonth(month2);
         setActiveDay('');
     };
 
@@ -205,8 +210,7 @@ export default function CalendarOrders() {
     };
 
     useEffect(() => {
-        if (month) {
-            console.log(123);
+        if (month !== undefined) {
             const date = new Date();
             //записываем в стейт массив с днями месяца для отображения на календаре
             setNums(draw(year, month));

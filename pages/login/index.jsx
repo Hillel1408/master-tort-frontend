@@ -7,7 +7,7 @@ import { SocialLinks } from '../../components/SocialLinks';
 import styles from './Login.module.scss';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import { EmailForm } from './EmailForm';
+import { EmailForm } from '../../components/pages/EmailForm';
 import AuthService from '../../services/AuthService';
 import { useRouter } from 'next/router';
 import stylesHeader from '../../components/Header/Header.module.scss';

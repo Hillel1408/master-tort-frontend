@@ -1,5 +1,5 @@
-import styles from './Recipes.module.scss';
 import classNames from 'classnames';
+import styles from '../../pages/recipes/Recipes.module.scss';
 
 function Group({
     groupIcon,

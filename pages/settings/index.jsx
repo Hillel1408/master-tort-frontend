@@ -4,7 +4,7 @@ import { Oval } from 'react-loader-spinner';
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
-import { BodyTable } from './BodyTable';
+import { BodyTable } from '../../components/pages/BodyTable';
 import { Alert } from '../../components/Alert';
 import { setAlert } from '../../redux/cakeSlice';
 import { NoAccess } from '../../components/NoAccess';

@@ -1,5 +1,5 @@
 import { TableCell } from './TableCell';
-import stylesTable from '../../components/Table/Table.module.scss';
+import stylesTable from '../Table/Table.module.scss';
 
 function BodyTable({ settings, setSettings, index }) {
     return (

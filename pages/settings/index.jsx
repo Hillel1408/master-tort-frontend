@@ -54,6 +54,7 @@ export default function Settings() {
             try {
                 const response = await SettingsService.get(user);
                 setSettings(response.data);
+                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -63,7 +64,6 @@ export default function Settings() {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
-                setIsAuth(true);
                 getSettings(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);

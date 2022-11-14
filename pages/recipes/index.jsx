@@ -274,6 +274,7 @@ export default function Recipes() {
             try {
                 const response = await RecipeService.getRecipe(userId);
                 setRecipe(response.data);
+                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -284,7 +285,7 @@ export default function Recipes() {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
-                setIsAuth(true);
+
                 getGroup(response.data.user.id);
                 getRecipe(response.data.user.id);
             } catch (e) {
@@ -387,71 +388,65 @@ export default function Recipes() {
                                         </span>
                                     </div>
                                 </div>
-                                {group && (
-                                    <div className={styles.cakes}>
-                                        <h2
-                                            className={classNames(
-                                                'text',
-                                                styles.groupsText
-                                            )}
-                                        >
-                                            Торты
-                                        </h2>
-                                        <div className={styles.cakesBlock}>
-                                            {filterRecipe
-                                                ? filterRecipe.map((item) => (
-                                                      <Recipe
-                                                          recipeName={
-                                                              item.recipeName
-                                                          }
-                                                          recipeUrl={
-                                                              item.recipeUrl
-                                                          }
-                                                          key={item._id}
-                                                          deleteRecipe={
-                                                              deleteRecipe
-                                                          }
-                                                          recipeId={item._id}
-                                                          groupId={item.group}
-                                                      />
-                                                  ))
-                                                : recipe &&
-                                                  recipe.map((item) => (
-                                                      <Recipe
-                                                          recipeName={
-                                                              item.recipeName
-                                                          }
-                                                          recipeUrl={
-                                                              item.recipeUrl
-                                                          }
-                                                          key={item._id}
-                                                          deleteRecipe={
-                                                              deleteRecipe
-                                                          }
-                                                          recipeId={item._id}
-                                                          groupId={item.group}
-                                                      />
-                                                  ))}
-                                        </div>
-                                        <div
-                                            className="addBlock"
-                                            onClick={() =>
-                                                setModalActiveRecipe(true)
-                                            }
-                                        >
-                                            <span
-                                                className={classNames(
-                                                    'small-text',
-                                                    'icon-8',
-                                                    'popup-link'
-                                                )}
-                                                href="add-recipe"
-                                            >
-                                                Создать рецепт
-                                            </span>
-                                        </div>
+                                <div className={styles.cakes}>
+                                    <h2
+                                        className={classNames(
+                                            'text',
+                                            styles.groupsText
+                                        )}
+                                    >
+                                        Торты
+                                    </h2>
+                                    <div className={styles.cakesBlock}>
+                                        {filterRecipe
+                                            ? filterRecipe.map((item) => (
+                                                  <Recipe
+                                                      recipeName={
+                                                          item.recipeName
+                                                      }
+                                                      recipeUrl={item.recipeUrl}
+                                                      key={item._id}
+                                                      deleteRecipe={
+                                                          deleteRecipe
+                                                      }
+                                                      recipeId={item._id}
+                                                      groupId={item.group}
+                                                  />
+                                              ))
+                                            : recipe &&
+                                              recipe.map((item) => (
+                                                  <Recipe
+                                                      recipeName={
+                                                          item.recipeName
+                                                      }
+                                                      recipeUrl={item.recipeUrl}
+                                                      key={item._id}
+                                                      deleteRecipe={
+                                                          deleteRecipe
+                                                      }
+                                                      recipeId={item._id}
+                                                      groupId={item.group}
+                                                  />
+                                              ))}
                                     </div>
-                                )}
+                                    <div
+                                        className="addBlock"
+                                        onClick={() =>
+                                            setModalActiveRecipe(true)
+                                        }
+                                    >
+                                        <span
+                                            className={classNames(
+                                                'small-text',
+                                                'icon-8',
+                                                'popup-link'
+                                            )}
+                                            href="add-recipe"
+                                        >
+                                            Создать рецепт
+                                        </span>
+                                    </div>
+                                </div>
                             </>
                         ) : (
                             <NoAccess

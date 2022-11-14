@@ -167,6 +167,7 @@ export default function CalendarOrders() {
             try {
                 const response = await OrdersService.getOrders(userId);
                 setOrders(response.data);
+                setIsAuth(true);
                 //получаем текущий год, месяц и день
                 const date = new Date();
                 setYear(date.getFullYear());
@@ -183,7 +184,6 @@ export default function CalendarOrders() {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
-                setIsAuth(true);
                 getOrders(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);

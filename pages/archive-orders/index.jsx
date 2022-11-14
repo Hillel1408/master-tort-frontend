@@ -32,6 +32,7 @@ export default function ArchiveOrders() {
             try {
                 const response = await OrdersService.getOrders(userId);
                 filterOrders(response.data);
+                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -44,7 +45,6 @@ export default function ArchiveOrders() {
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
                 getOrders(response.data.user.id);
-                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);

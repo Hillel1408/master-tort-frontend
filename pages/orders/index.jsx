@@ -191,6 +191,7 @@ export default function Orders() {
             try {
                 const response = await OrdersService.getKanban(userId);
                 filterOrders(response.data);
+                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -203,7 +204,6 @@ export default function Orders() {
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
                 getOrders(response.data.user.id);
-                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);

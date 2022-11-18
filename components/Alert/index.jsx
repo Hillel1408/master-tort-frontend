@@ -23,9 +23,9 @@ function Alert() {
             <div
                 className={classNames(
                     styles.toastContainer,
-                    alertName !== '' ? styles.active : ''
+                    alertName !== '' && styles.active
                 )}
-                style={{ backgroundColor: `${alertColor}` }}
+                style={{ backgroundColor: { alertColor } }}
             >
                 {alertName}
             </div>

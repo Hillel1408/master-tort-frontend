@@ -16,7 +16,7 @@ function NavLink({ item }) {
             <Link href={href}>
                 <a
                     className={
-                        router.pathname == `${href}`
+                        router.pathname == { href }
                             ? classNames(
                                   'text',
                                   styles.navLink,

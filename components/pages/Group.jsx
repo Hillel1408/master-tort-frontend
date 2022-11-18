@@ -20,13 +20,13 @@ function Group({
             }}
             className={classNames(
                 styles.link,
-                active === groupId ? styles.groupsItemActive : ''
+                active === groupId && styles.groupsItemActive
             )}
         >
             <div
                 className={classNames(
                     styles.groupsItem,
-                    groupId === '' ? styles.allRecipe : ''
+                    groupId === '' && styles.allRecipe
                 )}
             >
                 <span
@@ -53,10 +53,8 @@ function Group({
                         />
                     </svg>
                 </span>
-                {countRecipe != 0 ? (
+                {countRecipe != 0 && (
                     <span className={styles.groupsCount}>{countRecipe}</span>
-                ) : (
-                    ''
                 )}
             </div>
         </div>

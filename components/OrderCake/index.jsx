@@ -3,17 +3,17 @@ import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 
 function OrderCake({
+    bg,
+    item,
     type,
+    board,
     style,
     draggable,
-    dragOverHandler,
-    dragLeaveHandler,
-    dragStartHandler,
-    dragEndHandler,
     dropHandler,
-    item,
-    board,
-    bg,
+    dragEndHandler,
+    dragOverHandler,
+    dragStartHandler,
+    dragLeaveHandler,
 }) {
     return (
         <div
@@ -23,7 +23,7 @@ function OrderCake({
                 stylesOrders[style],
                 'item'
             )}
-            style={{ backgroundColor: `${bg}` }}
+            style={{ backgroundColor: { bg } }}
             draggable={draggable}
             onDragOver={(e) => dragOverHandler(e)}
             onDragLeave={(e) => dragLeaveHandler(e)}

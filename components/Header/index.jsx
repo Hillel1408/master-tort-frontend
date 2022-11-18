@@ -37,14 +37,14 @@ function Header({ isAuth, setIsAuth, userName }) {
                             className={classNames(
                                 'icon-30',
                                 styles.icon,
-                                tooltipActive ? styles.iconActive : ''
+                                tooltipActive && styles.iconActive
                             )}
                         ></span>
                     </div>
                     <div
                         className={classNames(
                             styles.tooltip,
-                            tooltipActive ? styles.tooltipActive : ''
+                            tooltipActive && styles.tooltipActive
                         )}
                     >
                         <Link href="/personal-settings">

@@ -61,11 +61,7 @@ function TableCell({
             {toggleBtn && (
                 <button
                     className={stylesInput.input__btn}
-                    onMouseDown={() => {
-                        if (item != value) {
-                            saveSettings();
-                        }
-                    }}
+                    onMouseDown={() => item !== value && saveSettings()}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

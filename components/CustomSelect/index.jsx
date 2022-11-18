@@ -1,5 +1,12 @@
 import Select from 'react-select';
 
+const styles = {
+    fontWeight: '400',
+    fontSize: '12px',
+    lineHeight: '150%',
+    textAlign: 'left',
+};
+
 const customStyles = {
     placeholder: (provided) => ({
         ...provided,
@@ -7,15 +14,12 @@ const customStyles = {
     }),
     control: (provided) => ({
         ...provided,
+        ...styles,
         borderRadius: '8px',
         height: '43px',
         boxShadow: 'none',
-        fontWeight: '400',
-        fontSize: '12px',
-        lineHeight: '150%',
         borderColor: '#cccccc',
         padding: '0 2px',
-        textAlign: 'left',
         '&:hover': {
             borderColor: '#7a7a7a',
             cursor: 'pointer',
@@ -28,14 +32,11 @@ const customStyles = {
     }),
     option: (provided, state) => ({
         ...provided,
+        ...styles,
         cursor: 'pointer',
-        fontWeight: '400',
-        fontSize: '12px',
-        lineHeight: '150%',
-        textAlign: 'left',
         padding: '8px 0 8px 12px',
-        backgroundColor: state.isSelected ? '#F4F2F1' : '',
-        color: state.isSelected ? '#002222' : '',
+        backgroundColor: state.isSelected && '#F4F2F1',
+        color: state.isSelected && '#002222',
         '&:active': {
             backgroundColor: '#F4F2F1',
         },

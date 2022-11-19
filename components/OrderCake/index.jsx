@@ -23,7 +23,7 @@ function OrderCake({
                 stylesOrders[style],
                 'item'
             )}
-            style={{ backgroundColor: { bg } }}
+            style={{ backgroundColor: `${bg}` }}
             draggable={draggable}
             onDragOver={(e) => dragOverHandler(e)}
             onDragLeave={(e) => dragLeaveHandler(e)}

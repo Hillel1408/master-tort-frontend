@@ -1,18 +1,12 @@
 import classNames from 'classnames';
-import { Sidebar } from '../../components/Sidebar';
-import { Header } from '../../components/Header';
 import { OrdersNav } from '../../components/OrdersNav';
 import { OrderCake } from '../../components/OrderCake';
 import styles from './Orders.module.scss';
 import { useState, useEffect } from 'react';
-import { Oval } from 'react-loader-spinner';
-import { NoAccess } from '../../components/NoAccess';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
-import stylesHeader from '../../components/Header/Header.module.scss';
-import stylesLogin from '../login/Login.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
-import stylesOrder from '../../components/OrderCake/OrderCake.module.scss';
+import Layout from '../../components/Layout';
 
 export default function Orders() {
     const [isAuth, setIsAuth] = useState('');
@@ -213,180 +207,92 @@ export default function Orders() {
         else setIsAuth(false);
     }, []);
     return (
-        <div className={classNames('wrapper', 'container')}>
-            <Sidebar />
-            <div className="content">
-                <header className={stylesHeader.root}>
-                    <h1 className={classNames('title', stylesHeader.title)}>
-                        Заказы
-                    </h1>
-                    {isAuth !== '' ? (
-                        <Header
-                            userName={dataUser.fullName}
-                            isAuth={isAuth}
-                            setIsAuth={setIsAuth}
-                        />
-                    ) : (
-                        <Oval
-                            height={34}
-                            width={34}
-                            color="#009998"
-                            wrapperStyle={{}}
-                            wrapperClass=""
-                            visible={true}
-                            ariaLabel="oval-loading"
-                            secondaryColor="#7a7a7a"
-                            strokeWidth={2}
-                            strokeWidthSecondary={2}
-                        />
-                    )}
-                </header>
-                <main className="main">
-                    {isAuth !== '' ? (
-                        isAuth ? (
-                            <>
-                                <OrdersNav visibleTabs={true} />
-                                {boards ? (
-                                    <div className={styles.kanban}>
-                                        {boards.map((board) => (
-                                            <div
-                                                className={classNames(
-                                                    styles.kanbanColumn,
-                                                    'column'
-                                                )}
-                                                onDragOver={(e) =>
-                                                    dragOverHandler(e)
-                                                }
-                                                onDrop={(e) =>
-                                                    dropCardHandler(e, board)
-                                                }
-                                            >
-                                                <span
-                                                    className={classNames(
-                                                        'text',
-                                                        styles.kanbanTitle
-                                                    )}
-                                                >
-                                                    {board.title}
-                                                </span>
-                                                <div
-                                                    className={
-                                                        styles.kanbanOrders
-                                                    }
-                                                >
-                                                    <div
-                                                        className={
-                                                            styles.kanbanWrapper
-                                                        }
-                                                    >
-                                                        {board.items &&
-                                                            board.items.map(
-                                                                (item) => (
-                                                                    <OrderCake
-                                                                        key={
-                                                                            item._id
-                                                                        }
-                                                                        style="kanbanCake"
-                                                                        draggable={
-                                                                            true
-                                                                        }
-                                                                        dragOverHandler={
-                                                                            dragOverHandler
-                                                                        }
-                                                                        dragLeaveHandler={
-                                                                            dragLeaveHandler
-                                                                        }
-                                                                        dragStartHandler={
-                                                                            dragStartHandler
-                                                                        }
-                                                                        dragEndHandler={
-                                                                            dragEndHandler
-                                                                        }
-                                                                        dropHandler={
-                                                                            dropHandler
-                                                                        }
-                                                                        item={
-                                                                            item
-                                                                        }
-                                                                        board={
-                                                                            board
-                                                                        }
-                                                                    />
-                                                                )
-                                                            )}
-                                                    </div>
-                                                    <div
-                                                        className={classNames(
-                                                            'addBlock',
-                                                            'addBlock__noIcon',
-                                                            styles.addBlock
-                                                        )}
-                                                    >
-                                                        <span
-                                                            className={classNames(
-                                                                'small-text',
-                                                                'icon-8'
-                                                            )}
-                                                            onClick={() => {
-                                                                board.function &&
-                                                                    board.function(
-                                                                        dataUser,
-                                                                        boards,
-                                                                        board
-                                                                    );
-                                                            }}
-                                                        >
-                                                            {board.textLink}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    boards !== undefined && (
-                                        <h2
-                                            className={classNames(
-                                                'title',
-                                                stylesNoAccess.noOrders,
-                                                stylesNoAccess.title
-                                            )}
-                                        >
-                                            У вас нет активных заказов
-                                        </h2>
-                                    )
+        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+            <OrdersNav visibleTabs={true} />
+            {boards ? (
+                <div className={styles.kanban}>
+                    {boards.map((board) => (
+                        <div
+                            className={classNames(
+                                styles.kanbanColumn,
+                                'column'
+                            )}
+                            onDragOver={(e) => dragOverHandler(e)}
+                            onDrop={(e) => dropCardHandler(e, board)}
+                        >
+                            <span
+                                className={classNames(
+                                    'text',
+                                    styles.kanbanTitle
                                 )}
-                            </>
-                        ) : (
-                            <NoAccess
-                                title={'Доступ закрыт'}
-                                text={
-                                    'Зарегистрируйтесь или войдите в учетную запись, чтобы использовать все возможности сервиса'
-                                }
-                                linkBtn={'/login'}
-                                textBtn={'Войти'}
-                            />
-                        )
-                    ) : (
-                        <div className={stylesLogin.wrapper}>
-                            <Oval
-                                height={40}
-                                width={40}
-                                color="#009998"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                                visible={true}
-                                ariaLabel="oval-loading"
-                                secondaryColor="#7a7a7a"
-                                strokeWidth={2}
-                                strokeWidthSecondary={2}
-                            />
+                            >
+                                {board.title}
+                            </span>
+                            <div className={styles.kanbanOrders}>
+                                <div className={styles.kanbanWrapper}>
+                                    {board.items &&
+                                        board.items.map((item) => (
+                                            <OrderCake
+                                                key={item._id}
+                                                style="kanbanCake"
+                                                draggable={true}
+                                                dragOverHandler={
+                                                    dragOverHandler
+                                                }
+                                                dragLeaveHandler={
+                                                    dragLeaveHandler
+                                                }
+                                                dragStartHandler={
+                                                    dragStartHandler
+                                                }
+                                                dragEndHandler={dragEndHandler}
+                                                dropHandler={dropHandler}
+                                                item={item}
+                                                board={board}
+                                            />
+                                        ))}
+                                </div>
+                                <div
+                                    className={classNames(
+                                        'addBlock',
+                                        'addBlock__noIcon',
+                                        styles.addBlock
+                                    )}
+                                >
+                                    <span
+                                        className={classNames(
+                                            'small-text',
+                                            'icon-8'
+                                        )}
+                                        onClick={() => {
+                                            board.function &&
+                                                board.function(
+                                                    dataUser,
+                                                    boards,
+                                                    board
+                                                );
+                                        }}
+                                    >
+                                        {board.textLink}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    )}
-                </main>
-                <br></br>
-                <br></br>
-            </div>
-        </div>
+                    ))}
+                </div>
+            ) : (
+                boards !== undefined && (
+                    <h2
+                        className={classNames(
+                            'title',
+                            stylesNoAccess.noOrders,
+                            stylesNoAccess.title
+                        )}
+                    >
+                        У вас нет активных заказов
+                    </h2>
+                )
+            )}
+        </Layout>
     );
 }

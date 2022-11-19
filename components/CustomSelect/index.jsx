@@ -1,71 +1,72 @@
 import Select from 'react-select';
 
-const styles = {
-    fontWeight: '400',
-    fontSize: '12px',
-    lineHeight: '150%',
-    textAlign: 'left',
-};
-
-const customStyles = {
-    placeholder: (provided) => ({
-        ...provided,
-        color: '#cccccc',
-    }),
-    control: (provided) => ({
-        ...provided,
-        ...styles,
-        borderRadius: '8px',
-        height: '43px',
-        boxShadow: 'none',
-        borderColor: '#cccccc',
-        padding: '0 2px',
-        '&:hover': {
-            borderColor: '#7a7a7a',
-            cursor: 'pointer',
-        },
-    }),
-    container: (provided) => ({
-        ...provided,
-        width: '280px',
-        margin: '0 auto',
-    }),
-    option: (provided, state) => ({
-        ...provided,
-        ...styles,
-        cursor: 'pointer',
-        padding: '8px 0 8px 12px',
-        backgroundColor: state.isSelected && '#F4F2F1',
-        color: state.isSelected && '#002222',
-        '&:active': {
-            backgroundColor: '#F4F2F1',
-        },
-        '&:hover': {
-            backgroundColor: '#F4F2F1',
-        },
-    }),
-    menu: (provided) => ({
-        ...provided,
-        borderRadius: '8px',
-        boxShadow: 'none',
-        overflow: 'hidden',
-        border: '1px solid #009998',
-        minHeight: '43px',
-    }),
-    menuList: (provided) => ({
-        ...provided,
-        maxHeight: '120px',
-    }),
-    noOptionsMessage: (provided) => ({
-        ...provided,
-        marginTop: '3px',
-        textAlign: 'left',
-        fontSize: '12px',
-        color: '#cccccc',
-    }),
-};
-
 function CustomSelect(props) {
+    const styles = {
+        fontWeight: '400',
+        fontSize: '12px',
+        lineHeight: '150%',
+        textAlign: 'left',
+    };
+
+    const customStyles = {
+        placeholder: (provided) => ({
+            ...provided,
+            color: '#cccccc',
+        }),
+        control: (provided) => ({
+            ...provided,
+            ...styles,
+            borderRadius: '8px',
+            height: props.height,
+            minHeight: props.height,
+            boxShadow: 'none',
+            borderColor: '#cccccc',
+            padding: '0 2px',
+            '&:hover': {
+                borderColor: '#7a7a7a',
+                cursor: 'pointer',
+            },
+        }),
+        container: (provided) => ({
+            ...provided,
+            width: '280px',
+            margin: '0 auto',
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            ...styles,
+            cursor: 'pointer',
+            padding: '8px 0 8px 12px',
+            backgroundColor: state.isSelected && '#F4F2F1',
+            color: state.isSelected && '#002222',
+            '&:active': {
+                backgroundColor: '#F4F2F1',
+            },
+            '&:hover': {
+                backgroundColor: '#F4F2F1',
+            },
+        }),
+        menu: (provided) => ({
+            ...provided,
+            borderRadius: '8px',
+            boxShadow: 'none',
+            overflow: 'hidden',
+            border: '1px solid #009998',
+            minHeight: '43px',
+        }),
+        menuList: (provided) => ({
+            ...provided,
+            maxHeight: '120px',
+        }),
+        noOptionsMessage: (provided) => ({
+            ...provided,
+            marginTop: '3px',
+            textAlign: 'left',
+            fontSize: '12px',
+            color: '#cccccc',
+        }),
+    };
+
     return (
         <Select
             styles={customStyles}

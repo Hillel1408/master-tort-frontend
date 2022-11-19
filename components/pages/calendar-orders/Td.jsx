@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from '../../pages/calendar-orders/CalendarOrders.module.scss';
+import styles from '../../../pages/calendar-orders/CalendarOrders.module.scss';
 
 function Td({ amount, st, count, activeDay, setActiveDay, today }) {
     return (

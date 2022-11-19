@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from '../../pages/recipes/Recipes.module.scss';
+import styles from '../../../pages/recipes/Recipes.module.scss';
 
 function Group({
     groupIcon,
@@ -13,7 +13,6 @@ function Group({
 }) {
     return (
         <div
-            href="#"
             onClick={(e) => {
                 setActive(groupId);
                 groupClickHandler(e, groupId);
@@ -53,7 +52,7 @@ function Group({
                         />
                     </svg>
                 </span>
-                {countRecipe != 0 && (
+                {countRecipe !== 0 && (
                     <span className={styles.groupsCount}>{countRecipe}</span>
                 )}
             </div>

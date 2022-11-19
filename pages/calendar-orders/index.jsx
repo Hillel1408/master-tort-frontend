@@ -6,7 +6,7 @@ import { NoAccess } from '../../components/NoAccess';
 import { Header } from '../../components/Header';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
-import { Td } from '../../components/pages/Td';
+import { Td } from '../../components/pages/calendar-orders/Td';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './CalendarOrders.module.scss';

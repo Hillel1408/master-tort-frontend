@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import classNames from 'classnames';
-import styles from './Sidebar.module.scss';
-import { NavLink } from './NavLink';
 import { useState } from 'react';
+import classNames from 'classnames';
+import { NavLink } from './NavLink';
 import { Modal } from '../Modal';
+import styles from './Sidebar.module.scss';
 
 function Sidebar() {
     const [navActive, setNavActive] = useState(false);

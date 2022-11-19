@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import { useEffect } from 'react';
+import classNames from 'classnames';
 import styles from './Modal.module.scss';
 
 function Modal({ active, setActive, children, closeIcon }) {

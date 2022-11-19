@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetAlert } from '../../redux/cakeSlice';
 import classNames from 'classnames';
+import { resetAlert } from '../../redux/cakeSlice';
 import styles from './Alert.module.scss';
 
 function Alert() {

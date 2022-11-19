@@ -4,7 +4,7 @@ import { Oval } from 'react-loader-spinner';
 import classNames from 'classnames';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
-import { BodyTable } from '../../components/pages/BodyTable';
+import { BodyTable } from '../../components/pages/settings/BodyTable';
 import { Alert } from '../../components/Alert';
 import { setAlert } from '../../redux/cakeSlice';
 import { NoAccess } from '../../components/NoAccess';
@@ -147,16 +147,28 @@ export default function Settings() {
                                             )}
                                         >
                                             <div
-                                                className={classNames(
-                                                    'text',
-                                                    stylesTable.thead
-                                                )}
-                                                style={{
-                                                    gridTemplateColumns: '1fr',
-                                                }}
+                                                className={
+                                                    stylesTable.wrapperHead
+                                                }
                                             >
-                                                <div className={stylesTable.th}>
-                                                    Проработка толщины мастики
+                                                <div
+                                                    className={classNames(
+                                                        'text',
+                                                        stylesTable.thead
+                                                    )}
+                                                    style={{
+                                                        gridTemplateColumns:
+                                                            '1fr',
+                                                    }}
+                                                >
+                                                    <div
+                                                        className={
+                                                            stylesTable.th
+                                                        }
+                                                    >
+                                                        Проработка толщины
+                                                        мастики
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className={stylesTable.tbody}>
@@ -181,16 +193,27 @@ export default function Settings() {
                                             )}
                                         >
                                             <div
-                                                className={classNames(
-                                                    'text',
-                                                    stylesTable.thead
-                                                )}
-                                                style={{
-                                                    gridTemplateColumns: '1fr',
-                                                }}
+                                                className={
+                                                    stylesTable.wrapperHead
+                                                }
                                             >
-                                                <div className={stylesTable.th}>
-                                                    Проработка толщины крема
+                                                <div
+                                                    className={classNames(
+                                                        'text',
+                                                        stylesTable.thead
+                                                    )}
+                                                    style={{
+                                                        gridTemplateColumns:
+                                                            '1fr',
+                                                    }}
+                                                >
+                                                    <div
+                                                        className={
+                                                            stylesTable.th
+                                                        }
+                                                    >
+                                                        Проработка толщины крема
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className={stylesTable.tbody}>

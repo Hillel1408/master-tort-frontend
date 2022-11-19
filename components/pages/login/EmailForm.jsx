@@ -1,12 +1,12 @@
 import React from 'react';
-import classNames from 'classnames';
-import { useForm } from 'react-hook-form';
-import styles from '../../pages/login/Login.module.scss';
-import AuthService from '../../services/AuthService';
 import { useState } from 'react';
 import Link from 'next/link';
-import stylesInput from '../Input/Input.module.scss';
-import stylesBtn from '../Btn/Btn.module.scss';
+import classNames from 'classnames';
+import { useForm } from 'react-hook-form';
+import AuthService from '../../../services/AuthService';
+import styles from '../../../pages/login/Login.module.scss';
+import stylesInput from '../../Input/Input.module.scss';
+import stylesBtn from '../../Btn/Btn.module.scss';
 
 function EmailForm({ setIsLogin }) {
     const [error, setError] = useState('');

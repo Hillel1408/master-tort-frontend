@@ -1,6 +1,4 @@
 .overflow {
-    overflow: auto;
-    border-radius: 8px;
 }
 .title {
     margin-bottom: 5px;
@@ -12,10 +10,9 @@
 .thead {
     display: grid;
     align-items: center;
-    background-color: var(--mainColor);
     color: var(--secondaryColor);
-    padding: 5px 15px;
     word-wrap: break-word;
+    flex: 1 1 auto;
     @media (max-width: 576px) {
         padding: 5px 5px;
     }
@@ -23,11 +20,13 @@
 .tr {
     display: grid;
     align-items: center;
+    flex: 1 1 auto;
 }
 .tbody {
     background-color: var(--secondaryColor);
     padding: 10px 15px 10px 15px;
-    overflow: hidden;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     @media (max-width: 576px) {
         padding: 10px 5px 10px 5px;
     }
@@ -57,4 +56,14 @@
 .addBlock {
     padding: 0 20px 15px 20px;
     margin-top: -10px;
+}
+.wrapper {
+    display: flex;
+    &Head {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        display: flex;
+        background-color: var(--mainColor);
+        padding: 5px 15px;
+    }
 }

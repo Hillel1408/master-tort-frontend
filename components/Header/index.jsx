@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
-import { useState } from 'react';
 import AuthService from '../../services/AuthService';
 
 function Header({ isAuth, setIsAuth, userName }) {

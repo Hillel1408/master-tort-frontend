@@ -1,7 +1,7 @@
-import { TableCell } from './TableCell';
-import stylesTable from '../Table/Table.module.scss';
+import { TableCell } from '../../TableCell';
+import stylesTable from '../../Table/Table.module.scss';
 
-function BodyTable({ settings, setSettings, index }) {
+function BodyTable({ settings, index }) {
     return (
         <div
             className={stylesTable.tr}
@@ -21,10 +21,11 @@ function BodyTable({ settings, setSettings, index }) {
                         value={settings[keyObj][index]}
                         thValue={keyObj}
                         disabled={false}
-                        setSettings={setSettings}
-                        settings={settings}
                         type="number"
                         index={index}
+                        saveSettings={(item, thValue, index) => {
+                            settings[thValue][index] = item;
+                        }}
                     />
                 </>
             ))}

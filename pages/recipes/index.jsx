@@ -7,8 +7,8 @@ import { Header } from '../../components/Header';
 import { Modal } from '../../components/Modal';
 import { CustomSelect } from '../../components/CustomSelect';
 import { NoAccess } from '../../components/NoAccess';
-import { Group } from '../../components/pages/Group';
-import { Recipe } from '../../components/pages/Recipe';
+import { Group } from '../../components/pages/recipes/Group';
+import { Recipe } from '../../components/pages/recipes/Recipe';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import UploadService from '../../services/UploadService';
@@ -48,7 +48,6 @@ export default function Recipes() {
             value: 'icon-2',
             label: 'Торты',
             icon: <i className={classNames('icon-2', styles.icon2)}></i>,
-            id: '123124',
         },
         {
             value: 'icon-17',
@@ -285,7 +284,6 @@ export default function Recipes() {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
-
                 getGroup(response.data.user.id);
                 getRecipe(response.data.user.id);
             } catch (e) {
@@ -514,6 +512,7 @@ export default function Recipes() {
                             }}
                             value={groupIcon}
                             setGroupIcon={setGroupIcon}
+                            height="43px"
                         />
                         <p className={styles.addRecipeText}></p>
                         <button
@@ -560,6 +559,7 @@ export default function Recipes() {
                             isSearchable={false}
                             value={groupId}
                             setGroupIcon={setGroupId}
+                            height="43px"
                         />
                     )}
                     {drag ? (

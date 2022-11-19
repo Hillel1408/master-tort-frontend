@@ -1,8 +1,8 @@
 import classNames from 'classnames';
+import Link from 'next/link';
 import styles from './NoAccess.module.scss';
 import stylesLogin from '../../pages/login/Login.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
-import Link from 'next/link';
 
 function NoAccess({ title, text, linkBtn, textBtn }) {
     return (

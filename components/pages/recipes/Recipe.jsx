@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import classNames from 'classnames';
-import styles from '../../pages/recipes/Recipes.module.scss';
+import Link from 'next/link';
+import styles from '../../../pages/recipes/Recipes.module.scss';
 
 function Recipe({ recipeName, recipeUrl, deleteRecipe, recipeId, groupId }) {
     return (

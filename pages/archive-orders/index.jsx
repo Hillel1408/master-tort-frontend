@@ -1,17 +1,12 @@
 import classNames from 'classnames';
-import { Sidebar } from '../../components/Sidebar';
-import { Header } from '../../components/Header';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
 import styles from '../purchase/Purchase.module.scss';
 import { useState, useEffect } from 'react';
-import stylesHeader from '../../components/Header/Header.module.scss';
-import { Oval } from 'react-loader-spinner';
-import { NoAccess } from '../../components/NoAccess';
-import stylesLogin from '../login/Login.module.scss';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
+import Layout from '../../components/Layout';
 
 export default function ArchiveOrders() {
     const [isAuth, setIsAuth] = useState('');
@@ -55,93 +50,31 @@ export default function ArchiveOrders() {
     }, []);
 
     return (
-        <div className={classNames('wrapper', 'container')}>
-            <Sidebar />
-            <div className="content">
-                <header className={stylesHeader.root}>
-                    <h1 className={classNames('title', stylesHeader.title)}>
-                        Заказы
-                    </h1>
-                    {isAuth !== '' ? (
-                        <Header
-                            userName={dataUser.fullName}
-                            isAuth={isAuth}
-                            setIsAuth={setIsAuth}
+        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+            <OrdersNav visibleTabs={false} />
+            {orders ? (
+                <div className={styles.orders}>
+                    {orders.map((item) => (
+                        <OrderCake
+                            key={item._id}
+                            type={item.status}
+                            item={item}
                         />
-                    ) : (
-                        <Oval
-                            height={34}
-                            width={34}
-                            color="#009998"
-                            wrapperStyle={{}}
-                            wrapperClass=""
-                            visible={true}
-                            ariaLabel="oval-loading"
-                            secondaryColor="#7a7a7a"
-                            strokeWidth={2}
-                            strokeWidthSecondary={2}
-                        />
-                    )}
-                </header>
-                <main className="main">
-                    {isAuth !== '' ? (
-                        isAuth ? (
-                            <>
-                                <OrdersNav visibleTabs={false} />
-                                {orders ? (
-                                    <div className={styles.orders}>
-                                        {orders.map((item) => (
-                                            <OrderCake
-                                                key={item._id}
-                                                type={item.status}
-                                                item={item}
-                                            />
-                                        ))}
-                                    </div>
-                                ) : (
-                                    orders !== undefined && (
-                                        <h2
-                                            className={classNames(
-                                                'title',
-                                                stylesNoAccess.noOrders,
-                                                stylesNoAccess.title
-                                            )}
-                                        >
-                                            У вас нет архивных заказов
-                                        </h2>
-                                    )
-                                )}
-                            </>
-                        ) : (
-                            <NoAccess
-                                title={'Доступ закрыт'}
-                                text={
-                                    'Зарегистрируйтесь или войдите в учетную запись, чтобы использовать все возможности сервиса'
-                                }
-                                linkBtn={'/login'}
-                                textBtn={'Войти'}
-                            />
-                        )
-                    ) : (
-                        <div className={stylesLogin.wrapper}>
-                            <Oval
-                                height={40}
-                                width={40}
-                                color="#009998"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                                visible={true}
-                                ariaLabel="oval-loading"
-                                secondaryColor="#7a7a7a"
-                                strokeWidth={2}
-                                strokeWidthSecondary={2}
-                            />
-                        </div>
-                    )}
-                </main>
-                <br></br>
-                <br></br>
-            </div>
-        </div>
+                    ))}
+                </div>
+            ) : (
+                orders !== undefined && (
+                    <h2
+                        className={classNames(
+                            'title',
+                            stylesNoAccess.noOrders,
+                            stylesNoAccess.title
+                        )}
+                    >
+                        У вас нет архивных заказов
+                    </h2>
+                )
+            )}
+        </Layout>
     );
 }

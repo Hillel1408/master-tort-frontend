@@ -1,17 +1,12 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Oval } from 'react-loader-spinner';
-import { Sidebar } from '../../components/Sidebar';
-import { NoAccess } from '../../components/NoAccess';
-import { Header } from '../../components/Header';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
 import { Td } from '../../components/pages/calendar-orders/Td';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './CalendarOrders.module.scss';
-import stylesHeader from '../../components/Header/Header.module.scss';
-import stylesLogin from '../login/Login.module.scss';
+import Layout from '../../components/Layout';
 
 export default function CalendarOrders() {
     const [isAuth, setIsAuth] = useState('');
@@ -223,230 +218,133 @@ export default function CalendarOrders() {
     }, [month]);
 
     return (
-        <div className={classNames('wrapper', 'container')}>
-            <Sidebar />
-            <div className="content">
-                <header className={stylesHeader.root}>
-                    <h1 className={classNames('title', stylesHeader.title)}>
-                        Заказы
-                    </h1>
-                    {isAuth !== '' ? (
-                        <Header
-                            userName={dataUser.fullName}
-                            isAuth={isAuth}
-                            setIsAuth={setIsAuth}
-                        />
-                    ) : (
-                        <Oval
-                            height={34}
-                            width={34}
-                            color="#009998"
-                            wrapperStyle={{}}
-                            wrapperClass=""
-                            visible={true}
-                            ariaLabel="oval-loading"
-                            secondaryColor="#7a7a7a"
-                            strokeWidth={2}
-                            strokeWidthSecondary={2}
-                        />
-                    )}
-                </header>
-                <main className="main">
-                    {isAuth !== '' ? (
-                        isAuth ? (
-                            <>
-                                <OrdersNav visibleTabs={true} />
-                                <div className={styles.root}>
-                                    <div className={styles.block}>
-                                        <div className={styles.container}>
-                                            <div className={styles.header}>
-                                                <span
-                                                    className={classNames(
-                                                        'text',
-                                                        styles.title
-                                                    )}
-                                                >
-                                                    {dateNow}
-                                                </span>
-                                                <div className={styles.nav}>
-                                                    <span
-                                                        className={classNames(
-                                                            'icon-29',
-                                                            styles.prev
-                                                        )}
-                                                        onClick={() =>
-                                                            prevClickHandler()
-                                                        }
-                                                    ></span>
-                                                    <span
-                                                        className={classNames(
-                                                            'icon-30',
-                                                            styles.next
-                                                        )}
-                                                        onClick={() =>
-                                                            nextClickHandler()
-                                                        }
-                                                    ></span>
-                                                </div>
-                                            </div>
-                                            {nums && (
-                                                <table className={styles.table}>
-                                                    <thead
-                                                        className={styles.thead}
-                                                    >
-                                                        <tr
-                                                            className={classNames(
-                                                                'small-text',
-                                                                styles.smallText
-                                                            )}
-                                                        >
-                                                            <th>пн</th>
-                                                            <th>вт</th>
-                                                            <th>ср</th>
-                                                            <th>чт</th>
-                                                            <th>пт</th>
-                                                            <th>сб</th>
-                                                            <th>вс</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {nums.map(
-                                                            (item, indexTr) => (
-                                                                <tr>
-                                                                    {item.map(
-                                                                        (
-                                                                            amount,
-                                                                            indexTd
-                                                                        ) => (
-                                                                            <Td
-                                                                                st={
-                                                                                    (indexTr ===
-                                                                                        0 &&
-                                                                                        indexTd <
-                                                                                            getFirstWeekDay(
-                                                                                                year,
-                                                                                                month
-                                                                                            )) ||
-                                                                                    (indexTr ===
-                                                                                        nums.length -
-                                                                                            1 &&
-                                                                                        indexTd >=
-                                                                                            item.length -
-                                                                                                (6 -
-                                                                                                    getLastWeekDay(
-                                                                                                        year,
-                                                                                                        month
-                                                                                                    )))
-                                                                                        ? true
-                                                                                        : false
-                                                                                }
-                                                                                amount={
-                                                                                    amount
-                                                                                }
-                                                                                count={
-                                                                                    filteredOrders[
-                                                                                        amount
-                                                                                    ] &&
-                                                                                    filteredOrders[
-                                                                                        amount
-                                                                                    ]
-                                                                                        .length
-                                                                                }
-                                                                                today={
-                                                                                    amount ===
-                                                                                        day &&
-                                                                                    isActive
-                                                                                }
-                                                                                activeDay={
-                                                                                    activeDay
-                                                                                }
-                                                                                setActiveDay={
-                                                                                    setActiveDay
-                                                                                }
-                                                                            />
-                                                                        )
-                                                                    )}
-                                                                </tr>
-                                                            )
-                                                        )}
-                                                    </tbody>
-                                                </table>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className={styles.orders}>
-                                        {activeDay ? (
-                                            <>
-                                                <h2
-                                                    className="text"
-                                                    style={{
-                                                        marginBottom: '20px',
-                                                    }}
-                                                >
-                                                    {`Заказы ${activeDay} ${monthArr[month][1]} ${year}`}
-                                                </h2>
-                                                <div
-                                                    className={styles.overflow}
-                                                >
-                                                    {filteredOrders[
-                                                        activeDay
-                                                    ].map((item) => (
-                                                        <OrderCake
-                                                            key={item._id}
-                                                            item={item}
-                                                            type={item.status} //archive или kanban
-                                                            bg={
-                                                                item.status ===
-                                                                    'archive' &&
-                                                                '#f4f2f1'
-                                                            }
-                                                            style="calendarCake"
-                                                        />
-                                                    ))}
-                                                </div>
-                                            </>
-                                        ) : (
-                                            <div className={styles.ordersNo}>
-                                                <span className="icon-9"></span>
-                                                <p className="text">
-                                                    Выберите дату, чтобы
-                                                    посмотреть заказы
-                                                </p>
-                                            </div>
+        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+            <OrdersNav visibleTabs={true} />
+            <div className={styles.root}>
+                <div className={styles.block}>
+                    <div className={styles.container}>
+                        <div className={styles.header}>
+                            <span className={classNames('text', styles.title)}>
+                                {dateNow}
+                            </span>
+                            <div className={styles.nav}>
+                                <span
+                                    className={classNames(
+                                        'icon-29',
+                                        styles.prev
+                                    )}
+                                    onClick={() => prevClickHandler()}
+                                ></span>
+                                <span
+                                    className={classNames(
+                                        'icon-30',
+                                        styles.next
+                                    )}
+                                    onClick={() => nextClickHandler()}
+                                ></span>
+                            </div>
+                        </div>
+                        {nums && (
+                            <table className={styles.table}>
+                                <thead className={styles.thead}>
+                                    <tr
+                                        className={classNames(
+                                            'small-text',
+                                            styles.smallText
                                         )}
-                                    </div>
-                                </div>
-                            </>
-                        ) : (
-                            <NoAccess
-                                title={'Доступ закрыт'}
-                                text={
-                                    'Зарегистрируйтесь или войдите в учетную запись, чтобы использовать все возможности сервиса'
-                                }
-                                linkBtn={'/login'}
-                                textBtn={'Войти'}
-                            />
-                        )
+                                    >
+                                        <th>пн</th>
+                                        <th>вт</th>
+                                        <th>ср</th>
+                                        <th>чт</th>
+                                        <th>пт</th>
+                                        <th>сб</th>
+                                        <th>вс</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {nums.map((item, indexTr) => (
+                                        <tr>
+                                            {item.map((amount, indexTd) => (
+                                                <Td
+                                                    st={
+                                                        (indexTr === 0 &&
+                                                            indexTd <
+                                                                getFirstWeekDay(
+                                                                    year,
+                                                                    month
+                                                                )) ||
+                                                        (indexTr ===
+                                                            nums.length - 1 &&
+                                                            indexTd >=
+                                                                item.length -
+                                                                    (6 -
+                                                                        getLastWeekDay(
+                                                                            year,
+                                                                            month
+                                                                        )))
+                                                            ? true
+                                                            : false
+                                                    }
+                                                    amount={amount}
+                                                    count={
+                                                        filteredOrders[
+                                                            amount
+                                                        ] &&
+                                                        filteredOrders[amount]
+                                                            .length
+                                                    }
+                                                    today={
+                                                        amount === day &&
+                                                        isActive
+                                                    }
+                                                    activeDay={activeDay}
+                                                    setActiveDay={setActiveDay}
+                                                />
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
+                    </div>
+                </div>
+                <div className={styles.orders}>
+                    {activeDay ? (
+                        <>
+                            <h2
+                                className="text"
+                                style={{
+                                    marginBottom: '20px',
+                                }}
+                            >
+                                {`Заказы ${activeDay} ${monthArr[month][1]} ${year}`}
+                            </h2>
+                            <div className={styles.overflow}>
+                                {filteredOrders[activeDay].map((item) => (
+                                    <OrderCake
+                                        key={item._id}
+                                        item={item}
+                                        type={item.status} //archive или kanban
+                                        bg={
+                                            item.status === 'archive' &&
+                                            '#f4f2f1'
+                                        }
+                                        style="calendarCake"
+                                    />
+                                ))}
+                            </div>
+                        </>
                     ) : (
-                        <div className={stylesLogin.wrapper}>
-                            <Oval
-                                height={40}
-                                width={40}
-                                color="#009998"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                                visible={true}
-                                ariaLabel="oval-loading"
-                                secondaryColor="#7a7a7a"
-                                strokeWidth={2}
-                                strokeWidthSecondary={2}
-                            />
+                        <div className={styles.ordersNo}>
+                            <span className="icon-9"></span>
+                            <p className="text">
+                                Выберите дату, чтобы посмотреть заказы
+                            </p>
                         </div>
                     )}
-                </main>
-                <br></br>
-                <br></br>
+                </div>
             </div>
-        </div>
+        </Layout>
     );
 }

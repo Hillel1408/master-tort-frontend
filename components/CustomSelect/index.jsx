@@ -17,15 +17,18 @@ function CustomSelect(props) {
             ...provided,
             ...styles,
             borderRadius: '8px',
-            height: props.height,
-            minHeight: props.height,
             boxShadow: 'none',
             borderColor: '#cccccc',
             padding: '0 2px',
+            minHeight: props.height,
             '&:hover': {
                 borderColor: '#7a7a7a',
                 cursor: 'pointer',
             },
+        }),
+        indicatorsContainer: (provided) => ({
+            ...provided,
+            height: props.contHeight,
         }),
         container: (provided) => ({
             ...provided,
@@ -78,7 +81,17 @@ function CustomSelect(props) {
             value={props.value}
             onChange={props.setGroupIcon}
             required
+            defaultValue={props.default}
+            onMenuClose={() => {
+                const table = document.querySelector('.table');
+                table && table.classList.remove('lock');
+            }}
+            onMenuOpen={() => {
+                const table = document.querySelector('.table');
+                table && table.classList.add('lock');
+            }}
             noOptionsMessage={() => 'Добавьте группу'}
+            menuPortalTarget={props.portalTarget && document.body}
         />
     );
 }

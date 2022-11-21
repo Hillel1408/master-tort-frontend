@@ -1,3 +1,9 @@
+.overflow {
+    margin-bottom: 20px;
+    @media (max-width: 630px) {
+        overflow: auto;
+    }
+}
 .table {
     color: var(--textColor);
 }
@@ -14,9 +20,6 @@
     color: var(--secondaryColor);
     word-wrap: break-word;
     flex: 1 1 auto;
-    @media (max-width: 576px) {
-        padding: 5px 5px;
-    }
 }
 .tr {
     display: grid;
@@ -66,5 +69,12 @@
         display: flex;
         background-color: var(--mainColor);
         padding: 5px 15px;
+        @media (max-width: 576px) {
+            padding: 5px 5px;
+        }
     }
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
 }

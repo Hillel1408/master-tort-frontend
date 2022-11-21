@@ -19,7 +19,6 @@
 body.lock {
     overflow: hidden !important;
 }
-
 .container {
     max-width: 1880px;
     margin: 0 auto;
@@ -106,4 +105,9 @@ body.lock {
 
 #nprogress .spinner {
     display: none !important;
+}
+.table {
+    &.lock {
+        overflow: hidden;
+    }
 }

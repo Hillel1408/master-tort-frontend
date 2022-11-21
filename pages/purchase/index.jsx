@@ -1,151 +1,161 @@
 import classNames from 'classnames';
-import { Sidebar } from '../../components/Sidebar';
-import { Header } from '../../components/Header';
-import { OrderCake } from '../../components/OrderCake';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Purchase.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
+import AuthService from '../../services/AuthService';
+import { useEffect, useState } from 'react';
+import Layout from '../../components/Layout';
+import OrdersService from '../../services/OrdersService';
+import { OrderCake } from '../../components/OrderCake';
 
 export default function Purchase() {
+    const [isAuth, setIsAuth] = useState('');
+    const [dataUser, setDataUser] = useState('');
+    const [orders, setOrders] = useState('');
+
+    useEffect(() => {
+        const getOrders = async (userId) => {
+            //получаем заказы пользователя
+            try {
+                const response = await OrdersService.getKanban(userId);
+                setOrders(response.data.purchase);
+                setIsAuth(true);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
+        };
+
+        const checkAuth = async () => {
+            //проверяем авторизован ли пользователь
+            try {
+                const response = await AuthService.refresh();
+                localStorage.setItem('token', response.data.accessToken);
+                setDataUser(response.data.user);
+                getOrders(response.data.user.id);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+                setIsAuth(false);
+            }
+        };
+        if (localStorage.getItem('token')) checkAuth();
+        else setIsAuth(false);
+    }, []);
+
     return (
-        <div className={classNames('wrapper', 'container')}>
-            <Sidebar />
-            <div className="content">
-                <Header title="Закупка" />
-                <main className="main">
-                    <div className={styles.columns}>
-                        <div className={styles.column}>
-                            <h2 className={classNames('text', styles.title)}>
-                                Выбранные заказы
-                            </h2>
-                            <div className={styles.orders}></div>
-                            <div className="addBlock">
-                                <span
-                                    className={classNames(
-                                        'small-text',
-                                        'icon-8'
-                                    )}
-                                >
-                                    Добавить заказы
-                                </span>
-                            </div>
+        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+            <div className={styles.columns}>
+                <div className={styles.column}>
+                    <h2 className={classNames('text', styles.title)}>
+                        Выбранные заказы
+                    </h2>
+                    {orders.length > 0 && (
+                        <div className={styles.orders}>
+                            {orders.map((item) => (
+                                <OrderCake key={item.id} item={item} />
+                            ))}
                         </div>
-                        <div className={styles.column}>
-                            <div className={stylesTable.overflow}>
+                    )}
+                    <div className="addBlock">
+                        <span className={classNames('small-text', 'icon-8')}>
+                            Добавить заказы
+                        </span>
+                    </div>
+                </div>
+                <div className={styles.column}>
+                    <div className={stylesTable.overflow}>
+                        <div
+                            className={classNames(
+                                stylesTable.table,
+                                'small-text',
+                                styles.table
+                            )}
+                        >
+                            <div className={stylesTable.wrapperHead}>
+                                <div className={stylesTable.th}>
+                                    <input type="checkbox" />
+                                </div>
                                 <div
                                     className={classNames(
-                                        stylesTable.table,
-                                        'small-text',
-                                        styles.table
+                                        'text',
+                                        stylesTable.thead
                                     )}
-                                    style={{ minWidth: '470px' }}
+                                    style={{
+                                        gridTemplateColumns:
+                                            '33.3% 33.3% 33.3%',
+                                    }}
                                 >
+                                    <div className={stylesTable.th}>
+                                        Наименование
+                                    </div>
+                                    <div className={stylesTable.th}>
+                                        Количество
+                                    </div>
+                                    <div className={stylesTable.th}>
+                                        Стоимость, ₽
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={stylesTable.tbody}>
+                                <div
+                                    className={classNames(
+                                        stylesTable.wrapper,
+                                        styles.tableTr,
+                                        styles.active
+                                    )}
+                                >
+                                    <div className={stylesTable.td}>
+                                        <input type="checkbox" checked />
+                                    </div>
                                     <div
-                                        className={classNames(
-                                            'text',
-                                            stylesTable.thead
-                                        )}
+                                        className={stylesTable.tr}
                                         style={{
                                             gridTemplateColumns:
-                                                '4% 32% 32% 32%',
+                                                '33.3% 33.3% 33.3%',
                                         }}
                                     >
-                                        <div className={stylesTable.th}>
-                                            <input type="checkbox" />
+                                        <div className={stylesTable.td}>
+                                            <input
+                                                type="number"
+                                                name=""
+                                                className={stylesInput.input}
+                                            />
                                         </div>
-                                        <div className={stylesTable.th}>
-                                            Наименование
+                                        <div className={stylesTable.td}>
+                                            <input
+                                                type="number"
+                                                name=""
+                                                className={stylesInput.input}
+                                            />
                                         </div>
-                                        <div className={stylesTable.th}>
-                                            Количество
-                                        </div>
-                                        <div className={stylesTable.th}>
-                                            Стоимость, ₽
-                                        </div>
-                                    </div>
-                                    <div className={stylesTable.tbody}>
-                                        <div
-                                            className={classNames(
-                                                stylesTable.tr,
-                                                styles.active,
-                                                styles.tableTr
-                                            )}
-                                            style={{
-                                                gridTemplateColumns:
-                                                    '4% 32% 32% 32%',
-                                            }}
-                                        >
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="checkbox"
-                                                    checked
-                                                />
-                                            </div>
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
+                                        <div className={stylesTable.td}>
+                                            <input
+                                                type="number"
+                                                name=""
+                                                className={stylesInput.input}
+                                            />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.total}>
-                                <p
-                                    className={classNames(
-                                        'text',
-                                        styles.totalText
-                                    )}
-                                >
-                                    Итоговая стоимость продуктов
-                                </p>
-                                <span
-                                    className={classNames(
-                                        'text',
-                                        styles.totalPrice
-                                    )}
-                                >
-                                    4260.80 ₽
-                                </span>
-                            </div>
-                            <button
-                                className={classNames(
-                                    stylesBtn.btn,
-                                    'small-text'
-                                )}
-                                href="#"
-                            >
-                                Печать
-                            </button>
                         </div>
                     </div>
-                </main>
-                <br></br>
-                <br></br>
+                    <div className={styles.total}>
+                        <p className={classNames('text', styles.totalText)}>
+                            Итоговая стоимость продуктов
+                        </p>
+                        <span className={classNames('text', styles.totalPrice)}>
+                            4260.80 ₽
+                        </span>
+                    </div>
+                    <button
+                        className={classNames(stylesBtn.btn, 'small-text')}
+                        href="#"
+                    >
+                        Печать
+                    </button>
+                </div>
             </div>
-        </div>
+        </Layout>
     );
 }

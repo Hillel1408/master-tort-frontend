@@ -21,6 +21,7 @@ export default function Settings() {
     const [isAuth, setIsAuth] = useState('');
     const [settings, setSettings] = useState('');
     const [dataUser, setDataUser] = useState('');
+
     const dispatch = useDispatch();
 
     const saveSettings = async () => {
@@ -156,10 +157,6 @@ export default function Settings() {
                                                         'text',
                                                         stylesTable.thead
                                                     )}
-                                                    style={{
-                                                        gridTemplateColumns:
-                                                            '1fr',
-                                                    }}
                                                 >
                                                     <div
                                                         className={
@@ -202,10 +199,6 @@ export default function Settings() {
                                                         'text',
                                                         stylesTable.thead
                                                     )}
-                                                    style={{
-                                                        gridTemplateColumns:
-                                                            '1fr',
-                                                    }}
                                                 >
                                                     <div
                                                         className={
@@ -231,7 +224,7 @@ export default function Settings() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.buttons}>
+                                <div className={stylesTable.buttons}>
                                     <button
                                         className={classNames(
                                             stylesBtn.btn,

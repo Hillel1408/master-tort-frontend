@@ -162,12 +162,12 @@ export default function CalendarOrders() {
             try {
                 const response = await OrdersService.getOrders(userId);
                 setOrders(response.data);
-                setIsAuth(true);
                 //получаем текущий год, месяц и день
                 const date = new Date();
                 setYear(date.getFullYear());
                 setMonth(date.getMonth());
                 setDay(date.getDate());
+                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -223,89 +223,100 @@ export default function CalendarOrders() {
             <div className={styles.root}>
                 <div className={styles.block}>
                     <div className={styles.container}>
-                        <div className={styles.header}>
-                            <span className={classNames('text', styles.title)}>
-                                {dateNow}
-                            </span>
-                            <div className={styles.nav}>
-                                <span
-                                    className={classNames(
-                                        'icon-29',
-                                        styles.prev
-                                    )}
-                                    onClick={() => prevClickHandler()}
-                                ></span>
-                                <span
-                                    className={classNames(
-                                        'icon-30',
-                                        styles.next
-                                    )}
-                                    onClick={() => nextClickHandler()}
-                                ></span>
-                            </div>
-                        </div>
                         {nums && (
-                            <table className={styles.table}>
-                                <thead className={styles.thead}>
-                                    <tr
+                            <>
+                                <div className={styles.header}>
+                                    <span
                                         className={classNames(
-                                            'small-text',
-                                            styles.smallText
+                                            'text',
+                                            styles.title
                                         )}
                                     >
-                                        <th>пн</th>
-                                        <th>вт</th>
-                                        <th>ср</th>
-                                        <th>чт</th>
-                                        <th>пт</th>
-                                        <th>сб</th>
-                                        <th>вс</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {nums.map((item, indexTr) => (
-                                        <tr>
-                                            {item.map((amount, indexTd) => (
-                                                <Td
-                                                    st={
-                                                        (indexTr === 0 &&
-                                                            indexTd <
-                                                                getFirstWeekDay(
-                                                                    year,
-                                                                    month
-                                                                )) ||
-                                                        (indexTr ===
-                                                            nums.length - 1 &&
-                                                            indexTd >=
-                                                                item.length -
-                                                                    (6 -
-                                                                        getLastWeekDay(
-                                                                            year,
-                                                                            month
-                                                                        )))
-                                                            ? true
-                                                            : false
-                                                    }
-                                                    amount={amount}
-                                                    count={
-                                                        filteredOrders[
-                                                            amount
-                                                        ] &&
-                                                        filteredOrders[amount]
-                                                            .length
-                                                    }
-                                                    today={
-                                                        amount === day &&
-                                                        isActive
-                                                    }
-                                                    activeDay={activeDay}
-                                                    setActiveDay={setActiveDay}
-                                                />
-                                            ))}
+                                        {dateNow}
+                                    </span>
+                                    <div className={styles.nav}>
+                                        <span
+                                            className={classNames(
+                                                'icon-29',
+                                                styles.prev
+                                            )}
+                                            onClick={() => prevClickHandler()}
+                                        ></span>
+                                        <span
+                                            className={classNames(
+                                                'icon-30',
+                                                styles.next
+                                            )}
+                                            onClick={() => nextClickHandler()}
+                                        ></span>
+                                    </div>
+                                </div>
+                                <table className={styles.table}>
+                                    <thead className={styles.thead}>
+                                        <tr
+                                            className={classNames(
+                                                'small-text',
+                                                styles.smallText
+                                            )}
+                                        >
+                                            <th>пн</th>
+                                            <th>вт</th>
+                                            <th>ср</th>
+                                            <th>чт</th>
+                                            <th>пт</th>
+                                            <th>сб</th>
+                                            <th>вс</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {nums.map((item, indexTr) => (
+                                            <tr>
+                                                {item.map((amount, indexTd) => (
+                                                    <Td
+                                                        st={
+                                                            (indexTr === 0 &&
+                                                                indexTd <
+                                                                    getFirstWeekDay(
+                                                                        year,
+                                                                        month
+                                                                    )) ||
+                                                            (indexTr ===
+                                                                nums.length -
+                                                                    1 &&
+                                                                indexTd >=
+                                                                    item.length -
+                                                                        (6 -
+                                                                            getLastWeekDay(
+                                                                                year,
+                                                                                month
+                                                                            )))
+                                                                ? true
+                                                                : false
+                                                        }
+                                                        amount={amount}
+                                                        count={
+                                                            filteredOrders[
+                                                                amount
+                                                            ] &&
+                                                            filteredOrders[
+                                                                amount
+                                                            ].length
+                                                        }
+                                                        today={
+                                                            amount === day &&
+                                                            isActive
+                                                        }
+                                                        activeDay={activeDay}
+                                                        setActiveDay={
+                                                            setActiveDay
+                                                        }
+                                                    />
+                                                ))}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </>
                         )}
                     </div>
                 </div>

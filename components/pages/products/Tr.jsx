@@ -23,6 +23,7 @@ function Tr({ item, tr, setTr, index, measure }) {
                                     key={Math.random()}
                                     isSearchable={false}
                                     height="35px"
+                                    width="100%"
                                     contHeight="33px"
                                     options={measure}
                                     placeholder=""

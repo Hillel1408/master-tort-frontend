@@ -32,7 +32,7 @@ function CustomSelect(props) {
         }),
         container: (provided) => ({
             ...provided,
-            width: '280px',
+            width: props.width,
             margin: '0 auto',
         }),
         option: (provided, state) => ({
@@ -80,7 +80,6 @@ function CustomSelect(props) {
             register={props.register}
             value={props.value}
             onChange={props.setGroupIcon}
-            required
             defaultValue={props.default}
             onMenuClose={() => {
                 const table = document.querySelector('.table');

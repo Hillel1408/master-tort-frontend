@@ -9,10 +9,14 @@
 .block {
     flex: 0 1 740px;
     background-color: white;
-    padding: 140px 20px;
+    padding: 0 20px;
     border-radius: 16px;
+    height: 738px;
+    display: flex;
+    align-items: center;
     @media (max-width: 576px) {
         padding: 26px 20px;
+        height: 330px;
     }
 }
 .header {
@@ -38,13 +42,13 @@
             color: #7a7a7a;
         }
     }
+    @media (max-width: 768px) {
+        min-height: 160px;
+    }
 }
 .container {
     max-width: max-content;
     margin: 0 auto;
-    @media (max-width: 576px) {
-        max-width: 284px;
-    }
 }
 .header {
     margin-bottom: 18px;
@@ -127,7 +131,7 @@
     border-radius: 16px;
 }
 .overflow {
-    max-height: 780.31px;
+    max-height: 650px;
     overflow: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;

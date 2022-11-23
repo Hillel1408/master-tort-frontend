@@ -1,7 +1,6 @@
 .root {
     display: flex;
     gap: 20px;
-    align-items: baseline;
     @media (max-width: 950px) {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -19,26 +18,41 @@
         margin-bottom: 20px;
     }
     &Avatar {
-        border: 1px dashed #cccccc;
+        border: 1px solid #cccccc;
         border-radius: 8px;
         min-width: 140px;
         text-align: center;
-        padding: 65px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 191px;
+        width: 143px;
         span:before {
             font-size: 41px;
             color: rgba(204, 204, 204, 1);
+        }
+        img {
+            width: 100%;
+            object-fit: cover;
+            height: 191px;
+            border-radius: 8px;
         }
     }
     &Columns {
         display: flex;
         gap: 20px;
     }
-    &Inputs {
-        flex: 1 1 auto;
-    }
     &Input {
-        padding: 12px;
-        margin-bottom: 20px;
+        padding: 12px !important;
+        margin-bottom: 10px;
+    }
+    &Flex {
+        flex: 1 1 auto;
+        form {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
     }
 }
 .security {
@@ -47,14 +61,21 @@
     padding: 20px;
     flex: 0 1 360px;
     min-width: 290px;
+    display: flex;
+    flex-direction: column;
     &Input {
         margin-bottom: 10px;
-        padding: 12px;
+        padding: 12px !important;
     }
     &Buttons {
         display: flex;
         justify-content: space-between;
         margin-top: 10px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
     }
 }
 .order {
@@ -62,10 +83,14 @@
     border-radius: 16px;
     padding: 20px;
     flex: 0 1 266px;
+    align-self: baseline;
     &Block {
         display: flex;
         align-items: center;
         gap: 12px;
+        & .css-aisvj3-container {
+            width: 100%;
+        }
     }
     &Tooltip span {
         color: var(--textColor);
@@ -73,4 +98,9 @@
             color: rgba(241, 99, 99, 1);
         }
     }
+}
+.error {
+    color: var(--redColor);
+    width: 100%;
+    margin: 0 auto 10px auto;
 }

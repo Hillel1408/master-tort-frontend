@@ -43,7 +43,12 @@ export default function Purchase() {
     }, []);
 
     return (
-        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+        <Layout
+            isAuth={isAuth}
+            setIsAuth={setIsAuth}
+            dataUser={dataUser}
+            title="Закупка"
+        >
             <div className={styles.columns}>
                 <div className={styles.column}>
                     <h2 className={classNames('text', styles.title)}>

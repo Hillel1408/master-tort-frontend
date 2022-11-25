@@ -218,7 +218,12 @@ export default function CalendarOrders() {
     }, [month]);
 
     return (
-        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+        <Layout
+            isAuth={isAuth}
+            setIsAuth={setIsAuth}
+            dataUser={dataUser}
+            title="Календарь"
+        >
             <OrdersNav visibleTabs={true} />
             <div className={styles.root}>
                 <div className={styles.block}>

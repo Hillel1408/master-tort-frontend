@@ -91,7 +91,12 @@ export default function Products() {
     }, []);
 
     return (
-        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+        <Layout
+            isAuth={isAuth}
+            setIsAuth={setIsAuth}
+            dataUser={dataUser}
+            title="Продукты"
+        >
             <div className={classNames(stylesTable.overflow, 'table')}>
                 <div
                     className={classNames(stylesTable.table, 'small-text')}

@@ -50,7 +50,12 @@ export default function ArchiveOrders() {
     }, []);
 
     return (
-        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+        <Layout
+            isAuth={isAuth}
+            setIsAuth={setIsAuth}
+            dataUser={dataUser}
+            title="Архив"
+        >
             <OrdersNav visibleTabs={false} />
             {orders ? (
                 <div className={styles.orders}>

@@ -6,19 +6,20 @@ import stylesLogin from '../pages/login/Login.module.scss';
 import { Header } from '../components/Header';
 import classNames from 'classnames';
 
-const Layout = ({ children, isAuth, setIsAuth, dataUser }) => (
+const Layout = ({ children, isAuth, setIsAuth, dataUser, title }) => (
     <div className={classNames('wrapper', 'container')}>
         <Sidebar />
         <div className="content">
             <header className={stylesHeader.root}>
                 <h1 className={classNames('title', stylesHeader.title)}>
-                    Продукты
+                    {title}
                 </h1>
                 {isAuth !== '' ? (
                     <Header
                         userName={dataUser.fullName}
                         isAuth={isAuth}
                         setIsAuth={setIsAuth}
+                        avatar={dataUser.avatar}
                     />
                 ) : (
                     <Oval

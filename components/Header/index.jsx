@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styles from './Header.module.scss';
 import AuthService from '../../services/AuthService';
 
-function Header({ isAuth, setIsAuth, userName }) {
+function Header({ isAuth, setIsAuth, userName, avatar }) {
     const [tooltipActive, setTooltipActive] = useState(false);
 
     const logout = async () => {
@@ -23,7 +23,11 @@ function Header({ isAuth, setIsAuth, userName }) {
                 <div className={styles.menu}>
                     <Link href="/personal-settings">
                         <div className={styles.avatar}>
-                            <span className="icon-21"></span>
+                            {avatar ? (
+                                <img src={avatar} alt="avatar" />
+                            ) : (
+                                <span className="icon-21"></span>
+                            )}
                         </div>
                     </Link>
                     <div

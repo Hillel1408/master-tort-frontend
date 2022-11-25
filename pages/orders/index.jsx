@@ -207,7 +207,12 @@ export default function Orders() {
         else setIsAuth(false);
     }, []);
     return (
-        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+        <Layout
+            isAuth={isAuth}
+            setIsAuth={setIsAuth}
+            dataUser={dataUser}
+            title="Заказы"
+        >
             <OrdersNav visibleTabs={true} />
             {boards ? (
                 <div className={styles.kanban}>

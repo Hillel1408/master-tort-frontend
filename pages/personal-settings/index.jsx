@@ -18,6 +18,8 @@ export default function PersonalSettings() {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [errorPas, setErrorPas] = useState('');
+    const [success, setSuccess] = useState('');
+    const [successPas, setSuccessPas] = useState('');
 
     const inputFileRef = useRef('');
     const btnRef = useRef();
@@ -43,9 +45,10 @@ export default function PersonalSettings() {
     }, [fullName, email, image]);
 
     const {
-        register: register,
-        handleSubmit: handleSubmit,
+        register,
+        handleSubmit,
         formState: { isValid },
+        reset,
     } = useForm({
         defaultValues: {
             password: '',
@@ -55,23 +58,59 @@ export default function PersonalSettings() {
         mode: 'onChange',
     });
 
+    const resetState = (state) => {
+        setTimeout(() => {
+            state('');
+        }, 3000);
+    };
+
     const onSubmit = async () => {
         //отправляем основную информацию на сервер
         try {
-            console.log(fullName, email, image);
-            setError('');
+            const response = await AuthService.update({
+                userId: dataUser.id,
+                fullName,
+                email,
+                image: image && `http://localhost:5000${image}`,
+            });
+            setDataUser(response.data);
+            response.data.email !== email
+                ? setSuccess(
+                      'На вашу новую почту выслана ссылка для ее подтверждения'
+                  )
+                : setSuccess('Настройки успешно сохранены');
+            resetState(setSuccess);
         } catch (e) {
-            console.log(e.response?.data?.message);
+            e.response?.data[0]
+                ? setError(e.response?.data[0]?.msg)
+                : setError(e.response?.data?.message);
+            resetState(setError);
         }
     };
 
     const onSubmitPassword = async (values) => {
         //отправляем новый пароль на сервер
         try {
-            values.newPassword !== values.repeatPassword &&
+            if (values.newPassword !== values.repeatPassword) {
                 setErrorPas('Пароли не совпадают');
+                resetState(setErrorPas);
+            } else if (values.newPassword !== values.password) {
+                const response = await AuthService.updatePassword({
+                    userId: dataUser.id,
+                    ...values,
+                });
+                setSuccessPas('Пароль успешно изменен');
+                resetState(setSuccessPas);
+                reset();
+            } else {
+                setErrorPas('Пароль должен отличаться от текущего');
+                resetState(setErrorPas);
+            }
         } catch (e) {
-            console.log(e.response?.data?.message);
+            e.response?.data[0]
+                ? setErrorPas(e.response?.data[0]?.msg)
+                : setErrorPas(e.response?.data?.message);
+            resetState(setErrorPas);
         }
     };
 
@@ -100,7 +139,6 @@ export default function PersonalSettings() {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
-                console.log(response.data.user);
                 setFullName(response.data.user.fullName);
                 setEmail(response.data.user.email);
                 setIsAuth(true);
@@ -114,7 +152,12 @@ export default function PersonalSettings() {
     }, []);
 
     return (
-        <Layout isAuth={isAuth} setIsAuth={setIsAuth} dataUser={dataUser}>
+        <Layout
+            isAuth={isAuth}
+            setIsAuth={setIsAuth}
+            dataUser={dataUser}
+            title="Настройки"
+        >
             <div className={styles.root}>
                 <div className={styles.info}>
                     <h2 className={classNames('text', styles.infoTitle)}>
@@ -123,13 +166,13 @@ export default function PersonalSettings() {
                     <div className={styles.infoColumns}>
                         <div>
                             <div className={styles.infoAvatar}>
-                                {dataUser.avatar ? (
-                                    <img src={dataUser.avatar} alt="avatar" />
-                                ) : image ? (
+                                {image ? (
                                     <img
                                         src={`http://localhost:5000${image}`}
                                         alt="avatar"
                                     />
+                                ) : dataUser.avatar ? (
+                                    <img src={dataUser.avatar} alt="avatar" />
                                 ) : (
                                     <span className="icon-21"></span>
                                 )}
@@ -179,11 +222,11 @@ export default function PersonalSettings() {
                                 />
                                 <p
                                     className={classNames(
-                                        styles.error,
-                                        'small-text'
+                                        'small-text',
+                                        success ? styles.success : styles.error
                                     )}
                                 >
-                                    {error}
+                                    {success ? success : error}
                                 </p>
                                 <div
                                     className={styles.securityButtons}
@@ -247,8 +290,13 @@ export default function PersonalSettings() {
                                 required: true,
                             })}
                         />
-                        <p className={classNames(styles.error, 'small-text')}>
-                            {errorPas}
+                        <p
+                            className={classNames(
+                                'small-text',
+                                successPas ? styles.success : styles.error
+                            )}
+                        >
+                            {successPas ? successPas : errorPas}
                         </p>
                         <div
                             className={styles.securityButtons}

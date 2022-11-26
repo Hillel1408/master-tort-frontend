@@ -1,22 +1,17 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { Oval } from 'react-loader-spinner';
-import { Sidebar } from '../../components/Sidebar';
-import { Header } from '../../components/Header';
 import { Modal } from '../../components/Modal';
 import { CustomSelect } from '../../components/CustomSelect';
-import { NoAccess } from '../../components/NoAccess';
 import { Group } from '../../components/pages/recipes/Group';
 import { Recipe } from '../../components/pages/recipes/Recipe';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import UploadService from '../../services/UploadService';
-import stylesHeader from '../../components/Header/Header.module.scss';
 import styles from './Recipes.module.scss';
-import stylesLogin from '../login/Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
+import Layout from '../../components/Layout';
 
 export default function Recipes() {
     const [isAuth, setIsAuth] = useState('');
@@ -246,16 +241,20 @@ export default function Recipes() {
 
     useEffect(() => {
         //если какое-то поле из формы создания рубрики не заполнено, делаем кнопку не активной
-        groupIcon !== '' && groupName !== ''
-            ? (btnRef.current.disabled = false)
-            : (btnRef.current.disabled = true);
+        if (btnRef.current) {
+            groupIcon !== '' && groupName !== ''
+                ? (btnRef.current.disabled = false)
+                : (btnRef.current.disabled = true);
+        }
     }, [groupIcon, groupName]);
 
     useEffect(() => {
         //если какое-то поле из формы создания рецепта не заполнено, делаем кнопку не активной
-        recipeName !== '' && groupId !== '' && image !== ''
-            ? (btnRefRecipe.current.disabled = false)
-            : (btnRefRecipe.current.disabled = true);
+        if (btnRefRecipe.current) {
+            recipeName !== '' && groupId !== '' && image !== ''
+                ? (btnRefRecipe.current.disabled = false)
+                : (btnRefRecipe.current.disabled = true);
+        }
     }, [recipeName, groupId, image]);
 
     useEffect(() => {
@@ -271,7 +270,7 @@ export default function Recipes() {
         const getRecipe = async (userId) => {
             //получаем рецепты пользователя
             try {
-                const response = await RecipeService.getRecipe(userId);
+                const response = await RecipeService.getRecipes(userId);
                 setRecipe(response.data);
                 setIsAuth(true);
             } catch (e) {
@@ -296,192 +295,103 @@ export default function Recipes() {
     }, []);
 
     return (
-        <div className={classNames('wrapper', 'container')}>
-            <Sidebar />
-            <div className="content">
-                <header className={stylesHeader.root}>
-                    <h1 className={classNames('title', stylesHeader.title)}>
-                        Рецепты
-                    </h1>
-                    {isAuth !== '' ? (
-                        <Header
-                            userName={dataUser.fullName}
-                            isAuth={isAuth}
-                            setIsAuth={setIsAuth}
-                        />
-                    ) : (
-                        <Oval
-                            height={34}
-                            width={34}
-                            color="#009998"
-                            wrapperStyle={{}}
-                            wrapperClass=""
-                            visible={true}
-                            ariaLabel="oval-loading"
-                            secondaryColor="#7a7a7a"
-                            strokeWidth={2}
-                            strokeWidthSecondary={2}
-                        />
-                    )}
-                </header>
-                <main className="main">
-                    {isAuth !== '' ? (
-                        isAuth ? (
-                            <>
-                                <div className={styles.groups}>
-                                    <h2
-                                        className={classNames(
-                                            'text',
-                                            styles.groupsText
-                                        )}
-                                    >
-                                        Группы
-                                    </h2>
-                                    <div className={styles.groupsBlock}>
-                                        <Group
-                                            groupIcon="icon-1"
-                                            groupName="Все рецепты"
-                                            countRecipe={recipe.length}
-                                            groupId=""
-                                            active={active}
-                                            setActive={setActive}
-                                            groupClickHandler={
-                                                groupClickHandler
-                                            }
-                                        />
-                                        {group &&
-                                            group.map((item) => (
-                                                <Group
-                                                    key={item._id}
-                                                    groupIcon={item.groupIcon}
-                                                    groupName={item.groupName}
-                                                    countRecipe={
-                                                        item.countRecipe
-                                                    }
-                                                    groupId={item._id}
-                                                    active={active}
-                                                    setActive={setActive}
-                                                    groupClickHandler={
-                                                        groupClickHandler
-                                                    }
-                                                    deleteGroup={deleteGroup}
-                                                />
-                                            ))}
-                                    </div>
-                                    <div
-                                        className="addBlock"
-                                        onClick={() =>
-                                            setModalActiveGroup(true)
-                                        }
-                                    >
-                                        <span
-                                            className={classNames(
-                                                'small-text',
-                                                'icon-8',
-                                                'popup-link'
-                                            )}
-                                            href="add-group"
-                                        >
-                                            Создать группы
-                                        </span>
-                                    </div>
-                                </div>
-                                {group && (
-                                    <div className={styles.cakes}>
-                                        <h2
-                                            className={classNames(
-                                                'text',
-                                                styles.groupsText
-                                            )}
-                                        >
-                                            Торты
-                                        </h2>
-                                        <div className={styles.cakesBlock}>
-                                            {filterRecipe
-                                                ? filterRecipe.map((item) => (
-                                                      <Recipe
-                                                          recipeName={
-                                                              item.recipeName
-                                                          }
-                                                          recipeUrl={
-                                                              item.recipeUrl
-                                                          }
-                                                          key={item._id}
-                                                          deleteRecipe={
-                                                              deleteRecipe
-                                                          }
-                                                          recipeId={item._id}
-                                                          groupId={item.group}
-                                                      />
-                                                  ))
-                                                : recipe &&
-                                                  recipe.map((item) => (
-                                                      <Recipe
-                                                          recipeName={
-                                                              item.recipeName
-                                                          }
-                                                          recipeUrl={
-                                                              item.recipeUrl
-                                                          }
-                                                          key={item._id}
-                                                          deleteRecipe={
-                                                              deleteRecipe
-                                                          }
-                                                          recipeId={item._id}
-                                                          groupId={item.group}
-                                                      />
-                                                  ))}
-                                        </div>
-                                        <div
-                                            className="addBlock"
-                                            onClick={() =>
-                                                setModalActiveRecipe(true)
-                                            }
-                                        >
-                                            <span
-                                                className={classNames(
-                                                    'small-text',
-                                                    'icon-8',
-                                                    'popup-link'
-                                                )}
-                                                href="add-recipe"
-                                            >
-                                                Создать рецепт
-                                            </span>
-                                        </div>
-                                    </div>
-                                )}
-                            </>
-                        ) : (
-                            <NoAccess
-                                title={'Доступ закрыт'}
-                                text={
-                                    'Зарегистрируйтесь или войдите в учетную запись, чтобы использовать все возможности сервиса'
-                                }
-                                linkBtn={'/login'}
-                                textBtn={'Войти'}
+        <Layout
+            isAuth={isAuth}
+            setIsAuth={setIsAuth}
+            dataUser={dataUser}
+            title="Рецепты"
+        >
+            <div className={styles.groups}>
+                <h2 className={classNames('text', styles.groupsText)}>
+                    Группы
+                </h2>
+                <div className={styles.groupsBlock}>
+                    <Group
+                        groupIcon="icon-1"
+                        groupName="Все рецепты"
+                        countRecipe={recipe.length}
+                        groupId=""
+                        active={active}
+                        setActive={setActive}
+                        groupClickHandler={groupClickHandler}
+                    />
+                    {group &&
+                        group.map((item) => (
+                            <Group
+                                key={item._id}
+                                groupIcon={item.groupIcon}
+                                groupName={item.groupName}
+                                countRecipe={item.countRecipe}
+                                groupId={item._id}
+                                active={active}
+                                setActive={setActive}
+                                groupClickHandler={groupClickHandler}
+                                deleteGroup={deleteGroup}
                             />
-                        )
-                    ) : (
-                        <div className={stylesLogin.wrapper}>
-                            <Oval
-                                height={40}
-                                width={40}
-                                color="#009998"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                                visible={true}
-                                ariaLabel="oval-loading"
-                                secondaryColor="#7a7a7a"
-                                strokeWidth={2}
-                                strokeWidthSecondary={2}
-                            />
-                        </div>
-                    )}
-                </main>
-                <br></br>
-                <br></br>
+                        ))}
+                </div>
+                <div
+                    className="addBlock"
+                    onClick={() => setModalActiveGroup(true)}
+                >
+                    <span
+                        className={classNames(
+                            'small-text',
+                            'icon-8',
+                            'popup-link'
+                        )}
+                        href="add-group"
+                    >
+                        Создать группы
+                    </span>
+                </div>
             </div>
+            {group && (
+                <div className={styles.cakes}>
+                    <h2 className={classNames('text', styles.groupsText)}>
+                        Торты
+                    </h2>
+                    <div className={styles.cakesBlock}>
+                        {filterRecipe
+                            ? filterRecipe.map((item) => (
+                                  <Recipe
+                                      recipeName={item.recipeName}
+                                      recipeUrl={item.recipeUrl}
+                                      key={item._id}
+                                      deleteRecipe={deleteRecipe}
+                                      recipeId={item._id}
+                                      groupId={item.group}
+                                  />
+                              ))
+                            : recipe &&
+                              recipe.map((item) => (
+                                  <Recipe
+                                      recipeName={item.recipeName}
+                                      recipeUrl={item.recipeUrl}
+                                      key={item._id}
+                                      deleteRecipe={deleteRecipe}
+                                      recipeId={item._id}
+                                      groupId={item.group}
+                                  />
+                              ))}
+                    </div>
+                    <div
+                        className="addBlock"
+                        onClick={() => setModalActiveRecipe(true)}
+                    >
+                        <span
+                            className={classNames(
+                                'small-text',
+                                'icon-8',
+                                'popup-link'
+                            )}
+                            href="add-recipe"
+                        >
+                            Создать рецепт
+                        </span>
+                    </div>
+                </div>
+            )}
             <Modal
                 active={modalActiveGroup}
                 setActive={setModalActiveGroup}
@@ -647,6 +557,6 @@ export default function Recipes() {
                     </button>
                 </div>
             </Modal>
-        </div>
+        </Layout>
     );
 }

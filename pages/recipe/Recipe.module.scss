@@ -1,9 +1,7 @@
 .backLink {
     margin-bottom: 20px;
-    display: block;
-    a {
-        color: var(--mainColor);
-    }
+    display: inline-block;
+    cursor: pointer;
     &:before {
         margin-right: 13px;
     }
@@ -20,6 +18,7 @@
     background-color: var(--secondaryColor);
     padding: 20px;
     border-radius: 16px;
+    align-self: baseline;
     &Block {
         width: 100%;
         margin-bottom: 10px;

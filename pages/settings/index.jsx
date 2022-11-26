@@ -16,6 +16,7 @@ import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Settings.module.scss';
 import stylesLogin from '../login/Login.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
+import Layout from '../../components/Layout';
 
 export default function Settings() {
     const [isAuth, setIsAuth] = useState('');
@@ -76,209 +77,104 @@ export default function Settings() {
     }, []);
 
     return (
-        <div className={classNames('wrapper', 'container')}>
-            <Sidebar />
-            <div className="content">
-                <header className={stylesHeader.root}>
-                    <h1 className={classNames('title', stylesHeader.title)}>
-                        Настройки
-                    </h1>
-                    {isAuth !== '' ? (
-                        <Header
-                            userName={dataUser.fullName}
-                            isAuth={isAuth}
-                            setIsAuth={setIsAuth}
-                        />
-                    ) : (
-                        <Oval
-                            height={34}
-                            width={34}
-                            color="#009998"
-                            wrapperStyle={{}}
-                            wrapperClass=""
-                            visible={true}
-                            ariaLabel="oval-loading"
-                            secondaryColor="#7a7a7a"
-                            strokeWidth={2}
-                            strokeWidthSecondary={2}
-                        />
-                    )}
-                </header>
-                <main className="main">
-                    {isAuth !== '' ? (
-                        isAuth ? (
-                            <>
-                                <div className={styles.info}>
-                                    <h2
-                                        className={classNames(
-                                            'text',
-                                            styles.title
-                                        )}
-                                    >
-                                        Информация о настройках
-                                    </h2>
-                                    <div
-                                        className={classNames(
-                                            'small-text',
-                                            styles.columns
-                                        )}
-                                    >
-                                        <div className={styles.column}>
-                                            {settingsText[0].map((item) => (
-                                                <p className={styles.text}>
-                                                    {item}
-                                                </p>
-                                            ))}
-                                        </div>
-                                        <div className={styles.column}>
-                                            {settingsText[1].map((item) => (
-                                                <p className={styles.text}>
-                                                    {item}
-                                                </p>
-                                            ))}
-                                        </div>
-                                    </div>
+        <Layout
+            isAuth={isAuth}
+            setIsAuth={setIsAuth}
+            dataUser={dataUser}
+            title="Настройки"
+        >
+            <div className={styles.info}>
+                <h2 className={classNames('text', styles.title)}>
+                    Информация о настройках
+                </h2>
+                <div className={classNames('small-text', styles.columns)}>
+                    <div className={styles.column}>
+                        {settingsText[0].map((item) => (
+                            <p className={styles.text}>{item}</p>
+                        ))}
+                    </div>
+                    <div className={styles.column}>
+                        {settingsText[1].map((item) => (
+                            <p className={styles.text}>{item}</p>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            <div className={styles.tables}>
+                <div className={stylesTable.overflow}>
+                    <div className={classNames('table', 'small-text')}>
+                        <div className={stylesTable.wrapperHead}>
+                            <div
+                                className={classNames(
+                                    'text',
+                                    stylesTable.thead
+                                )}
+                            >
+                                <div className={stylesTable.th}>
+                                    Проработка толщины мастики
                                 </div>
-                                <div className={styles.tables}>
-                                    <div className={stylesTable.overflow}>
-                                        <div
-                                            className={classNames(
-                                                'table',
-                                                'small-text'
-                                            )}
-                                        >
-                                            <div
-                                                className={
-                                                    stylesTable.wrapperHead
-                                                }
-                                            >
-                                                <div
-                                                    className={classNames(
-                                                        'text',
-                                                        stylesTable.thead
-                                                    )}
-                                                >
-                                                    <div
-                                                        className={
-                                                            stylesTable.th
-                                                        }
-                                                    >
-                                                        Проработка толщины
-                                                        мастики
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className={stylesTable.tbody}>
-                                                {settings && (
-                                                    <BodyTable
-                                                        key={Math.random()}
-                                                        settings={settings}
-                                                        setSettings={
-                                                            setSettings
-                                                        }
-                                                        index="0"
-                                                    />
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={stylesTable.overflow}>
-                                        <div
-                                            className={classNames(
-                                                'table',
-                                                'small-text'
-                                            )}
-                                        >
-                                            <div
-                                                className={
-                                                    stylesTable.wrapperHead
-                                                }
-                                            >
-                                                <div
-                                                    className={classNames(
-                                                        'text',
-                                                        stylesTable.thead
-                                                    )}
-                                                >
-                                                    <div
-                                                        className={
-                                                            stylesTable.th
-                                                        }
-                                                    >
-                                                        Проработка толщины крема
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className={stylesTable.tbody}>
-                                                {settings && (
-                                                    <BodyTable
-                                                        key={Math.random()}
-                                                        settings={settings}
-                                                        setSettings={
-                                                            setSettings
-                                                        }
-                                                        index="1"
-                                                    />
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={stylesTable.buttons}>
-                                    <button
-                                        className={classNames(
-                                            stylesBtn.btn,
-                                            'small-text'
-                                        )}
-                                        href="#"
-                                        onClick={() => resetSettings()}
-                                    >
-                                        Сбросить настройки
-                                    </button>
-                                    <button
-                                        className={classNames(
-                                            stylesBtn.btn,
-                                            stylesBtn.btn__secondary,
-                                            'small-text'
-                                        )}
-                                        href="#"
-                                        onClick={() => saveSettings()}
-                                    >
-                                        Сохранить
-                                    </button>
-                                </div>
-                            </>
-                        ) : (
-                            <NoAccess
-                                title={'Доступ закрыт'}
-                                text={
-                                    'Зарегистрируйтесь или войдите в учетную запись, чтобы использовать все возможности сервиса'
-                                }
-                                linkBtn={'/login'}
-                                textBtn={'Войти'}
-                            />
-                        )
-                    ) : (
-                        <div className={stylesLogin.wrapper}>
-                            <Oval
-                                height={40}
-                                width={40}
-                                color="#009998"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                                visible={true}
-                                ariaLabel="oval-loading"
-                                secondaryColor="#7a7a7a"
-                                strokeWidth={2}
-                                strokeWidthSecondary={2}
-                            />
+                            </div>
                         </div>
+                        <div className={stylesTable.tbody}>
+                            {settings && (
+                                <BodyTable
+                                    key={Math.random()}
+                                    settings={settings}
+                                    setSettings={setSettings}
+                                    index="0"
+                                />
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className={stylesTable.overflow}>
+                    <div className={classNames('table', 'small-text')}>
+                        <div className={stylesTable.wrapperHead}>
+                            <div
+                                className={classNames(
+                                    'text',
+                                    stylesTable.thead
+                                )}
+                            >
+                                <div className={stylesTable.th}>
+                                    Проработка толщины крема
+                                </div>
+                            </div>
+                        </div>
+                        <div className={stylesTable.tbody}>
+                            {settings && (
+                                <BodyTable
+                                    key={Math.random()}
+                                    settings={settings}
+                                    setSettings={setSettings}
+                                    index="1"
+                                />
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={stylesTable.buttons}>
+                <button
+                    className={classNames(stylesBtn.btn, 'small-text')}
+                    href="#"
+                    onClick={() => resetSettings()}
+                >
+                    Сбросить настройки
+                </button>
+                <button
+                    className={classNames(
+                        stylesBtn.btn,
+                        stylesBtn.btn__secondary,
+                        'small-text'
                     )}
-                </main>
-                <br></br>
-                <br></br>
+                    href="#"
+                    onClick={() => saveSettings()}
+                >
+                    Сохранить
+                </button>
             </div>
             <Alert />
-        </div>
+        </Layout>
     );
 }

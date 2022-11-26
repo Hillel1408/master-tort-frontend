@@ -192,13 +192,18 @@ export default function CalendarOrders() {
     const filterOrders = (orders, year, month) => {
         //фильтруем и получаем в стейт заказы текущего месяца на календаре
         const asd = {};
+        const today = new Date();
+
         orders.forEach((item) => {
-            const date = new Date(item.date);
+            const date = new Date(item.date + 'T' + item.time);
             if (date.getMonth() === month && date.getFullYear() === year) {
                 const day = date.getDate();
-                asd[day]
-                    ? (asd[day] = [...asd[day], item])
-                    : (asd[day] = [item]);
+                const a = (date - today) / (1000 * 3600 * 24);
+                const obj = {
+                    ...item,
+                    isRushOrder: a > 0 && a < dataUser.rushOrder.value,
+                };
+                asd[day] ? (asd[day] = [...asd[day], obj]) : (asd[day] = [obj]);
             }
         });
         setFilteredOrders(asd);
@@ -306,6 +311,14 @@ export default function CalendarOrders() {
                                                             filteredOrders[
                                                                 amount
                                                             ].length
+                                                        }
+                                                        isRushOrder={
+                                                            filteredOrders[
+                                                                amount
+                                                            ] &&
+                                                            filteredOrders[
+                                                                amount
+                                                            ][0].isRushOrder
                                                         }
                                                         today={
                                                             amount === day &&

@@ -32,4 +32,8 @@ export default class AuthService {
     static async updatePassword(values) {
         return $api.post('/update-password', values);
     }
+
+    static async updateRushOrder(values) {
+        return $api.post('/update-order', values);
+    }
 }

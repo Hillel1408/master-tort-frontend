@@ -17,8 +17,12 @@ export default class RecipeService {
         return $api.post('/recipe', values);
     }
 
-    static async getRecipe(userId) {
-        return $api.get(`/recipe/${userId}`);
+    static async getRecipes(userId) {
+        return $api.get(`/recipes/${userId}`);
+    }
+
+    static async getRecipe(recipeId) {
+        return $api.get(`/recipe/${recipeId}`);
     }
 
     static async deleteRecipe(recipeId) {

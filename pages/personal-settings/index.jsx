@@ -88,6 +88,18 @@ export default function PersonalSettings() {
         }
     };
 
+    const onSubmitSelect = async (e) => {
+        //отправляем срочный заказ на сервер
+        try {
+            const response = await AuthService.updateRushOrder({
+                userId: dataUser.id,
+                rushOrder: e,
+            });
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
     const onSubmitPassword = async (values) => {
         //отправляем новый пароль на сервер
         try {
@@ -323,11 +335,13 @@ export default function PersonalSettings() {
                     </h2>
                     <div className={styles.orderBlock}>
                         <CustomSelect
+                            default={dataUser.rushOrder}
                             isSearchable={false}
                             height="43px"
                             width="100%"
                             options={measure}
                             placeholder="Срочный заказ"
+                            setGroupIcon={(e) => onSubmitSelect(e)}
                         />
                         <div
                             className={classNames(

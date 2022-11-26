@@ -8,7 +8,7 @@ function Recipe({ recipeName, recipeUrl, deleteRecipe, recipeId, groupId }) {
             <span className={classNames('small-text', styles.smallText)}>
                 {recipeName}
             </span>
-            <Link href="/recipe">
+            <Link href={`/recipe/${recipeId}`}>
                 <a>
                     <div className={styles.cakesImage}>
                         <img src={recipeUrl} />

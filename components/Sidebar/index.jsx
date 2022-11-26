@@ -51,7 +51,7 @@ function Sidebar() {
             <div className={styles.logo}>
                 <Link href="/">
                     <a className={classNames('text', styles.logoLink)}>
-                        <img src="logo.svg" alt="" />
+                        <img src="/logo.svg" alt="" />
                         Помощник кондитеру
                     </a>
                 </Link>

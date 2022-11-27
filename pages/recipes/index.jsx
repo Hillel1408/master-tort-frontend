@@ -258,20 +258,13 @@ export default function Recipes() {
     }, [recipeName, groupId, image]);
 
     useEffect(() => {
-        const getGroup = async (userId) => {
-            //получаем рубрики пользователя
+        const getRecipeGroup = async (userId) => {
+            //получаем рецепты и группы пользователя
             try {
-                const response = await RecipeService.getGroup(userId);
-                setGroup(response.data);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-            }
-        };
-        const getRecipe = async (userId) => {
-            //получаем рецепты пользователя
-            try {
-                const response = await RecipeService.getRecipes(userId);
-                setRecipe(response.data);
+                const responseRecipe = await RecipeService.getRecipes(userId);
+                setRecipe(responseRecipe.data);
+                const responseGroup = await RecipeService.getGroup(userId);
+                setGroup(responseGroup.data);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -283,8 +276,7 @@ export default function Recipes() {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
-                getGroup(response.data.user.id);
-                getRecipe(response.data.user.id);
+                getRecipeGroup(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);

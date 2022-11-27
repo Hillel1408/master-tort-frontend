@@ -1,12 +1,9 @@
 import classNames from 'classnames';
-import { useRef } from 'react';
 import { TableCell } from '../../TableCell';
 import { CustomSelect } from '../../CustomSelect/';
 import stylesTable from '../../Table/Table.module.scss';
 
 function Tr({ item, tr, setTr, index, measure }) {
-    const selectRef = useRef('');
-
     return (
         <div className={stylesTable.wrapper}>
             <div
@@ -38,7 +35,7 @@ function Tr({ item, tr, setTr, index, measure }) {
                                 />
                             </div>
                         ) : (
-                            keyObj !== 'unit' && (
+                            keyObj !== 'id' && (
                                 <TableCell
                                     key={Math.random()}
                                     value={item[keyObj]}

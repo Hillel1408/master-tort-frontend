@@ -18,6 +18,7 @@ export default function Products() {
     const dispatch = useDispatch();
 
     const trValue = {
+        id: Math.random(),
         name: '',
         unit: { value: '', label: '' },
         packageKg: '',

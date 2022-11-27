@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import stylesTable from '../../Table/Table.module.scss';
 import { Tr } from './Tr';
 
-function Block({ item, setBlock, blockIndex, block }) {
+function Block({ item, setBlock, blockIndex, block, select }) {
     const trValue = { product: { value: '', label: '' }, gross: '', net: '' };
 
     const clickHandler = () => {
@@ -10,14 +10,19 @@ function Block({ item, setBlock, blockIndex, block }) {
         setBlock([...block]);
     };
 
+    const clickHandlerBlock = () => {
+        block.splice(blockIndex, 1);
+        setBlock([...block]);
+    };
+
     return (
         <div className={stylesTable.block}>
             <div className={classNames('text', stylesTable.title)}>
                 {item.title}
-                {/*<span
-                    onClick={() => clickHandler()}
+                <span
+                    onClick={() => clickHandlerBlock()}
                     className={classNames('icon-11', stylesTable.delete)}
-    ></span>*/}
+                ></span>
             </div>
             {item.products.length > 0 && (
                 <div className={stylesTable.tbody}>
@@ -29,6 +34,7 @@ function Block({ item, setBlock, blockIndex, block }) {
                             blockIndex={blockIndex}
                             block={block}
                             setBlock={setBlock}
+                            select={select}
                         />
                     ))}
                 </div>

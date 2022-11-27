@@ -1,11 +1,3 @@
-.backLink {
-    margin-bottom: 20px;
-    display: inline-block;
-    cursor: pointer;
-    &:before {
-        margin-right: 13px;
-    }
-}
 .root {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -32,4 +24,18 @@
             }
         }
     }
+}
+.backLink {
+    margin-bottom: 20px;
+    display: inline-block;
+    cursor: pointer;
+    &:before {
+        margin-right: 13px;
+    }
+}
+#tooltiptext {
+    left: 20px;
+    top: 25px;
+    display: block;
+    width: 250px;
 }

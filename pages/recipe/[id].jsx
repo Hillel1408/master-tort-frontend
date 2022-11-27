@@ -6,37 +6,69 @@ import Layout from '../../components/Layout';
 import AuthService from '../../services/AuthService';
 import Link from 'next/link';
 import RecipeService from '../../services/RecipeService';
+import ProductsService from '../../services/ProductsService';
 import { Block } from '../../components/pages/recipe/Block';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
+import stylesInput from '../../components/Input/Input.module.scss';
+import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
 
 export default function Recipe() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [recipe, setRecipe] = useState('');
     const [block, setBlock] = useState([]);
-
-    const blockValue = {
-        title: 'Бисквит',
-        products: [],
-    };
+    const [select, setSelect] = useState('');
+    const [visiblePopup, setVisiblePopup] = useState(false);
+    const [value, setValue] = useState('');
 
     const thTitle = ['Продукт', 'Брутто', 'Нетто'];
 
     const clickHandler = () => {
-        setBlock([...block, blockValue]);
+        setBlock([
+            ...block,
+            {
+                title: `${value}`,
+                products: [],
+            },
+        ]);
     };
 
-    const saveSettings = () => {};
+    const saveSettings = async () => {
+        try {
+            const id = window.location.pathname.split('/recipe/')[1];
+            const response = await RecipeService.updateRecipe(id, block);
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
 
     useEffect(() => {
+        const getProducts = async (id) => {
+            //получаем продукты пользователя
+            try {
+                const response = await ProductsService.get(id);
+                //формируем значения выпадающего списка с продуктами
+                const select = [];
+                response.data.products.map((item) => {
+                    select.push({
+                        value: item.id,
+                        label: item.name,
+                    });
+                });
+                setSelect(select);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
+        };
+
         const getRecipe = async () => {
             //получаем рецепт пользователя
             try {
                 const id = window.location.pathname.split('/recipe/')[1];
                 const response = await RecipeService.getRecipe(id);
                 setRecipe(response.data);
+                setBlock(response.data.products);
                 setIsAuth(true);
-                console.log(response);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -49,6 +81,7 @@ export default function Recipe() {
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
                 getRecipe();
+                getProducts(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);
@@ -115,6 +148,7 @@ export default function Recipe() {
                                             setBlock={setBlock}
                                             blockIndex={index}
                                             block={block}
+                                            select={select}
                                         />
                                     ))}
                                 <div
@@ -128,27 +162,67 @@ export default function Recipe() {
                                             'icon-8',
                                             'small-text'
                                         )}
-                                        onClick={() => clickHandler()}
+                                        onClick={() =>
+                                            setVisiblePopup(!visiblePopup)
+                                        }
                                     >
                                         Добавить полуфабрикат
                                     </span>
+                                    {visiblePopup && (
+                                        <div
+                                            id={styles.tooltiptext}
+                                            className={classNames(
+                                                stylesTooltip.tooltiptext,
+                                                visiblePopup &&
+                                                    stylesTooltip.tooltipActive
+                                            )}
+                                        >
+                                            <input
+                                                className={stylesInput.input}
+                                                placeholder="Введите название"
+                                                value={value}
+                                                onChange={(e) =>
+                                                    setValue(e.target.value)
+                                                }
+                                            />
+                                            <button
+                                                className={classNames(
+                                                    stylesBtn.btn,
+                                                    stylesBtn.btn__secondary,
+                                                    'small-text'
+                                                )}
+                                                style={{
+                                                    width: '100%',
+                                                    marginTop: '10px',
+                                                }}
+                                                onClick={() => {
+                                                    clickHandler();
+                                                    setVisiblePopup(
+                                                        !visiblePopup
+                                                    );
+                                                    setValue('');
+                                                }}
+                                            >
+                                                Добавить
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className={stylesTable.buttons}>
-                        <div></div>
                         <button
                             className={classNames(
                                 stylesBtn.btn,
                                 stylesBtn.btn__secondary,
                                 'small-text'
                             )}
-                            href="#"
                             onClick={() => saveSettings()}
                         >
                             Сохранить
                         </button>
+                        <div></div>
                     </div>
                 </div>
                 <div className={styles.image}>

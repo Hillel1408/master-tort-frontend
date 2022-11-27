@@ -28,4 +28,8 @@ export default class RecipeService {
     static async deleteRecipe(recipeId) {
         return $api.delete(`/recipe/${recipeId}`);
     }
+
+    static async updateRecipe(recipeId, values) {
+        return $api.patch(`/recipe/${recipeId}`, values);
+    }
 }

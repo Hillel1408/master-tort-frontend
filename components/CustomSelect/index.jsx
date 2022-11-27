@@ -59,7 +59,7 @@ function CustomSelect(props) {
         }),
         menuList: (provided) => ({
             ...provided,
-            maxHeight: '120px',
+            maxHeight: '125px',
         }),
         noOptionsMessage: (provided) => ({
             ...provided,
@@ -89,7 +89,7 @@ function CustomSelect(props) {
                 const table = document.querySelector('.table');
                 table && table.classList.add('lock');
             }}
-            noOptionsMessage={() => 'Добавьте группу'}
+            noOptionsMessage={() => 'Ничего не найдено'}
             menuPortalTarget={props.portalTarget && document.body}
         />
     );

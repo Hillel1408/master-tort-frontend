@@ -1,12 +1,12 @@
+import { useState, useEffect } from 'react';
 import classNames from 'classnames';
+import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
-import styles from '../purchase/Purchase.module.scss';
-import { useState, useEffect } from 'react';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
-import Layout from '../../components/Layout';
+import styles from '../purchase/Purchase.module.scss';
 
 export default function ArchiveOrders() {
     const [isAuth, setIsAuth] = useState('');

@@ -25,6 +25,9 @@
 }
 .orders {
     flex: 0 1 780px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 16px;
     &No {
         display: flex;
         height: 100%;
@@ -124,11 +127,6 @@
 }
 .smallText {
     color: var(--textColor);
-}
-.orders {
-    background-color: white;
-    padding: 20px;
-    border-radius: 16px;
 }
 .overflow {
     max-height: 650px;

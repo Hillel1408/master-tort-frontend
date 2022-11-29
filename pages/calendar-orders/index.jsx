@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
 import { Td } from '../../components/pages/calendar-orders/Td';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './CalendarOrders.module.scss';
-import Layout from '../../components/Layout';
 
 export default function CalendarOrders() {
     const [isAuth, setIsAuth] = useState('');
@@ -197,6 +197,7 @@ export default function CalendarOrders() {
         orders.forEach((item) => {
             const date = new Date(item.date + 'T' + item.time);
             if (date.getMonth() === month && date.getFullYear() === year) {
+                //проверяем является ли заказ срочным
                 const day = date.getDate();
                 const a = (date - today) / (1000 * 3600 * 24);
                 const obj = {

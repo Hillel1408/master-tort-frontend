@@ -1,15 +1,15 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 import { Oval } from 'react-loader-spinner';
 import { Sidebar } from '../../components/Sidebar';
 import { Header } from '../../components/Header';
 import { SocialLinks } from '../../components/SocialLinks';
-import styles from './Login.module.scss';
-import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
 import { EmailForm } from '../../components/pages/login/EmailForm';
 import AuthService from '../../services/AuthService';
-import { useRouter } from 'next/router';
+import styles from './Login.module.scss';
 import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesLogin from '../login/Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
@@ -19,6 +19,7 @@ export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState();
     const [isAuth, setIsAuth] = useState('');
+
     const router = useRouter();
 
     const {

@@ -1,10 +1,10 @@
-import { Sidebar } from '../components/Sidebar';
-import stylesHeader from '../components/Header/Header.module.scss';
 import { Oval } from 'react-loader-spinner';
-import { NoAccess } from '../components/NoAccess';
-import stylesLogin from '../pages/login/Login.module.scss';
-import { Header } from '../components/Header';
 import classNames from 'classnames';
+import { Sidebar } from '../components/Sidebar';
+import { NoAccess } from '../components/NoAccess';
+import { Header } from '../components/Header';
+import stylesLogin from '../pages/login/Login.module.scss';
+import stylesHeader from '../components/Header/Header.module.scss';
 
 const Layout = ({ children, isAuth, setIsAuth, dataUser, title }) => (
     <div className={classNames('wrapper', 'container')}>

@@ -22,6 +22,11 @@
             background-color: var(--secondaryColor);
             z-index: 2;
         }
+        &Active {
+            @media (max-width: 1920px) {
+                transform: translate(0px, 0%);
+            }
+        }
     }
     &Link {
         display: flex;
@@ -41,6 +46,9 @@
             margin-right: 12px;
             display: inline-flex;
             justify-content: center;
+        }
+        &Active {
+            color: var(--mainColor);
         }
     }
     &Icon {
@@ -69,26 +77,18 @@
                 }
             }
         }
-    }
-}
-.navListActive {
-    @media (max-width: 1920px) {
-        transform: translate(0px, 0%);
-    }
-}
-.navLinkActive {
-    color: var(--mainColor);
-}
-.navIconActive {
-    span {
-        transform: scale(0);
-        &:first-child {
-            transform: rotate(-45deg);
-            top: calc(50% - 1px);
-        }
-        &:last-child {
-            transform: rotate(45deg);
-            bottom: calc(50% - 1px);
+        &Active {
+            span {
+                transform: scale(0);
+                &:first-child {
+                    transform: rotate(-45deg);
+                    top: calc(50% - 1px);
+                }
+                &:last-child {
+                    transform: rotate(45deg);
+                    bottom: calc(50% - 1px);
+                }
+            }
         }
     }
 }

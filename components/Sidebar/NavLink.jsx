@@ -5,6 +5,7 @@ import styles from './Sidebar.module.scss';
 
 function NavLink({ item }) {
     const { href, icon, name } = item;
+
     const router = useRouter();
 
     const clickHandler = () => {

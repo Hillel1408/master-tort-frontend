@@ -16,6 +16,7 @@
 #__next {
     height: 100%;
 }
+
 body.lock {
     overflow: hidden !important;
 }
@@ -71,10 +72,6 @@ body.lock {
         margin-left: 10px;
     }
 }
-.select {
-    padding: 8px;
-}
-
 .text {
     font-size: 16px;
     font-weight: 500;

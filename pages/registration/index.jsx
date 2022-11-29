@@ -124,18 +124,16 @@ export default function Registration() {
                                 >
                                     Уже есть учетная запись?
                                     <span>
-                                        <Link href="/login">
-                                            <a>Войти</a>
-                                        </Link>
+                                        <Link href="/login">Войти</Link>
                                     </span>
                                 </p>
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <input
-                                        placeholder="Имя"
                                         className={classNames(
                                             stylesInput.input,
                                             styles.input
                                         )}
+                                        placeholder="Имя"
                                         {...register('fullName', {
                                             required: true,
                                         })}

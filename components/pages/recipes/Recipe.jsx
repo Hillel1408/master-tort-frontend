@@ -9,11 +9,9 @@ function Recipe({ recipeName, recipeUrl, deleteRecipe, recipeId, groupId }) {
                 {recipeName}
             </span>
             <Link href={`/recipe/${recipeId}`}>
-                <a>
-                    <div className={styles.cakesImage}>
-                        <img src={recipeUrl} />
-                    </div>
-                </a>
+                <div className={styles.cakesImage}>
+                    <img src={recipeUrl} />
+                </div>
             </Link>
             <span
                 className={styles.groupsDelete}

@@ -106,7 +106,7 @@ export default function Login() {
                                         Нет учетной записи?
                                         <span>
                                             <Link href="/registration">
-                                                <a>Зарегистрироваться</a>
+                                                Зарегистрироваться
                                             </Link>
                                         </span>
                                     </p>

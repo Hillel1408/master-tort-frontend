@@ -10,14 +10,10 @@
 .title {
     margin-bottom: 5px;
     padding: 5px 20px 0 20px;
-    cursor: pointer;
     display: flex;
     justify-content: space-between;
     @media (max-width: 576px) {
         padding: 5px 10px 0 10px;
-    }
-    span {
-        font-size: 12px;
     }
 }
 .thead {
@@ -56,6 +52,7 @@
 .delete {
     color: red;
     cursor: pointer;
+    font-size: 9px;
 }
 .block {
     &Wrapper {

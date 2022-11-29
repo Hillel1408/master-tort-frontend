@@ -17,7 +17,7 @@ function Td({
     ) : (
         <td
             onClick={() => count && setActiveDay(amount)}
-            className={classNames(activeDay == amount && styles.tdActive)}
+            className={classNames(activeDay === amount && styles.tdActive)}
         >
             <div
                 className={classNames(

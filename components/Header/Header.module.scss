@@ -69,13 +69,15 @@
 .block {
     cursor: pointer;
 }
-.icon:before {
-    transition: all 0.3s ease 0s;
-    display: inline-block;
-}
-.iconActive {
+.icon {
     &:before {
-        transform: rotate(180deg);
+        transition: all 0.3s ease 0s;
+        display: inline-block;
+    }
+    &Active {
+        &:before {
+            transform: rotate(180deg);
+        }
     }
 }
 .link {

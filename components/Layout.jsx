@@ -69,6 +69,7 @@ const Layout = ({ children, isAuth, setIsAuth, dataUser, title }) => (
             </main>
             <br></br>
             <br></br>
+            <br></br>
         </div>
     </div>
 );

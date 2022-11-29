@@ -51,13 +51,12 @@ function EmailForm({ setIsLogin }) {
                         Проверьте почтовый ящик, чтобы узнать как его
                         активизировать
                     </p>
-                    <Link href="/">
-                        <a
-                            className={classNames('small-text', styles.link)}
-                            style={{ marginBottom: '0' }}
-                        >
-                            На главную
-                        </a>
+                    <Link
+                        href="/"
+                        className={classNames('small-text', styles.link)}
+                        style={{ marginBottom: '0' }}
+                    >
+                        На главную
                     </Link>
                 </>
             ) : (

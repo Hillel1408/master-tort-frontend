@@ -37,13 +37,13 @@
         flex-wrap: wrap;
         align-items: center;
     }
-    &Date:before {
-        font-size: 14px;
-        margin-right: 6px;
-    }
     &Date {
         display: flex;
         align-items: center;
+        &:before {
+            font-size: 14px;
+            margin-right: 6px;
+        }
     }
 }
 .archive {

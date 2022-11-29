@@ -51,15 +51,11 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                             tooltipActive && styles.tooltipActive
                         )}
                     >
-                        <Link href="/personal-settings">
-                            <a
-                                className={classNames(
-                                    styles.link,
-                                    'small-text'
-                                )}
-                            >
-                                Личный кабинет
-                            </a>
+                        <Link
+                            href="/personal-settings"
+                            className={classNames(styles.link, 'small-text')}
+                        >
+                            Личный кабинет
                         </Link>
                         <a
                             onClick={(e) => {
@@ -75,16 +71,18 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                 </div>
             ) : (
                 <div className={styles.login}>
-                    <Link href="/login">
-                        <a className={classNames('text', styles.loginLink)}>
-                            Вход
-                        </a>
+                    <Link
+                        href="/login"
+                        className={classNames('text', styles.loginLink)}
+                    >
+                        Вход
                     </Link>
                     <span className={styles.text}>|</span>
-                    <Link href="registration">
-                        <a className={classNames('text', styles.loginLink)}>
-                            Регистрация
-                        </a>
+                    <Link
+                        href="registration"
+                        className={classNames('text', styles.loginLink)}
+                    >
+                        Регистрация
                     </Link>
                 </div>
             )}

@@ -23,12 +23,16 @@
     transition: all 0.8s ease 0s;
 }
 .content {
-    @media (max-width: 576px) {
-        width: 100%;
-    }
     transition: all 0.8s ease 0s;
     opacity: 0;
     transform: perspective(600px) translate(0px, -100%) rotateX(45deg);
+    @media (max-width: 576px) {
+        width: 100%;
+    }
+    &Open {
+        transform: perspective(600px) translate(0px, 0%) rotateX(0deg);
+        opacity: 1;
+    }
 }
 .close {
     position: absolute;
@@ -64,8 +68,4 @@
     opacity: 1;
     visibility: visible;
     pointer-events: all;
-}
-.contentOpen {
-    transform: perspective(600px) translate(0px, 0%) rotateX(0deg);
-    opacity: 1;
 }

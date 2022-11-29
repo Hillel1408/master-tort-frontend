@@ -136,7 +136,7 @@ export default function Recipe() {
                                 </div>
                                 <div
                                     className={stylesTable.th}
-                                    style={{ width: '22px' }}
+                                    style={{ width: '19px' }}
                                 ></div>
                             </div>
                             <div className={stylesTable.blockWrapper}>

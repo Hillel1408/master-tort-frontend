@@ -28,7 +28,7 @@
         background-color: #f4f2f1;
         border-radius: 8px;
         position: relative;
-        span:before {
+        & > span:before {
             font-size: 30px;
             margin-bottom: 20px;
             display: inline-block;
@@ -56,23 +56,11 @@
         visibility: hidden;
         transition: all 0.3s ease 0s;
         position: absolute;
-        top: 4px;
-        right: 4px;
-        width: 18px;
+        top: 9px;
+        right: 8px;
+        color: red;
+        font-size: 9px;
         cursor: pointer;
-        svg {
-            path {
-                transition: all 0.3s ease 0s;
-                fill: var(--mainColor);
-            }
-            @media (any-hover: hover) {
-                &:hover {
-                    path {
-                        fill: darken(#009998, 10%);
-                    }
-                }
-            }
-        }
     }
     &Count {
         opacity: 1;
@@ -128,6 +116,12 @@
         @media (max-width: 375px) {
             padding: 10px;
         }
+        .groupsDelete {
+            font-size: 10px;
+            color: #f16363;
+            top: 10px;
+            right: 10px;
+        }
         @media (any-hover: hover) {
             &:hover {
                 .groupsDelete {
@@ -135,10 +129,6 @@
                     visibility: visible;
                 }
             }
-        }
-        .groupsDelete {
-            top: 10px;
-            right: 10px;
         }
     }
     &Image {

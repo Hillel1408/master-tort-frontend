@@ -57,7 +57,7 @@ body.lock {
     color: var(--mainColor);
     margin-top: 10px;
     display: block;
-    span {
+    & > span {
         cursor: pointer;
         display: inline-flex;
         align-items: center;

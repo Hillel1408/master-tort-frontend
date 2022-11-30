@@ -10,6 +10,7 @@ import stylesHeader from '../components/Header/Header.module.scss';
 import { Oval } from 'react-loader-spinner';
 import stylesInput from '../components/Input/Input.module.scss';
 import stylesBtn from '../components/Btn/Btn.module.scss';
+import { Tooltip } from '../components/Tooltip';
 
 export default function Home() {
     const [isAuth, setIsAuth] = useState('');
@@ -574,7 +575,7 @@ export default function Home() {
                                 >
                                     Визуализация силуэта
                                 </h2>
-                                <div className={stylesTooltip.tooltiptext}>
+                                <Tooltip style={styles.tooltiptext}>
                                     <div>
                                         <span>Порций в ярусе</span>
                                         <span>Вес начинки</span>
@@ -589,7 +590,7 @@ export default function Home() {
                                         <span>40 г</span>
                                         <span>600 г</span>
                                     </div>
-                                </div>
+                                </Tooltip>
                             </div>
                             <div className={styles.cakeImage}>
                                 <img src="2.jpg" alt="" />

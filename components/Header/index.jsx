@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
+import { Tooltip } from '../Tooltip';
 import styles from './Header.module.scss';
 import AuthService from '../../services/AuthService';
 
@@ -51,22 +52,35 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                             tooltipActive && styles.tooltipActive
                         )}
                     >
-                        <Link
-                            href="/personal-settings"
-                            className={classNames(styles.link, 'small-text')}
+                        <Tooltip
+                            visiblePopup={tooltipActive}
+                            style={styles.tooltip}
+                            setVisiblePopup={setTooltipActive}
+                            close={true}
                         >
-                            Личный кабинет
-                        </Link>
-                        <a
-                            onClick={(e) => {
-                                e.preventDefault();
-                                logout();
-                            }}
-                            href=""
-                            className={classNames(styles.link, 'small-text')}
-                        >
-                            Выход
-                        </a>
+                            <Link
+                                href="/personal-settings"
+                                className={classNames(
+                                    styles.link,
+                                    'small-text'
+                                )}
+                            >
+                                Личный кабинет
+                            </Link>
+                            <a
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    logout();
+                                }}
+                                href=""
+                                className={classNames(
+                                    styles.link,
+                                    'small-text'
+                                )}
+                            >
+                                Выход
+                            </a>
+                        </Tooltip>
                     </div>
                 </div>
             ) : (

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { Tr } from '../../components/pages/products/Tr';
 import Layout from '../../components/Layout';
+import { Tr } from '../../components/pages/products/Tr';
 import { Alert } from '../../components/Alert';
 import { setAlert } from '../../redux/cakeSlice';
 import AuthService from '../../services/AuthService';

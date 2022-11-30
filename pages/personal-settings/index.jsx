@@ -1,14 +1,15 @@
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import { useForm } from 'react-hook-form';
+import Layout from '../../components/Layout';
+import { CustomSelect } from '../../components/CustomSelect';
+import { Tooltip } from '../../components/Tooltip';
+import AuthService from '../../services/AuthService';
+import UploadService from '../../services/UploadService';
 import styles from './PersonalSettings.module.scss';
 import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
-import AuthService from '../../services/AuthService';
-import { useState, useEffect, useRef } from 'react';
-import Layout from '../../components/Layout';
-import { CustomSelect } from '../../components/CustomSelect';
-import { useForm } from 'react-hook-form';
-import UploadService from '../../services/UploadService';
 
 export default function PersonalSettings() {
     const [isAuth, setIsAuth] = useState('');
@@ -33,17 +34,6 @@ export default function PersonalSettings() {
         { value: '5', label: '5 дней' },
     ];
 
-    useEffect(() => {
-        //если какое-то поле из формы не заполнено, делаем кнопку не активной
-        if (btnRef.current) {
-            (email !== '' && fullName !== '' && email !== dataUser.email) ||
-            fullName !== dataUser.fullName ||
-            image
-                ? (btnRef.current.disabled = false)
-                : (btnRef.current.disabled = true);
-        }
-    }, [fullName, email, image]);
-
     const {
         register,
         handleSubmit,
@@ -57,6 +47,17 @@ export default function PersonalSettings() {
         },
         mode: 'onChange',
     });
+
+    useEffect(() => {
+        //если какое-то поле из формы не заполнено, делаем кнопку не активной
+        if (btnRef.current) {
+            (email !== '' && fullName !== '' && email !== dataUser.email) ||
+            fullName !== dataUser.fullName ||
+            image
+                ? (btnRef.current.disabled = false)
+                : (btnRef.current.disabled = true);
+        }
+    }, [fullName, email, image]);
 
     const resetState = (state) => {
         setTimeout(() => {
@@ -202,9 +203,7 @@ export default function PersonalSettings() {
                                 <input
                                     ref={inputFileRef}
                                     type="file"
-                                    onChange={(e) => {
-                                        handleChangeFile(e);
-                                    }}
+                                    onChange={(e) => handleChangeFile(e)}
                                     hidden
                                 />
                             </div>
@@ -350,13 +349,13 @@ export default function PersonalSettings() {
                             )}
                         >
                             <span className="icon-22"></span>
-                            <div className={stylesTooltip.tooltiptext}>
+                            <Tooltip>
                                 <span className="small-text">
                                     Помечать заказ как “Срочный” (
                                     <i className="icon-27"></i>) за 2 дня до
                                     даты заказа
                                 </span>
-                            </div>
+                            </Tooltip>
                         </div>
                     </div>
                 </div>

@@ -302,3 +302,14 @@
     cursor: pointer;
     border-radius: 50%;
 }
+#tooltiptext {
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    font-size: 10px;
+    span {
+        display: block;
+    }
+    span:not(:last-child) {
+        margin-bottom: 4px;
+    }
+}

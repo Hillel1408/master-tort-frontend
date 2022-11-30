@@ -1,16 +1,16 @@
-import classNames from 'classnames';
-import stylesTable from '../../components/Table/Table.module.scss';
-import styles from './Recipe.module.scss';
 import { useState, useEffect } from 'react';
-import Layout from '../../components/Layout';
-import AuthService from '../../services/AuthService';
+import classNames from 'classnames';
 import Link from 'next/link';
+import Layout from '../../components/Layout';
+import { Block } from '../../components/pages/recipe/Block';
+import { Tooltip } from '../../components/Tooltip';
+import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import ProductsService from '../../services/ProductsService';
-import { Block } from '../../components/pages/recipe/Block';
+import styles from './Recipe.module.scss';
+import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
-import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
 
 export default function Recipe() {
     const [isAuth, setIsAuth] = useState('');
@@ -90,6 +90,7 @@ export default function Recipe() {
         if (localStorage.getItem('token')) checkAuth();
         else setIsAuth(false);
     }, []);
+
     return (
         <Layout
             isAuth={isAuth}
@@ -143,7 +144,7 @@ export default function Recipe() {
                                 {block &&
                                     block.map((item, index) => (
                                         <Block
-                                            key={Math.random()}
+                                            key={index}
                                             item={item}
                                             setBlock={setBlock}
                                             blockIndex={index}
@@ -168,45 +169,43 @@ export default function Recipe() {
                                     >
                                         Добавить полуфабрикат
                                     </span>
-                                    {visiblePopup && (
-                                        <div
-                                            id={styles.tooltiptext}
+                                    <Tooltip
+                                        style={styles.tooltiptext}
+                                        visiblePopup={visiblePopup}
+                                        setVisiblePopup={setVisiblePopup}
+                                        close={true}
+                                    >
+                                        <input
+                                            className={stylesInput.input}
+                                            placeholder="Введите название"
+                                            value={value}
+                                            onChange={(e) =>
+                                                setValue(e.target.value)
+                                            }
+                                        />
+                                        <button
                                             className={classNames(
-                                                stylesTooltip.tooltiptext,
-                                                visiblePopup &&
-                                                    stylesTooltip.tooltipActive
+                                                stylesBtn.btn,
+                                                stylesBtn.btn__secondary,
+                                                'small-text'
                                             )}
-                                        >
-                                            <input
-                                                className={stylesInput.input}
-                                                placeholder="Введите название"
-                                                value={value}
-                                                onChange={(e) =>
-                                                    setValue(e.target.value)
-                                                }
-                                            />
-                                            <button
-                                                className={classNames(
-                                                    stylesBtn.btn,
-                                                    stylesBtn.btn__secondary,
-                                                    'small-text'
-                                                )}
-                                                style={{
-                                                    width: '100%',
-                                                    marginTop: '10px',
-                                                }}
-                                                onClick={() => {
+                                            style={{
+                                                width: '100%',
+                                                marginTop: '10px',
+                                            }}
+                                            onClick={() => {
+                                                if (value) {
                                                     clickHandler();
                                                     setVisiblePopup(
                                                         !visiblePopup
                                                     );
                                                     setValue('');
-                                                }}
-                                            >
-                                                Добавить
-                                            </button>
-                                        </div>
-                                    )}
+                                                }
+                                            }}
+                                        >
+                                            Добавить
+                                        </button>
+                                    </Tooltip>
                                 </div>
                             </div>
                         </div>

@@ -1,13 +1,13 @@
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import stylesTable from '../../components/Table/Table.module.scss';
+import Layout from '../../components/Layout';
+import { OrderCake } from '../../components/OrderCake';
+import AuthService from '../../services/AuthService';
+import OrdersService from '../../services/OrdersService';
 import styles from './Purchase.module.scss';
+import stylesTable from '../../components/Table/Table.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
-import AuthService from '../../services/AuthService';
-import { useEffect, useState } from 'react';
-import Layout from '../../components/Layout';
-import OrdersService from '../../services/OrdersService';
-import { OrderCake } from '../../components/OrderCake';
 
 export default function Purchase() {
     const [isAuth, setIsAuth] = useState('');

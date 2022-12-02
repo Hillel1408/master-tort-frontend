@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
@@ -7,6 +7,7 @@ import { Tooltip } from '../../components/Tooltip';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import ProductsService from '../../services/ProductsService';
+import UploadService from '../../services/UploadService';
 import styles from './Recipe.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
@@ -23,6 +24,9 @@ export default function Recipe() {
     const [select, setSelect] = useState('');
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [value, setValue] = useState('');
+    const [image, setImage] = useState('');
+
+    const inputFileRef = useRef('');
 
     const dispatch = useDispatch();
 
@@ -30,8 +34,12 @@ export default function Recipe() {
 
     const saveSettings = async () => {
         try {
+            const values = {
+                products: block,
+                recipeUrl: image && `http://localhost:5000${image}`,
+            };
             const id = window.location.pathname.split('/recipe/')[1];
-            const response = await RecipeService.updateRecipe(id, block);
+            const response = await RecipeService.updateRecipe(id, values);
 
             dispatch(
                 setAlert({
@@ -59,8 +67,26 @@ export default function Recipe() {
                 products: [],
             },
         ]);
-        setVisiblePopup(!visiblePopup);
+        setVisiblePopup('');
         setValue('');
+    };
+
+    const sendImage = async (file) => {
+        //отправляем аватар на сервер
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            const response = await UploadService.set(formData);
+            setImage(response.data.url);
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
+    const handleChangeFile = async (e) => {
+        //получаем картинку рецепта
+        const file = e.target.files[0];
+        sendImage(file);
     };
 
     useEffect(() => {
@@ -182,12 +208,9 @@ export default function Recipe() {
                                     <span
                                         className={classNames(
                                             'icon-8',
-                                            'small-text',
-                                            'open'
+                                            'small-text'
                                         )}
-                                        onClick={() =>
-                                            setVisiblePopup(!visiblePopup)
-                                        }
+                                        onClick={(e) => setVisiblePopup(e)}
                                     >
                                         Добавить полуфабрикат
                                     </span>
@@ -247,12 +270,27 @@ export default function Recipe() {
                 </div>
                 <div className={styles.image}>
                     <div className={styles.imageBlock}>
-                        <img src={recipe.recipeUrl} />
+                        {image ? (
+                            <img src={`http://localhost:5000${image}`} />
+                        ) : (
+                            <img src={recipe.recipeUrl} />
+                        )}
                     </div>
                     <div className="addBlock">
-                        <span className={classNames('icon-8', 'small-text')}>
+                        <span
+                            onClick={() => inputFileRef.current.click()}
+                            className={classNames('icon-8', 'small-text')}
+                        >
                             Загрузить новое фото
                         </span>
+                        <input
+                            ref={inputFileRef}
+                            type="file"
+                            onChange={(e) => {
+                                handleChangeFile(e);
+                            }}
+                            hidden
+                        />
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ import AuthService from '../../services/AuthService';
 import classNames from 'classnames';
 
 function Header({ isAuth, setIsAuth, userName, avatar }) {
-    const [tooltipActive, setTooltipActive] = useState(false);
+    const [tooltipActive, setTooltipActive] = useState('');
 
     const logout = async () => {
         try {
@@ -32,8 +32,8 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                         </div>
                     </Link>
                     <div
-                        className={classNames(styles.block, 'open')}
-                        onClick={() => setTooltipActive(!tooltipActive)}
+                        className={classNames(styles.block)}
+                        onClick={(e) => setTooltipActive(e)}
                     >
                         <span className={classNames('text', styles.userName)}>
                             {userName}
@@ -46,12 +46,7 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                             )}
                         ></span>
                     </div>
-                    <div
-                        className={classNames(
-                            styles.tooltip,
-                            tooltipActive && styles.tooltipActive
-                        )}
-                    >
+                    {tooltipActive && (
                         <Tooltip
                             visiblePopup={tooltipActive}
                             style={styles.tooltip}
@@ -81,7 +76,7 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                                 Выход
                             </a>
                         </Tooltip>
-                    </div>
+                    )}
                 </div>
             ) : (
                 <div className={styles.login}>

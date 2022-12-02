@@ -3,17 +3,17 @@ import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 
 function OrderCake({
-    bg,
-    item,
-    type,
-    board,
-    style,
-    draggable,
     dropHandler,
+    style,
+    bg,
+    dragLeaveHandler,
     dragEndHandler,
     dragOverHandler,
+    board,
     dragStartHandler,
-    dragLeaveHandler,
+    draggable,
+    item,
+    type,
 }) {
     return (
         <div

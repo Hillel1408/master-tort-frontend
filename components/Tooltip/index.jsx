@@ -6,10 +6,9 @@ function Tooltip({ children, visiblePopup, style, setVisiblePopup, close }) {
     useEffect(() => {
         if (setVisiblePopup) {
             const clickHandler = (e) => {
-                if (e.target.closest('.open')) return;
-                setVisiblePopup(false);
+                if (e.target === visiblePopup.target) return;
+                setVisiblePopup('');
             };
-
             window.addEventListener('click', clickHandler);
             return () => window.removeEventListener('click', clickHandler);
         }
@@ -25,10 +24,7 @@ function Tooltip({ children, visiblePopup, style, setVisiblePopup, close }) {
             )}
         >
             {close && (
-                <i
-                    className="icon-11"
-                    onClick={() => setVisiblePopup(false)}
-                ></i>
+                <i className="icon-11" onClick={() => setVisiblePopup('')}></i>
             )}
             {children}
         </div>

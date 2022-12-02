@@ -1,20 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Oval } from 'react-loader-spinner';
 import classNames from 'classnames';
-import { Sidebar } from '../../components/Sidebar';
-import { Header } from '../../components/Header';
 import { BodyTable } from '../../components/pages/settings/BodyTable';
 import { Alert } from '../../components/Alert';
 import { setAlert } from '../../redux/cakeSlice';
-import { NoAccess } from '../../components/NoAccess';
 import AuthService from '../../services/AuthService';
 import SettingsService from '../../services/SettingsService';
 import { settingsText } from '../../data/settings';
-import stylesHeader from '../../components/Header/Header.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Settings.module.scss';
-import stylesLogin from '../login/Login.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import Layout from '../../components/Layout';
 
@@ -31,6 +25,7 @@ export default function Settings() {
                 ...settings,
                 user: dataUser.id,
             });
+
             dispatch(
                 setAlert({
                     text: 'Настройки успешно сохранены',
@@ -45,6 +40,7 @@ export default function Settings() {
 
     const resetSettings = () => {
         const newObj = {};
+
         Object.keys(settings).map((key) => {
             newObj[key] = ['', ''];
         });

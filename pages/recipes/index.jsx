@@ -426,6 +426,7 @@ export default function Recipes() {
                         <p className={styles.addRecipeText}></p>
                         <button
                             ref={btnRef}
+                            disabled={true}
                             className={classNames(
                                 stylesBtn.btn,
                                 stylesBtn.btn__secondary,
@@ -534,6 +535,7 @@ export default function Recipes() {
                     )}
                     <button
                         ref={btnRefRecipe}
+                        disabled={true}
                         className={classNames(
                             stylesBtn.btn,
                             stylesBtn.btn__secondary,

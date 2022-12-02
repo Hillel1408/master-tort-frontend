@@ -3,12 +3,13 @@ import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import styles from './Sidebar.module.scss';
 
-function NavLink({ item }) {
+function NavLink({ item, setNavActive }) {
     const { href, icon, name } = item;
 
     const router = useRouter();
 
     const clickHandler = () => {
+        setNavActive(false);
         document.body.classList.remove('lock');
     };
 

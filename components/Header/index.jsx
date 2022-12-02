@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import classNames from 'classnames';
 import { Tooltip } from '../Tooltip';
 import styles from './Header.module.scss';
 import AuthService from '../../services/AuthService';
+import classNames from 'classnames';
 
 function Header({ isAuth, setIsAuth, userName, avatar }) {
     const [tooltipActive, setTooltipActive] = useState(false);
@@ -32,7 +32,7 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                         </div>
                     </Link>
                     <div
-                        className={styles.block}
+                        className={classNames(styles.block, 'open')}
                         onClick={() => setTooltipActive(!tooltipActive)}
                     >
                         <span className={classNames('text', styles.userName)}>

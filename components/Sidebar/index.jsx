@@ -75,7 +75,11 @@ function Sidebar() {
                     }
                 >
                     {navItems.map((item) => (
-                        <NavLink key={item.href} item={item} />
+                        <NavLink
+                            key={item.href}
+                            item={item}
+                            setNavActive={setNavActive}
+                        />
                     ))}
                 </ul>
             </div>

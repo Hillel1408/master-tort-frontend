@@ -11,6 +11,9 @@ import styles from './Recipe.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
+import { Alert } from '../../components/Alert';
+import { useDispatch } from 'react-redux';
+import { setAlert } from '../../redux/cakeSlice';
 
 export default function Recipe() {
     const [isAuth, setIsAuth] = useState('');
@@ -21,9 +24,34 @@ export default function Recipe() {
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [value, setValue] = useState('');
 
+    const dispatch = useDispatch();
+
     const thTitle = ['Продукт', 'Брутто', 'Нетто'];
 
-    const clickHandler = () => {
+    const saveSettings = async () => {
+        try {
+            const id = window.location.pathname.split('/recipe/')[1];
+            const response = await RecipeService.updateRecipe(id, block);
+
+            dispatch(
+                setAlert({
+                    text: 'Рецепт успешно сохранен',
+                    color: '#62ac62',
+                })
+            );
+        } catch (e) {
+            console.log(e.response?.data?.message);
+            dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
+        }
+    };
+
+    const handleKey = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit();
+        }
+    };
+
+    const handleSubmit = () => {
         setBlock([
             ...block,
             {
@@ -31,15 +59,8 @@ export default function Recipe() {
                 products: [],
             },
         ]);
-    };
-
-    const saveSettings = async () => {
-        try {
-            const id = window.location.pathname.split('/recipe/')[1];
-            const response = await RecipeService.updateRecipe(id, block);
-        } catch (e) {
-            console.log(e.response?.data?.message);
-        }
+        setVisiblePopup(!visiblePopup);
+        setValue('');
     };
 
     useEffect(() => {
@@ -161,7 +182,8 @@ export default function Recipe() {
                                     <span
                                         className={classNames(
                                             'icon-8',
-                                            'small-text'
+                                            'small-text',
+                                            'open'
                                         )}
                                         onClick={() =>
                                             setVisiblePopup(!visiblePopup)
@@ -169,43 +191,42 @@ export default function Recipe() {
                                     >
                                         Добавить полуфабрикат
                                     </span>
-                                    <Tooltip
-                                        style={styles.tooltiptext}
-                                        visiblePopup={visiblePopup}
-                                        setVisiblePopup={setVisiblePopup}
-                                        close={true}
-                                    >
-                                        <input
-                                            className={stylesInput.input}
-                                            placeholder="Введите название"
-                                            value={value}
-                                            onChange={(e) =>
-                                                setValue(e.target.value)
-                                            }
-                                        />
-                                        <button
-                                            className={classNames(
-                                                stylesBtn.btn,
-                                                stylesBtn.btn__secondary,
-                                                'small-text'
-                                            )}
-                                            style={{
-                                                width: '100%',
-                                                marginTop: '10px',
-                                            }}
-                                            onClick={() => {
-                                                if (value) {
-                                                    clickHandler();
-                                                    setVisiblePopup(
-                                                        !visiblePopup
-                                                    );
-                                                    setValue('');
-                                                }
-                                            }}
+                                    {visiblePopup && (
+                                        <Tooltip
+                                            style={styles.tooltiptext}
+                                            visiblePopup={visiblePopup}
+                                            setVisiblePopup={setVisiblePopup}
+                                            close={true}
                                         >
-                                            Добавить
-                                        </button>
-                                    </Tooltip>
+                                            <input
+                                                className={stylesInput.input}
+                                                placeholder="Введите название"
+                                                value={value}
+                                                onChange={(e) =>
+                                                    setValue(e.target.value)
+                                                }
+                                                onKeyDown={handleKey}
+                                            />
+                                            <button
+                                                className={classNames(
+                                                    stylesBtn.btn,
+                                                    stylesBtn.btn__secondary,
+                                                    'small-text'
+                                                )}
+                                                style={{
+                                                    width: '100%',
+                                                    marginTop: '10px',
+                                                }}
+                                                onClick={() => {
+                                                    if (value) {
+                                                        handleSubmit();
+                                                    }
+                                                }}
+                                            >
+                                                Добавить
+                                            </button>
+                                        </Tooltip>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -235,6 +256,7 @@ export default function Recipe() {
                     </div>
                 </div>
             </div>
+            <Alert />
         </Layout>
     );
 }

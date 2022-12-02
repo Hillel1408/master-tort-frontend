@@ -202,7 +202,7 @@ export default function CalendarOrders() {
                 const a = (date - today) / (1000 * 3600 * 24);
                 const obj = {
                     ...item,
-                    isRushOrder: (a) => 0 && a < dataUser.rushOrder.value,
+                    isRushOrder: a > 0 && a <= dataUser.rushOrder.value,
                 };
                 asd[day] ? (asd[day] = [...asd[day], obj]) : (asd[day] = [obj]);
             }

@@ -13,11 +13,15 @@ export default class OrdersService {
         return $api.post('/kanban/', values);
     }
 
-    static async setOrders(values) {
-        return $api.post('/orders/', values);
+    static async setOrders(user, values) {
+        return $api.patch(`/orders/${user}`, values);
+    }
+
+    static async getOrder(id) {
+        return $api.get(`/order/${id}`);
     }
 
     static async updateOrders(user, values) {
-        return $api.patch(`/orders/${user}`, values);
+        return $api.patch(`/update-orders/${user}`, values);
     }
 }

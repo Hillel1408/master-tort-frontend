@@ -144,7 +144,7 @@ export default function Orders() {
     useEffect(() => {
         const filterOrders = async (orders) => {
             //создаем доску, если у нас есть заказы
-            if (checkOrders(orders)) {
+            if (orders && checkOrders(orders)) {
                 const ordersFiltered = [
                     {
                         id: 1,

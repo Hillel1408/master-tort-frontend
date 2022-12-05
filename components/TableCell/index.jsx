@@ -32,7 +32,7 @@ function TableCell({ value, type, disabled, thValue, index, saveSettings }) {
                             ? ''
                             : setItem(target.value);
                     }}
-                    onBlur={() => saveSettings(item, thValue, index)}
+                    onBlur={(e) => saveSettings(item, thValue, index)}
                     onKeyDown={handleKey}
                 />
             )}

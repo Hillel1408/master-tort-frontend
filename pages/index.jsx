@@ -3,40 +3,62 @@ import classNames from 'classnames';
 import Layout from '../components/Layout';
 import { TabContent } from '../components/pages/index/TabContent';
 import AuthService from '../services/AuthService';
+import OrdersService from '../services/OrdersService';
 import styles from './Home.module.scss';
 
 export default function Home() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [active, setActive] = useState(0);
-    const [items, setItems] = useState([
-        {
-            data: {
-                name: '',
-                date: '',
-                time: '',
-                info: '',
-                range: '',
-                standWidth: '',
-                standLength: '',
-                price: '',
-                cakeShape: '',
-                kindCake: '',
-            },
-            image: [],
-            table: [],
-        },
-    ]);
+
+    const [items, setItems] = useState([]);
+    const [isEdit, setIsEdit] = useState();
 
     const openTab = (e) => setActive(+e.target.dataset.index);
 
     useEffect(() => {
+        const getOrder = async (userId) => {
+            //получаем заказ пользователя
+            try {
+                const id = window.location.search.split('?id=')[1];
+                if (id) {
+                    const response = await OrdersService.getOrder(id);
+                    setIsEdit(true);
+                    setItems([...items, response.data]);
+                } else {
+                    {
+                        setIsEdit(false);
+                        setItems([
+                            ...items,
+                            {
+                                orderName: '',
+                                date: '',
+                                time: '',
+                                info: '',
+                                range: '',
+                                standWidth: '',
+                                standLength: '',
+                                price: '',
+                                cakeShape: '',
+                                kindCake: '',
+                                imagesUrl: [],
+                                table: [],
+                            },
+                        ]);
+                    }
+                }
+                setIsAuth(true);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
+        };
+
         const checkAuth = async () => {
             try {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
-                setIsAuth(true);
+                getOrder();
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);
@@ -69,22 +91,29 @@ export default function Home() {
                 ))}
                 <span
                     className="icon-8"
-                    onClick={() => setItems([...items, { ...items[active] }])}
+                    onClick={() => {
+                        let clone = JSON.parse(JSON.stringify(items[active]));
+                        setItems([...items, clone]);
+                    }}
                 ></span>
             </div>
             {items.map((n, i) =>
                 i === active ? (
                     <TabContent
+                        key={i}
                         items={items}
-                        setItems={setItems}
-                        index={active}
+                        index={i}
+                        isEdit={isEdit}
+                        userId={dataUser.id}
                         style={{ display: 'flex' }}
                     />
                 ) : (
                     <TabContent
+                        key={i}
                         items={items}
-                        setItems={setItems}
-                        index={active}
+                        index={i}
+                        isEdit={isEdit}
+                        userId={dataUser.id}
                         style={{ display: 'none' }}
                     />
                 )

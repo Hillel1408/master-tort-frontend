@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
+import Link from 'next/link';
 
 function OrderCake({
     dropHandler,
@@ -16,7 +17,11 @@ function OrderCake({
     type,
 }) {
     return (
-        <div
+        <Link
+            href={{
+                pathname: `/`,
+                query: { id: item._id },
+            }}
             className={classNames(
                 styles.root,
                 styles[type],
@@ -32,7 +37,11 @@ function OrderCake({
             onDrop={(e) => dropHandler(e, board, item)}
         >
             <div className={styles.img}>
-                <img src={item.imagesUrl[0]} alt="" draggable="false" />
+                <img
+                    src={`http://localhost:5000${item.imagesUrl[0]}`}
+                    alt=""
+                    draggable="false"
+                />
             </div>
             <div className={styles.content}>
                 <span className={styles.contentNumber}>№{item.number}</span>
@@ -56,7 +65,7 @@ function OrderCake({
                     </span>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }
 

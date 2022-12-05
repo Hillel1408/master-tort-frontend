@@ -1,17 +1,42 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { Tooltip } from '../../Tooltip';
 import UploadService from '../../../services/UploadService';
+import OrdersService from '../../../services/OrdersService';
+import styles from '../../../pages/Home.module.scss';
 import stylesTable from '../../Table/Table.module.scss';
 import stylesTooltip from '../../Tooltip/Tooltip.module.scss';
 import stylesInput from '../../Input/Input.module.scss';
 import stylesBtn from '../../Btn/Btn.module.scss';
-import styles from '../../../pages/Home.module.scss';
 
-function TabContent({ items, index, style, setItems }) {
-    const [range, setRange] = useState('');
+function TabContent({ items, index, style, userId, isEdit }) {
+    const [range, setRange] = useState(items[index].range);
     const [drag, setDrag] = useState(false);
+
+    const [name, setName] = useState(items[index].orderName);
+    const [date, setDate] = useState(items[index].date);
+    const [time, setTime] = useState(items[index].time);
+    const [image, setImage] = useState(items[index].imagesUrl);
+
     const inputFileRef = useRef('');
+    const btnRef = useRef('');
+    const buttonRef = useRef('');
+
+    useEffect(() => {
+        if (btnRef.current) {
+            name && date && time && image.length !== 0
+                ? (btnRef.current.disabled = false)
+                : (btnRef.current.disabled = true);
+        }
+    }, [name, date, time, image]);
+
+    useEffect(() => {
+        if (buttonRef.current) {
+            range
+                ? (buttonRef.current.disabled = false)
+                : (buttonRef.current.disabled = true);
+        }
+    }, [range]);
 
     const sendImage = async (file) => {
         //отправляем картинку торта на сервер
@@ -19,8 +44,11 @@ function TabContent({ items, index, style, setItems }) {
             const formData = new FormData();
             formData.append('image', file);
             const response = await UploadService.set(formData);
-            items[index].image = [...items[index].image, response.data.url];
-            setItems([...items]);
+            items[index].imagesUrl = [
+                ...items[index].imagesUrl,
+                response.data.url,
+            ];
+            setImage([...image, response.data.url]);
         } catch (e) {
             console.log(e.response?.data?.message);
         }
@@ -50,6 +78,17 @@ function TabContent({ items, index, style, setItems }) {
         sendImage(file);
     };
 
+    const addOrder = async () => {
+        try {
+            const response = await OrdersService.setOrders(
+                userId,
+                items[index]
+            );
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
     return (
         <div className={styles.mainBlock} style={style}>
             <div className={styles.tabs}>
@@ -72,7 +111,12 @@ function TabContent({ items, index, style, setItems }) {
                                     stylesInput.input,
                                     styles.informationInput
                                 )}
+                                value={name}
                                 placeholder="Название проекта"
+                                onChange={(e) => setName(e.target.value)}
+                                onBlur={(e) => {
+                                    items[index].orderName = name;
+                                }}
                             />
                             <div className={styles.informationInputBlock}>
                                 <input
@@ -81,6 +125,11 @@ function TabContent({ items, index, style, setItems }) {
                                         stylesInput.input,
                                         styles.informationInput
                                     )}
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}
+                                    onBlur={(e) => {
+                                        items[index].date = date;
+                                    }}
                                 />
                                 <input
                                     type="time"
@@ -88,6 +137,11 @@ function TabContent({ items, index, style, setItems }) {
                                         stylesInput.input,
                                         styles.informationInput
                                     )}
+                                    value={time}
+                                    onChange={(e) => setTime(e.target.value)}
+                                    onBlur={(e) => {
+                                        items[index].time = time;
+                                    }}
                                 />
                             </div>
                             <textarea
@@ -96,6 +150,10 @@ function TabContent({ items, index, style, setItems }) {
                                     styles.informationTextarea
                                 )}
                                 placeholder="Комментарий к заказу"
+                                defaultValue={items[index].info}
+                                onBlur={(e) => {
+                                    items[index].info = e.target.value;
+                                }}
                             ></textarea>
                         </div>
                         <div className={styles.information}>
@@ -111,12 +169,15 @@ function TabContent({ items, index, style, setItems }) {
                                 type="range"
                                 min="0"
                                 max="250"
-                                step="10"
                                 className={classNames(
                                     styles.informationSlider,
                                     styles.slider
                                 )}
-                                onChange={(e) => setRange(e.target.value)}
+                                value={range}
+                                onChange={(e) => {
+                                    setRange(e.target.value);
+                                    items[index].range = range;
+                                }}
                                 id="myRange"
                             />
                         </div>
@@ -140,11 +201,21 @@ function TabContent({ items, index, style, setItems }) {
                                         type="number"
                                         className={stylesInput.input}
                                         placeholder="Ширина"
+                                        defaultValue={items[index].standWidth}
+                                        onBlur={(e) => {
+                                            items[index].standWidth =
+                                                e.target.value;
+                                        }}
                                     />
                                     <input
                                         type="number"
                                         className={stylesInput.input}
                                         placeholder="Длина"
+                                        defaultValue={items[index].standLength}
+                                        onBlur={(e) => {
+                                            items[index].standLength =
+                                                e.target.value;
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -161,6 +232,10 @@ function TabContent({ items, index, style, setItems }) {
                                     type="number"
                                     className={stylesInput.input}
                                     placeholder="Стоимость торта"
+                                    defaultValue={items[index].price}
+                                    onBlur={(e) => {
+                                        items[index].price = e.target.value;
+                                    }}
                                 />
                             </div>
                         </div>
@@ -180,7 +255,17 @@ function TabContent({ items, index, style, setItems }) {
                                         styles.informationLabel
                                     )}
                                 >
-                                    <input type="radio" value="circle" />
+                                    <input
+                                        type="radio"
+                                        name={'cakeShape' + index}
+                                        value="circle"
+                                        defaultChecked={
+                                            items[index].cakeShape === 'circle'
+                                        }
+                                        onChange={(e) => {
+                                            items[index].cakeShape = 'circle';
+                                        }}
+                                    />
                                     <span className="icon-13">Круг</span>
                                 </label>
                                 <label
@@ -189,7 +274,17 @@ function TabContent({ items, index, style, setItems }) {
                                         styles.informationLabel
                                     )}
                                 >
-                                    <input type="radio" value="square" />
+                                    <input
+                                        type="radio"
+                                        name={'cakeShape' + index}
+                                        value="square"
+                                        defaultChecked={
+                                            items[index].cakeShape === 'square'
+                                        }
+                                        onChange={(e) => {
+                                            items[index].cakeShape = 'square';
+                                        }}
+                                    />
                                     <span className="icon-14">Квадрат</span>
                                 </label>
                                 <label
@@ -198,7 +293,19 @@ function TabContent({ items, index, style, setItems }) {
                                         styles.informationLabel
                                     )}
                                 >
-                                    <input type="radio" value="rectangle" />
+                                    <input
+                                        type="radio"
+                                        name={'cakeShape' + index}
+                                        value="rectangle"
+                                        defaultChecked={
+                                            items[index].cakeShape ===
+                                            'rectangle'
+                                        }
+                                        onChange={(e) => {
+                                            items[index].cakeShape =
+                                                'rectangle';
+                                        }}
+                                    />
                                     <span className="icon-15">
                                         Прямоугольник
                                     </span>
@@ -221,7 +328,15 @@ function TabContent({ items, index, style, setItems }) {
                                         styles.informationLabel
                                     )}
                                 >
-                                    <input type="radio" value="open-cake" />
+                                    <input
+                                        type="radio"
+                                        name="kindCake"
+                                        value="open-cake"
+                                        onChange={(e) => {
+                                            items[index].kindCake =
+                                                e.target.value;
+                                        }}
+                                    />
                                     <span className="icon-12">
                                         Открытый торт
                                     </span>
@@ -234,7 +349,12 @@ function TabContent({ items, index, style, setItems }) {
                                 >
                                     <input
                                         type="radio"
+                                        name="kindCake"
                                         value="buttercream-cake"
+                                        onChange={(e) => {
+                                            items[index].kindCake =
+                                                e.target.value;
+                                        }}
                                     />
                                     <span className="icon-13">
                                         Мастичный торт
@@ -246,7 +366,15 @@ function TabContent({ items, index, style, setItems }) {
                                         styles.informationLabel
                                     )}
                                 >
-                                    <input type="radio" value="cream-cake" />
+                                    <input
+                                        type="radio"
+                                        name="kindCake"
+                                        value="cream-cake"
+                                        onChange={(e) => {
+                                            items[index].kindCake =
+                                                e.target.value;
+                                        }}
+                                    />
                                     <span className="icon-13">
                                         Кремовый торт
                                     </span>
@@ -283,14 +411,20 @@ function TabContent({ items, index, style, setItems }) {
                                         onDragStart={(e) => dragStartHandler(e)}
                                         onDragLeave={(e) => dragLeaveHandler(e)}
                                         onDragOver={(e) => dragStartHandler(e)}
-                                        className={classNames(
-                                            'icon-12',
-                                            styles.icon12
-                                        )}
-                                    ></span>
+                                        className={classNames(styles.icon12)}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                                        </svg>
+                                    </span>
                                 )}
-                                {items[index].image.length > 0 &&
-                                    items[index].image.map((item) => (
+                                {image.length > 0 &&
+                                    image.map((item) => (
                                         <div
                                             className={styles.informationImage}
                                         >
@@ -455,16 +589,32 @@ function TabContent({ items, index, style, setItems }) {
                         >
                             Печать
                         </button>
-                        <button
-                            className={classNames(
-                                stylesBtn.btn,
-                                stylesBtn.btn__secondary,
-                                'small-text'
-                            )}
-                            type="submit"
-                        >
-                            Добавить в заказы
-                        </button>
+                        <div>
+                            <button
+                                ref={buttonRef}
+                                className={classNames(
+                                    stylesBtn.btn,
+                                    stylesBtn.btn__secondary,
+                                    'small-text'
+                                )}
+                                style={{ marginRight: '10px' }}
+                            >
+                                Рассчитать
+                            </button>
+                            <button
+                                ref={btnRef}
+                                className={classNames(
+                                    stylesBtn.btn,
+                                    stylesBtn.btn__secondary,
+                                    'small-text'
+                                )}
+                                onClick={() => {
+                                    isEdit ? '' : addOrder();
+                                }}
+                            >
+                                {isEdit ? 'Изменить' : 'Добавить в заказы'}
+                            </button>
+                        </div>
                     </div>
                 </section>
             </div>

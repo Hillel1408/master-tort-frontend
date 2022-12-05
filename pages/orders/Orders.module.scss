@@ -25,12 +25,12 @@
         height: 100%;
         padding: 0 10px;
         transform: translate(0, 0);
-        cursor: grab;
-        & > div:not(:last-of-type) {
+        & > a:not(:last-of-type) {
             margin-bottom: 20px;
         }
     }
     &Cake {
+        cursor: grab;
         @media (max-width: 1040px) {
             grid-template-columns: 1fr;
         }

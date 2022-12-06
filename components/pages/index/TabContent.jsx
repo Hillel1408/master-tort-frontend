@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
+import { Tr } from './Tr';
 import { Tooltip } from '../../Tooltip';
 import UploadService from '../../../services/UploadService';
 import OrdersService from '../../../services/OrdersService';
@@ -9,19 +10,34 @@ import stylesTooltip from '../../Tooltip/Tooltip.module.scss';
 import stylesInput from '../../Input/Input.module.scss';
 import stylesBtn from '../../Btn/Btn.module.scss';
 
-function TabContent({ items, index, style, userId, isEdit }) {
-    const [range, setRange] = useState(items[index].range);
+function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
     const [drag, setDrag] = useState(false);
+    const [isCake, setIsCake] = useState(false);
 
+    const [range, setRange] = useState(items[index].range);
     const [name, setName] = useState(items[index].orderName);
     const [date, setDate] = useState(items[index].date);
     const [time, setTime] = useState(items[index].time);
     const [image, setImage] = useState(items[index].imagesUrl);
+    const [standWidth, setStandWidth] = useState(items[index].standWidth);
+    const [standLength, setStandLength] = useState(items[index].standLength);
+    const [cakeShape, setCakeShape] = useState(items[index].cakeShape);
+    const [kindCake, setKindCake] = useState(items[index].kindCake);
 
     const inputFileRef = useRef('');
     const btnRef = useRef('');
     const buttonRef = useRef('');
 
+    const thTitle = ['Диаметр, см.', 'Высота, см.', 'Отступ, см.', 'Рецепт'];
+
+    const trValue = {
+        diameter: '',
+        height: '',
+        indent: '',
+        recipe: { value: '', label: '' },
+    };
+
+    //проверяем заполнил ли пользователь данные для добавления заказа
     useEffect(() => {
         if (btnRef.current) {
             name && date && time && image.length !== 0
@@ -30,13 +46,14 @@ function TabContent({ items, index, style, userId, isEdit }) {
         }
     }, [name, date, time, image]);
 
+    //проверяем заполнил ли пользователь данные для расчета заказа
     useEffect(() => {
         if (buttonRef.current) {
-            range
+            range && standWidth && standLength && cakeShape && kindCake
                 ? (buttonRef.current.disabled = false)
                 : (buttonRef.current.disabled = true);
         }
-    }, [range]);
+    }, [range, standWidth, standLength, cakeShape, kindCake]);
 
     const sendImage = async (file) => {
         //отправляем картинку торта на сервер
@@ -201,20 +218,26 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                         type="number"
                                         className={stylesInput.input}
                                         placeholder="Ширина"
-                                        defaultValue={items[index].standWidth}
+                                        value={standWidth}
+                                        onChange={(e) =>
+                                            setStandWidth(e.target.value)
+                                        }
                                         onBlur={(e) => {
                                             items[index].standWidth =
-                                                e.target.value;
+                                                standWidth;
                                         }}
                                     />
                                     <input
                                         type="number"
                                         className={stylesInput.input}
                                         placeholder="Длина"
-                                        defaultValue={items[index].standLength}
+                                        value={standLength}
+                                        onChange={(e) =>
+                                            setStandLength(e.target.value)
+                                        }
                                         onBlur={(e) => {
                                             items[index].standLength =
-                                                e.target.value;
+                                                standLength;
                                         }}
                                     />
                                 </div>
@@ -259,11 +282,11 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                         type="radio"
                                         name={'cakeShape' + index}
                                         value="circle"
-                                        defaultChecked={
-                                            items[index].cakeShape === 'circle'
-                                        }
+                                        defaultChecked={cakeShape === 'circle'}
                                         onChange={(e) => {
-                                            items[index].cakeShape = 'circle';
+                                            setCakeShape(e.target.value);
+                                            items[index].cakeShape =
+                                                e.target.value;
                                         }}
                                     />
                                     <span className="icon-13">Круг</span>
@@ -278,11 +301,11 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                         type="radio"
                                         name={'cakeShape' + index}
                                         value="square"
-                                        defaultChecked={
-                                            items[index].cakeShape === 'square'
-                                        }
+                                        defaultChecked={cakeShape === 'square'}
                                         onChange={(e) => {
-                                            items[index].cakeShape = 'square';
+                                            setCakeShape(e.target.value);
+                                            items[index].cakeShape =
+                                                e.target.value;
                                         }}
                                     />
                                     <span className="icon-14">Квадрат</span>
@@ -298,12 +321,12 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                         name={'cakeShape' + index}
                                         value="rectangle"
                                         defaultChecked={
-                                            items[index].cakeShape ===
-                                            'rectangle'
+                                            cakeShape === 'rectangle'
                                         }
                                         onChange={(e) => {
+                                            setCakeShape(e.target.value);
                                             items[index].cakeShape =
-                                                'rectangle';
+                                                e.target.value;
                                         }}
                                     />
                                     <span className="icon-15">
@@ -330,9 +353,13 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                 >
                                     <input
                                         type="radio"
-                                        name="kindCake"
+                                        name={'kindCake' + index}
                                         value="open-cake"
+                                        defaultChecked={
+                                            kindCake === 'open-cake'
+                                        }
                                         onChange={(e) => {
+                                            setKindCake(e.target.value);
                                             items[index].kindCake =
                                                 e.target.value;
                                         }}
@@ -349,9 +376,13 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                 >
                                     <input
                                         type="radio"
-                                        name="kindCake"
+                                        name={'kindCake' + index}
                                         value="buttercream-cake"
+                                        defaultChecked={
+                                            kindCake === 'buttercream-cake'
+                                        }
                                         onChange={(e) => {
+                                            setKindCake(e.target.value);
                                             items[index].kindCake =
                                                 e.target.value;
                                         }}
@@ -368,9 +399,13 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                 >
                                     <input
                                         type="radio"
-                                        name="kindCake"
+                                        name={'kindCake' + index}
                                         value="cream-cake"
+                                        defaultChecked={
+                                            kindCake === 'cream-cake'
+                                        }
                                         onChange={(e) => {
+                                            setKindCake(e.target.value);
                                             items[index].kindCake =
                                                 e.target.value;
                                         }}
@@ -490,18 +525,11 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                                 '25% 25% 25% 25%',
                                         }}
                                     >
-                                        <div className={stylesTable.th}>
-                                            Диаметр, см.
-                                        </div>
-                                        <div className={stylesTable.th}>
-                                            Высота, см.
-                                        </div>
-                                        <div className={stylesTable.th}>
-                                            Отступ, см.
-                                        </div>
-                                        <div className={stylesTable.th}>
-                                            Рецепт
-                                        </div>
+                                        {thTitle.map((item) => (
+                                            <div className={stylesTable.th}>
+                                                {item}
+                                            </div>
+                                        ))}
                                     </div>
                                     <div
                                         className={classNames(stylesTable.th)}
@@ -509,88 +537,61 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                     ></div>
                                 </div>
                                 <div className={stylesTable.tbody}>
-                                    <div className={stylesTable.wrapper}>
-                                        <div
-                                            className={stylesTable.tr}
-                                            style={{
-                                                gridTemplateColumns:
-                                                    '25% 25% 25% 25%',
+                                    {items[index].table.map(
+                                        (item, tableIndex) => (
+                                            <Tr
+                                                select={select}
+                                                index={index}
+                                                item={item}
+                                                items={items}
+                                                tableIndex={tableIndex}
+                                            />
+                                        )
+                                    )}
+                                    <div className="addBlock">
+                                        <span
+                                            className={classNames(
+                                                'small-text',
+                                                'icon-8'
+                                            )}
+                                            onClick={() => {
+                                                items[index].table = [
+                                                    ...items[index].table,
+                                                    trValue,
+                                                ];
+                                                setItems([...items]);
                                             }}
                                         >
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
-                                            <div className={stylesTable.td}>
-                                                <select
-                                                    className={classNames(
-                                                        stylesInput.input,
-                                                        'select'
-                                                    )}
-                                                >
-                                                    <option></option>
-                                                    <option>Шоколадная</option>
-                                                    <option>Медовик</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={classNames(
-                                                stylesTable.td,
-                                                stylesTable.tdDelete
-                                            )}
-                                        >
-                                            <span
-                                                className={classNames(
-                                                    'icon-11',
-                                                    stylesTable.delete
-                                                )}
-                                            ></span>
-                                        </div>
+                                            Добавить ярус
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="addBlock">
-                            <span
-                                className={classNames('small-text', 'icon-8')}
-                            >
-                                Добавить ярус
-                            </span>
-                        </div>
                     </div>
                     <div className={styles.tabContentButtons}>
-                        <button
-                            onClick={() => {
-                                window.print();
-                            }}
-                            className={classNames(stylesBtn.btn, 'small-text')}
-                        >
-                            Печать
-                        </button>
+                        <div>
+                            <button
+                                onClick={() => {
+                                    window.print();
+                                }}
+                                className={classNames(
+                                    stylesBtn.btn,
+                                    'small-text'
+                                )}
+                                style={{ marginRight: '10px' }}
+                            >
+                                Печать
+                            </button>
+                            <button
+                                className={classNames(
+                                    stylesBtn.btn,
+                                    'small-text'
+                                )}
+                            >
+                                Сбросить
+                            </button>
+                        </div>
                         <div>
                             <button
                                 ref={buttonRef}
@@ -611,7 +612,7 @@ function TabContent({ items, index, style, userId, isEdit }) {
                                     'small-text'
                                 )}
                                 onClick={() => {
-                                    isEdit ? '' : addOrder();
+                                    addOrder();
                                 }}
                             >
                                 {isEdit ? 'Изменить' : 'Добавить в заказы'}
@@ -627,24 +628,36 @@ function TabContent({ items, index, style, userId, isEdit }) {
                     </h2>
                     <Tooltip style={styles.tooltiptext}>
                         <div>
-                            <span>Порций в ярусе</span>
-                            <span>Вес начинки</span>
-                            <span>Вес выравнивающего крема</span>
-                            <span>Вес мастики</span>
-                            <span>Общий вес яруса</span>
+                            <div>Порций в ярусе</div>
+                            <div>Вес начинки</div>
+                            <div>Вес выравнивающего крема</div>
+                            <div>Вес мастики</div>
+                            <div>Общий вес яруса</div>
                         </div>
                         <div>
-                            <span>4</span>
-                            <span>400 г</span>
-                            <span>60 г</span>
-                            <span>40 г</span>
-                            <span>600 г</span>
+                            <div>0</div>
+                            <div>0</div>
+                            <div>0</div>
+                            <div>0</div>
+                            <div>0</div>
                         </div>
                     </Tooltip>
                 </div>
-                <div className={styles.cakeImage}>
-                    <img src="2.jpg" alt="" />
-                </div>
+                {isCake ? (
+                    <div className={styles.cakeImage}>
+                        <img src="2.jpg" alt="" />
+                    </div>
+                ) : (
+                    <div className={styles.cakeBlock}>
+                        <div>
+                            <span className="icon-2"></span>
+                            <p className="title">
+                                Скоро здесь появится визуализация силуэта вашего
+                                торта
+                            </p>
+                        </div>
+                    </div>
+                )}
                 <div className={classNames('total', 'small-text')}>
                     <h2 className={classNames('title', styles.cakeColumnTitle)}>
                         Итого
@@ -652,27 +665,27 @@ function TabContent({ items, index, style, userId, isEdit }) {
                     <div className={styles.cakeColumns}>
                         <div className={styles.cakeColumn}>
                             <div>Порций в торте</div>
-                            <div>16</div>
+                            <div>0</div>
                         </div>
                         <div className={styles.cakeColumn}>
                             <div>Общий вес выравнивающего крема</div>
-                            <div>400 г</div>
+                            <div>0</div>
                         </div>
                         <div className={styles.cakeColumn}>
                             <div>Порций в торте</div>
-                            <div>16</div>
+                            <div>0</div>
                         </div>
                         <div className={styles.cakeColumn}>
                             <div>Общий вес мастики</div>
-                            <div>420 г</div>
+                            <div>0</div>
                         </div>
                         <div className={styles.cakeColumn}>
                             <div>Общий вес торта</div>
-                            <div>3800 г</div>
+                            <div>0</div>
                         </div>
                         <div className={styles.cakeColumn}>
                             <div>Себестоимость торта</div>
-                            <div>5000 ₽</div>
+                            <div>0</div>
                         </div>
                     </div>
                 </div>

@@ -68,7 +68,7 @@ export default function Products() {
             //получаем табличные данные
             try {
                 const response = await ProductsService.get(user);
-                setTr(response.data.products);
+                response.data && setTr(response.data.products);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);

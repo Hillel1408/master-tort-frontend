@@ -12,14 +12,14 @@ import stylesBtn from '../../components/Btn/Btn.module.scss';
 export default function Purchase() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
-    const [orders, setOrders] = useState('');
+    const [orders, setOrders] = useState([]);
 
     useEffect(() => {
         const getOrders = async (userId) => {
             //получаем заказы пользователя
             try {
                 const response = await OrdersService.getKanban(userId);
-                setOrders(response.data.purchase);
+                response.data && setOrders(response.data.purchase);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);

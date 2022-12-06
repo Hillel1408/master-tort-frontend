@@ -395,51 +395,47 @@ export default function Recipes() {
                     >
                         Создание группы
                     </span>
-                    <form>
-                        <input
-                            className={classNames(
-                                stylesInput.input,
-                                styles.addRecipeInput
-                            )}
-                            placeholder="Название"
-                            value={groupName}
-                            onChange={(e) => setGroupName(e.target.value)}
-                        />
-                        <CustomSelect
-                            options={options}
-                            placeholder="Иконка"
-                            isSearchable={false}
-                            getOptionLabel={(props) => {
-                                const { icon, label } = props;
-                                return (
-                                    <div className={styles.selectFlex}>
-                                        {icon && icon}
-                                        <span>{label}</span>
-                                    </div>
-                                );
-                            }}
-                            value={groupIcon}
-                            setGroupIcon={setGroupIcon}
-                            height="43px"
-                            width="280px"
-                        />
-                        <p className={styles.addRecipeText}></p>
-                        <button
-                            ref={btnRef}
-                            disabled={true}
-                            className={classNames(
-                                stylesBtn.btn,
-                                stylesBtn.btn__secondary,
-                                'small-text'
-                            )}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                handleSubmit();
-                            }}
-                        >
-                            Создать группу
-                        </button>
-                    </form>
+                    <input
+                        className={classNames(
+                            stylesInput.input,
+                            styles.addRecipeInput
+                        )}
+                        placeholder="Название"
+                        value={groupName}
+                        onChange={(e) => setGroupName(e.target.value)}
+                    />
+                    <CustomSelect
+                        options={options}
+                        placeholder="Иконка"
+                        isSearchable={false}
+                        getOptionLabel={(props) => {
+                            const { icon, label } = props;
+                            return (
+                                <div className={styles.selectFlex}>
+                                    {icon && icon}
+                                    <span>{label}</span>
+                                </div>
+                            );
+                        }}
+                        value={groupIcon}
+                        setGroupIcon={setGroupIcon}
+                        height="43px"
+                        width="280px"
+                    />
+                    <p className={styles.addRecipeText}></p>
+                    <button
+                        ref={btnRef}
+                        className={classNames(
+                            stylesBtn.btn,
+                            stylesBtn.btn__secondary,
+                            'small-text'
+                        )}
+                        onClick={() => {
+                            handleSubmit();
+                        }}
+                    >
+                        Создать группу
+                    </button>
                 </div>
             </Modal>
             <Modal
@@ -535,15 +531,12 @@ export default function Recipes() {
                     )}
                     <button
                         ref={btnRefRecipe}
-                        disabled={true}
                         className={classNames(
                             stylesBtn.btn,
                             stylesBtn.btn__secondary,
                             'small-text'
                         )}
-                        href="#"
-                        onClick={(e) => {
-                            e.preventDefault();
+                        onClick={() => {
                             handleSubmitRecipe();
                         }}
                     >

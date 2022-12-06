@@ -1,6 +1,7 @@
 .mainBlock {
     display: none;
     gap: 20px;
+    align-items: flex-start;
     @media (max-width: 768px) {
         flex-direction: column;
     }
@@ -143,6 +144,29 @@
             width: 440px;
         }
     }
+    &Block {
+        width: 100%;
+        height: 400px;
+        border: 10px solid #f4f2f1;
+        border-radius: 16px;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        span:before {
+            font-size: 150px;
+            color: #f4f2f1;
+        }
+        & > div {
+            max-width: 350px;
+            text-align: center;
+        }
+        p {
+            margin-top: 25px;
+            color: #f4f2f1;
+        }
+    }
     &Columns {
         color: var(--textColor);
         width: 100%;
@@ -160,6 +184,7 @@
             }
             &:last-child {
                 width: 15%;
+                text-align: right;
             }
             @media (max-width: 768px) {
                 &:first-child {
@@ -293,35 +318,34 @@
     outline: none;
     opacity: 0.7;
     transition: opacity 0.2s;
-}
-.slider:hover {
-    opacity: 1;
-}
-.slider::-webkit-slider-thumb {
-    appearance: none;
-    width: 10px;
-    height: 10px;
-    background: var(--mainColor);
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.slider::-moz-range-thumb {
-    width: 10px;
-    height: 10px;
-    background: var(--mainColor);
-    cursor: pointer;
-    border-radius: 50%;
+    &:hover {
+        opacity: 1;
+    }
+    &::-webkit-slider-thumb {
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        background: var(--mainColor);
+        cursor: pointer;
+        border-radius: 50%;
+    }
+    &::-moz-range-thumb {
+        width: 10px;
+        height: 10px;
+        background: var(--mainColor);
+        cursor: pointer;
+        border-radius: 50%;
+    }
 }
 #tooltiptext {
     display: grid;
     grid-template-columns: 6fr 1fr;
     font-size: 10px;
-    span {
-        display: block;
-    }
-    span:not(:last-child) {
+    div div:not(:last-child) {
         margin-bottom: 4px;
+    }
+    div:last-child div {
+        text-align: right;
     }
 }
 .icon12 {

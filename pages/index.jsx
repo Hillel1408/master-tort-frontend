@@ -4,20 +4,39 @@ import Layout from '../components/Layout';
 import { TabContent } from '../components/pages/index/TabContent';
 import AuthService from '../services/AuthService';
 import OrdersService from '../services/OrdersService';
+import RecipeService from '../services/RecipeService';
 import styles from './Home.module.scss';
 
 export default function Home() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [active, setActive] = useState(0);
-
     const [items, setItems] = useState([]);
-    const [isEdit, setIsEdit] = useState();
+    const [isEdit, setIsEdit] = useState(undefined);
+    const [select, setSelect] = useState('');
 
     const openTab = (e) => setActive(+e.target.dataset.index);
 
     useEffect(() => {
-        const getOrder = async (userId) => {
+        const getRecipes = async (id) => {
+            //получаем рецепты пользователя
+            try {
+                const response = await RecipeService.getRecipes(id);
+                //формируем значения выпадающего списка с рецептами
+                const select = [];
+                response.data.map((item) => {
+                    select.push({
+                        value: item._id,
+                        label: item.recipeName,
+                    });
+                });
+                setSelect(select);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
+        };
+
+        const getOrder = async () => {
             //получаем заказ пользователя
             try {
                 const id = window.location.search.split('?id=')[1];
@@ -59,6 +78,7 @@ export default function Home() {
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
                 getOrder();
+                getRecipes(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);
@@ -97,27 +117,20 @@ export default function Home() {
                     }}
                 ></span>
             </div>
-            {items.map((n, i) =>
-                i === active ? (
-                    <TabContent
-                        key={i}
-                        items={items}
-                        index={i}
-                        isEdit={isEdit}
-                        userId={dataUser.id}
-                        style={{ display: 'flex' }}
-                    />
-                ) : (
-                    <TabContent
-                        key={i}
-                        items={items}
-                        index={i}
-                        isEdit={isEdit}
-                        userId={dataUser.id}
-                        style={{ display: 'none' }}
-                    />
-                )
-            )}
+            {items.map((n, i) => (
+                <TabContent
+                    key={i}
+                    items={items}
+                    index={i}
+                    isEdit={isEdit}
+                    userId={dataUser.id}
+                    setItems={setItems}
+                    select={select}
+                    style={
+                        i === active ? { display: 'flex' } : { display: 'none' }
+                    }
+                />
+            ))}
         </Layout>
     );
 }

@@ -584,8 +584,10 @@ function TabContent({ items, index, style, userId, isEdit }) {
                     </div>
                     <div className={styles.tabContentButtons}>
                         <button
+                            onClick={() => {
+                                window.print();
+                            }}
                             className={classNames(stylesBtn.btn, 'small-text')}
-                            href="#"
                         >
                             Печать
                         </button>

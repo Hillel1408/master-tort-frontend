@@ -61,6 +61,7 @@ export default function ArchiveOrders() {
                 <div className={styles.orders}>
                     {orders.map((item) => (
                         <OrderCake
+                            draggable={false}
                             key={item._id}
                             type={item.status}
                             item={item}

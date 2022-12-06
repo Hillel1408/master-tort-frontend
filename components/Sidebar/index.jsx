@@ -49,7 +49,11 @@ function Sidebar() {
     return (
         <aside className={styles.root}>
             <div className={styles.logo}>
-                <Link href="/" className={classNames('text', styles.logoLink)}>
+                <Link
+                    href="/"
+                    prefetch={false}
+                    className={classNames('text', styles.logoLink)}
+                >
                     <img src="/logo.svg" alt="" />
                     Помощник кондитеру
                 </Link>

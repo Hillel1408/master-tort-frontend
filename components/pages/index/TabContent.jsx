@@ -71,6 +71,8 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
         }
     };
 
+    const resetSettings = () => {};
+
     const onDropHandler = async (e) => {
         //получаем картинку торта
         e.preventDefault();
@@ -544,6 +546,7 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
                                                 index={index}
                                                 item={item}
                                                 items={items}
+                                                setItems={setItems}
                                                 tableIndex={tableIndex}
                                             />
                                         )
@@ -588,6 +591,9 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
                                     stylesBtn.btn,
                                     'small-text'
                                 )}
+                                onClick={() => {
+                                    resetSettings();
+                                }}
                             >
                                 Сбросить
                             </button>
@@ -652,8 +658,7 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
                         <div>
                             <span className="icon-2"></span>
                             <p className="title">
-                                Скоро здесь появится визуализация силуэта вашего
-                                торта
+                                Скоро здесь появится силуэт вашего торта
                             </p>
                         </div>
                     </div>

@@ -28,6 +28,9 @@
         & > a:not(:last-of-type) {
             margin-bottom: 20px;
         }
+        & > a:last-of-type {
+            margin-bottom: 10px;
+        }
     }
     &Cake {
         cursor: grab;

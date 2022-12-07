@@ -324,7 +324,10 @@ export default function Recipes() {
                 </div>
                 <div
                     className="addBlock"
-                    onClick={() => setModalActiveGroup(true)}
+                    onClick={() => {
+                        btnRef.current.disabled = true;
+                        setModalActiveGroup(true);
+                    }}
                 >
                     <span
                         className={classNames(
@@ -369,7 +372,10 @@ export default function Recipes() {
                     </div>
                     <div
                         className="addBlock"
-                        onClick={() => setModalActiveRecipe(true)}
+                        onClick={() => {
+                            btnRefRecipe.current.disabled = true;
+                            setModalActiveRecipe(true);
+                        }}
                     >
                         <span
                             className={classNames(
@@ -430,7 +436,7 @@ export default function Recipes() {
                             stylesBtn.btn__secondary,
                             'small-text'
                         )}
-                        onClick={() => {
+                        onClick={(e) => {
                             handleSubmit();
                         }}
                     >

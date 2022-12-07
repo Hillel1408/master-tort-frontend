@@ -3,7 +3,7 @@ import { TableCell } from '../../TableCell';
 import { CustomSelect } from '../../CustomSelect/';
 import stylesTable from '../../Table/Table.module.scss';
 
-function Tr({ select, index, item, items, tableIndex }) {
+function Tr({ select, index, item, items, tableIndex, setItems }) {
     return (
         <div className={stylesTable.wrapper}>
             <div
@@ -53,6 +53,10 @@ function Tr({ select, index, item, items, tableIndex }) {
             <div className={classNames(stylesTable.td, stylesTable.tdDelete)}>
                 <span
                     className={classNames('icon-11', stylesTable.delete)}
+                    onClick={() => {
+                        items[index].table.splice(index, 1);
+                        setItems([...items]);
+                    }}
                 ></span>
             </div>
         </div>

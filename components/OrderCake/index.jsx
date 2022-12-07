@@ -18,10 +18,7 @@ function OrderCake({
 }) {
     return (
         <Link
-            href={{
-                pathname: `/`,
-                query: { id: item._id },
-            }}
+            href={`/${item._id}`}
             className={classNames(
                 styles.root,
                 styles[type],

@@ -56,7 +56,7 @@ body.lock {
 .addBlock {
     color: var(--mainColor);
     margin-top: 10px;
-    display: block;
+    display: inline-block;
     & > span {
         cursor: pointer;
         display: inline-flex;

@@ -23,7 +23,7 @@ function TableCell({ value, type, disabled, thValue, index, saveSettings }) {
                 />
             ) : (
                 <input
-                    class={stylesInput.input}
+                    className={stylesInput.input}
                     value={item}
                     type={type}
                     disabled={disabled}

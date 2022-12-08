@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import uuid from 'react-uuid';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { Tr } from './Tr';
@@ -505,6 +506,7 @@ function TabContent({
                                 {image.length > 0 &&
                                     image.map((item) => (
                                         <div
+                                            key={item}
                                             className={styles.informationImage}
                                         >
                                             <div
@@ -569,8 +571,11 @@ function TabContent({
                                                 '25% 25% 25% 25%',
                                         }}
                                     >
-                                        {thTitle.map((item) => (
-                                            <div className={stylesTable.th}>
+                                        {thTitle.map((item, index) => (
+                                            <div
+                                                key={index}
+                                                className={stylesTable.th}
+                                            >
                                                 {item}
                                             </div>
                                         ))}
@@ -584,6 +589,7 @@ function TabContent({
                                     {items[index].table.map(
                                         (item, tableIndex) => (
                                             <Tr
+                                                key={item.id}
                                                 select={select}
                                                 index={index}
                                                 item={item}
@@ -600,9 +606,10 @@ function TabContent({
                                                 'icon-8'
                                             )}
                                             onClick={() => {
+                                                const id = uuid();
                                                 items[index].table = [
                                                     ...items[index].table,
-                                                    trValue,
+                                                    { ...trValue, id: id },
                                                 ];
                                                 setItems([...items]);
                                             }}

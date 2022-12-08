@@ -73,7 +73,7 @@ export default function Home() {
         >
             <div className={styles.tab}>
                 {items.map((n, i) => (
-                    <Tab setActive={setActive} i={i} active={active} />
+                    <Tab key={i} setActive={setActive} i={i} active={active} />
                 ))}
                 {items.length < 3 && (
                     <span

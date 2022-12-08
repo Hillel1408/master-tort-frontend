@@ -1,8 +1,7 @@
 .overflow {
     margin-bottom: 20px;
-    overflow-x: auto;
-    overflow-y: initial;
     @media (max-width: 630px) {
+        //overflow-x: auto;
     }
 }
 .table {

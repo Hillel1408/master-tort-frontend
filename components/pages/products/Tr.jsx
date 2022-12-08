@@ -17,7 +17,7 @@ function Tr({ item, tr, setTr, index, measure }) {
                         {keyObj === 'unit' ? (
                             <div className={stylesTable.td}>
                                 <CustomSelect
-                                    key={Math.random()}
+                                    key={keyObj}
                                     isSearchable={false}
                                     height="35px"
                                     width="100%"
@@ -37,7 +37,7 @@ function Tr({ item, tr, setTr, index, measure }) {
                         ) : (
                             keyObj !== 'id' && (
                                 <TableCell
-                                    key={Math.random()}
+                                    key={keyObj}
                                     value={item[keyObj]}
                                     thValue={keyObj}
                                     type={keyObj === 'name' ? 'text' : 'number'}

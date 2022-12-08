@@ -10,22 +10,23 @@ export default function Home() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [active, setActive] = useState(0);
-    const [items, setItems] = useState([
-        {
-            orderName: '',
-            date: '',
-            time: '',
-            info: '',
-            range: '',
-            standWidth: '',
-            standLength: '',
-            price: '',
-            cakeShape: '',
-            kindCake: '',
-            imagesUrl: [],
-            table: [],
-        },
-    ]);
+
+    const value = {
+        orderName: '',
+        date: '',
+        time: '',
+        info: '',
+        range: '',
+        standWidth: '',
+        standLength: '',
+        price: '',
+        cakeShape: '',
+        kindCake: '',
+        imagesUrl: [],
+        table: [],
+    };
+
+    const [items, setItems] = useState([value]);
     const [select, setSelect] = useState('');
 
     useEffect(() => {
@@ -95,6 +96,7 @@ export default function Home() {
                     userId={dataUser.id}
                     setItems={setItems}
                     select={select}
+                    value={value}
                     style={
                         i === active ? { display: 'flex' } : { display: 'none' }
                     }

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import Router from 'next/router';
 import Layout from '../components/Layout';
 import { Tab } from '../components/pages/index/Tab';
 import { TabContent } from '../components/pages/index/TabContent';
@@ -13,6 +15,21 @@ export default function Home() {
     const [active, setActive] = useState(0);
     const [items, setItems] = useState([]);
     const [select, setSelect] = useState('');
+
+    const value = {
+        orderName: '',
+        date: '',
+        time: '',
+        info: '',
+        range: '',
+        standWidth: '',
+        standLength: '',
+        price: '',
+        cakeShape: '',
+        kindCake: '',
+        imagesUrl: [],
+        table: [],
+    };
 
     useEffect(() => {
         const getRecipes = async (id) => {
@@ -39,6 +56,7 @@ export default function Home() {
                 const id = window.location.pathname.split('/')[1];
                 const response = await OrdersService.getOrder(id);
                 setItems([response.data]);
+                console.log(response.data);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -66,19 +84,34 @@ export default function Home() {
             isAuth={isAuth}
             setIsAuth={setIsAuth}
             dataUser={dataUser}
-            title={items[0] && items[0].orderName}
+            title={
+                items[0] && items[0].orderName
+                    ? items[0].orderName
+                    : 'Расчет тортов'
+            }
         >
             <div className={styles.tab}>
                 <Tab setActive={setActive} i={0} active={active} />
+                <span
+                    className={classNames(
+                        'icon-28',
+                        'small-text',
+                        styles.backLink
+                    )}
+                    onClick={() => Router.back()}
+                >
+                    Вернуться к заказам
+                </span>
             </div>
             <TabContent
+                key={0}
                 items={items}
                 index={0}
                 isEdit={true}
                 userId={dataUser.id}
                 setItems={setItems}
                 select={select}
-                setActive={setActive}
+                value={value}
                 style={{ display: 'flex' }}
             />
         </Layout>

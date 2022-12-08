@@ -111,6 +111,7 @@
                 & > .information:nth-child(6) {
                     order: 6;
                     width: 100%;
+                    height: 333px;
                 }
             }
         }
@@ -118,6 +119,14 @@
             margin-top: 20px;
             display: flex;
             justify-content: space-between;
+            @media (max-width: 1024px) {
+                flex-direction: column;
+                gap: 10px;
+                & > div {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
         }
     }
 }
@@ -363,5 +372,15 @@
         width: 50px;
         height: 50px;
         fill: #f4f2f1;
+    }
+}
+.backLink {
+    cursor: pointer;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    &:before {
+        margin-right: 13px;
     }
 }

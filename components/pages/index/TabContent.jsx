@@ -1,21 +1,33 @@
 import { useState, useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { Tr } from './Tr';
 import { Tooltip } from '../../Tooltip';
+import { Alert } from '../../Alert';
 import UploadService from '../../../services/UploadService';
 import OrdersService from '../../../services/OrdersService';
+import { setAlert } from '../../../redux/cakeSlice';
 import styles from '../../../pages/Home.module.scss';
 import stylesTable from '../../Table/Table.module.scss';
 import stylesTooltip from '../../Tooltip/Tooltip.module.scss';
 import stylesInput from '../../Input/Input.module.scss';
 import stylesBtn from '../../Btn/Btn.module.scss';
 
-function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
+function TabContent({
+    items,
+    index,
+    style,
+    userId,
+    isEdit,
+    setItems,
+    select,
+    value,
+}) {
     const [drag, setDrag] = useState(false);
     const [isCake, setIsCake] = useState(false);
 
     const [range, setRange] = useState(items[index].range);
-    const [name, setName] = useState(items[index].orderName);
+    const [orderName, setOrderName] = useState(items[index].orderName);
     const [date, setDate] = useState(items[index].date);
     const [time, setTime] = useState(items[index].time);
     const [image, setImage] = useState(items[index].imagesUrl);
@@ -23,6 +35,10 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
     const [standLength, setStandLength] = useState(items[index].standLength);
     const [cakeShape, setCakeShape] = useState(items[index].cakeShape);
     const [kindCake, setKindCake] = useState(items[index].kindCake);
+    const [info, setInfo] = useState(items[index].info);
+    const [price, setPrice] = useState(items[index].price);
+
+    const dispatch = useDispatch();
 
     const inputFileRef = useRef('');
     const btnRef = useRef('');
@@ -40,11 +56,11 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
     //проверяем заполнил ли пользователь данные для добавления заказа
     useEffect(() => {
         if (btnRef.current) {
-            name && date && time && image.length !== 0
+            orderName && date && time && image.length !== 0
                 ? (btnRef.current.disabled = false)
                 : (btnRef.current.disabled = true);
         }
-    }, [name, date, time, image]);
+    }, [orderName, date, time, image]);
 
     //проверяем заполнил ли пользователь данные для расчета заказа
     useEffect(() => {
@@ -71,7 +87,22 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
         }
     };
 
-    const resetSettings = () => {};
+    const resetSettings = () => {
+        items[index] = value;
+        setItems([...items]);
+        //обнуляем стейты
+        setOrderName('');
+        setDate('');
+        setTime('');
+        setInfo('');
+        setRange('');
+        setStandWidth('');
+        setStandLength('');
+        setPrice('');
+        setCakeShape('');
+        setKindCake('');
+        setImage([]);
+    };
 
     const onDropHandler = async (e) => {
         //получаем картинку торта
@@ -103,8 +134,17 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
                 userId,
                 items[index]
             );
+            dispatch(
+                setAlert({
+                    text: isEdit
+                        ? 'Заказ успешно изменен'
+                        : 'Заказ успешно сохранен',
+                    color: '#62ac62',
+                })
+            );
         } catch (e) {
             console.log(e.response?.data?.message);
+            dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
         }
     };
 
@@ -130,11 +170,11 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
                                     stylesInput.input,
                                     styles.informationInput
                                 )}
-                                value={name}
+                                value={orderName}
                                 placeholder="Название проекта"
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={(e) => setOrderName(e.target.value)}
                                 onBlur={(e) => {
-                                    items[index].orderName = name;
+                                    items[index].orderName = orderName;
                                 }}
                             />
                             <div className={styles.informationInputBlock}>
@@ -169,9 +209,10 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
                                     styles.informationTextarea
                                 )}
                                 placeholder="Комментарий к заказу"
-                                defaultValue={items[index].info}
+                                value={info}
+                                onChange={(e) => setInfo(e.target.value)}
                                 onBlur={(e) => {
-                                    items[index].info = e.target.value;
+                                    items[index].info = info;
                                 }}
                             ></textarea>
                         </div>
@@ -257,9 +298,10 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
                                     type="number"
                                     className={stylesInput.input}
                                     placeholder="Стоимость торта"
-                                    defaultValue={items[index].price}
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
                                     onBlur={(e) => {
-                                        items[index].price = e.target.value;
+                                        items[index].price = price;
                                     }}
                                 />
                             </div>
@@ -695,6 +737,7 @@ function TabContent({ items, index, style, userId, isEdit, setItems, select }) {
                     </div>
                 </div>
             </div>
+            <Alert />
         </div>
     );
 }

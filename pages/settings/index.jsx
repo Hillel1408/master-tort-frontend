@@ -85,13 +85,17 @@ export default function Settings() {
                 </h2>
                 <div className={classNames('small-text', styles.columns)}>
                     <div className={styles.column}>
-                        {settingsText[0].map((item) => (
-                            <p className={styles.text}>{item}</p>
+                        {settingsText[0].map((item, index) => (
+                            <p key={index} className={styles.text}>
+                                {item}
+                            </p>
                         ))}
                     </div>
                     <div className={styles.column}>
-                        {settingsText[1].map((item) => (
-                            <p className={styles.text}>{item}</p>
+                        {settingsText[1].map((item, index) => (
+                            <p key={index} className={styles.text}>
+                                {item}
+                            </p>
                         ))}
                     </div>
                 </div>
@@ -114,7 +118,7 @@ export default function Settings() {
                         <div className={stylesTable.tbody}>
                             {settings && (
                                 <BodyTable
-                                    key={Math.random()}
+                                    key={0}
                                     settings={settings}
                                     setSettings={setSettings}
                                     index="0"
@@ -140,7 +144,7 @@ export default function Settings() {
                         <div className={stylesTable.tbody}>
                             {settings && (
                                 <BodyTable
-                                    key={Math.random()}
+                                    key={1}
                                     settings={settings}
                                     setSettings={setSettings}
                                     index="1"

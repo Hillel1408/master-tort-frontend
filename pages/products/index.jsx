@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
+import uuid from 'react-uuid';
 import Layout from '../../components/Layout';
 import { Tr } from '../../components/pages/products/Tr';
 import { Alert } from '../../components/Alert';
@@ -18,11 +19,9 @@ export default function Products() {
     const dispatch = useDispatch();
 
     const trValue = {
-        id: Math.random(),
         name: '',
         unit: { value: '', label: '' },
-        packageKg: '',
-        packageGr: '',
+        package: '',
         price: '',
     };
 
@@ -31,18 +30,19 @@ export default function Products() {
         { value: 'kg', label: 'кг.' },
         { value: 'gr', label: 'гр.' },
         { value: 'count', label: 'штук' },
+        { value: 'liter', label: 'литр' },
     ];
 
     const thTitle = [
         'Наименование',
         'Единица измерения',
-        'Упаковка кг.',
-        'Упаковка гр.',
+        'Упаковка',
         'Цена, ₽',
     ];
 
     const clickHandler = () => {
-        setTr([...tr, trValue]);
+        const id = uuid();
+        setTr([...tr, { ...trValue, id: id }]);
     };
 
     const saveSettings = async () => {
@@ -109,11 +109,13 @@ export default function Products() {
                         <div
                             className={classNames('text', stylesTable.thead)}
                             style={{
-                                gridTemplateColumns: '40% 15% 15% 15% 15%',
+                                gridTemplateColumns: '40% 20% 20% 20%',
                             }}
                         >
                             {thTitle.map((item) => (
-                                <div className={stylesTable.th}>{item}</div>
+                                <div key={item} className={stylesTable.th}>
+                                    {item}
+                                </div>
                             ))}
                         </div>
                         <div
@@ -125,6 +127,7 @@ export default function Products() {
                         {tr.length > 0 &&
                             tr.map((item, index) => (
                                 <Tr
+                                    key={item.id}
                                     item={item}
                                     tr={tr}
                                     index={index}

@@ -1,19 +1,19 @@
 const settingsMastic = {
-    diameter: [1, 2],
-    height: [1, 2],
-    cakeWeightUpToTight: [1, 2],
-    standWeight: [1, 2],
-    leveledCakeWeight: [1, 2],
-    weightOfCoveredCake: [1, 2],
+    diameter: [22, 12],
+    height: [6, 13],
+    cakeWeightUpToTight: [1514, 1012],
+    standWeight: [170, ''],
+    leveledCakeWeight: [1820, 1212],
+    weightOfCoveredCake: [2280, ''],
 };
 
 const settingsNameTh = {
-    diameter: 'Диаметр',
-    height: 'Высота',
-    cakeWeightUpToTight: 'Вес торта до обтяжки',
-    standWeight: 'Вес подставки',
-    leveledCakeWeight: 'Вес выровненного торта',
-    weightOfCoveredCake: 'Вес обтянутого торта',
+    diameter: 'Диаметр, cм.',
+    height: 'Высота, см.',
+    cakeWeightUpToTight: 'Вес торта до обтяжки, гр.',
+    standWeight: 'Вес подставки, гр.',
+    leveledCakeWeight: 'Вес выровненного торта, гр.',
+    weightOfCoveredCake: 'Вес обтянутого торта, гр.',
 };
 
 const settingsText = [

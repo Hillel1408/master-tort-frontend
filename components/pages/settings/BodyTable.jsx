@@ -11,13 +11,9 @@ function BodyTable({ settings, index }) {
         >
             {Object.keys(settings).map((keyObj) => (
                 <>
+                    <TableCell key={keyObj} disabled={true} thValue={keyObj} />
                     <TableCell
-                        key={Math.random()}
-                        disabled={true}
-                        thValue={keyObj}
-                    />
-                    <TableCell
-                        key={Math.random()}
+                        key={keyObj + index}
                         value={settings[keyObj][index]}
                         thValue={keyObj}
                         disabled={false}

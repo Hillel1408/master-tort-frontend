@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
+import uuid from 'react-uuid';
 import Layout from '../../components/Layout';
 import { Block } from '../../components/pages/recipe/Block';
 import { Tooltip } from '../../components/Tooltip';
@@ -60,9 +61,11 @@ export default function Recipe() {
     };
 
     const handleSubmit = () => {
+        const id = uuid();
         setBlock([
             ...block,
             {
+                id: id,
                 title: `${value}`,
                 products: [],
             },
@@ -177,7 +180,10 @@ export default function Recipe() {
                                     }}
                                 >
                                     {thTitle.map((item) => (
-                                        <div className={stylesTable.th}>
+                                        <div
+                                            key={item}
+                                            className={stylesTable.th}
+                                        >
                                             {item}
                                         </div>
                                     ))}
@@ -191,7 +197,7 @@ export default function Recipe() {
                                 {block &&
                                     block.map((item, index) => (
                                         <Block
-                                            key={index}
+                                            key={item.id}
                                             item={item}
                                             setBlock={setBlock}
                                             blockIndex={index}

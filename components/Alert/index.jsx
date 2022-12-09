@@ -9,9 +9,10 @@ function Alert() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log(alertColor);
         const timerId = setTimeout(() => {
             dispatch(resetAlert(''));
-        }, 2000);
+        }, 1500);
         return () => {
             clearInterval(timerId);
         };
@@ -25,7 +26,7 @@ function Alert() {
                     styles.toastContainer,
                     alertName !== '' && styles.active
                 )}
-                style={{ backgroundColor: { alertColor } }}
+                style={{ backgroundColor: `${alertColor}` }}
             >
                 {alertName}
             </div>

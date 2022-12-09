@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Router from 'next/router';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { Tab } from '../components/pages/index/Tab';
 import { TabContent } from '../components/pages/index/TabContent';
 import AuthService from '../services/AuthService';
 import OrdersService from '../services/OrdersService';
 import RecipeService from '../services/RecipeService';
+import stylesNoAccess from '../components/NoAccess/NoAccess.module.scss';
 import styles from './Home.module.scss';
 
 export default function Home() {
@@ -15,6 +17,8 @@ export default function Home() {
     const [active, setActive] = useState(0);
     const [items, setItems] = useState([]);
     const [select, setSelect] = useState('');
+
+    const router = useRouter();
 
     const value = {
         orderName: '',
@@ -56,10 +60,10 @@ export default function Home() {
                 const id = window.location.pathname.split('/')[1];
                 const response = await OrdersService.getOrder(id);
                 setItems([response.data]);
-                console.log(response.data);
-                setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
+            } finally {
+                setIsAuth(true);
             }
         };
 
@@ -84,36 +88,46 @@ export default function Home() {
             isAuth={isAuth}
             setIsAuth={setIsAuth}
             dataUser={dataUser}
-            title={
-                items[0] && items[0].orderName
-                    ? items[0].orderName
-                    : 'Расчет тортов'
-            }
+            title={items[0] ? items[0].orderName : ''}
         >
-            <div className={styles.tab}>
-                <Tab setActive={setActive} i={0} active={active} />
-                <span
+            {items[0] ? (
+                <>
+                    <div className={styles.tab}>
+                        <Tab setActive={setActive} i={0} active={active} />
+                        <Link
+                            className={classNames(
+                                'icon-28',
+                                'small-text',
+                                styles.backLink
+                            )}
+                            href="/orders"
+                        >
+                            <span>Вернуться к заказам</span>
+                        </Link>
+                    </div>
+                    <TabContent
+                        key={0}
+                        items={items}
+                        index={0}
+                        isEdit={true}
+                        userId={dataUser.id}
+                        setItems={setItems}
+                        select={select}
+                        value={value}
+                        style={{ display: 'flex' }}
+                    />
+                </>
+            ) : (
+                <h2
                     className={classNames(
-                        'icon-28',
-                        'small-text',
-                        styles.backLink
+                        'title',
+                        stylesNoAccess.noOrders,
+                        stylesNoAccess.title
                     )}
-                    onClick={() => Router.back()}
                 >
-                    Вернуться к заказам
-                </span>
-            </div>
-            <TabContent
-                key={0}
-                items={items}
-                index={0}
-                isEdit={true}
-                userId={dataUser.id}
-                setItems={setItems}
-                select={select}
-                value={value}
-                style={{ display: 'flex' }}
-            />
+                    Ошибка загрузки данных
+                </h2>
+            )}
         </Layout>
     );
 }

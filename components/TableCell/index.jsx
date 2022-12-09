@@ -28,9 +28,7 @@ function TableCell({ value, type, disabled, thValue, index, saveSettings }) {
                     type={type}
                     disabled={disabled}
                     onChange={({ target }) => {
-                        target.value === '0' || target.value < 0
-                            ? ''
-                            : setItem(target.value);
+                        target.value < 0 ? '' : setItem(target.value);
                     }}
                     onBlur={(e) => saveSettings(item, thValue, index)}
                     onKeyDown={handleKey}

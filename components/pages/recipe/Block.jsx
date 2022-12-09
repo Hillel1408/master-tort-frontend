@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import uuid from 'react-uuid';
 import stylesTable from '../../Table/Table.module.scss';
 import { Tr } from './Tr';
 import styles from '../../../pages/recipe/Recipe.module.scss';
@@ -14,7 +15,11 @@ function Block({ item, setBlock, blockIndex, block, select }) {
     const trValue = { product: { value: '', label: '' }, gross: '', net: '' };
 
     const clickHandler = () => {
-        block[blockIndex].products = [...block[blockIndex].products, trValue];
+        const id = uuid();
+        block[blockIndex].products = [
+            ...block[blockIndex].products,
+            { ...trValue, id: id },
+        ];
         setBlock([...block]);
     };
 
@@ -97,7 +102,7 @@ function Block({ item, setBlock, blockIndex, block, select }) {
                 <div className={stylesTable.tbody}>
                     {item.products.map((item, index) => (
                         <Tr
-                            key={Math.random()}
+                            key={item.id}
                             item={item}
                             index={index}
                             blockIndex={blockIndex}

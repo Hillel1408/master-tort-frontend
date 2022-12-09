@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
+import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { OrdersNav } from '../../components/OrdersNav';
 import { OrderCake } from '../../components/OrderCake';
@@ -152,6 +153,7 @@ export default function Orders() {
                         type: 'upcoming',
                         textLink: 'Добавить заказы',
                         items: orders.upcoming,
+                        link: '/',
                     },
                     {
                         id: 2,
@@ -159,6 +161,7 @@ export default function Orders() {
                         type: 'purchase',
                         textLink: 'Составить закупку',
                         items: orders.purchase,
+                        link: '/purchase',
                     },
                     {
                         id: 3,
@@ -264,22 +267,35 @@ export default function Orders() {
                                         styles.addBlock
                                     )}
                                 >
-                                    <span
-                                        className={classNames(
-                                            'small-text',
-                                            'icon-8'
-                                        )}
-                                        onClick={() => {
-                                            board.function &&
-                                                board.function(
-                                                    dataUser,
-                                                    boards,
-                                                    board
-                                                );
-                                        }}
-                                    >
-                                        {board.textLink}
-                                    </span>
+                                    {board.link ? (
+                                        <Link href={board.link}>
+                                            <span
+                                                className={classNames(
+                                                    'small-text',
+                                                    'icon-8'
+                                                )}
+                                            >
+                                                {board.textLink}
+                                            </span>
+                                        </Link>
+                                    ) : (
+                                        <span
+                                            className={classNames(
+                                                'small-text',
+                                                'icon-8'
+                                            )}
+                                            onClick={() => {
+                                                board.function &&
+                                                    board.function(
+                                                        dataUser,
+                                                        boards,
+                                                        board
+                                                    );
+                                            }}
+                                        >
+                                            {board.textLink}
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                         </div>

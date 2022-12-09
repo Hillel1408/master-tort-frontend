@@ -9,51 +9,49 @@ function Tr({ item, tr, setTr, index, measure }) {
             <div
                 className={stylesTable.tr}
                 style={{
-                    gridTemplateColumns: '40% 15% 15% 15% 15%',
+                    gridTemplateColumns: '40% 20% 20% 20%',
                 }}
             >
-                {Object.keys(item).map((keyObj) => (
-                    <>
-                        {keyObj === 'unit' ? (
-                            <div className={stylesTable.td}>
-                                <CustomSelect
-                                    key={keyObj}
-                                    isSearchable={false}
-                                    height="35px"
-                                    width="100%"
-                                    contHeight="33px"
-                                    options={measure}
-                                    placeholder=""
-                                    default={item.unit}
-                                    setGroupIcon={(e) => {
-                                        tr[index] = {
-                                            ...tr[index],
-                                            unit: e,
-                                        };
-                                    }}
-                                    portalTarget={true}
-                                />
-                            </div>
-                        ) : (
-                            keyObj !== 'id' && (
-                                <TableCell
-                                    key={keyObj}
-                                    value={item[keyObj]}
-                                    thValue={keyObj}
-                                    type={keyObj === 'name' ? 'text' : 'number'}
-                                    tr={tr}
-                                    index={index}
-                                    saveSettings={(item, thValue, index) => {
-                                        tr[index] = {
-                                            ...tr[index],
-                                            [thValue]: item,
-                                        };
-                                    }}
-                                />
-                            )
-                        )}
-                    </>
-                ))}
+                {Object.keys(item).map((keyObj) =>
+                    keyObj === 'unit' ? (
+                        <div key={item.id + keyObj} className={stylesTable.td}>
+                            <CustomSelect
+                                key={keyObj}
+                                isSearchable={false}
+                                height="35px"
+                                width="100%"
+                                contHeight="33px"
+                                options={measure}
+                                placeholder=""
+                                default={item.unit}
+                                setGroupIcon={(e) => {
+                                    tr[index] = {
+                                        ...tr[index],
+                                        unit: e,
+                                    };
+                                }}
+                                portalTarget={true}
+                            />
+                        </div>
+                    ) : (
+                        keyObj !== 'id' && (
+                            <TableCell
+                                key={keyObj}
+                                value={item[keyObj]}
+                                thValue={keyObj}
+                                type={keyObj === 'name' ? 'text' : 'number'}
+                                tr={tr}
+                                index={index}
+                                saveSettings={(item, thValue, index) => {
+                                    tr[index] = {
+                                        ...tr[index],
+                                        [thValue]: item,
+                                    };
+                                }}
+                            />
+                        )
+                    )
+                )}
             </div>
             <div className={classNames(stylesTable.td, stylesTable.tdDelete)}>
                 <span

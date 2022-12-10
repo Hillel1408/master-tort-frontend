@@ -27,16 +27,36 @@ export default function Recipe() {
     const [value, setValue] = useState('');
     const [image, setImage] = useState('');
 
+    const [checkbox, setCheckbox] = useState(false);
+    const [exit, setExit] = useState(recipe.exit);
+    const [height, setHeight] = useState('');
+    const [diameter, setDiameter] = useState('');
+
     const inputFileRef = useRef('');
+    const btnRef = useRef('');
 
     const dispatch = useDispatch();
 
     const thTitle = ['Продукт', 'Брутто', 'Нетто'];
 
+    useEffect(() => {
+        if (btnRef.current) {
+            if (checkbox) {
+                exit && height && diameter
+                    ? (btnRef.current.disabled = false)
+                    : (btnRef.current.disabled = true);
+            } else btnRef.current.disabled = false;
+        }
+    }, [exit, height, diameter, checkbox]);
+
     const saveSettings = async () => {
         try {
             const values = {
                 products: block,
+                checkbox,
+                exit,
+                height,
+                diameter,
                 recipeUrl: image && `http://localhost:5000${image}`,
             };
             const id = window.location.pathname.split('/recipe/')[1];
@@ -117,6 +137,10 @@ export default function Recipe() {
                 const id = window.location.pathname.split('/recipe/')[1];
                 const response = await RecipeService.getRecipe(id);
                 setRecipe(response.data);
+                setExit(response.data.exit);
+                setDiameter(response.data.diameter);
+                setHeight(response.data.height);
+                setCheckbox(response.data.checkbox);
                 setBlock(response.data.products);
                 setIsAuth(true);
             } catch (e) {
@@ -262,6 +286,7 @@ export default function Recipe() {
                     </div>
                     <div className={stylesTable.buttons}>
                         <button
+                            ref={btnRef}
                             className={classNames(
                                 stylesBtn.btn,
                                 stylesBtn.btn__secondary,
@@ -274,29 +299,91 @@ export default function Recipe() {
                         <div></div>
                     </div>
                 </div>
-                <div className={styles.image}>
-                    <div className={styles.imageBlock}>
-                        {image ? (
-                            <img src={`http://localhost:5000${image}`} />
-                        ) : (
-                            <img src={recipe.recipeUrl} />
-                        )}
+                <div>
+                    <div className={styles.image}>
+                        <div className={styles.imageBlock}>
+                            {image ? (
+                                <img src={`http://localhost:5000${image}`} />
+                            ) : (
+                                <img src={recipe.recipeUrl} />
+                            )}
+                        </div>
+                        <div className="addBlock">
+                            <span
+                                onClick={() => inputFileRef.current.click()}
+                                className={classNames('icon-8', 'small-text')}
+                            >
+                                Загрузить новое фото
+                            </span>
+                            <input
+                                ref={inputFileRef}
+                                type="file"
+                                onChange={(e) => {
+                                    handleChangeFile(e);
+                                }}
+                                hidden
+                            />
+                        </div>
                     </div>
-                    <div className="addBlock">
-                        <span
-                            onClick={() => inputFileRef.current.click()}
-                            className={classNames('icon-8', 'small-text')}
+                    <div className={styles.params}>
+                        <div
+                            className={stylesTable.titleWrapper}
+                            style={{ marginBottom: '20px' }}
                         >
-                            Загрузить новое фото
-                        </span>
-                        <input
-                            ref={inputFileRef}
-                            type="file"
-                            onChange={(e) => {
-                                handleChangeFile(e);
-                            }}
-                            hidden
-                        />
+                            Параметры
+                        </div>
+                        <div className={styles.grid}>
+                            <label className="small-text">
+                                <input
+                                    type="checkbox"
+                                    checked={checkbox}
+                                    onChange={(e) =>
+                                        setCheckbox(e.target.checked)
+                                    }
+                                />
+                                Использовать в расчетах
+                            </label>
+                            {checkbox && (
+                                <>
+                                    <input
+                                        title="Выход"
+                                        type="number"
+                                        placeholder="Выход"
+                                        value={exit}
+                                        onChange={(e) =>
+                                            setExit(e.target.value)
+                                        }
+                                        className={classNames(
+                                            stylesInput.input
+                                        )}
+                                    />
+                                    <input
+                                        title="Диаметр"
+                                        type="number"
+                                        placeholder="Диаметр"
+                                        value={diameter}
+                                        onChange={(e) =>
+                                            setDiameter(e.target.value)
+                                        }
+                                        className={classNames(
+                                            stylesInput.input
+                                        )}
+                                    />
+                                    <input
+                                        title="Высота"
+                                        type="number"
+                                        placeholder="Высота"
+                                        value={height}
+                                        onChange={(e) =>
+                                            setHeight(e.target.value)
+                                        }
+                                        className={classNames(
+                                            stylesInput.input
+                                        )}
+                                    />
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

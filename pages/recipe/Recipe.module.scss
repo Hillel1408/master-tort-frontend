@@ -39,3 +39,24 @@
     display: block;
     width: 250px;
 }
+.params {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    label {
+        cursor: pointer;
+        flex: 0 0 auto;
+        align-items: center;
+        color: var(--textColor);
+        display: flex;
+        height: 35px;
+        input {
+            margin-right: 10px;
+        }
+    }
+}
+.grid {
+    display: flex;
+    gap: 10px;
+}

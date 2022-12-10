@@ -43,10 +43,11 @@ export default function Home() {
                 //формируем значения выпадающего списка с рецептами
                 const select = [];
                 response.data.map((item) => {
-                    select.push({
-                        value: item._id,
-                        label: item.recipeName,
-                    });
+                    item.checkbox &&
+                        select.push({
+                            value: item._id,
+                            label: item.recipeName,
+                        });
                 });
                 setSelect(select);
             } catch (e) {

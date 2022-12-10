@@ -25,7 +25,6 @@ export default function Settings() {
                 ...settings,
                 user: dataUser.id,
             });
-
             dispatch(
                 setAlert({
                     text: 'Настройки успешно сохранены',
@@ -40,7 +39,6 @@ export default function Settings() {
 
     const resetSettings = () => {
         const newObj = {};
-
         Object.keys(settings).map((key) => {
             newObj[key] = ['', ''];
         });

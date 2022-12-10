@@ -129,6 +129,17 @@ function TabContent({
         sendImage(file);
     };
 
+    const calculationOrder = async () => {
+        try {
+            const response = await OrdersService.calculationOrder({
+                ...items[index],
+                user: userId,
+            });
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
     const addOrder = async () => {
         try {
             const response = await OrdersService.setOrders(
@@ -656,6 +667,9 @@ function TabContent({
                                     'small-text'
                                 )}
                                 style={{ marginRight: '10px' }}
+                                onClick={() => {
+                                    calculationOrder();
+                                }}
                             >
                                 Рассчитать
                             </button>

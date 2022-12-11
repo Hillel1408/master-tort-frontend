@@ -40,7 +40,7 @@
             gap: 20px;
             flex-flow: column wrap;
             margin-bottom: 20px;
-            height: 549px;
+            height: 550px;
             justify-content: space-between;
             @media (max-width: 768px) {
                 height: 741px;
@@ -138,9 +138,23 @@
     &Title {
         margin-bottom: 40px;
     }
+    &Item {
+        padding: 20px;
+        min-width: 240px;
+        background: #f4f2f1;
+        border-radius: 8px;
+        white-space: nowrap;
+    }
+    &Data {
+        display: flex;
+        overflow: auto;
+        gap: 10px;
+        margin-bottom: 20px;
+        max-width: 688px;
+    }
     &Image {
         overflow: auto;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         text-align: center;
         img {
             width: 440px;
@@ -151,7 +165,7 @@
         height: 400px;
         border: 10px solid #f4f2f1;
         border-radius: 16px;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -214,6 +228,7 @@
     overflow: auto;
     &Text {
         margin-bottom: 10px;
+        white-space: nowrap;
     }
     &Input {
         margin-bottom: 10px;
@@ -315,7 +330,7 @@
             }
         }
         @media (max-width: 768px) {
-            height: 115px;
+            height: 119px;
         }
     }
 }

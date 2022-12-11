@@ -158,7 +158,7 @@ export default function Settings() {
                     href="#"
                     onClick={() => resetSettings()}
                 >
-                    Сбросить настройки
+                    Сбросить
                 </button>
                 <button
                     className={classNames(

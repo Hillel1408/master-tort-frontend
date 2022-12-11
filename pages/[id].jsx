@@ -95,16 +95,16 @@ export default function Home() {
                 <>
                     <div className={styles.tab}>
                         <Tab setActive={setActive} i={0} active={active} />
-                        <Link
+                        <div
                             className={classNames(
                                 'icon-28',
                                 'small-text',
                                 styles.backLink
                             )}
-                            href="/orders"
+                            onClick={() => router.back()}
                         >
                             <span>Вернуться к заказам</span>
-                        </Link>
+                        </div>
                     </div>
                     <TabContent
                         key={0}

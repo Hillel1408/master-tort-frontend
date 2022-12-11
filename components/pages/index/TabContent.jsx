@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import uuid from 'react-uuid';
 import { useDispatch } from 'react-redux';
@@ -5,6 +6,7 @@ import classNames from 'classnames';
 import { Tr } from './Tr';
 import { Tooltip } from '../../Tooltip';
 import { Alert } from '../../Alert';
+import { Total } from './Total';
 import UploadService from '../../../services/UploadService';
 import OrdersService from '../../../services/OrdersService';
 import { setAlert } from '../../../redux/cakeSlice';
@@ -13,6 +15,7 @@ import stylesTable from '../../Table/Table.module.scss';
 import stylesTooltip from '../../Tooltip/Tooltip.module.scss';
 import stylesInput from '../../Input/Input.module.scss';
 import stylesBtn from '../../Btn/Btn.module.scss';
+import { CSSTransition } from 'react-transition-group';
 
 function TabContent({
     items,
@@ -38,6 +41,9 @@ function TabContent({
     const [kindCake, setKindCake] = useState(items[index].kindCake);
     const [info, setInfo] = useState(items[index].info);
     const [price, setPrice] = useState(items[index].price);
+
+    const [data, setData] = useState('');
+    const [show, setShow] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -71,6 +77,10 @@ function TabContent({
                 : (buttonRef.current.disabled = true);
         }
     }, [range, standWidth, standLength, cakeShape, kindCake]);
+
+    useEffect(() => {
+        setShow(false);
+    }, [range, cakeShape, kindCake]);
 
     const sendImage = async (file) => {
         //отправляем картинку торта на сервер
@@ -135,6 +145,8 @@ function TabContent({
                 ...items[index],
                 user: userId,
             });
+            setData(response.data);
+            setShow(true);
         } catch (e) {
             console.log(e.response?.data?.message);
         }
@@ -357,6 +369,7 @@ function TabContent({
                                         type="radio"
                                         name={'cakeShape' + index}
                                         value="square"
+                                        disabled
                                         defaultChecked={cakeShape === 'square'}
                                         onChange={(e) => {
                                             setCakeShape(e.target.value);
@@ -376,6 +389,7 @@ function TabContent({
                                         type="radio"
                                         name={'cakeShape' + index}
                                         value="rectangle"
+                                        disabled
                                         defaultChecked={
                                             cakeShape === 'rectangle'
                                         }
@@ -457,6 +471,7 @@ function TabContent({
                                         type="radio"
                                         name={'kindCake' + index}
                                         value="cream-cake"
+                                        disabled
                                         defaultChecked={
                                             kindCake === 'cream-cake'
                                         }
@@ -563,7 +578,13 @@ function TabContent({
                         >
                             Ярусы
                         </h3>
-                        <div className={stylesTable.overflow}>
+                        <div
+                            className={classNames(
+                                stylesTable.overflow,
+                                'table'
+                            )}
+                            style={{ overflow: 'auto' }}
+                        >
                             <div
                                 className={classNames(
                                     'small-text',
@@ -726,37 +747,14 @@ function TabContent({
                         </div>
                     </div>
                 )}
-                <div className={classNames('total', 'small-text')}>
-                    <h2 className={classNames('title', styles.cakeColumnTitle)}>
-                        Итого
-                    </h2>
-                    <div className={styles.cakeColumns}>
-                        <div className={styles.cakeColumn}>
-                            <div>Порций в торте</div>
-                            <div>0</div>
-                        </div>
-                        <div className={styles.cakeColumn}>
-                            <div>Общий вес выравнивающего крема</div>
-                            <div>0</div>
-                        </div>
-                        <div className={styles.cakeColumn}>
-                            <div>Порций в торте</div>
-                            <div>0</div>
-                        </div>
-                        <div className={styles.cakeColumn}>
-                            <div>Общий вес мастики</div>
-                            <div>0</div>
-                        </div>
-                        <div className={styles.cakeColumn}>
-                            <div>Общий вес торта</div>
-                            <div>0</div>
-                        </div>
-                        <div className={styles.cakeColumn}>
-                            <div>Себестоимость торта</div>
-                            <div>0</div>
-                        </div>
-                    </div>
-                </div>
+                <CSSTransition
+                    in={show}
+                    timeout={300}
+                    classNames="my-node"
+                    unmountOnExit
+                >
+                    <Total data={data} />
+                </CSSTransition>
             </div>
             <Alert />
         </div>

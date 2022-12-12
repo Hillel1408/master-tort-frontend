@@ -34,6 +34,7 @@ export default function Registration() {
     });
 
     const saveSettings = async (id) => {
+        //сохраняем дефолтные настройки пользователя (перенести на сервер)
         try {
             const response = await SettingsService.set({
                 ...settingsMastic,
@@ -47,6 +48,7 @@ export default function Registration() {
     };
 
     const onSubmit = async (values) => {
+        //обработчик формы, отправляем регистрационные данные
         try {
             setIsLoading(true);
             const response = await AuthService.registration(values);
@@ -62,6 +64,7 @@ export default function Registration() {
     };
 
     useEffect(() => {
+        //проверяем авторизован ли пользовтель
         const checkAuth = async () => {
             try {
                 const response = await AuthService.refresh();
@@ -82,7 +85,7 @@ export default function Registration() {
             isAuth={isAuth}
             setIsAuth={setIsAuth}
             dataUser={dataUser}
-            title="Календарь"
+            title="Регистрация"
             isLogin={true}
         >
             <div className={styles.wrapper}>

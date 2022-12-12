@@ -1,6 +1,7 @@
 .columns {
     display: flex;
     gap: 20px;
+    align-items: flex-start;
     @media (max-width: 768px) {
         flex-direction: column;
     }

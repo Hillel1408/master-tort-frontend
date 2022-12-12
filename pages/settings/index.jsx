@@ -20,6 +20,7 @@ export default function Settings() {
     const dispatch = useDispatch();
 
     const saveSettings = async () => {
+        //сохраняем настройки пользователя
         try {
             const response = await SettingsService.set({
                 ...settings,
@@ -38,6 +39,7 @@ export default function Settings() {
     };
 
     const resetSettings = () => {
+        //обнуляем настройки
         const newObj = {};
         Object.keys(settings).map((key) => {
             newObj[key] = ['', ''];
@@ -47,6 +49,7 @@ export default function Settings() {
 
     useEffect(() => {
         const getSettings = async (user) => {
+            //получаем настройки пользователя
             try {
                 const response = await SettingsService.get(user);
                 setSettings(response.data);
@@ -56,6 +59,7 @@ export default function Settings() {
             }
         };
         const checkAuth = async () => {
+            //проверяем авторизован ли пользователь
             try {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
@@ -155,7 +159,6 @@ export default function Settings() {
             <div className={stylesTable.buttons}>
                 <button
                     className={classNames(stylesBtn.btn, 'small-text')}
-                    href="#"
                     onClick={() => resetSettings()}
                 >
                     Сбросить
@@ -166,7 +169,6 @@ export default function Settings() {
                         stylesBtn.btn__secondary,
                         'small-text'
                     )}
-                    href="#"
                     onClick={() => saveSettings()}
                 >
                     Сохранить

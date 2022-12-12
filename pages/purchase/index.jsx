@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
+import { Tr } from '../../components/pages/purchase/Tr';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Purchase.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
-import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
 
@@ -15,6 +15,7 @@ export default function Purchase() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [orders, setOrders] = useState([]);
+    const [sumProducts, setSumProducts] = useState('');
 
     useEffect(() => {
         const getOrders = async (userId) => {
@@ -22,6 +23,31 @@ export default function Purchase() {
             try {
                 const response = await OrdersService.getKanban(userId);
                 response.data && setOrders(response.data.purchase);
+                console.log(response.data.purchase);
+                const sumProducts = {};
+                response.data.purchase.map((item) => {
+                    item.total.map((product, index) => {
+                        if (index !== item.total.length - 1) {
+                            sumProducts[product.id]
+                                ? (sumProducts[product.id] = {
+                                      ...sumProducts[product.id],
+                                      count:
+                                          sumProducts[product.id].count +
+                                          product.count,
+                                      price:
+                                          sumProducts[product.id].price +
+                                          product.price,
+                                  })
+                                : (sumProducts[product.id] = {
+                                      name: product.name,
+                                      count: product.count,
+                                      price: product.price,
+                                  });
+                        }
+                    });
+                });
+                console.log(sumProducts);
+                setSumProducts(sumProducts);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -112,52 +138,17 @@ export default function Purchase() {
                                     </div>
                                 </div>
                                 <div className={stylesTable.tbody}>
-                                    <div
-                                        className={classNames(
-                                            stylesTable.wrapper,
-                                            styles.tableTr,
-                                            styles.active
+                                    {sumProducts &&
+                                        Object.keys(sumProducts).map(
+                                            (keyObj) => (
+                                                <Tr
+                                                    key={keyObj}
+                                                    product={
+                                                        sumProducts[keyObj]
+                                                    }
+                                                />
+                                            )
                                         )}
-                                    >
-                                        <div className={stylesTable.td}>
-                                            <input type="checkbox" checked />
-                                        </div>
-                                        <div
-                                            className={stylesTable.tr}
-                                            style={{
-                                                gridTemplateColumns:
-                                                    '33.3% 33.3% 33.3%',
-                                            }}
-                                        >
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
-                                            <div className={stylesTable.td}>
-                                                <input
-                                                    type="number"
-                                                    name=""
-                                                    className={
-                                                        stylesInput.input
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

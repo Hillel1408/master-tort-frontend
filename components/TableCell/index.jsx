@@ -3,7 +3,15 @@ import styles from '../../components/Table/Table.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import { settingsNameTh } from '../../data/settings';
 
-function TableCell({ value, type, disabled, thValue, index, saveSettings }) {
+function TableCell({
+    value,
+    type,
+    disabled,
+    thValue,
+    index,
+    saveSettings,
+    purchase,
+}) {
     const [item, setItem] = useState(value);
 
     const handleKey = (e) => {
@@ -16,11 +24,19 @@ function TableCell({ value, type, disabled, thValue, index, saveSettings }) {
     return (
         <div className={styles.td}>
             {disabled ? (
-                <input
-                    className={stylesInput.input}
-                    value={settingsNameTh[thValue]}
-                    disabled={disabled}
-                />
+                purchase ? (
+                    <input
+                        className={stylesInput.input}
+                        value={value}
+                        disabled={disabled}
+                    />
+                ) : (
+                    <input
+                        className={stylesInput.input}
+                        value={settingsNameTh[thValue]}
+                        disabled={disabled}
+                    />
+                )
             ) : (
                 <input
                     className={stylesInput.input}

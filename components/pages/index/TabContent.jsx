@@ -26,6 +26,7 @@ function TabContent({
     setItems,
     select,
     value,
+    products,
 }) {
     const [drag, setDrag] = useState(false);
     const [isCake, setIsCake] = useState(false);
@@ -42,8 +43,9 @@ function TabContent({
     const [info, setInfo] = useState(items[index].info);
     const [price, setPrice] = useState(items[index].price);
 
-    const [data, setData] = useState('');
-    const [show, setShow] = useState(false);
+    const [data, setData] = useState(items[index].calculation);
+    const [show, setShow] = useState(true);
+    const [total, setTotal] = useState(items[index].total);
 
     const dispatch = useDispatch();
 
@@ -77,10 +79,6 @@ function TabContent({
                 : (buttonRef.current.disabled = true);
         }
     }, [range, standWidth, standLength, cakeShape, kindCake]);
-
-    useEffect(() => {
-        setShow(false);
-    }, [range, cakeShape, kindCake]);
 
     const sendImage = async (file) => {
         //отправляем картинку торта на сервер
@@ -146,6 +144,42 @@ function TabContent({
                 user: userId,
             });
             setData(response.data);
+            const newProducts = {};
+            response.data.map((item) => {
+                if (item.products) {
+                    item.products.map((product) => {
+                        product.products.map((item) => {
+                            newProducts[item.product.value]
+                                ? (newProducts[item.product.value] =
+                                      newProducts[item.product.value] +
+                                      item.net)
+                                : (newProducts[item.product.value] = item.net);
+                        });
+                    });
+                }
+            });
+            let arr = [];
+            let total = 0;
+            for (let key in newProducts) {
+                console.log(key);
+                const a = products.find((product) => product.id === key);
+                let b = '';
+                if (a.unit.value === 'kg' || a.unit.value === 'liter') {
+                    b = (a.price / (a.package * 1000)) * newProducts[key];
+                }
+                if (a.unit.value === 'count' || a.unit.value === 'gr') {
+                    b = (a.price / a.package) * newProducts[key];
+                }
+                arr.push({
+                    id: key,
+                    name: a.name,
+                    count: newProducts[key],
+                    price: b,
+                });
+                total = total + Number(b);
+            }
+            arr.push(total);
+            setTotal(arr);
             setShow(true);
         } catch (e) {
             console.log(e.response?.data?.message);
@@ -154,10 +188,11 @@ function TabContent({
 
     const addOrder = async () => {
         try {
-            const response = await OrdersService.setOrders(
-                userId,
-                items[index]
-            );
+            const response = await OrdersService.setOrders(userId, {
+                ...items[index],
+                calculation: data,
+                total,
+            });
             dispatch(
                 setAlert({
                     text: isEdit
@@ -260,6 +295,7 @@ function TabContent({
                                 value={range}
                                 onChange={(e) => {
                                     setRange(e.target.value);
+                                    setShow(false);
                                     items[index].range = range;
                                 }}
                                 id="myRange"
@@ -430,6 +466,7 @@ function TabContent({
                                         }
                                         onChange={(e) => {
                                             setKindCake(e.target.value);
+                                            setShow(false);
                                             items[index].kindCake =
                                                 e.target.value;
                                         }}
@@ -453,6 +490,7 @@ function TabContent({
                                         }
                                         onChange={(e) => {
                                             setKindCake(e.target.value);
+                                            setShow(false);
                                             items[index].kindCake =
                                                 e.target.value;
                                         }}
@@ -747,14 +785,17 @@ function TabContent({
                         </div>
                     </div>
                 )}
-                <CSSTransition
-                    in={show}
-                    timeout={300}
-                    classNames="my-node"
-                    unmountOnExit
-                >
-                    <Total data={data} />
-                </CSSTransition>
+
+                {data.length > 0 && (
+                    <CSSTransition
+                        in={show}
+                        timeout={300}
+                        classNames="my-node"
+                        unmountOnExit
+                    >
+                        <Total data={data} total={total} />
+                    </CSSTransition>
+                )}
             </div>
             <Alert />
         </div>

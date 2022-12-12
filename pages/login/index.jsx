@@ -63,7 +63,7 @@ export default function Login() {
             isAuth={isAuth}
             setIsAuth={setIsAuth}
             dataUser={dataUser}
-            title="Календарь"
+            title="Вход"
             isLogin={true}
         >
             {isLogin ? (

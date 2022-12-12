@@ -4,12 +4,14 @@ import { Tab } from '../components/pages/index/Tab';
 import { TabContent } from '../components/pages/index/TabContent';
 import AuthService from '../services/AuthService';
 import RecipeService from '../services/RecipeService';
+import ProductsService from '../services/ProductsService';
 import styles from './Home.module.scss';
 
 export default function Home() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [active, setActive] = useState(0);
+    const [products, setProducts] = useState([]);
 
     const value = {
         orderName: '',
@@ -24,12 +26,19 @@ export default function Home() {
         kindCake: '',
         imagesUrl: [],
         table: [],
+        calculation: [],
     };
 
     const [items, setItems] = useState([value]);
     const [select, setSelect] = useState('');
 
     useEffect(() => {
+        //получаем продукты пользователя
+        const getProducts = async (user) => {
+            const response = await ProductsService.get(user);
+            setProducts(response.data.products);
+        };
+
         const getRecipes = async (id) => {
             //получаем рецепты пользователя
             try {
@@ -51,10 +60,12 @@ export default function Home() {
 
         const checkAuth = async () => {
             try {
+                //проверяем авторизован ли пользователь
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
                 getRecipes(response.data.user.id);
+                getProducts(response.data.user.id);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -98,6 +109,7 @@ export default function Home() {
                     setItems={setItems}
                     select={select}
                     value={value}
+                    products={products}
                     style={
                         i === active ? { display: 'flex' } : { display: 'none' }
                     }

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import styles from '../../../pages/Home.module.scss';
 
-function Total({ data }) {
+function Total({ data, total }) {
     return (
         <div>
             <div className={styles.cakeData}>
@@ -24,11 +24,19 @@ function Total({ data }) {
                                     <div>Общий вес яруса</div>
                                 </div>
                                 <div>
-                                    <div>{item.portion.toFixed(2)}</div>
-                                    <div>{`${item.weight.toFixed(2)} кг.`}</div>
-                                    <div>{`${item.cream.toFixed(0)} гр.`}</div>
-                                    <div>{`${item.mastic.toFixed(0)} гр.`}</div>
-                                    <div>{`${item.totalWeight.toFixed(
+                                    <div>
+                                        {item.calculat.portion.toFixed(2)}
+                                    </div>
+                                    <div>{`${item.calculat.weight.toFixed(
+                                        2
+                                    )} кг.`}</div>
+                                    <div>{`${item.calculat.cream.toFixed(
+                                        0
+                                    )} гр.`}</div>
+                                    <div>{`${item.calculat.mastic.toFixed(
+                                        0
+                                    )} гр.`}</div>
+                                    <div>{`${item.calculat.totalWeight.toFixed(
                                         2
                                     )} кг.`}</div>
                                 </div>
@@ -63,10 +71,14 @@ function Total({ data }) {
                             2
                         )} кг.`}</div>
                     </div>
-                    <div className={styles.cakeColumn}>
-                        <div>Себестоимость торта</div>
-                        <div>0</div>
-                    </div>
+                    {total.length > 0 && (
+                        <div className={styles.cakeColumn}>
+                            <div>Себестоимость торта</div>
+                            <div>{`${total[total.length - 1].toFixed(
+                                2
+                            )} руб.`}</div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

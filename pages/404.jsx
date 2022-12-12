@@ -9,6 +9,7 @@ export default function Home() {
     const [dataUser, setDataUser] = useState('');
 
     useEffect(() => {
+        //проверяем авторизован ли пользователь
         const checkAuth = async () => {
             try {
                 const response = await AuthService.refresh();

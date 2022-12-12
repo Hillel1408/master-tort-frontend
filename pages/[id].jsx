@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { Tab } from '../components/pages/index/Tab';
@@ -8,8 +7,9 @@ import { TabContent } from '../components/pages/index/TabContent';
 import AuthService from '../services/AuthService';
 import OrdersService from '../services/OrdersService';
 import RecipeService from '../services/RecipeService';
-import stylesNoAccess from '../components/NoAccess/NoAccess.module.scss';
+import ProductsService from '../services/ProductsService';
 import styles from './Home.module.scss';
+import stylesNoAccess from '../components/NoAccess/NoAccess.module.scss';
 
 export default function Home() {
     const [isAuth, setIsAuth] = useState('');
@@ -17,6 +17,7 @@ export default function Home() {
     const [active, setActive] = useState(0);
     const [items, setItems] = useState([]);
     const [select, setSelect] = useState('');
+    const [products, setProducts] = useState([]);
 
     const router = useRouter();
 
@@ -55,6 +56,12 @@ export default function Home() {
             }
         };
 
+        const getProducts = async (user) => {
+            //получаем продукты пользователя
+            const response = await ProductsService.get(user);
+            setProducts(response.data.products);
+        };
+
         const getOrder = async () => {
             //получаем заказ пользователя
             try {
@@ -70,11 +77,13 @@ export default function Home() {
 
         const checkAuth = async () => {
             try {
+                //проверяем авторизован ли пользователь
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
                 getOrder();
                 getRecipes(response.data.user.id);
+                getProducts(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);
@@ -107,7 +116,6 @@ export default function Home() {
                         </div>
                     </div>
                     <TabContent
-                        key={0}
                         items={items}
                         index={0}
                         isEdit={true}
@@ -115,6 +123,7 @@ export default function Home() {
                         setItems={setItems}
                         select={select}
                         value={value}
+                        products={products}
                         style={{ display: 'flex' }}
                     />
                 </>

@@ -786,7 +786,6 @@ function TabContent({
                         </div>
                     </div>
                 )}
-
                 {data.length > 0 && (
                     <CSSTransition
                         in={show}

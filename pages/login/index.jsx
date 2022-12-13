@@ -13,7 +13,7 @@ import Layout from '../../components/Layout';
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
-    const [error, setError] = useState();
+    const [error, setError] = useState('');
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
 

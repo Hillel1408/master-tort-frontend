@@ -15,10 +15,11 @@ function Tr({ product, index, orders }) {
                 checkbox && styles.active
             )}
             onClick={() => {
+                const indexSplit = index.split('ch')[0];
                 setCheckbox(!checkbox);
                 orders.map((order, orderIndex) => {
                     order.total.map((item, totalIndex) => {
-                        if (item.id === index.split('ch')[0]) {
+                        if (item.id === indexSplit) {
                             orders[orderIndex].total[totalIndex].checked =
                                 !checkbox;
                         }

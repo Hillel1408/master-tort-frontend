@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Tr } from '../../components/pages/purchase/Tr';
+import { Alert } from '../../components/Alert';
+import { setAlert } from '../../redux/cakeSlice';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Purchase.module.scss';
@@ -17,14 +20,23 @@ export default function Purchase() {
     const [orders, setOrders] = useState([]);
     const [sumProducts, setSumProducts] = useState('');
 
+    const dispatch = useDispatch();
+
     const saveSettings = async () => {
         try {
             const response = await OrdersService.updateTotal(
                 dataUser.id,
                 orders
             );
+            dispatch(
+                setAlert({
+                    text: 'Закупка успешно сохранена',
+                    color: '#62ac62',
+                })
+            );
         } catch (e) {
             console.log(e.response?.data?.message);
+            dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
         }
     };
 
@@ -59,6 +71,7 @@ export default function Purchase() {
                                     ...objFunc(product.id),
                                 };
                             } else {
+                                //хз как объяснить но работает отлично :D
                                 if (sum[`${product.id}ch`]) {
                                     sum[`${product.id}ch`] = {
                                         ...objFunc(`${product.id}ch`),
@@ -90,7 +103,6 @@ export default function Purchase() {
                 const response = await OrdersService.getKanban(userId);
                 response.data && setOrders(response.data.purchase);
                 sumProducts(response.data.purchase);
-
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -219,7 +231,9 @@ export default function Purchase() {
                                     stylesBtn.btn,
                                     'small-text'
                                 )}
-                                href="#"
+                                onClick={() => {
+                                    window.print();
+                                }}
                             >
                                 Печать
                             </button>
@@ -247,6 +261,7 @@ export default function Purchase() {
                     У вас нет заказов в закупке
                 </h2>
             )}
+            <Alert />
         </Layout>
     );
 }

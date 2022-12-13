@@ -11,7 +11,7 @@ import styles from '../purchase/Purchase.module.scss';
 export default function ArchiveOrders() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
-    const [orders, setOrders] = useState();
+    const [orders, setOrders] = useState(undefined);
 
     useEffect(() => {
         const filterOrders = async (orders) => {

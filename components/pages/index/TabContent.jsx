@@ -175,6 +175,7 @@ function TabContent({
                     name: a.name,
                     count: newProducts[key],
                     price: b,
+                    checked: false,
                 });
                 total = total + Number(b);
             }

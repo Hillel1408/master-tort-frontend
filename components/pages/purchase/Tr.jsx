@@ -1,13 +1,37 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 import { TableCell } from '../../TableCell';
 import styles from '../../../pages/purchase/Purchase.module.scss';
 import stylesTable from '../../Table/Table.module.scss';
 
-function Tr({ product }) {
+function Tr({ product, index, orders }) {
+    const [checkbox, setCheckbox] = useState(product.checked);
+
     return (
-        <div className={classNames(stylesTable.wrapper, styles.tableTr)}>
+        <div
+            className={classNames(
+                stylesTable.wrapper,
+                styles.tableTr,
+                checkbox && styles.active
+            )}
+            onClick={() => {
+                setCheckbox(!checkbox);
+                orders.map((order, orderIndex) => {
+                    order.total.map((item, totalIndex) => {
+                        if (item.id === index.split('ch')[0]) {
+                            orders[orderIndex].total[totalIndex].checked =
+                                !checkbox;
+                        }
+                    });
+                });
+            }}
+        >
             <div className={stylesTable.td}>
-                <input type="checkbox" />
+                <input
+                    type="checkbox"
+                    checked={checkbox}
+                    onChange={() => setCheckbox(!checkbox)}
+                />
             </div>
             <div
                 className={stylesTable.tr}

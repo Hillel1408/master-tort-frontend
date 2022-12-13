@@ -17,37 +17,80 @@ export default function Purchase() {
     const [orders, setOrders] = useState([]);
     const [sumProducts, setSumProducts] = useState('');
 
+    const saveSettings = async () => {
+        try {
+            const response = await OrdersService.updateTotal(
+                dataUser.id,
+                orders
+            );
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
     useEffect(() => {
+        //считаем сумму продуктов и общий итог по ярусам
+        const sumProducts = (data) => {
+            const sum = {};
+            let total = 0;
+            data.map((item) => {
+                item.total.map((product, index) => {
+                    //вспомогательный объект и функция
+                    const obj = {
+                        name: product.name,
+                        count: product.count,
+                        price: product.price,
+                        checked: product.checked,
+                    };
+                    const objFunc = (item) => {
+                        return {
+                            ...sum[item],
+                            count: sum[item].count + product.count,
+                            price: sum[item].price + product.price,
+                        };
+                    };
+                    //последний элемент не сморим, так как там итог
+                    if (index !== item.total.length - 1) {
+                        //если продукт с ID уже есть в нашем объекте, то...
+                        if (sum[product.id]) {
+                            //делим продукты на закупленные и не закупленные
+                            if (sum[product.id].checked === product.checked) {
+                                sum[product.id] = {
+                                    ...objFunc(product.id),
+                                };
+                            } else {
+                                if (sum[`${product.id}ch`]) {
+                                    sum[`${product.id}ch`] = {
+                                        ...objFunc(`${product.id}ch`),
+                                    };
+                                } else {
+                                    sum[`${product.id}ch`] = {
+                                        ...obj,
+                                    };
+                                }
+                            }
+                        } //иначе создаем его
+                        else
+                            sum[product.id] = {
+                                ...obj,
+                            };
+                    } else total = total + product;
+                });
+            });
+            sum.total = total;
+            //преобразуем объект в массив чтобы отсортировать по checked
+            setSumProducts(
+                Object.entries(sum).sort((a, b) => b[1].checked - a[1].checked)
+            );
+        };
+
         const getOrders = async (userId) => {
             //получаем заказы пользователя
             try {
                 const response = await OrdersService.getKanban(userId);
                 response.data && setOrders(response.data.purchase);
-                console.log(response.data.purchase);
-                const sumProducts = {};
-                response.data.purchase.map((item) => {
-                    item.total.map((product, index) => {
-                        if (index !== item.total.length - 1) {
-                            sumProducts[product.id]
-                                ? (sumProducts[product.id] = {
-                                      ...sumProducts[product.id],
-                                      count:
-                                          sumProducts[product.id].count +
-                                          product.count,
-                                      price:
-                                          sumProducts[product.id].price +
-                                          product.price,
-                                  })
-                                : (sumProducts[product.id] = {
-                                      name: product.name,
-                                      count: product.count,
-                                      price: product.price,
-                                  });
-                        }
-                    });
-                });
-                console.log(sumProducts);
-                setSumProducts(sumProducts);
+                sumProducts(response.data.purchase);
+
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -139,15 +182,16 @@ export default function Purchase() {
                                 </div>
                                 <div className={stylesTable.tbody}>
                                     {sumProducts &&
-                                        Object.keys(sumProducts).map(
-                                            (keyObj) => (
-                                                <Tr
-                                                    key={keyObj}
-                                                    product={
-                                                        sumProducts[keyObj]
-                                                    }
-                                                />
-                                            )
+                                        sumProducts.map(
+                                            (item) =>
+                                                item[0] !== 'total' && (
+                                                    <Tr
+                                                        key={item[0]}
+                                                        product={item[1]}
+                                                        index={item[0]}
+                                                        orders={orders}
+                                                    />
+                                                )
                                         )}
                                 </div>
                             </div>
@@ -156,21 +200,40 @@ export default function Purchase() {
                             <p className={classNames('text', styles.totalText)}>
                                 Итоговая стоимость продуктов
                             </p>
-                            <span
-                                className={classNames(
-                                    'text',
-                                    styles.totalPrice
-                                )}
-                            >
-                                4260.80 ₽
-                            </span>
+                            {sumProducts && (
+                                <span
+                                    className={classNames(
+                                        'text',
+                                        styles.totalPrice
+                                    )}
+                                >
+                                    {`${sumProducts[
+                                        sumProducts.length - 1
+                                    ][1].toFixed(2)} руб.`}
+                                </span>
+                            )}
                         </div>
-                        <button
-                            className={classNames(stylesBtn.btn, 'small-text')}
-                            href="#"
-                        >
-                            Печать
-                        </button>
+                        <div className={styles.buttons}>
+                            <button
+                                className={classNames(
+                                    stylesBtn.btn,
+                                    'small-text'
+                                )}
+                                href="#"
+                            >
+                                Печать
+                            </button>
+                            <button
+                                className={classNames(
+                                    stylesBtn.btn,
+                                    stylesBtn.btn__secondary,
+                                    'small-text'
+                                )}
+                                onClick={() => saveSettings()}
+                            >
+                                Сохранить
+                            </button>
+                        </div>
                     </div>
                 </div>
             ) : (

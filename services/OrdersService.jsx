@@ -28,4 +28,8 @@ export default class OrdersService {
     static async calculationOrder(values) {
         return $api.post('/calculation/', values);
     }
+
+    static async updateTotal(user, values) {
+        return $api.patch(`/update-total/${user}`, values);
+    }
 }

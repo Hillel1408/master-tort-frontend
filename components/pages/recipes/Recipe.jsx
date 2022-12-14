@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '../../../pages/recipes/Recipes.module.scss';
 
 function Recipe({ recipeName, recipeUrl, deleteRecipe, recipeId, groupId }) {
@@ -10,7 +11,7 @@ function Recipe({ recipeName, recipeUrl, deleteRecipe, recipeId, groupId }) {
             </span>
             <Link href={`/recipe/${recipeId}`}>
                 <div className={styles.cakesImage}>
-                    <img src={recipeUrl} />
+                    <Image src={recipeUrl} alt="" fill />
                 </div>
             </Link>
             <i

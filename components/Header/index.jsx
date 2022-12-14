@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Tooltip } from '../Tooltip';
 import styles from './Header.module.scss';
 import AuthService from '../../services/AuthService';
@@ -25,7 +26,7 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                     <Link href="/personal-settings">
                         <div className={styles.avatar}>
                             {avatar ? (
-                                <img src={avatar} alt="avatar" />
+                                <Image src={avatar} alt="avatar" fill />
                             ) : (
                                 <span className="icon-21"></span>
                             )}

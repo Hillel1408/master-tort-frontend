@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import Image from 'next/image';
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 import Link from 'next/link';
@@ -34,10 +35,11 @@ function OrderCake({
             onDrop={(e) => dropHandler(e, board, item)}
         >
             <div className={styles.img}>
-                <img
+                <Image
                     src={`http://localhost:5000${item.imagesUrl[0]}`}
                     alt=""
                     draggable="false"
+                    fill
                 />
             </div>
             <div className={styles.content}>

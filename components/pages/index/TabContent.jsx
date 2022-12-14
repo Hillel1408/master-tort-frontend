@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import uuid from 'react-uuid';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
@@ -579,9 +580,10 @@ function TabContent({
                                                     styles.informationImageImg
                                                 }
                                             >
-                                                <img
+                                                <Image
                                                     src={`http://localhost:5000${item}`}
                                                     alt=""
+                                                    fill
                                                 />
                                             </div>
                                         </div>

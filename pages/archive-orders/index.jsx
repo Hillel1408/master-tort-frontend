@@ -19,7 +19,9 @@ export default function ArchiveOrders() {
             const archiveOrders = orders.filter((item) => {
                 return item.status === 'archive';
             });
-            archiveOrders.length > 0 ? setOrders(archiveOrders) : setOrders('');
+            archiveOrders.length > 0
+                ? setOrders(archiveOrders.sort((a, b) => b.number - a.number))
+                : setOrders('');
         };
 
         const getOrders = async (userId) => {
@@ -27,6 +29,7 @@ export default function ArchiveOrders() {
             try {
                 const response = await OrdersService.getOrders(userId);
                 filterOrders(response.data);
+                console.log(response.data);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);

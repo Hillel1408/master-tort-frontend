@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import Layout from '../../components/Layout';
 import { CustomSelect } from '../../components/CustomSelect';
@@ -180,12 +181,17 @@ export default function PersonalSettings() {
                         <div>
                             <div className={styles.infoAvatar}>
                                 {image ? (
-                                    <img
+                                    <Image
                                         src={`http://localhost:5000${image}`}
                                         alt="avatar"
+                                        fill
                                     />
                                 ) : dataUser.avatar ? (
-                                    <img src={dataUser.avatar} alt="avatar" />
+                                    <Image
+                                        src={dataUser.avatar}
+                                        alt="avatar"
+                                        fill
+                                    />
                                 ) : (
                                     <span className="icon-21"></span>
                                 )}

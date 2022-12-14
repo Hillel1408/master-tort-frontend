@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Head from 'next/head';
 import classNames from 'classnames';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
@@ -66,21 +67,20 @@ export default function Purchase() {
                         //если продукт с ID уже есть в нашем объекте, то...
                         if (sum[product.id]) {
                             //делим продукты на закупленные и не закупленные
-                            if (sum[product.id].checked === product.checked) {
+                            if (sum[product.id].checked === product.checked)
                                 sum[product.id] = {
                                     ...objFunc(product.id),
                                 };
-                            } else {
+                            else {
                                 //хз как объяснить но работает отлично :D
-                                if (sum[`${product.id}ch`]) {
+                                if (sum[`${product.id}ch`])
                                     sum[`${product.id}ch`] = {
                                         ...objFunc(`${product.id}ch`),
                                     };
-                                } else {
+                                else
                                     sum[`${product.id}ch`] = {
                                         ...obj,
                                     };
-                                }
                             }
                         } //иначе создаем его
                         else
@@ -132,6 +132,9 @@ export default function Purchase() {
             dataUser={dataUser}
             title="Закупка"
         >
+            <Head>
+                <title>Закупка</title>
+            </Head>
             {orders.length > 0 ? (
                 <div className={styles.columns}>
                     <div className={styles.column}>
@@ -168,7 +171,10 @@ export default function Purchase() {
                                 )}
                             >
                                 <div className={stylesTable.wrapperHead}>
-                                    <div className={stylesTable.th}>
+                                    <div
+                                        className={stylesTable.th}
+                                        style={{ display: 'flex' }}
+                                    >
                                         <input type="checkbox" />
                                     </div>
                                     <div

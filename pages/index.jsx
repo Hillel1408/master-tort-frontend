@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import Layout from '../components/Layout';
 import { Tab } from '../components/pages/index/Tab';
 import { TabContent } from '../components/pages/index/TabContent';
@@ -83,6 +84,9 @@ export default function Home() {
             dataUser={dataUser}
             title="Расчет тортов"
         >
+            <Head>
+                <title>Главная</title>
+            </Head>
             <div className={styles.tab}>
                 {items.map((n, i) => (
                     <Tab key={i} setActive={setActive} i={i} active={active} />

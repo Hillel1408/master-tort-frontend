@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import Link from 'next/link';
 import uuid from 'react-uuid';
@@ -303,9 +304,13 @@ export default function Recipe() {
                     <div className={styles.image}>
                         <div className={styles.imageBlock}>
                             {image ? (
-                                <img src={`http://localhost:5000${image}`} />
+                                <Image
+                                    src={`http://localhost:5000${image}`}
+                                    fill
+                                    alt=""
+                                />
                             ) : (
-                                <img src={recipe.recipeUrl} />
+                                <Image src={recipe.recipeUrl} fill alt="" />
                             )}
                         </div>
                         <div className="addBlock">

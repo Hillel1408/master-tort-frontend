@@ -37,9 +37,19 @@
 }
 .table {
     &Tr {
+        cursor: pointer;
         margin-left: -15px;
         margin-right: -15px;
         padding: 0 15px;
+        transition: all 0.2s ease 0s;
+        @media (any-hover: hover) {
+            &:hover {
+                background-color: rgba(204, 238, 238, 1);
+            }
+        }
+    }
+    input:disabled {
+        cursor: pointer;
     }
 }
 .total {

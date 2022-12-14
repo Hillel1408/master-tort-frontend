@@ -27,6 +27,7 @@
         justify-content: center;
         height: 191px;
         width: 143px;
+        position: relative;
         span {
             &:before {
                 font-size: 41px;
@@ -34,9 +35,7 @@
             }
         }
         img {
-            width: 100%;
             object-fit: cover;
-            height: 191px;
             border-radius: 8px;
         }
     }

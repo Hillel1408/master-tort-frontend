@@ -16,7 +16,6 @@ import stylesTable from '../../Table/Table.module.scss';
 import stylesTooltip from '../../Tooltip/Tooltip.module.scss';
 import stylesInput from '../../Input/Input.module.scss';
 import stylesBtn from '../../Btn/Btn.module.scss';
-import { CSSTransition } from 'react-transition-group';
 
 function TabContent({
     items,
@@ -45,7 +44,6 @@ function TabContent({
     const [price, setPrice] = useState(items[index].price);
 
     const [data, setData] = useState(items[index].calculation);
-    const [show, setShow] = useState(true);
     const [total, setTotal] = useState(items[index].total);
 
     const dispatch = useDispatch();
@@ -63,8 +61,8 @@ function TabContent({
         recipe: { value: '', label: '' },
     };
 
-    //проверяем заполнил ли пользователь данные для добавления заказа
     useEffect(() => {
+        //проверяем заполнил ли пользователь данные, необходимые для добавления заказа
         if (btnRef.current) {
             orderName && date && time && image.length !== 0
                 ? (btnRef.current.disabled = false)
@@ -72,8 +70,8 @@ function TabContent({
         }
     }, [orderName, date, time, image]);
 
-    //проверяем заполнил ли пользователь данные для расчета заказа
     useEffect(() => {
+        //проверяем заполнил ли пользователь данные, необходимые для расчета заказа
         if (buttonRef.current) {
             range && standWidth && standLength && cakeShape && kindCake
                 ? (buttonRef.current.disabled = false)
@@ -87,6 +85,7 @@ function TabContent({
             const formData = new FormData();
             formData.append('image', file);
             const response = await UploadService.set(formData);
+            //и в стейты
             items[index].imagesUrl = [
                 ...items[index].imagesUrl,
                 response.data.url,
@@ -100,7 +99,7 @@ function TabContent({
     const resetSettings = () => {
         items[index] = value;
         setItems([...items]);
-        //обнуляем стейты
+        //обнуляем стейты для сброса настроек
         setOrderName('');
         setDate('');
         setTime('');
@@ -133,62 +132,75 @@ function TabContent({
     };
 
     const handleChangeFile = async (e) => {
-        //получаем картинки торта
+        //получаем картинку торта
         const file = e.target.files[0];
         sendImage(file);
     };
 
+    const calcOrder = (newPr) => {
+        //считаем стоимость каждого продукта и общую сумму
+        let arr = [];
+        let total = 0;
+        for (let key in newPr) {
+            let b = '';
+            //ищем продукт в базе продуктов пользователя
+            const a = products.find((product) => product.id === key);
+            //делаем расчеты в зависимости от единицы измерения продукта
+            if (a.unit.value === 'kg' || a.unit.value === 'liter')
+                b = (a.price / (a.package * 1000)) * newPr[key];
+            else if (a.unit.value === 'count' || a.unit.value === 'gr')
+                b = (a.price / a.package) * newPr[key];
+            arr.push({
+                id: key,
+                name: a.name,
+                count: newPr[key],
+                price: b,
+                checked: false,
+            });
+            //общая стоимость всех продуктов
+            total = total + Number(b);
+        }
+        arr.push(total);
+        setTotal(arr);
+    };
+
+    const calcPr = (data) => {
+        const newPr = {};
+        //считаем сколько и каких нужно продуктов на заказ
+        data.map((item) => {
+            if (item.products) {
+                item.products.map((pr) => {
+                    pr.products.map((item) => {
+                        //проверяем есть ли в нашем объекте продукт
+                        if (newPr[item.product.value])
+                            //если да, то считаем общее количество
+                            newPr[item.product.value] =
+                                newPr[item.product.value] + item.net;
+                        //если нет, то создаем его
+                        else newPr[item.product.value] = item.net;
+                    });
+                });
+            }
+        });
+        calcOrder(newPr);
+    };
+
     const calculationOrder = async () => {
+        //расчитываем заказ пользователя
         try {
             const response = await OrdersService.calculationOrder({
                 ...items[index],
                 user: userId,
             });
             setData(response.data);
-            const newProducts = {};
-            response.data.map((item) => {
-                if (item.products) {
-                    item.products.map((product) => {
-                        product.products.map((item) => {
-                            newProducts[item.product.value]
-                                ? (newProducts[item.product.value] =
-                                      newProducts[item.product.value] +
-                                      item.net)
-                                : (newProducts[item.product.value] = item.net);
-                        });
-                    });
-                }
-            });
-            let arr = [];
-            let total = 0;
-            for (let key in newProducts) {
-                console.log(key);
-                const a = products.find((product) => product.id === key);
-                let b = '';
-                if (a.unit.value === 'kg' || a.unit.value === 'liter') {
-                    b = (a.price / (a.package * 1000)) * newProducts[key];
-                }
-                if (a.unit.value === 'count' || a.unit.value === 'gr') {
-                    b = (a.price / a.package) * newProducts[key];
-                }
-                arr.push({
-                    id: key,
-                    name: a.name,
-                    count: newProducts[key],
-                    price: b,
-                    checked: false,
-                });
-                total = total + Number(b);
-            }
-            arr.push(total);
-            setTotal(arr);
-            setShow(true);
+            calcPr(response.data);
         } catch (e) {
             console.log(e.response?.data?.message);
         }
     };
 
     const addOrder = async () => {
+        //добавляем либо сохраняем заказ
         try {
             const response = await OrdersService.setOrders(userId, {
                 ...items[index],
@@ -234,7 +246,7 @@ function TabContent({
                                 value={orderName}
                                 placeholder="Название проекта"
                                 onChange={(e) => setOrderName(e.target.value)}
-                                onBlur={(e) => {
+                                onBlur={() => {
                                     items[index].orderName = orderName;
                                 }}
                             />
@@ -247,7 +259,7 @@ function TabContent({
                                     )}
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
-                                    onBlur={(e) => {
+                                    onBlur={() => {
                                         items[index].date = date;
                                     }}
                                 />
@@ -259,7 +271,7 @@ function TabContent({
                                     )}
                                     value={time}
                                     onChange={(e) => setTime(e.target.value)}
-                                    onBlur={(e) => {
+                                    onBlur={() => {
                                         items[index].time = time;
                                     }}
                                 />
@@ -272,7 +284,7 @@ function TabContent({
                                 placeholder="Комментарий к заказу"
                                 value={info}
                                 onChange={(e) => setInfo(e.target.value)}
-                                onBlur={(e) => {
+                                onBlur={() => {
                                     items[index].info = info;
                                 }}
                             ></textarea>
@@ -297,8 +309,8 @@ function TabContent({
                                 value={range}
                                 onChange={(e) => {
                                     setRange(e.target.value);
-                                    setShow(false);
-                                    items[index].range = range;
+
+                                    items[index].range = e.target.value;
                                 }}
                                 id="myRange"
                             />
@@ -327,7 +339,7 @@ function TabContent({
                                         onChange={(e) =>
                                             setStandWidth(e.target.value)
                                         }
-                                        onBlur={(e) => {
+                                        onBlur={() => {
                                             items[index].standWidth =
                                                 standWidth;
                                         }}
@@ -340,7 +352,7 @@ function TabContent({
                                         onChange={(e) =>
                                             setStandLength(e.target.value)
                                         }
-                                        onBlur={(e) => {
+                                        onBlur={() => {
                                             items[index].standLength =
                                                 standLength;
                                         }}
@@ -362,7 +374,7 @@ function TabContent({
                                     placeholder="Стоимость торта"
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
-                                    onBlur={(e) => {
+                                    onBlur={() => {
                                         items[index].price = price;
                                     }}
                                 />
@@ -468,7 +480,6 @@ function TabContent({
                                         }
                                         onChange={(e) => {
                                             setKindCake(e.target.value);
-                                            setShow(false);
                                             items[index].kindCake =
                                                 e.target.value;
                                         }}
@@ -492,7 +503,6 @@ function TabContent({
                                         }
                                         onChange={(e) => {
                                             setKindCake(e.target.value);
-                                            setShow(false);
                                             items[index].kindCake =
                                                 e.target.value;
                                         }}
@@ -788,16 +798,7 @@ function TabContent({
                         </div>
                     </div>
                 )}
-                {data.length > 0 && (
-                    <CSSTransition
-                        in={show}
-                        timeout={300}
-                        classNames="my-node"
-                        unmountOnExit
-                    >
-                        <Total data={data} total={total} />
-                    </CSSTransition>
-                )}
+                {total.length > 0 && <Total data={data} total={total} />}
             </div>
             <Alert />
         </div>

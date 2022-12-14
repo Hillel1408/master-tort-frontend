@@ -140,7 +140,7 @@
     }
     &Item {
         padding: 20px;
-        min-width: 240px;
+        min-width: 260px;
         background: #f4f2f1;
         border-radius: 8px;
         white-space: nowrap;
@@ -364,8 +364,8 @@
     }
 }
 #tooltiptext {
-    display: grid;
-    grid-template-columns: 6fr 1fr;
+    display: flex;
+    justify-content: space-between;
     font-size: 10px;
     div div:not(:last-child) {
         margin-bottom: 4px;

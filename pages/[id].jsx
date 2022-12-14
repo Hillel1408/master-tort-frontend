@@ -34,6 +34,7 @@ export default function Home() {
         kindCake: '',
         imagesUrl: [],
         table: [],
+        total: [],
     };
 
     useEffect(() => {

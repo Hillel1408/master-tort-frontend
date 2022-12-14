@@ -28,6 +28,7 @@ export default function Home() {
         imagesUrl: [],
         table: [],
         calculation: [],
+        total: [],
     };
 
     const [items, setItems] = useState([value]);

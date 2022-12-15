@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import Head from 'next/head';
 import classNames from 'classnames';
 import { BodyTable } from '../../components/pages/settings/BodyTable';
 import { Alert } from '../../components/Alert';
@@ -58,6 +59,7 @@ export default function Settings() {
                 console.log(e.response?.data?.message);
             }
         };
+
         const checkAuth = async () => {
             //проверяем авторизован ли пользователь
             try {
@@ -81,6 +83,9 @@ export default function Settings() {
             dataUser={dataUser}
             title="Настройки"
         >
+            <Head>
+                <title>Настройки</title>
+            </Head>
             <div className={styles.info}>
                 <h2 className={classNames('text', styles.title)}>
                     Информация о настройках

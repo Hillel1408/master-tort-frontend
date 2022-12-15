@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
@@ -230,6 +231,9 @@ export default function CalendarOrders() {
             dataUser={dataUser}
             title="Календарь"
         >
+            <Head>
+                <title>Календарь</title>
+            </Head>
             <OrdersNav visibleTabs={true} />
             <div className={styles.root}>
                 <div className={styles.block}>

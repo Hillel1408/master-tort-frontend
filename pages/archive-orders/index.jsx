@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
+import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
@@ -19,6 +20,7 @@ export default function ArchiveOrders() {
             const archiveOrders = orders.filter((item) => {
                 return item.status === 'archive';
             });
+            //сортируем по убыванию номера заказа
             archiveOrders.length > 0
                 ? setOrders(archiveOrders.sort((a, b) => b.number - a.number))
                 : setOrders('');
@@ -59,6 +61,9 @@ export default function ArchiveOrders() {
             dataUser={dataUser}
             title="Архив"
         >
+            <Head>
+                <title>Архив</title>
+            </Head>
             <OrdersNav visibleTabs={false} />
             {orders ? (
                 <div className={styles.orders}>

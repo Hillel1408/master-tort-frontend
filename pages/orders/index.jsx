@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
+import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrdersNav } from '../../components/OrdersNav';
 import { OrderCake } from '../../components/OrderCake';
@@ -216,6 +217,9 @@ export default function Orders() {
             dataUser={dataUser}
             title="Заказы"
         >
+            <Head>
+                <title>Заказы</title>
+            </Head>
             <OrdersNav visibleTabs={true} />
             {boards ? (
                 <div className={styles.kanban}>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
+import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import Layout from '../../components/Layout';
 import { CustomSelect } from '../../components/CustomSelect';
@@ -172,6 +173,9 @@ export default function PersonalSettings() {
             dataUser={dataUser}
             title="Настройки"
         >
+            <Head>
+                <title>Настройки</title>
+            </Head>
             <div className={styles.root}>
                 <div className={styles.info}>
                     <h2 className={classNames('text', styles.infoTitle)}>

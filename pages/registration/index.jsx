@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import classNames from 'classnames';
@@ -88,6 +89,9 @@ export default function Registration() {
             title="Регистрация"
             isLogin={true}
         >
+            <Head>
+                <title>Регистрация</title>
+            </Head>
             <div className={styles.wrapper}>
                 <div className={styles.root}>
                     <h2 className={classNames('title', styles.title)}>

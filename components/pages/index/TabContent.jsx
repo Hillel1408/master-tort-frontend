@@ -246,7 +246,7 @@ function TabContent({
                 items[index].table[i].height * scale //высота яруса
             );
             margin =
-                margin + Number(items[index].table[i].height * scale) - 0.4;
+                margin + Number(items[index].table[i].height * scale) - 0.7;
         }
     };
 

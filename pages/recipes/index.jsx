@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import Head from 'next/head';
 import classNames from 'classnames';
 import { Modal } from '../../components/Modal';
 import { CustomSelect } from '../../components/CustomSelect';
@@ -270,6 +271,7 @@ export default function Recipes() {
                 console.log(e.response?.data?.message);
             }
         };
+
         const checkAuth = async () => {
             //проверяем авторизован ли пользователь
             try {
@@ -293,6 +295,9 @@ export default function Recipes() {
             dataUser={dataUser}
             title="Рецепты"
         >
+            <Head>
+                <title>Рецепты</title>
+            </Head>
             <div className={styles.groups}>
                 <h2 className={classNames('text', styles.groupsText)}>
                     Группы

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Head from 'next/head';
 import classNames from 'classnames';
 import uuid from 'react-uuid';
 import Layout from '../../components/Layout';
@@ -98,6 +99,9 @@ export default function Products() {
             dataUser={dataUser}
             title="Продукты"
         >
+            <Head>
+                <title>Продукты</title>
+            </Head>
             <div className={classNames(stylesTable.overflow, 'table')}>
                 <div
                     className={classNames(stylesTable.table, 'small-text')}

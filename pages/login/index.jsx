@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -66,6 +67,9 @@ export default function Login() {
             title="Вход"
             isLogin={true}
         >
+            <Head>
+                <title>Вход</title>
+            </Head>
             {isLogin ? (
                 <div className={styles.wrapper}>
                     <div className={styles.root}>

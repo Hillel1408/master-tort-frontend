@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import classNames from 'classnames';
 import Layout from '../components/Layout';
 import AuthService from '../services/AuthService';
@@ -32,6 +33,9 @@ export default function Home() {
             dataUser={dataUser}
             title={isAuth && '404'}
         >
+            <Head>
+                <title>404</title>
+            </Head>
             <h2
                 className={classNames(
                     'title',

@@ -155,14 +155,10 @@
     &Image {
         overflow: auto;
         margin-bottom: 30px;
-        text-align: center;
-        img {
-            width: 440px;
-        }
     }
     &Block {
         width: 100%;
-        height: 400px;
+        height: 434px;
         border: 10px solid #f4f2f1;
         border-radius: 16px;
         margin-bottom: 30px;
@@ -197,10 +193,9 @@
             padding-bottom: 10px;
             &:first-child {
                 padding-right: 5px;
-                width: 85%;
+                flex: 1;
             }
             &:last-child {
-                width: 15%;
                 text-align: right;
             }
             @media (max-width: 768px) {
@@ -392,9 +387,11 @@
     }
 }
 .backLink {
-    cursor: pointer;
     flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    span {
+        cursor: pointer;
+    }
 }

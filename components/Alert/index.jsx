@@ -9,7 +9,6 @@ function Alert() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(alertColor);
         const timerId = setTimeout(() => {
             dispatch(resetAlert(''));
         }, 1500);

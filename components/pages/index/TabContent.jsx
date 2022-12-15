@@ -46,11 +46,14 @@ function TabContent({
     const [data, setData] = useState(items[index].calculation);
     const [total, setTotal] = useState(items[index].total);
 
+    const [width, setWidth] = useState(464);
+
     const dispatch = useDispatch();
 
     const inputFileRef = useRef('');
     const btnRef = useRef('');
     const buttonRef = useRef('');
+    const canvasRef = useRef('');
 
     const thTitle = ['Диаметр, см.', 'Высота, см.', 'Отступ, см.', 'Рецепт'];
 
@@ -145,10 +148,11 @@ function TabContent({
             let b = '';
             //ищем продукт в базе продуктов пользователя
             const a = products.find((product) => product.id === key);
+            const c = a.unit.value;
             //делаем расчеты в зависимости от единицы измерения продукта
-            if (a.unit.value === 'kg' || a.unit.value === 'liter')
+            if (c === 'kg' || c === 'liter')
                 b = (a.price / (a.package * 1000)) * newPr[key];
-            else if (a.unit.value === 'count' || a.unit.value === 'gr')
+            else if (c === 'count' || c === 'gr')
                 b = (a.price / a.package) * newPr[key];
             arr.push({
                 id: key,
@@ -185,15 +189,78 @@ function TabContent({
         calcOrder(newPr);
     };
 
+    const canvas = () => {
+        const height = '434'; //высота canvas
+        const length = items[index].table.length; //количество ярусов торта
+        let margin = 30; //отступ от нижней границы canvas
+        const scale = 10; //масштаб 1 см scale пикселей
+        let sum = 0; // высота торта
+        let maxWidth = 0; //самый широкий ярус торта
+
+        const ctx = canvasRef.current.getContext('2d');
+
+        canvasRef.current.width = width;
+        canvasRef.current.height = height;
+
+        for (let i = 0; i < length; i++) {
+            //считаем сумму высот всех ярусов
+            sum = sum + Number(items[index].table[i].height);
+            if (Number(items[index].table[i].diameter) > maxWidth) {
+                maxWidth = Number(items[index].table[i].diameter);
+            }
+        }
+
+        if (
+            sum * scale + margin * 2 < height &&
+            maxWidth * scale + margin * 2 < width
+        ) {
+            scale = 10;
+        }
+
+        //уменьшаем масштаб, если торт не влизает по высоте в canvas
+        if (sum * scale + margin * 2 > height) {
+            console.log(true);
+            while (sum * scale + margin * 2 > height) {
+                scale = scale - 0.01;
+            }
+
+            console.log(scale);
+        }
+
+        //уменьшаем масштаб, если торт не влизает по ширине в canvas
+        if (maxWidth * scale + margin * 2 > width) {
+            console.log(maxWidth * scale + margin * 2 > width);
+            while (maxWidth * scale + margin * 2 > width) {
+                scale = scale - 0.01;
+
+                console.log(scale);
+            }
+        }
+
+        for (let i = length - 1; i >= 0; i--) {
+            ctx.fillStyle = '#009998';
+            ctx.fillRect(
+                width / 2 - (items[index].table[i].diameter * scale) / 2, //начальная координата X
+                height - items[index].table[i].height * scale - margin, //начальная координата Y
+                items[index].table[i].diameter * scale, //ширина яруса
+                items[index].table[i].height * scale //высота яруса
+            );
+            margin =
+                margin + Number(items[index].table[i].height * scale) - 0.4;
+        }
+    };
+
     const calculationOrder = async () => {
         //расчитываем заказ пользователя
         try {
+            setIsCake(true);
             const response = await OrdersService.calculationOrder({
                 ...items[index],
                 user: userId,
             });
             setData(response.data);
             calcPr(response.data);
+            canvas();
         } catch (e) {
             console.log(e.response?.data?.message);
         }
@@ -786,7 +853,12 @@ function TabContent({
                 </div>
                 {isCake ? (
                     <div className={styles.cakeImage}>
-                        <img src="2.jpg" alt="" />
+                        <canvas
+                            ref={canvasRef}
+                            className={styles.cakeCanvas}
+                            height="434"
+                            width={width}
+                        ></canvas>
                     </div>
                 ) : (
                     <div className={styles.cakeBlock}>

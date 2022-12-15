@@ -111,9 +111,10 @@ export default function Home() {
                                 'small-text',
                                 styles.backLink
                             )}
-                            onClick={() => router.back()}
                         >
-                            <span>Вернуться к заказам</span>
+                            <span onClick={() => router.back()}>
+                                Вернуться к заказам
+                            </span>
                         </div>
                     </div>
                     <TabContent

@@ -5,7 +5,6 @@ import uuid from 'react-uuid';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { Tr } from './Tr';
-import { Tooltip } from '../../Tooltip';
 import { Alert } from '../../Alert';
 import { Total } from './Total';
 import UploadService from '../../../services/UploadService';
@@ -45,8 +44,6 @@ function TabContent({
 
     const [data, setData] = useState(items[index].calculation);
     const [total, setTotal] = useState(items[index].total);
-
-    const [width, setWidth] = useState(464);
 
     const dispatch = useDispatch();
 
@@ -144,7 +141,7 @@ function TabContent({
         //считаем стоимость каждого продукта и общую сумму
         let arr = [];
         let total = 0;
-        for (let key in newPr) {
+        Object.keys(newPr).map((key) => {
             let b = '';
             //ищем продукт в базе продуктов пользователя
             const a = products.find((product) => product.id === key);
@@ -163,7 +160,7 @@ function TabContent({
             });
             //общая стоимость всех продуктов
             total = total + Number(b);
-        }
+        });
         arr.push(total);
         setTotal(arr);
     };
@@ -190,15 +187,15 @@ function TabContent({
     };
 
     const canvas = () => {
+        const canvas = document.querySelector('.Home_cakeImage__F__aZ'); //блок где отображаем график
         const height = '434'; //высота canvas
         const length = items[index].table.length; //количество ярусов торта
-        let margin = 30; //отступ от нижней границы canvas
         const scale = 10; //масштаб 1 см scale пикселей
         let sum = 0; // высота торта
+        let margin = 10; //отступ от границ canvas
         let maxWidth = 0; //самый широкий ярус торта
-
         const ctx = canvasRef.current.getContext('2d');
-
+        const width = canvas.offsetWidth - 2;
         canvasRef.current.width = width;
         canvasRef.current.height = height;
 
@@ -206,37 +203,30 @@ function TabContent({
             //считаем сумму высот всех ярусов
             sum = sum + Number(items[index].table[i].height);
             if (Number(items[index].table[i].diameter) > maxWidth) {
+                //и максимальную ширину яруса
                 maxWidth = Number(items[index].table[i].diameter);
             }
         }
-
+        //если торт помещается в canvas блок, то делаем масштаб по умолчанию
         if (
             sum * scale + margin * 2 < height &&
             maxWidth * scale + margin * 2 < width
         ) {
-            scale = 10;
+            scale = 7;
         }
-
         //уменьшаем масштаб, если торт не влизает по высоте в canvas
         if (sum * scale + margin * 2 > height) {
-            console.log(true);
             while (sum * scale + margin * 2 > height) {
                 scale = scale - 0.01;
             }
-
-            console.log(scale);
         }
-
         //уменьшаем масштаб, если торт не влизает по ширине в canvas
         if (maxWidth * scale + margin * 2 > width) {
-            console.log(maxWidth * scale + margin * 2 > width);
             while (maxWidth * scale + margin * 2 > width) {
                 scale = scale - 0.01;
-
-                console.log(scale);
             }
         }
-
+        //перебираем и рисуем ярусы торта
         for (let i = length - 1; i >= 0; i--) {
             ctx.fillStyle = '#009998';
             ctx.fillRect(
@@ -834,22 +824,6 @@ function TabContent({
                     <h2 className={classNames('title', styles.cakeTitle)}>
                         Визуализация силуэта
                     </h2>
-                    <Tooltip style={styles.tooltiptext}>
-                        <div>
-                            <div>Порций в ярусе</div>
-                            <div>Вес начинки</div>
-                            <div>Вес выравнивающего крема</div>
-                            <div>Вес мастики</div>
-                            <div>Общий вес яруса</div>
-                        </div>
-                        <div>
-                            <div>0</div>
-                            <div>0</div>
-                            <div>0</div>
-                            <div>0</div>
-                            <div>0</div>
-                        </div>
-                    </Tooltip>
                 </div>
                 {isCake ? (
                     <div className={styles.cakeImage}>
@@ -857,7 +831,6 @@ function TabContent({
                             ref={canvasRef}
                             className={styles.cakeCanvas}
                             height="434"
-                            width={width}
                         ></canvas>
                     </div>
                 ) : (

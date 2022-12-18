@@ -6,15 +6,6 @@
         flex-direction: column;
     }
 }
-.tabs {
-    width: calc(65% - 20px);
-    @media (max-width: 768px) {
-        width: 100%;
-    }
-    @media print {
-        order: 1;
-    }
-}
 .tab {
     display: flex;
     align-items: center;
@@ -130,6 +121,15 @@
                     grid-template-columns: 1fr 1fr;
                 }
             }
+        }
+    }
+    &s {
+        width: calc(65% - 20px);
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+        @media print {
+            order: 1;
         }
     }
 }

@@ -57,6 +57,7 @@ function Tr({ item, index, blockIndex, block, setBlock, select }) {
             </div>
             <div className={classNames(stylesTable.td, stylesTable.tdDelete)}>
                 <span
+                    title="Удалить"
                     onClick={() => clickHandler()}
                     className={classNames('icon-11', stylesTable.delete)}
                 ></span>

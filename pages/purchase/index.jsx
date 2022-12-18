@@ -14,6 +14,7 @@ import styles from './Purchase.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
+import stylesCheckbox from '../../components/CustomCheckbox/Checkbox.module.scss';
 
 export default function Purchase() {
     const [isAuth, setIsAuth] = useState('');
@@ -175,7 +176,14 @@ export default function Purchase() {
                                         className={stylesTable.th}
                                         style={{ display: 'flex' }}
                                     >
-                                        <input type="checkbox" />
+                                        <label
+                                            className={
+                                                stylesCheckbox.customCheckbox
+                                            }
+                                        >
+                                            <input type="checkbox" />
+                                            <span></span>
+                                        </label>
                                     </div>
                                     <div
                                         className={classNames(

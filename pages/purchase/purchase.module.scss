@@ -1,11 +1,3 @@
-.columns {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    @media (max-width: 768px) {
-        flex-direction: column;
-    }
-}
 .column {
     &:first-child {
         background-color: var(--secondaryColor);
@@ -22,6 +14,14 @@
             width: 100%;
         }
     }
+    &s {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
+    }
 }
 .title {
     margin-bottom: 20px;
@@ -30,7 +30,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     gap: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     &No {
         height: 100%;
     }

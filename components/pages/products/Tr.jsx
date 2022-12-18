@@ -55,6 +55,7 @@ function Tr({ item, tr, setTr, index, measure }) {
             </div>
             <div className={classNames(stylesTable.td, stylesTable.tdDelete)}>
                 <span
+                    title="Удалить"
                     onClick={() => {
                         tr.splice(index, 1);
                         setTr([...tr]);

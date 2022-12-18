@@ -187,6 +187,19 @@ function TabContent({
     };
 
     const canvas = () => {
+        const colors = [
+            '#00F5F4',
+            '#00DFDE',
+            '#00CBCA',
+            '#00B9B8',
+            '#00A8A7',
+            '#009998',
+            '#008A89',
+            '#007C7B',
+            '#00706F',
+            '#006564',
+            '#005B5A',
+        ];
         const canvas = document.querySelector('.Home_cakeImage__F__aZ'); //блок где отображаем график
         const height = '434'; //высота canvas
         const length = items[index].table.length; //количество ярусов торта
@@ -210,9 +223,9 @@ function TabContent({
         //если торт помещается в canvas блок, то делаем масштаб по умолчанию
         if (
             sum * scale + margin * 2 < height &&
-            maxWidth * scale + margin * 2 < width
+            maxWidth * scale + 40 * 2 < width
         ) {
-            scale = 7;
+            scale = 8;
         }
         //уменьшаем масштаб, если торт не влизает по высоте в canvas
         if (sum * scale + margin * 2 > height) {
@@ -221,22 +234,46 @@ function TabContent({
             }
         }
         //уменьшаем масштаб, если торт не влизает по ширине в canvas
-        if (maxWidth * scale + margin * 2 > width) {
-            while (maxWidth * scale + margin * 2 > width) {
+        if (maxWidth * scale + 40 * 2 > width) {
+            while (maxWidth * scale + 40 * 2 > width) {
                 scale = scale - 0.01;
             }
         }
         //перебираем и рисуем ярусы торта
         for (let i = length - 1; i >= 0; i--) {
-            ctx.fillStyle = '#009998';
+            ctx.fillStyle = colors[i];
+            ctx.globalCompositeOperation = 'destination-over';
             ctx.fillRect(
                 width / 2 - (items[index].table[i].diameter * scale) / 2, //начальная координата X
                 height - items[index].table[i].height * scale - margin, //начальная координата Y
                 items[index].table[i].diameter * scale, //ширина яруса
                 items[index].table[i].height * scale //высота яруса
             );
-            margin =
-                margin + Number(items[index].table[i].height * scale) - 0.7;
+            margin = margin + Number(items[index].table[i].height * scale);
+        }
+        //рисуем систему коррдинат
+        let mrg = height; //высота canvas
+        let a = 0;
+        ctx.font = '10px Hauora';
+        //направляющие
+        ctx.beginPath();
+        ctx.strokeStyle = '#CCCCCC';
+        ctx.lineWidth = 2;
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, 434);
+        ctx.lineTo(width, 434);
+        ctx.stroke();
+        //горизонтальные линии с высотой (текст)
+        for (let i = 0; i < 10; i++) {
+            mrg = mrg - 434 / 10;
+            a = a + 434 / 10;
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.moveTo(0, mrg);
+            ctx.lineTo(width, mrg);
+            ctx.stroke();
+            ctx.fillStyle = '#CCCCCC';
+            ctx.fillText((a / scale).toFixed(0), 3, mrg + 10);
         }
     };
 
@@ -366,7 +403,6 @@ function TabContent({
                                 value={range}
                                 onChange={(e) => {
                                     setRange(e.target.value);
-
                                     items[index].range = e.target.value;
                                 }}
                                 id="myRange"

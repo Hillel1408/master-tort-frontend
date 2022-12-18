@@ -7,19 +7,19 @@
 .title {
     margin-bottom: 10px;
 }
-.columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    color: var(--textColor);
-    @media (max-width: 768px) {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-}
 .column {
     p:not(:last-child) {
         margin-bottom: 20px;
+    }
+    &s {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        color: var(--textColor);
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
     }
 }
 .tables {

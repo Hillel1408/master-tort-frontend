@@ -24,7 +24,11 @@ function Tooltip({ children, visiblePopup, style, setVisiblePopup, close }) {
             )}
         >
             {close && (
-                <i className="icon-11" onClick={() => setVisiblePopup('')}></i>
+                <i
+                    title="Скрыть"
+                    className="icon-11"
+                    onClick={() => setVisiblePopup('')}
+                ></i>
             )}
             {children}
         </div>

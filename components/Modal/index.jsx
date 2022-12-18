@@ -38,6 +38,7 @@ function Modal({ active, setActive, children, closeIcon }) {
                 >
                     {closeIcon && (
                         <span
+                            title="Скрыть"
                             className={styles.close}
                             onClick={() => closeModal()}
                         ></span>

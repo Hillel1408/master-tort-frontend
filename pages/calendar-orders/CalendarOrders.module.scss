@@ -22,6 +22,7 @@
 .header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 18px;
 }
 .orders {
     flex: 0 1 780px;
@@ -52,9 +53,6 @@
 .container {
     max-width: max-content;
     margin: 0 auto;
-}
-.header {
-    margin-bottom: 18px;
 }
 .table {
     border-spacing: unset;

@@ -21,8 +21,26 @@ export default function Purchase() {
     const [dataUser, setDataUser] = useState('');
     const [orders, setOrders] = useState([]);
     const [sumProducts, setSumProducts] = useState('');
+    const [checkbox, setCheckbox] = useState('');
 
     const dispatch = useDispatch();
+
+    const clickHandler = () => {
+        setCheckbox(!checkbox);
+        sumProducts.map((item, index) => {
+            index !== sumProducts.length - 1
+                ? (item[1].checked = !checkbox)
+                : '';
+        });
+        orders.map((order, orderIndex) => {
+            order.total.map((a, totalIndex) => {
+                totalIndex !== order.total.length - 1
+                    ? (orders[orderIndex].total[totalIndex].checked = !checkbox)
+                    : '';
+            });
+        });
+        setSumProducts([...sumProducts]);
+    };
 
     const saveSettings = async () => {
         try {
@@ -47,8 +65,10 @@ export default function Purchase() {
         const sumProducts = (data) => {
             const sum = {};
             let total = 0;
+            let isChecked = true;
             data.map((item) => {
                 item.total.map((product, index) => {
+                    product.checked === false ? (isChecked = false) : '';
                     //вспомогательный объект и функция
                     const obj = {
                         name: product.name,
@@ -92,6 +112,7 @@ export default function Purchase() {
                 });
             });
             sum.total = total;
+            setCheckbox(isChecked);
             //преобразуем объект в массив чтобы отсортировать по checked
             setSumProducts(
                 Object.entries(sum).sort((a, b) => b[1].checked - a[1].checked)
@@ -171,55 +192,73 @@ export default function Purchase() {
                                     styles.table
                                 )}
                             >
-                                <div className={stylesTable.wrapperHead}>
-                                    <div
-                                        className={stylesTable.th}
-                                        style={{ display: 'flex' }}
-                                    >
-                                        <label
-                                            className={
-                                                stylesCheckbox.customCheckbox
-                                            }
+                                {sumProducts && (
+                                    <>
+                                        <div
+                                            className={stylesTable.wrapperHead}
                                         >
-                                            <input type="checkbox" />
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                    <div
-                                        className={classNames(
-                                            'text',
-                                            stylesTable.thead
-                                        )}
-                                        style={{
-                                            gridTemplateColumns:
-                                                '33.3% 33.3% 33.3%',
-                                        }}
-                                    >
-                                        <div className={stylesTable.th}>
-                                            Наименование
-                                        </div>
-                                        <div className={stylesTable.th}>
-                                            Количество
-                                        </div>
-                                        <div className={stylesTable.th}>
-                                            Стоимость, ₽
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={stylesTable.tbody}>
-                                    {sumProducts &&
-                                        sumProducts.map(
-                                            (item) =>
-                                                item[0] !== 'total' && (
-                                                    <Tr
-                                                        key={item[0]}
-                                                        product={item[1]}
-                                                        index={item[0]}
-                                                        orders={orders}
+                                            <div
+                                                className={stylesTable.th}
+                                                style={{ display: 'flex' }}
+                                            >
+                                                <label
+                                                    className={
+                                                        stylesCheckbox.customCheckbox
+                                                    }
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={checkbox}
                                                     />
-                                                )
-                                        )}
-                                </div>
+                                                    <span
+                                                        onClick={() =>
+                                                            clickHandler()
+                                                        }
+                                                    ></span>
+                                                </label>
+                                            </div>
+                                            <div
+                                                className={classNames(
+                                                    'text',
+                                                    stylesTable.thead
+                                                )}
+                                                style={{
+                                                    gridTemplateColumns:
+                                                        '33.3% 33.3% 33.3%',
+                                                }}
+                                            >
+                                                <div className={stylesTable.th}>
+                                                    Наименование
+                                                </div>
+                                                <div className={stylesTable.th}>
+                                                    Количество
+                                                </div>
+                                                <div className={stylesTable.th}>
+                                                    Стоимость, ₽
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={stylesTable.tbody}>
+                                            {sumProducts.map(
+                                                (item) =>
+                                                    item[0] !== 'total' && (
+                                                        <Tr
+                                                            key={item[0]}
+                                                            product={item[1]}
+                                                            index={item[0]}
+                                                            orders={orders}
+                                                            sumProducts={
+                                                                sumProducts
+                                                            }
+                                                            setSumProducts={
+                                                                setSumProducts
+                                                            }
+                                                        />
+                                                    )
+                                            )}
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className={styles.total}>

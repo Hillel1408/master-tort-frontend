@@ -41,7 +41,7 @@ export default function Recipe() {
 
     const dispatch = useDispatch();
 
-    const thTitle = ['Продукт', 'Брутто', 'Нетто'];
+    const thTitle = ['Продукт', 'Брутто, гр.', 'Нетто, гр.'];
 
     useEffect(() => {
         if (btnRef.current) {
@@ -374,9 +374,9 @@ export default function Recipe() {
                                     {checkbox && (
                                         <>
                                             <input
-                                                title="Выход"
+                                                title="Выход, гр."
                                                 type="number"
-                                                placeholder="Выход"
+                                                placeholder="Выход, гр."
                                                 value={exit}
                                                 onChange={(e) =>
                                                     setExit(e.target.value)
@@ -386,9 +386,9 @@ export default function Recipe() {
                                                 )}
                                             />
                                             <input
-                                                title="Диаметр"
+                                                title="Диаметр, см."
                                                 type="number"
-                                                placeholder="Диаметр"
+                                                placeholder="Диаметр, см."
                                                 value={diameter}
                                                 onChange={(e) =>
                                                     setDiameter(e.target.value)
@@ -398,9 +398,9 @@ export default function Recipe() {
                                                 )}
                                             />
                                             <input
-                                                title="Высота"
+                                                title="Высота, см."
                                                 type="number"
-                                                placeholder="Высота"
+                                                placeholder="Высота, см."
                                                 value={height}
                                                 onChange={(e) =>
                                                     setHeight(e.target.value)

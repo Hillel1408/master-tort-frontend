@@ -421,7 +421,7 @@ function TabContent({
                                         styles.informationText
                                     )}
                                 >
-                                    Подставка
+                                    Подставка, см.
                                 </h3>
                                 <div className={styles.informationInputBlock}>
                                     <input

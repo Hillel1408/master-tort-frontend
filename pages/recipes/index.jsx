@@ -9,6 +9,7 @@ import { Recipe } from '../../components/pages/recipes/Recipe';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import UploadService from '../../services/UploadService';
+import OrdersService from '../../services/OrdersService';
 import styles from './Recipes.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
@@ -31,6 +32,8 @@ export default function Recipes() {
     const [text, setText] = useState('Отпустите');
     const [textImage, setTextImage] = useState('');
     const [active, setActive] = useState('');
+    const [orders, setOrders] = useState('');
+    const [modalActive, setModalActive] = useState(false);
 
     const [drag, setDrag] = useState(false);
 
@@ -98,23 +101,39 @@ export default function Recipes() {
     };
 
     const deleteRecipe = async (recipeId, groupId) => {
-        //удаляем рецепт с сервера и стейта
-        try {
-            const response = await RecipeService.deleteRecipe(recipeId);
-            const newRecipe = recipe.filter((item) => {
-                return item._id !== recipeId;
-            });
-            setRecipe(newRecipe);
-            if (filterRecipe) {
-                //если рубрика удаленного рецепта в данный момент активна то удаляем рецепт и из нее
-                const newRecipe = filterRecipe.filter((item) => {
+        let flag = false;
+        Object.keys(orders).map((keyObj) => {
+            if (typeof orders[keyObj] === 'object') {
+                orders[keyObj].map((item) => {
+                    item.table.map((a) => {
+                        if (recipeId === a.recipe.value) {
+                            flag = true;
+                        }
+                    });
+                });
+            }
+        });
+        if (flag) {
+            setModalActive(true);
+        } else {
+            //удаляем рецепт с сервера и стейта
+            try {
+                const response = await RecipeService.deleteRecipe(recipeId);
+                const newRecipe = recipe.filter((item) => {
                     return item._id !== recipeId;
                 });
-                setFilterRecipe(newRecipe);
+                setRecipe(newRecipe);
+                if (filterRecipe) {
+                    //если рубрика удаленного рецепта в данный момент активна то удаляем рецепт и из нее
+                    const newRecipe = filterRecipe.filter((item) => {
+                        return item._id !== recipeId;
+                    });
+                    setFilterRecipe(newRecipe);
+                }
+                updateCountRecipe(groupId, false);
+            } catch (e) {
+                console.log(e.response?.data?.message);
             }
-            updateCountRecipe(groupId, false);
-        } catch (e) {
-            console.log(e.response?.data?.message);
         }
     };
 
@@ -259,6 +278,17 @@ export default function Recipes() {
     }, [recipeName, groupId, image]);
 
     useEffect(() => {
+        const getOrders = async (userId) => {
+            //получаем заказы пользователя
+            try {
+                const response = await OrdersService.getKanban(userId);
+                setOrders(response.data);
+                console.log(response.data);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
+        };
+
         const getRecipeGroup = async (userId) => {
             //получаем рецепты и группы пользователя
             try {
@@ -279,6 +309,7 @@ export default function Recipes() {
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
                 getRecipeGroup(response.data.user.id);
+                getOrders(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);
@@ -553,6 +584,19 @@ export default function Recipes() {
                     >
                         Создать рецепт
                     </button>
+                </div>
+            </Modal>
+            <Modal
+                active={modalActive}
+                setActive={setModalActive}
+                closeIcon={true}
+            >
+                <div className={styles.addRecipeModal}>
+                    <span className="icon-16"></span>
+                    <p className={classNames('text', styles.modalText)}>
+                        Нельзя удалять рецепты, которые используются в активных
+                        заказах
+                    </p>
                 </div>
             </Modal>
         </Layout>

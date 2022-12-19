@@ -1,23 +1,22 @@
-import { useState } from 'react';
 import classNames from 'classnames';
 import { TableCell } from '../../TableCell';
+import { Checkbox } from '../../CustomCheckbox/Checkbox';
 import styles from '../../../pages/purchase/Purchase.module.scss';
-import stylesCheckbox from '../../CustomCheckbox/Checkbox.module.scss';
 import stylesTable from '../../Table/Table.module.scss';
 
-function Tr({ product, index, orders }) {
-    const [checkbox, setCheckbox] = useState(product.checked);
-
+function Tr({ product, index, orders, sumProducts, setSumProducts }) {
     const clickHandler = () => {
         const indexSplit = index.split('ch')[0];
         orders.map((order, orderIndex) => {
             order.total.map((item, totalIndex) => {
                 if (item.id === indexSplit) {
-                    orders[orderIndex].total[totalIndex].checked = !checkbox;
+                    orders[orderIndex].total[totalIndex].checked =
+                        !product.checked;
                 }
             });
         });
-        setCheckbox(!checkbox);
+        product.checked = !product.checked;
+        setSumProducts([...sumProducts]);
     };
 
     return (
@@ -25,14 +24,14 @@ function Tr({ product, index, orders }) {
             className={classNames(
                 stylesTable.wrapper,
                 styles.tableTr,
-                checkbox && styles.active
+                product.checked && styles.active
             )}
         >
             <div className={stylesTable.td}>
-                <label className={stylesCheckbox.customCheckbox}>
-                    <input type="checkbox" checked={checkbox} />
-                    <span onClick={(e) => clickHandler()}></span>
-                </label>
+                <Checkbox
+                    checkbox={product.checked}
+                    clickHandler={clickHandler}
+                />
             </div>
             <div
                 onClick={() => clickHandler()}

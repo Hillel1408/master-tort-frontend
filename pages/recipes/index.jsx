@@ -594,7 +594,7 @@ export default function Recipes() {
                 <div className={styles.addRecipeModal}>
                     <span className="icon-16"></span>
                     <p className={classNames('text', styles.modalText)}>
-                        Нельзя удалять рецепты, которые используются в активных
+                        Нельзя удалить рецепт, который используется в активных
                         заказах
                     </p>
                 </div>

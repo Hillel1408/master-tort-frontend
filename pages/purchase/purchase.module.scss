@@ -26,14 +26,20 @@
 .title {
     margin-bottom: 20px;
 }
-.orders {
+.orders,
+.archiveOrders {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-bottom: 10px;
     &No {
         height: 100%;
     }
+}
+.orders {
+    grid-template-columns: 1fr 1fr;
+}
+.archiveOrders {
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
 }
 .table {
     &Tr {

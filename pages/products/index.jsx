@@ -190,7 +190,7 @@ export default function Products() {
                 <div className={styles.modal}>
                     <span className="icon-16"></span>
                     <p className={classNames('text', styles.modalText)}>
-                        Нельзя удалять продукты, которые используются в рецептах
+                        Нельзя удалять продукт, который используется в рецептах
                     </p>
                 </div>
             </Modal>

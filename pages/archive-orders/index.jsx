@@ -66,7 +66,7 @@ export default function ArchiveOrders() {
             </Head>
             <OrdersNav visibleTabs={false} />
             {orders ? (
-                <div className={styles.orders}>
+                <div className={styles.archiveOrders}>
                     {orders.map((item) => (
                         <OrderCake
                             draggable={false}

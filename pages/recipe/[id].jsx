@@ -6,6 +6,7 @@ import uuid from 'react-uuid';
 import Layout from '../../components/Layout';
 import { Block } from '../../components/pages/recipe/Block';
 import { Tooltip } from '../../components/Tooltip';
+import { Checkbox } from '../../components/CustomCheckbox/Checkbox';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import ProductsService from '../../services/ProductsService';
@@ -15,7 +16,6 @@ import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
-import stylesCheckbox from '../../components/CustomCheckbox/Checkbox.module.scss';
 
 import { Alert } from '../../components/Alert';
 import { useDispatch } from 'react-redux';
@@ -361,16 +361,22 @@ export default function Recipe() {
                                     Параметры
                                 </div>
                                 <div className={styles.grid}>
-                                    <label className="small-text">
-                                        <input
-                                            type="checkbox"
-                                            checked={checkbox}
-                                            onChange={(e) =>
-                                                setCheckbox(e.target.checked)
+                                    <div className={styles.paramsBlock}>
+                                        <Checkbox
+                                            checkbox={checkbox}
+                                            clickHandler={() =>
+                                                setCheckbox(!checkbox)
                                             }
                                         />
-                                        Использовать в расчетах
-                                    </label>
+                                        <span
+                                            onClick={() =>
+                                                setCheckbox(!checkbox)
+                                            }
+                                            className="small-text"
+                                        >
+                                            Использовать в расчетах
+                                        </span>
+                                    </div>
                                     {checkbox && (
                                         <>
                                             <input

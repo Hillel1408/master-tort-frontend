@@ -44,13 +44,15 @@
     background-color: white;
     border-radius: 8px;
     margin-top: 20px;
-    label {
-        cursor: pointer;
+    &Block {
         flex: 0 0 auto;
-        align-items: center;
-        color: var(--textColor);
         display: flex;
+        align-items: center;
         height: 35px;
+    }
+    span {
+        cursor: pointer;
+        color: var(--textColor);
         input {
             margin-right: 10px;
         }

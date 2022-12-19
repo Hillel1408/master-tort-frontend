@@ -166,7 +166,11 @@ export default function Purchase() {
                         {orders.length > 0 && (
                             <div className={styles.orders}>
                                 {orders.map((item) => (
-                                    <OrderCake key={item.id} item={item} />
+                                    <OrderCake
+                                        key={item.id}
+                                        item={item}
+                                        style="purchaseCake"
+                                    />
                                 ))}
                             </div>
                         )}

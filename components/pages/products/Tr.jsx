@@ -3,7 +3,24 @@ import { TableCell } from '../../TableCell';
 import { CustomSelect } from '../../CustomSelect/';
 import stylesTable from '../../Table/Table.module.scss';
 
-function Tr({ item, tr, setTr, index, measure }) {
+function Tr({ item, tr, setTr, index, measure, recipe, setActive }) {
+    const clickHandler = () => {
+        let flag = false;
+        recipe.map((b) => {
+            b.products.map((product) => {
+                product.products.map((a) => {
+                    if (a.product.value === item.id) flag = true;
+                });
+            });
+        });
+        if (flag) {
+            setActive(true);
+        } else {
+            tr.splice(index, 1);
+            setTr([...tr]);
+        }
+    };
+
     return (
         <div className={stylesTable.wrapper}>
             <div
@@ -56,10 +73,7 @@ function Tr({ item, tr, setTr, index, measure }) {
             <div className={classNames(stylesTable.td, stylesTable.tdDelete)}>
                 <span
                     title="Удалить"
-                    onClick={() => {
-                        tr.splice(index, 1);
-                        setTr([...tr]);
-                    }}
+                    onClick={() => clickHandler()}
                     className={classNames('icon-11', stylesTable.delete)}
                 ></span>
             </div>

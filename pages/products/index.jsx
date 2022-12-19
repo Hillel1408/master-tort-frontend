@@ -7,8 +7,11 @@ import Layout from '../../components/Layout';
 import { Tr } from '../../components/pages/products/Tr';
 import { Alert } from '../../components/Alert';
 import { setAlert } from '../../redux/cakeSlice';
+import { Modal } from '../../components/Modal';
 import AuthService from '../../services/AuthService';
 import ProductsService from '../../services/ProductsService';
+import RecipeService from '../../services/RecipeService';
+import styles from './products.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 
@@ -16,6 +19,8 @@ export default function Products() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [tr, setTr] = useState([]);
+    const [recipe, setRecipe] = useState('');
+    const [modalActive, setModalActive] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -65,6 +70,16 @@ export default function Products() {
     };
 
     useEffect(() => {
+        const getRecipes = async (id) => {
+            //получаем рецепты пользователя
+            try {
+                const response = await RecipeService.getRecipes(id);
+                setRecipe(response.data);
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
+        };
+
         const getSettings = async (user) => {
             //получаем табличные данные
             try {
@@ -83,6 +98,7 @@ export default function Products() {
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
                 getSettings(response.data.user.id);
+                getRecipes(response.data.user.id);
             } catch (e) {
                 console.log(e.response?.data?.message);
                 setIsAuth(false);
@@ -137,6 +153,8 @@ export default function Products() {
                                     index={index}
                                     setTr={setTr}
                                     measure={measure}
+                                    recipe={recipe}
+                                    setActive={setModalActive}
                                 />
                             ))}
                         <div className="addBlock">
@@ -164,6 +182,18 @@ export default function Products() {
                     Сохранить
                 </button>
             </div>
+            <Modal
+                active={modalActive}
+                setActive={setModalActive}
+                closeIcon={true}
+            >
+                <div className={styles.modal}>
+                    <span className="icon-16"></span>
+                    <p className={classNames('text', styles.modalText)}>
+                        Нельзя удалять продукты, которые используются в рецептах
+                    </p>
+                </div>
+            </Modal>
             <Alert />
         </Layout>
     );

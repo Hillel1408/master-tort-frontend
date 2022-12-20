@@ -39,7 +39,7 @@ function Group({
                     title="Удалить"
                     onClick={(e) => {
                         e.stopPropagation();
-                        deleteGroup(groupId);
+                        deleteGroup(groupId, active);
                     }}
                 ></i>
                 {countRecipe !== 0 && (

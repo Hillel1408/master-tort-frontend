@@ -46,6 +46,33 @@
             margin-right: 6px;
         }
     }
+    &Button {
+        margin-top: 6px;
+        display: flex;
+        justify-content: right;
+        button {
+            width: 20px;
+            height: 20px;
+            color: white;
+            border-radius: 50%;
+            background-color: var(--mainColor);
+            &:not(:last-child) {
+                margin-right: 6px;
+            }
+            @media (any-hover: hover) {
+                &:hover {
+                    background-color: #00aaa9;
+                }
+            }
+            &:disabled {
+                background-color: #99dddd;
+                cursor: default;
+            }
+        }
+        @media (any-hover: hover) {
+            display: none;
+        }
+    }
 }
 .archive {
     background-color: white;

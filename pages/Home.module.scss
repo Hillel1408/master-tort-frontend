@@ -332,6 +332,7 @@
         background: var(--secondaryColor);
         border-radius: 8px;
         padding: 10px;
+        position: relative;
         &Img {
             width: 100%;
             height: 61px;
@@ -344,8 +345,27 @@
                 }
             }
         }
+        &Delete {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 7px;
+            color: #f16363;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+        }
         @media (max-width: 768px) {
             height: 119px;
+        }
+        @media (any-hover: hover) {
+            &:hover {
+                .informationImageDelete {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
         }
     }
 }
@@ -411,5 +431,20 @@
     justify-content: flex-end;
     span {
         cursor: pointer;
+    }
+}
+.modal {
+    background: var(--secondaryColor);
+    border-radius: 16px;
+    width: 440px;
+    padding: 80px 20px;
+    text-align: center;
+    @media (max-width: 576px) {
+        width: auto;
+        border-radius: 0;
+    }
+    &Text {
+        max-width: 380px;
+        margin: 14px auto 0 auto;
     }
 }

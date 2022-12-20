@@ -34,6 +34,7 @@ export default function Recipes() {
     const [active, setActive] = useState('');
     const [orders, setOrders] = useState('');
     const [modalActive, setModalActive] = useState(false);
+    const [textModal, setTextModal] = useState('');
 
     const [drag, setDrag] = useState(false);
 
@@ -114,6 +115,9 @@ export default function Recipes() {
             }
         });
         if (flag) {
+            setTextModal(
+                'Нельзя удалить рецепт, который используется в активных заказах'
+            );
             setModalActive(true);
         } else {
             //удаляем рецепт с сервера и стейта
@@ -137,14 +141,13 @@ export default function Recipes() {
         }
     };
 
-    const deleteGroup = async (groupId) => {
+    const deleteGroup = async (groupId, active) => {
         //удаляем рубрику на сервере и в стейте
-        try {
-            if (
-                window.confirm(
-                    'Вы действительно хотите удалить группу? Все рецепты данной группы будут удалены'
-                )
-            ) {
+        const a = recipe.findIndex((item) => {
+            return item.group === groupId;
+        });
+        if (a === -1) {
+            try {
                 const response = await RecipeService.deleteGroup(groupId);
                 const newRecipe = recipe.filter((item) => {
                     //удаляем все рецепты удаленной группы
@@ -153,14 +156,19 @@ export default function Recipes() {
                 const newGroup = group.filter((item) => {
                     return item._id !== groupId;
                 });
-                //делаем рубрику "все рецепты" активной и убираем сортировку
                 setGroup(newGroup);
                 setRecipe(newRecipe);
-                setActive('');
-                setFilterRecipe('');
+                //делаем рубрику "все рецепты" активной и убираем сортировку, если удаляем активную рубрику
+                if (active === groupId) {
+                    setActive('');
+                    setFilterRecipe('');
+                }
+            } catch (e) {
+                console.log(e.response?.data?.message);
             }
-        } catch (e) {
-            console.log(e.response?.data?.message);
+        } else {
+            setTextModal('Нельзя удалить группу, в которой есть рецепты');
+            setModalActive(true);
         }
     };
 
@@ -283,7 +291,6 @@ export default function Recipes() {
             try {
                 const response = await OrdersService.getKanban(userId);
                 setOrders(response.data);
-                console.log(response.data);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -594,8 +601,7 @@ export default function Recipes() {
                 <div className={styles.addRecipeModal}>
                     <span className="icon-16"></span>
                     <p className={classNames('text', styles.modalText)}>
-                        Нельзя удалить рецепт, который используется в активных
-                        заказах
+                        {textModal}
                     </p>
                 </div>
             </Modal>

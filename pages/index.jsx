@@ -13,6 +13,7 @@ export default function Home() {
     const [dataUser, setDataUser] = useState('');
     const [active, setActive] = useState(0);
     const [products, setProducts] = useState([]);
+    const [recipe, setRecipe] = useState('');
 
     const value = {
         orderName: '',
@@ -54,6 +55,7 @@ export default function Home() {
                             label: item.recipeName,
                         });
                 });
+                setRecipe(response.data);
                 setSelect(select);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -115,6 +117,7 @@ export default function Home() {
                     select={select}
                     value={value}
                     products={products}
+                    recipe={recipe}
                     style={
                         i === active ? { display: 'flex' } : { display: 'none' }
                     }

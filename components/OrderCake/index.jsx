@@ -63,6 +63,28 @@ function OrderCake({
                         {item.time}
                     </span>
                 </div>
+                {draggable && (
+                    <div className={styles.contentButton}>
+                        <button
+                            title="Назад"
+                            className={classNames('small-text')}
+                            disabled={board.title === 'Предстоящие'}
+                        >
+                            ←
+                        </button>
+                        <button
+                            title="Вперед"
+                            className={classNames('small-text')}
+                            disabled={board.title === 'Готово'}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                console.log(board, item);
+                            }}
+                        >
+                            →
+                        </button>
+                    </div>
+                )}
             </div>
         </Link>
     );

@@ -18,6 +18,7 @@ export default function Home() {
     const [items, setItems] = useState([]);
     const [select, setSelect] = useState('');
     const [products, setProducts] = useState([]);
+    const [recipe, setRecipe] = useState('');
 
     const router = useRouter();
 
@@ -52,6 +53,7 @@ export default function Home() {
                         });
                 });
                 setSelect(select);
+                setRecipe(response.data);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -126,6 +128,7 @@ export default function Home() {
                         select={select}
                         value={value}
                         products={products}
+                        recipe={recipe}
                         style={{ display: 'flex' }}
                     />
                 </>

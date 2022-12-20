@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { Tr } from './Tr';
 import { Alert } from '../../Alert';
 import { Total } from './Total';
+import { Modal } from '../../Modal';
 import UploadService from '../../../services/UploadService';
 import OrdersService from '../../../services/OrdersService';
 import { setAlert } from '../../../redux/cakeSlice';
@@ -26,6 +27,7 @@ function TabContent({
     select,
     value,
     products,
+    recipe,
 }) {
     const [drag, setDrag] = useState(false);
     const [isCake, setIsCake] = useState(false);
@@ -41,6 +43,7 @@ function TabContent({
     const [kindCake, setKindCake] = useState(items[index].kindCake);
     const [info, setInfo] = useState(items[index].info);
     const [price, setPrice] = useState(items[index].price);
+    const [modalActive, setModalActive] = useState(false);
 
     const [data, setData] = useState(items[index].calculation);
     const [total, setTotal] = useState(items[index].total);
@@ -279,17 +282,33 @@ function TabContent({
 
     const calculationOrder = async () => {
         //расчитываем заказ пользователя
-        try {
-            setIsCake(true);
-            const response = await OrdersService.calculationOrder({
-                ...items[index],
-                user: userId,
-            });
-            setData(response.data);
-            calcPr(response.data);
-            canvas();
-        } catch (e) {
-            console.log(e.response?.data?.message);
+        let flag = false;
+        if (isEdit && items[0].status === 'archive') {
+            for (let i = 0; i < items[index].table.length; i++) {
+                const a = recipe.findIndex((item) => {
+                    return item._id === items[index].table[i].recipe.value;
+                });
+                if (a === -1) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if (flag) {
+            setModalActive(true);
+        } else {
+            try {
+                setIsCake(true);
+                const response = await OrdersService.calculationOrder({
+                    ...items[index],
+                    user: userId,
+                });
+                setData(response.data);
+                calcPr(response.data);
+                canvas();
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            }
         }
     };
 
@@ -313,6 +332,15 @@ function TabContent({
             console.log(e.response?.data?.message);
             dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
         }
+    };
+
+    const deleteImage = (item) => {
+        //удаляем картинку из стейтов
+        const newImage = image.filter((a) => {
+            return a !== item;
+        });
+        setImage(newImage);
+        items[index].imagesUrl = newImage;
     };
 
     return (
@@ -689,6 +717,16 @@ function TabContent({
                                                     fill
                                                 />
                                             </div>
+                                            <i
+                                                title="Удалить"
+                                                className={classNames(
+                                                    'icon-11',
+                                                    styles.informationImageDelete
+                                                )}
+                                                onClick={() =>
+                                                    deleteImage(item)
+                                                }
+                                            ></i>
                                         </div>
                                     ))}
                             </div>
@@ -881,6 +919,19 @@ function TabContent({
                 )}
                 {total.length > 0 && <Total data={data} total={total} />}
             </div>
+            <Modal
+                active={modalActive}
+                setActive={setModalActive}
+                closeIcon={true}
+            >
+                <div className={styles.modal}>
+                    <span className="icon-16"></span>
+                    <p className={classNames('text', styles.modalText)}>
+                        Нельзя рассчитать заказ с рецептом которого не
+                        существует
+                    </p>
+                </div>
+            </Modal>
             <Alert />
         </div>
     );

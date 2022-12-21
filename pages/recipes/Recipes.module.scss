@@ -143,17 +143,6 @@
     }
 }
 .addRecipe {
-    &Modal {
-        background: var(--secondaryColor);
-        border-radius: 16px;
-        width: 440px;
-        padding: 80px 20px;
-        text-align: center;
-        @media (max-width: 576px) {
-            width: auto;
-            border-radius: 0;
-        }
-    }
     &Title {
         display: block;
         margin-bottom: 40px;

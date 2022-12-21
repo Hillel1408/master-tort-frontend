@@ -16,9 +16,16 @@ function BodyTable({ settings, index }) {
                         key={keyObj + index}
                         value={settings[keyObj][index]}
                         thValue={keyObj}
-                        disabled={false}
+                        disabled={
+                            keyObj === 'weightOfCoveredCake' && index === '1'
+                                ? true
+                                : false
+                        }
                         type="number"
                         index={index}
+                        purchase={
+                            keyObj === 'weightOfCoveredCake' && index === '1'
+                        }
                         saveSettings={(item, thValue, index) => {
                             settings[thValue][index] = item;
                         }}

@@ -30,3 +30,9 @@
         grid-template-columns: 1fr;
     }
 }
+.modal {
+    &Text {
+        max-width: 380px;
+        margin: 14px auto 0 auto;
+    }
+}

@@ -924,13 +924,10 @@ function TabContent({
                 setActive={setModalActive}
                 closeIcon={true}
             >
-                <div className={styles.modal}>
-                    <span className="icon-16"></span>
-                    <p className={classNames('text', styles.modalText)}>
-                        Нельзя рассчитать заказ с рецептом которого не
-                        существует
-                    </p>
-                </div>
+                <span className="icon-16"></span>
+                <p className={classNames('text', styles.modalText)}>
+                    Нельзя рассчитать заказ с рецептом которого не существует
+                </p>
             </Modal>
             <Alert />
         </div>

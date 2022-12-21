@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from '../../components/Table/Table.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import { settingsNameTh } from '../../data/settings';
+import { useEffect } from 'react';
 
 function TableCell({
     value,
@@ -12,7 +13,7 @@ function TableCell({
     saveSettings,
     purchase,
 }) {
-    const [item, setItem] = useState(value);
+    const [item, setItem] = useState('');
 
     const handleKey = (e) => {
         if (e.key === 'Enter' && item !== value) {
@@ -20,6 +21,10 @@ function TableCell({
             e.target.blur();
         }
     };
+
+    useEffect(() => {
+        setItem(value);
+    }, [value]);
 
     return (
         <div className={styles.td}>

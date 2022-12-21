@@ -4,6 +4,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import { BodyTable } from '../../components/pages/settings/BodyTable';
 import { Alert } from '../../components/Alert';
+import { Modal } from '../../components/Modal';
 import { setAlert } from '../../redux/cakeSlice';
 import AuthService from '../../services/AuthService';
 import SettingsService from '../../services/SettingsService';
@@ -17,25 +18,39 @@ export default function Settings() {
     const [isAuth, setIsAuth] = useState('');
     const [settings, setSettings] = useState('');
     const [dataUser, setDataUser] = useState('');
+    const [modalActive, setModalActive] = useState(false);
 
     const dispatch = useDispatch();
 
     const saveSettings = async () => {
-        //сохраняем настройки пользователя
-        try {
-            const response = await SettingsService.set({
-                ...settings,
-                user: dataUser.id,
-            });
-            dispatch(
-                setAlert({
-                    text: 'Настройки успешно сохранены',
-                    color: '#62ac62',
-                })
-            );
-        } catch (e) {
-            console.log(e.response?.data?.message);
-            dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
+        let flag = false;
+        Object.keys(settings).map((key) => {
+            if (key === 'weightOfCoveredCake') {
+                if (settings[key][0] === '') flag = true;
+            } else if (settings[key][0] === '' || settings[key][1] === '')
+                flag = true;
+        });
+        if (flag) {
+            setModalActive(true);
+        } else {
+            //сохраняем настройки пользователя
+            try {
+                const response = await SettingsService.set({
+                    ...settings,
+                    user: dataUser.id,
+                });
+                dispatch(
+                    setAlert({
+                        text: 'Настройки успешно сохранены',
+                        color: '#62ac62',
+                    })
+                );
+            } catch (e) {
+                console.log(e.response?.data?.message);
+                dispatch(
+                    setAlert({ text: 'Возникла ошибка', color: '#c34a43' })
+                );
+            }
         }
     };
 
@@ -45,7 +60,7 @@ export default function Settings() {
         Object.keys(settings).map((key) => {
             newObj[key] = ['', ''];
         });
-        setSettings(newObj);
+        setSettings({ ...newObj });
     };
 
     useEffect(() => {
@@ -179,6 +194,16 @@ export default function Settings() {
                     Сохранить
                 </button>
             </div>
+            <Modal
+                active={modalActive}
+                setActive={setModalActive}
+                closeIcon={true}
+            >
+                <span className="icon-16"></span>
+                <p className={classNames('text', styles.modalText)}>
+                    Для точности расчетов необходимо заполнить все настройки
+                </p>
+            </Modal>
             <Alert />
         </Layout>
     );

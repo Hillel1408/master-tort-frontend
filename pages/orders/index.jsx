@@ -261,6 +261,11 @@ export default function Orders() {
                                                 dropHandler={dropHandler}
                                                 item={item}
                                                 board={board}
+                                                boards={boards}
+                                                setBoards={setBoards}
+                                                updateStatusOrder={
+                                                    updateStatusOrder
+                                                }
                                             />
                                         ))}
                                 </div>

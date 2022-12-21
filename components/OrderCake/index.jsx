@@ -16,7 +16,28 @@ function OrderCake({
     draggable,
     item,
     type,
+    boards,
+    setBoards,
+    updateStatusOrder,
 }) {
+    const updateKanban = (index) => {
+        const currentIndex = board.items.indexOf(item);
+        let clone = JSON.parse(JSON.stringify(boards[index]));
+        board.items.splice(currentIndex, 1);
+        clone.items.unshift(item);
+        setBoards(
+            boards.map((b) => {
+                if (b.id === board.id) {
+                    return board;
+                }
+                if (b.id === clone.id) {
+                    return clone;
+                }
+                return b;
+            })
+        );
+        updateStatusOrder(clone, board);
+    };
     return (
         <Link
             href={`/${item._id}`}
@@ -69,6 +90,22 @@ function OrderCake({
                             title="Назад"
                             className={classNames('small-text')}
                             disabled={board.title === 'Предстоящие'}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                let index = '';
+                                switch (board.title) {
+                                    case 'Закупка':
+                                        index = 0;
+                                        break;
+                                    case 'В работе':
+                                        index = 1;
+                                        break;
+                                    case 'Готово':
+                                        index = 2;
+                                        break;
+                                }
+                                updateKanban(index);
+                            }}
                         >
                             ←
                         </button>
@@ -78,7 +115,19 @@ function OrderCake({
                             disabled={board.title === 'Готово'}
                             onClick={(e) => {
                                 e.preventDefault();
-                                console.log(board, item);
+                                let index = '';
+                                switch (board.title) {
+                                    case 'Предстоящие':
+                                        index = 1;
+                                        break;
+                                    case 'Закупка':
+                                        index = 2;
+                                        break;
+                                    case 'В работе':
+                                        index = 3;
+                                        break;
+                                }
+                                updateKanban(index);
                             }}
                         >
                             →

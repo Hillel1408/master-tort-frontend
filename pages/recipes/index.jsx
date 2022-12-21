@@ -438,172 +438,159 @@ export default function Recipes() {
                 setActive={setModalActiveGroup}
                 closeIcon={true}
             >
-                <div className={styles.addRecipeModal}>
-                    <span
-                        className={classNames('title', styles.addRecipeTitle)}
-                    >
-                        Создание группы
-                    </span>
-                    <input
-                        className={classNames(
-                            stylesInput.input,
-                            styles.addRecipeInput
-                        )}
-                        placeholder="Название"
-                        value={groupName}
-                        onChange={(e) => setGroupName(e.target.value)}
-                    />
-                    <CustomSelect
-                        options={options}
-                        placeholder="Иконка"
-                        isSearchable={false}
-                        getOptionLabel={(props) => {
-                            const { icon, label } = props;
-                            return (
-                                <div className={styles.selectFlex}>
-                                    {icon && icon}
-                                    <span>{label}</span>
-                                </div>
-                            );
-                        }}
-                        value={groupIcon}
-                        setGroupIcon={setGroupIcon}
-                        height="43px"
-                        width="280px"
-                    />
-                    <p className={styles.addRecipeText}></p>
-                    <button
-                        ref={btnRef}
-                        className={classNames(
-                            stylesBtn.btn,
-                            stylesBtn.btn__secondary,
-                            'small-text'
-                        )}
-                        onClick={(e) => {
-                            handleSubmit();
-                        }}
-                    >
-                        Создать группу
-                    </button>
-                </div>
+                <span className={classNames('title', styles.addRecipeTitle)}>
+                    Создание группы
+                </span>
+                <input
+                    className={classNames(
+                        stylesInput.input,
+                        styles.addRecipeInput
+                    )}
+                    placeholder="Название"
+                    value={groupName}
+                    onChange={(e) => setGroupName(e.target.value)}
+                />
+                <CustomSelect
+                    options={options}
+                    placeholder="Иконка"
+                    isSearchable={false}
+                    getOptionLabel={(props) => {
+                        const { icon, label } = props;
+                        return (
+                            <div className={styles.selectFlex}>
+                                {icon && icon}
+                                <span>{label}</span>
+                            </div>
+                        );
+                    }}
+                    value={groupIcon}
+                    setGroupIcon={setGroupIcon}
+                    height="43px"
+                    width="280px"
+                />
+                <p className={styles.addRecipeText}></p>
+                <button
+                    ref={btnRef}
+                    className={classNames(
+                        stylesBtn.btn,
+                        stylesBtn.btn__secondary,
+                        'small-text'
+                    )}
+                    onClick={(e) => {
+                        handleSubmit();
+                    }}
+                >
+                    Создать группу
+                </button>
             </Modal>
             <Modal
                 active={modalActiveRecipe}
                 setActive={setModalActiveRecipe}
                 closeIcon={true}
             >
-                <div className={styles.addRecipeModal}>
-                    <span
-                        className={classNames('title', styles.addRecipeTitle)}
-                    >
-                        Создание рецепта
-                    </span>
-                    <input
-                        className={classNames(
-                            stylesInput.input,
-                            styles.addRecipeInput
-                        )}
-                        placeholder="Название"
-                        value={recipeName}
-                        onChange={(e) => setRecipeName(e.target.value)}
+                <span className={classNames('title', styles.addRecipeTitle)}>
+                    Создание рецепта
+                </span>
+                <input
+                    className={classNames(
+                        stylesInput.input,
+                        styles.addRecipeInput
+                    )}
+                    placeholder="Название"
+                    value={recipeName}
+                    onChange={(e) => setRecipeName(e.target.value)}
+                />
+                {groupSelect && (
+                    <CustomSelect
+                        options={groupSelect}
+                        placeholder="Группа"
+                        isSearchable={false}
+                        value={groupId}
+                        setGroupIcon={setGroupId}
+                        height="43px"
+                        width="280px"
                     />
-                    {groupSelect && (
-                        <CustomSelect
-                            options={groupSelect}
-                            placeholder="Группа"
-                            isSearchable={false}
-                            value={groupId}
-                            setGroupIcon={setGroupId}
-                            height="43px"
-                            width="280px"
-                        />
-                    )}
-                    {drag ? (
-                        <div className={styles.addRecipeBlock}>
+                )}
+                {drag ? (
+                    <div className={styles.addRecipeBlock}>
+                        <span
+                            onDragStart={(e) => dragStartHandler(e)}
+                            onDragLeave={(e) => dragLeaveHandler(e)}
+                            onDragOver={(e) => dragStartHandler(e)}
+                            onDrop={(e) => onDropHandler(e)}
+                            style={{
+                                fontSize: '12px',
+                                color: '#7a7a7a',
+                                borderColor: '#7a7a7a',
+                            }}
+                            className={classNames(styles.icon12)}
+                        >
+                            {text}
+                        </span>
+                    </div>
+                ) : (
+                    <div className={styles.addRecipeBlock}>
+                        <span
+                            onDragStart={(e) => dragStartHandler(e)}
+                            onDragLeave={(e) => dragLeaveHandler(e)}
+                            onDragOver={(e) => dragStartHandler(e)}
+                            className={classNames('icon-12', styles.icon12)}
+                        ></span>
+                    </div>
+                )}
+                {textImage ? (
+                    <p className={styles.addRecipeTextImage}>{textImage}</p>
+                ) : (
+                    <>
+                        <div
+                            className={classNames(
+                                'addBlock',
+                                styles.addRecipeAddBlock
+                            )}
+                        >
                             <span
-                                onDragStart={(e) => dragStartHandler(e)}
-                                onDragLeave={(e) => dragLeaveHandler(e)}
-                                onDragOver={(e) => dragStartHandler(e)}
-                                onDrop={(e) => onDropHandler(e)}
-                                style={{
-                                    fontSize: '12px',
-                                    color: '#7a7a7a',
-                                    borderColor: '#7a7a7a',
-                                }}
-                                className={classNames(styles.icon12)}
+                                onClick={() => inputFileRef.current.click()}
+                                className={classNames('small-text', 'icon-8')}
                             >
-                                {text}
+                                Загрузить фото
                             </span>
+                            <input
+                                ref={inputFileRef}
+                                type="file"
+                                onChange={(e) => {
+                                    handleChangeFile(e);
+                                }}
+                                hidden
+                            />
                         </div>
-                    ) : (
-                        <div className={styles.addRecipeBlock}>
-                            <span
-                                onDragStart={(e) => dragStartHandler(e)}
-                                onDragLeave={(e) => dragLeaveHandler(e)}
-                                onDragOver={(e) => dragStartHandler(e)}
-                                className={classNames('icon-12', styles.icon12)}
-                            ></span>
-                        </div>
+                        <p className={styles.addRecipeTextImage}>
+                            (.png, .jpg, .jpeg, не более 5Мб)
+                        </p>
+                    </>
+                )}
+                <button
+                    ref={btnRefRecipe}
+                    className={classNames(
+                        stylesBtn.btn,
+                        stylesBtn.btn__secondary,
+                        'small-text'
                     )}
-                    {textImage ? (
-                        <p className={styles.addRecipeTextImage}>{textImage}</p>
-                    ) : (
-                        <>
-                            <div
-                                className={classNames(
-                                    'addBlock',
-                                    styles.addRecipeAddBlock
-                                )}
-                            >
-                                <span
-                                    onClick={() => inputFileRef.current.click()}
-                                    className={classNames(
-                                        'small-text',
-                                        'icon-8'
-                                    )}
-                                >
-                                    Загрузить фото
-                                </span>
-                                <input
-                                    ref={inputFileRef}
-                                    type="file"
-                                    onChange={(e) => {
-                                        handleChangeFile(e);
-                                    }}
-                                    hidden
-                                />
-                            </div>
-                            <p className={styles.addRecipeTextImage}>
-                                (.png, .jpg, .jpeg, не более 5Мб)
-                            </p>
-                        </>
-                    )}
-                    <button
-                        ref={btnRefRecipe}
-                        className={classNames(
-                            stylesBtn.btn,
-                            stylesBtn.btn__secondary,
-                            'small-text'
-                        )}
-                        onClick={() => {
-                            handleSubmitRecipe();
-                        }}
-                    >
-                        Создать рецепт
-                    </button>
-                </div>
+                    onClick={() => {
+                        handleSubmitRecipe();
+                    }}
+                >
+                    Создать рецепт
+                </button>
             </Modal>
             <Modal
                 active={modalActive}
                 setActive={setModalActive}
                 closeIcon={true}
             >
-                <div className={styles.addRecipeModal}>
-                    <span className="icon-16"></span>
-                    <p className={classNames('text', styles.modalText)}>
-                        {textModal}
-                    </p>
-                </div>
+                <span className="icon-16"></span>
+                <p className={classNames('text', styles.modalText)}>
+                    {textModal}
+                </p>
             </Modal>
         </Layout>
     );

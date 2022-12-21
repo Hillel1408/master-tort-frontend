@@ -187,12 +187,10 @@ export default function Products() {
                 setActive={setModalActive}
                 closeIcon={true}
             >
-                <div className={styles.modal}>
-                    <span className="icon-16"></span>
-                    <p className={classNames('text', styles.modalText)}>
-                        Нельзя удалять продукт, который используется в рецептах
-                    </p>
-                </div>
+                <span className="icon-16"></span>
+                <p className={classNames('text', styles.modalText)}>
+                    Нельзя удалить продукт, который используется в рецептах
+                </p>
             </Modal>
             <Alert />
         </Layout>

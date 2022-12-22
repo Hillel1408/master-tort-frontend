@@ -76,4 +76,12 @@
 .buttons {
     display: flex;
     justify-content: space-between;
+    @media print {
+        display: none;
+    }
+}
+.addBlock {
+    @media print {
+        display: none;
+    }
 }

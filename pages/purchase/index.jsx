@@ -175,7 +175,12 @@ export default function Purchase() {
                             </div>
                         )}
                         <Link href="/">
-                            <div className="addBlock">
+                            <div
+                                className={classNames(
+                                    'addBlock',
+                                    styles.addBlock
+                                )}
+                            >
                                 <span
                                     className={classNames(
                                         'small-text',

@@ -24,6 +24,7 @@ export default function Settings() {
 
     const saveSettings = async () => {
         let flag = false;
+        //провверяем все ли настройки ввел пользователь
         Object.keys(settings).map((key) => {
             if (key === 'weightOfCoveredCake') {
                 if (settings[key][0] === '') flag = true;

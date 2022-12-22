@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrdersNav } from '../../components/OrdersNav';
 import { OrderCake } from '../../components/OrderCake';
+import { Modal } from '../../components/Modal';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Orders.module.scss';
@@ -16,6 +17,7 @@ export default function Orders() {
     const [boards, setBoards] = useState();
     const [currentBoard, setCurrentBoard] = useState('');
     const [currentItem, setCurrentItem] = useState('');
+    const [modalActive, setModalActive] = useState(false);
 
     const updateStatusOrder = async (currentBoard, board) => {
         //обновляем доски на сервере, так как у них меняются элементы и их порядок
@@ -41,22 +43,33 @@ export default function Orders() {
     };
 
     const sendArchive = async (dataUser, boards, board) => {
-        //очищаем архив в стейте и на сервере
-        try {
-            //проверяем есть ли вообще элементы на доске "архив"
-            if (board.items.length > 0) {
-                const response = await OrdersService.updateOrders(
-                    dataUser.id,
-                    board
-                );
-                let copy = Object.assign([], boards);
-                copy[3].items = [];
-                //если заказов на досках не осталось то скрываем доски и выводим сообщение
-                if (checkKanbanOrders(boards)) setBoards(copy);
-                else setBoards('');
+        //проверяем есть ли вообще элементы на доске "архив"
+        if (board.items.length > 0) {
+            let flag = false;
+            //проверяем есть ли заказ с актуальной датой
+            board.items.map((item) => {
+                const today = new Date();
+                const date = new Date(item.date + 'T' + item.time);
+                if ((date - today) / (1000 * 3600 * 24) > 0) flag = true;
+            });
+            if (flag) {
+                //если есть то выводим модалку с сообщением
+                setModalActive(true);
+            } else {
+                try {
+                    const response = await OrdersService.updateOrders(
+                        dataUser.id,
+                        board
+                    );
+                    let copy = Object.assign([], boards);
+                    copy[3].items = [];
+                    //если заказов на досках не осталось то скрываем доски и выводим сообщение
+                    if (checkKanbanOrders(boards)) setBoards(copy);
+                    else setBoards('');
+                } catch (e) {
+                    console.log(e.response?.data?.message);
+                }
             }
-        } catch (e) {
-            console.log(e.response?.data?.message);
         }
     };
 
@@ -266,6 +279,9 @@ export default function Orders() {
                                                 updateStatusOrder={
                                                     updateStatusOrder
                                                 }
+                                                rushOrder={
+                                                    dataUser.rushOrder.value
+                                                }
                                             />
                                         ))}
                                 </div>
@@ -323,6 +339,16 @@ export default function Orders() {
                     </h2>
                 )
             )}
+            <Modal
+                active={modalActive}
+                setActive={setModalActive}
+                closeIcon={true}
+            >
+                <span className="icon-16"></span>
+                <p className={classNames('text', styles.modalText)}>
+                    Нельзя отправить в архив заказы с актуальной датой
+                </p>
+            </Modal>
         </Layout>
     );
 }

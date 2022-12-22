@@ -23,9 +23,11 @@ function Td({
                 className={classNames(
                     styles.status,
                     count
-                        ? isRushOrder
+                        ? isRushOrder === 'urgent'
                             ? styles.statusUrgent
-                            : styles.statusOrdinary
+                            : isRushOrder === 'ordinary'
+                            ? styles.statusOrdinary
+                            : styles.statusArchive
                         : '',
                     today && styles.today
                 )}

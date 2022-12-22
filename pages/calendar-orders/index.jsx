@@ -201,9 +201,13 @@ export default function CalendarOrders() {
                 //проверяем является ли заказ срочным
                 const day = date.getDate();
                 const a = (date - today) / (1000 * 3600 * 24);
+                const status = '';
+                if (a > 0 && a <= dataUser.rushOrder.value) status = 'urgent';
+                else if (a < 0) status = 'archive';
+                else status = 'ordinary';
                 const obj = {
                     ...item,
-                    isRushOrder: a > 0 && a <= dataUser.rushOrder.value,
+                    isRushOrder: status,
                 };
                 asd[day] ? (asd[day] = [...asd[day], obj]) : (asd[day] = [obj]);
             }
@@ -359,12 +363,16 @@ export default function CalendarOrders() {
                                     <OrderCake
                                         key={item._id}
                                         item={item}
-                                        type={item.status} //archive или kanban
+                                        type={
+                                            item.status === 'archive' &&
+                                            'archive'
+                                        }
                                         bg={
                                             item.status === 'archive' &&
                                             '#f4f2f1'
                                         }
                                         style="calendarCake"
+                                        rushOrder={dataUser.rushOrder.value}
                                     />
                                 ))}
                             </div>

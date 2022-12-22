@@ -730,7 +730,12 @@ function TabContent({
                                         </div>
                                     ))}
                             </div>
-                            <div className="addBlock">
+                            <div
+                                className={classNames(
+                                    'addBlock',
+                                    styles.addBlock
+                                )}
+                            >
                                 <span
                                     className={classNames(
                                         'small-text',
@@ -813,7 +818,12 @@ function TabContent({
                                             />
                                         )
                                     )}
-                                    <div className="addBlock">
+                                    <div
+                                        className={classNames(
+                                            'addBlock',
+                                            styles.addBlock
+                                        )}
+                                    >
                                         <span
                                             className={classNames(
                                                 'small-text',

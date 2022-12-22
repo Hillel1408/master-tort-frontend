@@ -3,6 +3,8 @@ import Image from 'next/image';
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 function OrderCake({
     dropHandler,
@@ -19,7 +21,10 @@ function OrderCake({
     boards,
     setBoards,
     updateStatusOrder,
+    rushOrder,
 }) {
+    const [typeOrder, setTypeOrder] = useState(type);
+
     const updateKanban = (index) => {
         const currentIndex = board.items.indexOf(item);
         let clone = JSON.parse(JSON.stringify(boards[index]));
@@ -38,12 +43,23 @@ function OrderCake({
         );
         updateStatusOrder(clone, board);
     };
+
+    useEffect(() => {
+        if (item.status !== 'archive') {
+            const date = new Date(item.date + 'T' + item.time);
+            const today = new Date();
+            const a = (date - today) / (1000 * 3600 * 24);
+            if (a < 0) setTypeOrder('normal');
+            else if (a < rushOrder) setTypeOrder('urgent');
+        }
+    }, []);
+
     return (
         <Link
             href={`/${item._id}`}
             className={classNames(
                 styles.root,
-                styles[type],
+                styles[typeOrder],
                 stylesOrders[style],
                 'item'
             )}
@@ -64,7 +80,9 @@ function OrderCake({
                 />
             </div>
             <div className={styles.content}>
-                <span className={styles.contentNumber}>№{item.number}</span>
+                <span className={classNames(styles.contentNumber, 'icon-27')}>
+                    №{item.number}
+                </span>
                 <p className={classNames(styles.contentText, 'small-text')}>
                     {item.orderName}
                 </p>

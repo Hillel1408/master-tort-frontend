@@ -6,6 +6,9 @@
         justify-content: space-between;
         width: 100%;
     }
+    @media print {
+        display: none;
+    }
 }
 .nav {
     &List {

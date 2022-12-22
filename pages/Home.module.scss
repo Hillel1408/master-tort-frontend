@@ -10,6 +10,9 @@
     display: flex;
     align-items: center;
     overflow: auto;
+    @media print {
+        display: none;
+    }
     &Item {
         cursor: pointer;
         padding: 6px 20px;
@@ -171,8 +174,6 @@
         overflow: auto;
         text-align: center;
         margin-bottom: 30px;
-    }
-    &Canvas {
     }
     &Block {
         width: 100%;
@@ -423,6 +424,9 @@
         height: 50px;
         fill: #f4f2f1;
     }
+    @media print {
+        display: none;
+    }
 }
 .backLink {
     flex: 1 1 auto;
@@ -437,5 +441,10 @@
     &Text {
         max-width: 380px;
         margin: 14px auto 0 auto;
+    }
+}
+.addBlock {
+    @media print {
+        display: none;
     }
 }

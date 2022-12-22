@@ -1,7 +1,7 @@
 import { TableCell } from '../../TableCell';
 import stylesTable from '../../Table/Table.module.scss';
 
-function BodyTable({ settings, index }) {
+function BodyTable({ settings, index, setSettings }) {
     return (
         <div
             className={stylesTable.tr}
@@ -28,6 +28,7 @@ function BodyTable({ settings, index }) {
                         }
                         saveSettings={(item, thValue, index) => {
                             settings[thValue][index] = item;
+                            setSettings({ ...settings });
                         }}
                     />
                 </>

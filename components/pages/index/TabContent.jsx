@@ -47,6 +47,7 @@ function TabContent({
 
     const [data, setData] = useState(items[index].calculation);
     const [total, setTotal] = useState(items[index].total);
+    const [text, setText] = useState('');
 
     const dispatch = useDispatch();
 
@@ -63,6 +64,10 @@ function TabContent({
         indent: '',
         recipe: { value: '', label: '' },
     };
+
+    useEffect(() => {
+        console.log(items[index].table);
+    }, [items[index].table]);
 
     useEffect(() => {
         //проверяем заполнил ли пользователь данные, необходимые для добавления заказа
@@ -290,9 +295,27 @@ function TabContent({
                 });
                 if (a === -1) {
                     flag = true;
+                    setText(
+                        'Нельзя рассчитать заказ с рецептом которого не существует'
+                    );
                     break;
                 }
             }
+        }
+        if (items[index].table.length === 0) {
+            flag = true;
+            setText('Вы не заполнили параметры торта');
+        } else {
+            items[index].table.map((item) => {
+                if (
+                    item.diameter === '' ||
+                    item.height === '' ||
+                    item.indent === ''
+                ) {
+                    flag = true;
+                    setText('Вы заполнили не все параметры торта');
+                }
+            });
         }
         if (flag) {
             setModalActive(true);
@@ -935,9 +958,7 @@ function TabContent({
                 closeIcon={true}
             >
                 <span className="icon-16"></span>
-                <p className={classNames('text', styles.modalText)}>
-                    Нельзя рассчитать заказ с рецептом которого не существует
-                </p>
+                <p className={classNames('text', styles.modalText)}>{text}</p>
             </Modal>
             <Alert />
         </div>

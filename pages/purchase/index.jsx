@@ -8,6 +8,7 @@ import { OrderCake } from '../../components/OrderCake';
 import { Tr } from '../../components/pages/purchase/Tr';
 import { Alert } from '../../components/Alert';
 import { setAlert } from '../../redux/cakeSlice';
+import { Modal } from '../../components/Modal';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Purchase.module.scss';
@@ -22,6 +23,8 @@ export default function Purchase() {
     const [orders, setOrders] = useState([]);
     const [sumProducts, setSumProducts] = useState('');
     const [checkbox, setCheckbox] = useState('');
+    const [modal, setModal] = useState(false);
+    const [itemId, setItemId] = useState('');
 
     const dispatch = useDispatch();
 
@@ -40,6 +43,24 @@ export default function Purchase() {
             });
         });
         setSumProducts([...sumProducts]);
+    };
+
+    const deleteOrder = async () => {
+        setModal(false);
+        document.body.classList.remove('lock');
+        orders.map((a, index) => {
+            if (a._id === itemId) {
+                orders.splice(index, 1);
+            }
+        });
+        if (orders.length === 0) setOrders([]);
+        try {
+            const response = await OrdersService.deleteOrder(itemId, {
+                userId: dataUser.id,
+            });
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
     };
 
     const saveSettings = async () => {
@@ -170,6 +191,8 @@ export default function Purchase() {
                                         key={item.id}
                                         item={item}
                                         style="purchaseCake"
+                                        setModal={setModal}
+                                        setItemId={setItemId}
                                     />
                                 ))}
                             </div>
@@ -324,6 +347,32 @@ export default function Purchase() {
                 </h2>
             )}
             <Alert />
+            <Modal active={modal} setActive={setModal} closeIcon={true}>
+                <p className={classNames('text', styles.modalText)}>
+                    Подтвердите действие
+                </p>
+                <div className={styles.modalButtons}>
+                    <button
+                        className={classNames(stylesBtn.btn, 'small-text')}
+                        onClick={() => {
+                            setModal(false);
+                            document.body.classList.remove('lock');
+                        }}
+                    >
+                        Отмена
+                    </button>
+                    <button
+                        className={classNames(
+                            stylesBtn.btn,
+                            stylesBtn.btn__secondary,
+                            'small-text'
+                        )}
+                        onClick={() => deleteOrder()}
+                    >
+                        Ok
+                    </button>
+                </div>
+            </Modal>
         </Layout>
     );
 }

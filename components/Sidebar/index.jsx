@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { NavLink } from './NavLink';
@@ -55,7 +54,7 @@ function Sidebar() {
                     prefetch={false}
                     className={classNames('text', styles.logoLink)}
                 >
-                    <Image src="/logo.svg" alt="" height="60" width="60" />
+                    <img src="/logo.svg" alt="" height="60" width="60" />
                     Помощник кондитеру
                 </Link>
             </div>

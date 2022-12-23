@@ -32,4 +32,8 @@ export default class OrdersService {
     static async updateTotal(user, values) {
         return $api.patch(`/update-total/${user}`, values);
     }
+
+    static async deleteOrder(id, values) {
+        return $api.patch(`/order/${id}`, values);
+    }
 }

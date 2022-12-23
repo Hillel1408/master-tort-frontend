@@ -3,11 +3,13 @@ import classNames from 'classnames';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
+import { Modal } from '../../components/Modal';
 import { OrdersNav } from '../../components/OrdersNav';
 import { Td } from '../../components/pages/calendar-orders/Td';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './CalendarOrders.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function CalendarOrders() {
     const [isAuth, setIsAuth] = useState('');
@@ -21,6 +23,8 @@ export default function CalendarOrders() {
     const [filteredOrders, setFilteredOrders] = useState();
     const [activeDay, setActiveDay] = useState('');
     const [isActive, setIsActive] = useState('');
+    const [modal, setModal] = useState(false);
+    const [itemId, setItemId] = useState('');
 
     const monthArr = [
         ['январь', 'января'],
@@ -162,7 +166,10 @@ export default function CalendarOrders() {
             //получаем заказы пользователя
             try {
                 const response = await OrdersService.getOrders(userId);
-                setOrders(response.data);
+                const newOrders = response.data.filter((item) => {
+                    return item.status !== 'delete';
+                });
+                setOrders(newOrders);
                 //получаем текущий год, месяц и день
                 const date = new Date();
                 setYear(date.getFullYear());
@@ -213,6 +220,31 @@ export default function CalendarOrders() {
             }
         });
         setFilteredOrders(asd);
+    };
+
+    const deleteOrder = async () => {
+        setModal(false);
+        document.body.classList.remove('lock');
+        filteredOrders[activeDay].map((item, index) => {
+            if (item._id === itemId) {
+                filteredOrders[activeDay].splice(index, 1);
+                if (filteredOrders[activeDay].length === 0) {
+                    setActiveDay('');
+                }
+            }
+        });
+        orders.map((a, index) => {
+            if (a._id === itemId) {
+                orders.splice(index, 1);
+            }
+        });
+        try {
+            const response = await OrdersService.deleteOrder(itemId, {
+                userId: dataUser.id,
+            });
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
     };
 
     useEffect(() => {
@@ -319,12 +351,18 @@ export default function CalendarOrders() {
                                                             ] &&
                                                             filteredOrders[
                                                                 amount
+                                                            ].length > 0 &&
+                                                            filteredOrders[
+                                                                amount
                                                             ].length
                                                         }
                                                         isRushOrder={
                                                             filteredOrders[
                                                                 amount
                                                             ] &&
+                                                            filteredOrders[
+                                                                amount
+                                                            ].length > 0 &&
                                                             filteredOrders[
                                                                 amount
                                                             ][0].isRushOrder
@@ -373,6 +411,8 @@ export default function CalendarOrders() {
                                         }
                                         style="calendarCake"
                                         rushOrder={dataUser.rushOrder.value}
+                                        setModal={setModal}
+                                        setItemId={setItemId}
                                     />
                                 ))}
                             </div>
@@ -387,6 +427,32 @@ export default function CalendarOrders() {
                     )}
                 </div>
             </div>
+            <Modal active={modal} setActive={setModal} closeIcon={true}>
+                <p className={classNames('text', styles.modalText)}>
+                    Подтвердите действие
+                </p>
+                <div className={styles.modalButtons}>
+                    <button
+                        className={classNames(stylesBtn.btn, 'small-text')}
+                        onClick={() => {
+                            setModal(false);
+                            document.body.classList.remove('lock');
+                        }}
+                    >
+                        Отмена
+                    </button>
+                    <button
+                        className={classNames(
+                            stylesBtn.btn,
+                            stylesBtn.btn__secondary,
+                            'small-text'
+                        )}
+                        onClick={() => deleteOrder()}
+                    >
+                        Ok
+                    </button>
+                </div>
+            </Modal>
         </Layout>
     );
 }

@@ -40,7 +40,7 @@
             height: 550px;
             justify-content: space-between;
             @media (max-width: 768px) {
-                height: 741px;
+                height: 743px;
             }
             @media (max-width: 576px) {
                 height: auto;
@@ -123,6 +123,9 @@
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                 }
+            }
+            @media print {
+                display: none;
             }
         }
     }
@@ -298,6 +301,7 @@
         color: #002222;
         span {
             display: flex;
+            border: 1px solid transparent;
             flex-direction: column;
             min-width: 120px;
             align-items: center;
@@ -318,8 +322,9 @@
         input {
             visibility: hidden;
             position: absolute;
+
             &:checked + span {
-                outline: 1px solid var(--mainColor);
+                border: 1px solid var(--mainColor);
                 color: var(--mainColor);
             }
         }

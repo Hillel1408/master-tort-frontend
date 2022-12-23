@@ -158,4 +158,10 @@
         max-width: 380px;
         margin: 14px auto 0 auto;
     }
+    &Buttons {
+        margin-top: 14px;
+        button:first-child {
+            margin-right: 10px;
+        }
+    }
 }

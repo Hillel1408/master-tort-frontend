@@ -10,6 +10,7 @@ import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Orders.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Orders() {
     const [isAuth, setIsAuth] = useState('');
@@ -18,6 +19,8 @@ export default function Orders() {
     const [currentBoard, setCurrentBoard] = useState('');
     const [currentItem, setCurrentItem] = useState('');
     const [modalActive, setModalActive] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [itemId, setItemId] = useState('');
 
     const updateStatusOrder = async (currentBoard, board) => {
         //обновляем доски на сервере, так как у них меняются элементы и их порядок
@@ -156,6 +159,30 @@ export default function Orders() {
         );
     };
 
+    const deleteOrder = async () => {
+        let flag = true;
+        setModal(false);
+        document.body.classList.remove('lock');
+        boards.map((a) => {
+            a.items.map((b, index) => {
+                if (b._id === itemId) {
+                    a.items.splice(index, 1);
+                }
+            });
+            if (a.items.length > 0) {
+                flag = false;
+            }
+        });
+        if (flag) setBoards('');
+        try {
+            const response = await OrdersService.deleteOrder(itemId, {
+                userId: dataUser.id,
+            });
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
     useEffect(() => {
         const filterOrders = async (orders) => {
             //создаем доску, если у нас есть заказы
@@ -282,6 +309,8 @@ export default function Orders() {
                                                 rushOrder={
                                                     dataUser.rushOrder.value
                                                 }
+                                                setModal={setModal}
+                                                setItemId={setItemId}
                                             />
                                         ))}
                                 </div>
@@ -348,6 +377,33 @@ export default function Orders() {
                 <p className={classNames('text', styles.modalText)}>
                     Нельзя отправить в архив заказы с актуальной датой
                 </p>
+            </Modal>
+            <Modal active={modal} setActive={setModal} closeIcon={true}>
+                <span className="icon-16"></span>
+                <p className={classNames('text', styles.modalText)}>
+                    Подтвердите действие
+                </p>
+                <div className={styles.modalButtons}>
+                    <button
+                        className={classNames(stylesBtn.btn, 'small-text')}
+                        onClick={() => {
+                            setModal(false);
+                            document.body.classList.remove('lock');
+                        }}
+                    >
+                        Отмена
+                    </button>
+                    <button
+                        className={classNames(
+                            stylesBtn.btn,
+                            stylesBtn.btn__secondary,
+                            'small-text'
+                        )}
+                        onClick={() => deleteOrder()}
+                    >
+                        Принять
+                    </button>
+                </div>
             </Modal>
         </Layout>
     );

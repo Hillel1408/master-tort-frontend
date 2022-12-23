@@ -4,15 +4,37 @@ import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
+import { Modal } from '../../components/Modal';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
 import styles from '../purchase/Purchase.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function ArchiveOrders() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [orders, setOrders] = useState(undefined);
+    const [modal, setModal] = useState(false);
+    const [itemId, setItemId] = useState('');
+
+    const deleteOrder = async () => {
+        setModal(false);
+        document.body.classList.remove('lock');
+        orders.map((a, index) => {
+            if (a._id === itemId) {
+                orders.splice(index, 1);
+            }
+        });
+        if (orders.length === 0) setOrders('');
+        try {
+            const response = await OrdersService.deleteOrder(itemId, {
+                userId: dataUser.id,
+            });
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
 
     useEffect(() => {
         const filterOrders = async (orders) => {
@@ -73,6 +95,8 @@ export default function ArchiveOrders() {
                             key={item._id}
                             type={item.status}
                             item={item}
+                            setModal={setModal}
+                            setItemId={setItemId}
                         />
                     ))}
                 </div>
@@ -89,6 +113,32 @@ export default function ArchiveOrders() {
                     </h2>
                 )
             )}
+            <Modal active={modal} setActive={setModal} closeIcon={true}>
+                <p className={classNames('text', styles.modalText)}>
+                    Подтвердите действие
+                </p>
+                <div className={styles.modalButtons}>
+                    <button
+                        className={classNames(stylesBtn.btn, 'small-text')}
+                        onClick={() => {
+                            setModal(false);
+                            document.body.classList.remove('lock');
+                        }}
+                    >
+                        Отмена
+                    </button>
+                    <button
+                        className={classNames(
+                            stylesBtn.btn,
+                            stylesBtn.btn__secondary,
+                            'small-text'
+                        )}
+                        onClick={() => deleteOrder()}
+                    >
+                        Ok
+                    </button>
+                </div>
+            </Modal>
         </Layout>
     );
 }

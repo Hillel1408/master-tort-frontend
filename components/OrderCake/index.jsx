@@ -22,6 +22,8 @@ function OrderCake({
     setBoards,
     updateStatusOrder,
     rushOrder,
+    setModal,
+    setItemId,
 }) {
     const [typeOrder, setTypeOrder] = useState(type);
 
@@ -42,6 +44,12 @@ function OrderCake({
             })
         );
         updateStatusOrder(clone, board);
+    };
+
+    const deleteOrder = (e) => {
+        e.preventDefault();
+        setModal(true);
+        setItemId(item._id);
     };
 
     useEffect(() => {
@@ -71,6 +79,11 @@ function OrderCake({
             onDragEnd={(e) => dragEndHandler(e)}
             onDrop={(e) => dropHandler(e, board, item)}
         >
+            <i
+                className="icon-11"
+                title="Удалить"
+                onClick={(e) => deleteOrder(e)}
+            ></i>
             <div className={styles.img}>
                 <Image
                     src={`http://localhost:5000${item.imagesUrl[0]}`}

@@ -4,6 +4,24 @@ import { CustomSelect } from '../../CustomSelect/';
 import stylesTable from '../../Table/Table.module.scss';
 
 function Tr({ select, index, item, items, tableIndex, setItems }) {
+    const saveSettings = (item, thValue, index) => {
+        let clone = JSON.parse(JSON.stringify(items));
+        let a = clone[index].table;
+        a[tableIndex] = {
+            ...items[index].table[tableIndex],
+            [thValue]: item,
+        };
+        if (thValue === 'diameter') {
+            for (let i = 0; i < a.length; i++) {
+                if (a[i - 1])
+                    a[i - 1].indent = a[i].diameter - a[i - 1].diameter;
+                if (!a[i + 1])
+                    a[i].indent = clone[index].standWidth - a[i].diameter;
+            }
+        }
+        setItems([...clone]);
+    };
+
     return (
         <div className={stylesTable.wrapper}>
             <div
@@ -38,12 +56,11 @@ function Tr({ select, index, item, items, tableIndex, setItems }) {
                                 thValue={keyObj}
                                 type="number"
                                 index={index}
-                                saveSettings={(item, thValue, index) => {
-                                    items[index].table[tableIndex] = {
-                                        ...items[index].table[tableIndex],
-                                        [thValue]: item,
-                                    };
-                                }}
+                                disabled={keyObj === 'indent'}
+                                purchase={keyObj === 'indent'}
+                                saveSettings={(item, thValue, index) =>
+                                    saveSettings(item, thValue, index)
+                                }
                             />
                         )
                     )

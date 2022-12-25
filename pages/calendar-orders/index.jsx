@@ -428,6 +428,7 @@ export default function CalendarOrders() {
                 </div>
             </div>
             <Modal active={modal} setActive={setModal} closeIcon={true}>
+                <span className="icon-16"></span>
                 <p className={classNames('text', styles.modalText)}>
                     Подтвердите действие
                 </p>
@@ -449,7 +450,7 @@ export default function CalendarOrders() {
                         )}
                         onClick={() => deleteOrder()}
                     >
-                        Ok
+                        Принять
                     </button>
                 </div>
             </Modal>

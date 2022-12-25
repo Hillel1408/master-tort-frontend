@@ -8,6 +8,7 @@ import { Tr } from './Tr';
 import { Alert } from '../../Alert';
 import { Total } from './Total';
 import { Modal } from '../../Modal';
+import { Canvas } from './Canvas';
 import UploadService from '../../../services/UploadService';
 import OrdersService from '../../../services/OrdersService';
 import { setAlert } from '../../../redux/cakeSlice';
@@ -30,7 +31,7 @@ function TabContent({
     recipe,
 }) {
     const [drag, setDrag] = useState(false);
-    const [isCake, setIsCake] = useState(false);
+    const [isCake, setIsCake] = useState(undefined);
 
     const [range, setRange] = useState(items[index].range);
     const [orderName, setOrderName] = useState(items[index].orderName);
@@ -56,18 +57,27 @@ function TabContent({
     const buttonRef = useRef('');
     const canvasRef = useRef('');
 
-    const thTitle = ['Диаметр, см.', 'Высота, см.', 'Отступ, см.', 'Рецепт'];
+    const thTitle = ['Диаметр, см.', 'Высота, см.', 'Рецепт', 'Отступ, см.'];
 
     const trValue = {
         diameter: '',
         height: '',
-        indent: '',
         recipe: { value: '', label: '' },
+        indent: '',
     };
 
     useEffect(() => {
-        console.log(items[index].table);
-    }, [items[index].table]);
+        if (
+            range &&
+            standWidth &&
+            standLength &&
+            cakeShape &&
+            kindCake &&
+            items[index].table.length > 0
+        ) {
+            setIsCake(true);
+        } else setIsCake(false);
+    }, []);
 
     useEffect(() => {
         //проверяем заполнил ли пользователь данные, необходимые для добавления заказа
@@ -119,6 +129,9 @@ function TabContent({
         setCakeShape('');
         setKindCake('');
         setImage([]);
+        setData('');
+        setTotal('');
+        setIsCake(false);
     };
 
     const onDropHandler = async (e) => {
@@ -171,6 +184,8 @@ function TabContent({
         });
         arr.push(total);
         setTotal(arr);
+        items[index].total = arr;
+        console.log(items);
     };
 
     const calcPr = (data) => {
@@ -208,15 +223,16 @@ function TabContent({
             '#006564',
             '#005B5A',
         ];
-        const canvas = document.querySelector('.Home_cakeImage__F__aZ'); //блок где отображаем график
+        const canvas = document.querySelector('.main'); //блок где отображаем график
         const height = '434'; //высота canvas
         const length = items[index].table.length; //количество ярусов торта
         const scale = 10; //масштаб 1 см scale пикселей
         let sum = 0; // высота торта
-        let margin = 10; //отступ от границ canvas
+        let margin = 0; //отступ от границ по вертикали canvas
         let maxWidth = 0; //самый широкий ярус торта
         const ctx = canvasRef.current.getContext('2d');
-        const width = canvas.offsetWidth - 2;
+        const width = (canvas.offsetWidth / 100) * 35 - 95;
+
         canvasRef.current.width = width;
         canvasRef.current.height = height;
 
@@ -228,10 +244,12 @@ function TabContent({
                 maxWidth = Number(items[index].table[i].diameter);
             }
         }
+        if (Number(items[index].standWidth) > maxWidth)
+            maxWidth = items[index].standWidth;
         //если торт помещается в canvas блок, то делаем масштаб по умолчанию
         if (
             sum * scale + margin * 2 < height &&
-            maxWidth * scale + 40 * 2 < width
+            maxWidth * scale + 30 * 2 < width
         ) {
             scale = 8;
         }
@@ -242,11 +260,20 @@ function TabContent({
             }
         }
         //уменьшаем масштаб, если торт не влизает по ширине в canvas
-        if (maxWidth * scale + 40 * 2 > width) {
-            while (maxWidth * scale + 40 * 2 > width) {
+        if (maxWidth * scale + 30 * 2 > width) {
+            while (maxWidth * scale + 30 * 2 > width) {
                 scale = scale - 0.01;
             }
         }
+        //рисуем подставку
+        ctx.fillStyle = colors[length];
+        ctx.fillRect(
+            width / 2 - (items[index].standWidth * scale) / 2, //начальная координата X
+            height - 1 * scale - margin, //начальная координата Y
+            items[index].standWidth * scale, //ширина яруса
+            1 * scale //высота яруса
+        );
+        margin = margin + 1 * scale;
         //перебираем и рисуем ярусы торта
         for (let i = length - 1; i >= 0; i--) {
             ctx.fillStyle = colors[i];
@@ -310,7 +337,8 @@ function TabContent({
                 if (
                     item.diameter === '' ||
                     item.height === '' ||
-                    item.indent === ''
+                    item.indent === '' ||
+                    item.recipe.value === ''
                 ) {
                     flag = true;
                     setText('Вы заполнили не все параметры торта');
@@ -327,12 +355,22 @@ function TabContent({
                     user: userId,
                 });
                 setData(response.data);
+                items[index].calculation = response.data;
                 calcPr(response.data);
                 canvas();
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
         }
+    };
+
+    const updateIndent = () => {
+        let clone = JSON.parse(JSON.stringify(items));
+        const a = clone[index].table;
+        if (a[a.length - 1]) {
+            a[a.length - 1].indent = standWidth - a[a.length - 1].diameter;
+        }
+        setItems([...clone]);
     };
 
     const addOrder = async () => {
@@ -486,6 +524,7 @@ function TabContent({
                                         onBlur={() => {
                                             items[index].standWidth =
                                                 standWidth;
+                                            updateIndent();
                                         }}
                                     />
                                     <input
@@ -841,29 +880,31 @@ function TabContent({
                                             />
                                         )
                                     )}
-                                    <div
-                                        className={classNames(
-                                            'addBlock',
-                                            styles.addBlock
-                                        )}
-                                    >
-                                        <span
+                                    {items[index].table.length < 10 && (
+                                        <div
                                             className={classNames(
-                                                'small-text',
-                                                'icon-8'
+                                                'addBlock',
+                                                styles.addBlock
                                             )}
-                                            onClick={() => {
-                                                const id = uuid();
-                                                items[index].table = [
-                                                    ...items[index].table,
-                                                    { ...trValue, id: id },
-                                                ];
-                                                setItems([...items]);
-                                            }}
                                         >
-                                            Добавить ярус
-                                        </span>
-                                    </div>
+                                            <span
+                                                className={classNames(
+                                                    'small-text',
+                                                    'icon-8'
+                                                )}
+                                                onClick={() => {
+                                                    const id = uuid();
+                                                    items[index].table = [
+                                                        ...items[index].table,
+                                                        { ...trValue, id: id },
+                                                    ];
+                                                    setItems([...items]);
+                                                }}
+                                            >
+                                                Добавить ярус
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -932,24 +973,24 @@ function TabContent({
                         Визуализация силуэта
                     </h2>
                 </div>
-                {isCake ? (
-                    <div className={styles.cakeImage}>
-                        <canvas
-                            ref={canvasRef}
-                            className={styles.cakeCanvas}
-                            height="434"
-                        ></canvas>
-                    </div>
-                ) : (
-                    <div className={styles.cakeBlock}>
-                        <div>
-                            <span className="icon-2"></span>
-                            <p className="title">
-                                Скоро здесь появится силуэт вашего торта
-                            </p>
+                <div className={styles.cakeWrapper}>
+                    {isCake === undefined ? (
+                        ''
+                    ) : isCake ? (
+                        <div className={styles.cakeImage}>
+                            <Canvas canvasRef={canvasRef} canvas={canvas} />
                         </div>
-                    </div>
-                )}
+                    ) : (
+                        <div className={styles.cakeBlock}>
+                            <div>
+                                <span className="icon-2"></span>
+                                <p className="title">
+                                    Скоро здесь появится силуэт вашего торта
+                                </p>
+                            </div>
+                        </div>
+                    )}
+                </div>
                 {total.length > 0 && <Total data={data} total={total} />}
             </div>
             <Modal

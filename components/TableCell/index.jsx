@@ -13,7 +13,7 @@ function TableCell({
     saveSettings,
     purchase,
 }) {
-    const [item, setItem] = useState('');
+    const [item, setItem] = useState(value);
 
     const handleKey = (e) => {
         if (e.key === 'Enter' && item !== value) {

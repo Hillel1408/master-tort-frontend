@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
@@ -62,7 +63,7 @@ export default function Home() {
         const getProducts = async (user) => {
             //получаем продукты пользователя
             const response = await ProductsService.get(user);
-            setProducts(response.data.products);
+            response.data && setProducts(response.data.products);
         };
 
         const getOrder = async () => {
@@ -103,6 +104,9 @@ export default function Home() {
             dataUser={dataUser}
             title={items[0] ? items[0].orderName : ''}
         >
+            <Head>
+                <title>Расчет тортов</title>
+            </Head>
             {items[0] ? (
                 <>
                     <div className={styles.tab}>

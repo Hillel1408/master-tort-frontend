@@ -6,8 +6,6 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import { SocialLinks } from '../../components/SocialLinks';
 import AuthService from '../../services/AuthService';
-import SettingsService from '../../services/SettingsService';
-import { settingsMastic } from '../../data/settings';
 import styles from '../login/Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
@@ -34,27 +32,13 @@ export default function Registration() {
         mode: 'onChange',
     });
 
-    const saveSettings = async (id) => {
-        //сохраняем дефолтные настройки пользователя (перенести на сервер)
-        try {
-            const response = await SettingsService.set({
-                ...settingsMastic,
-                user: id,
-            });
-            router.push('/');
-        } catch (e) {
-            setIsLoading(false);
-            console.log(e.response?.data?.message);
-        }
-    };
-
     const onSubmit = async (values) => {
         //обработчик формы, отправляем регистрационные данные
         try {
             setIsLoading(true);
             const response = await AuthService.registration(values);
             localStorage.setItem('token', response.data.accessToken);
-            saveSettings(response.data.user.id);
+            router.push('/');
         } catch (e) {
             console.log(e.response?.data?.message);
             setIsLoading(false);

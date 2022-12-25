@@ -1,12 +1,3 @@
-const settingsMastic = {
-    diameter: [22, 12],
-    height: [6, 13],
-    cakeWeightUpToTight: [1514, 1012],
-    standWeight: [170, ''],
-    leveledCakeWeight: [1820, 1212],
-    weightOfCoveredCake: [2280, ''],
-};
-
 const settingsNameTh = {
     diameter: 'Диаметр, cм.',
     height: 'Высота, см.',
@@ -28,4 +19,4 @@ const settingsText = [
     ],
 ];
 
-export { settingsMastic, settingsNameTh, settingsText };
+export { settingsNameTh, settingsText };

@@ -39,7 +39,7 @@ export default function Home() {
         //получаем продукты пользователя
         const getProducts = async (user) => {
             const response = await ProductsService.get(user);
-            setProducts(response.data.products);
+            response.data && setProducts(response.data.products);
         };
 
         const getRecipes = async (id) => {
@@ -88,7 +88,7 @@ export default function Home() {
             title="Расчет тортов"
         >
             <Head>
-                <title>Главная</title>
+                <title>Расчет тортов</title>
             </Head>
             <div className={styles.tab}>
                 {items.map((n, i) => (

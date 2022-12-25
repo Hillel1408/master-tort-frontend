@@ -107,9 +107,7 @@ export default function Recipes() {
             if (typeof orders[keyObj] === 'object') {
                 orders[keyObj].map((item) => {
                     item.table.map((a) => {
-                        if (recipeId === a.recipe.value) {
-                            flag = true;
-                        }
+                        if (recipeId === a.recipe.value) flag = true;
                     });
                 });
             }

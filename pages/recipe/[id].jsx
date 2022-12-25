@@ -65,7 +65,6 @@ export default function Recipe() {
             };
             const id = window.location.pathname.split('/recipe/')[1];
             const response = await RecipeService.updateRecipe(id, values);
-
             dispatch(
                 setAlert({
                     text: 'Рецепт успешно сохранен',

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 import classNames from 'classnames';
+import Layout from '../../components/Layout';
 import { BodyTable } from '../../components/pages/settings/BodyTable';
 import { Alert } from '../../components/Alert';
 import { Modal } from '../../components/Modal';
@@ -12,7 +13,6 @@ import { settingsText } from '../../data/settings';
 import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Settings.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
-import Layout from '../../components/Layout';
 
 export default function Settings() {
     const [isAuth, setIsAuth] = useState('');
@@ -69,7 +69,7 @@ export default function Settings() {
             //получаем настройки пользователя
             try {
                 const response = await SettingsService.get(user);
-                setSettings(response.data);
+                response.data && setSettings(response.data);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);

@@ -144,8 +144,10 @@ export default function Purchase() {
             //получаем заказы пользователя
             try {
                 const response = await OrdersService.getKanban(userId);
-                response.data && setOrders(response.data.purchase);
-                sumProducts(response.data.purchase);
+                if (response.data) {
+                    setOrders(response.data.purchase);
+                    sumProducts(response.data.purchase);
+                }
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);

@@ -3,7 +3,6 @@ import styles from '../../../pages/Home.module.scss';
 
 function Canvas({ canvasRef, canvas }) {
     useEffect(() => {
-        console.log(1);
         canvas();
     }, []);
     return (

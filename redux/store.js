@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cakeReducer from './cakeSlice';
 import { createWrapper } from 'next-redux-wrapper';
+import cakeReducer from './cakeSlice';
 
 export function makeStore() {
     return configureStore({

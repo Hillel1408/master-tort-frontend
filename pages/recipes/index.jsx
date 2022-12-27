@@ -6,6 +6,7 @@ import { Modal } from '../../components/Modal';
 import { CustomSelect } from '../../components/CustomSelect';
 import { Group } from '../../components/pages/recipes/Group';
 import { Recipe } from '../../components/pages/recipes/Recipe';
+import { Confirm } from '../../components/Confirm';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import UploadService from '../../services/UploadService';
@@ -34,9 +35,13 @@ export default function Recipes() {
     const [active, setActive] = useState('');
     const [orders, setOrders] = useState('');
     const [modalActive, setModalActive] = useState(false);
+    const [modal, setModal] = useState(false);
     const [textModal, setTextModal] = useState('');
 
     const [drag, setDrag] = useState(false);
+
+    const [recipeId, setRecipeId] = useState('');
+    const [gr, setGr] = useState('');
 
     const btnRef = useRef('');
     const btnRefRecipe = useRef('');
@@ -91,18 +96,42 @@ export default function Recipes() {
         }
     };
 
-    const updateCountRecipe = (groupId, iter) => {
+    const updateCountRecipe = (gr, iter) => {
         //обновляем количество рецептов в рубрике +/-
         const item = group.find((item) => {
-            return item._id === groupId;
+            return item._id === gr;
         });
         iter
             ? (item.countRecipe = item.countRecipe + 1)
             : (item.countRecipe = item.countRecipe - 1);
     };
 
-    const deleteRecipe = async (recipeId, groupId) => {
+    const deleteRec = async () => {
+        //удаляем рецепт с сервера и стейта
+        setModal(false);
+        document.body.classList.remove('lock');
+        try {
+            const response = await RecipeService.deleteRecipe(recipeId);
+            const newRecipe = recipe.filter((item) => {
+                return item._id !== recipeId;
+            });
+            setRecipe(newRecipe);
+            if (filterRecipe) {
+                //если рубрика удаленного рецепта в данный момент активна то удаляем рецепт и из нее
+                const newRecipe = filterRecipe.filter((item) => {
+                    return item._id !== recipeId;
+                });
+                setFilterRecipe(newRecipe);
+            }
+            updateCountRecipe(gr, false);
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
+
+    const deleteRecipe = async (recipeId) => {
         let flag = false;
+        //проверяем используется ли рецепт в активных заказах
         Object.keys(orders).map((keyObj) => {
             if (typeof orders[keyObj] === 'object') {
                 orders[keyObj].map((item) => {
@@ -118,24 +147,7 @@ export default function Recipes() {
             );
             setModalActive(true);
         } else {
-            //удаляем рецепт с сервера и стейта
-            try {
-                const response = await RecipeService.deleteRecipe(recipeId);
-                const newRecipe = recipe.filter((item) => {
-                    return item._id !== recipeId;
-                });
-                setRecipe(newRecipe);
-                if (filterRecipe) {
-                    //если рубрика удаленного рецепта в данный момент активна то удаляем рецепт и из нее
-                    const newRecipe = filterRecipe.filter((item) => {
-                        return item._id !== recipeId;
-                    });
-                    setFilterRecipe(newRecipe);
-                }
-                updateCountRecipe(groupId, false);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-            }
+            setModal(true);
         }
     };
 
@@ -391,9 +403,11 @@ export default function Recipes() {
                         {filterRecipe
                             ? filterRecipe.map((item) => (
                                   <Recipe
+                                      key={item._id}
                                       recipeName={item.recipeName}
                                       recipeUrl={item.recipeUrl}
-                                      key={item._id}
+                                      setRecipeId={setRecipeId}
+                                      setGr={setGr}
                                       deleteRecipe={deleteRecipe}
                                       recipeId={item._id}
                                       groupId={item.group}
@@ -408,6 +422,8 @@ export default function Recipes() {
                                       deleteRecipe={deleteRecipe}
                                       recipeId={item._id}
                                       groupId={item.group}
+                                      setGr={setGr}
+                                      setRecipeId={setRecipeId}
                                   />
                               ))}
                     </div>
@@ -532,8 +548,17 @@ export default function Recipes() {
                             onDragStart={(e) => dragStartHandler(e)}
                             onDragLeave={(e) => dragLeaveHandler(e)}
                             onDragOver={(e) => dragStartHandler(e)}
-                            className={classNames('icon-12', styles.icon12)}
-                        ></span>
+                            className={classNames(styles.icon12)}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                            </svg>
+                        </span>
                     </div>
                 )}
                 {textImage ? (
@@ -590,6 +615,7 @@ export default function Recipes() {
                     {textModal}
                 </p>
             </Modal>
+            <Confirm modal={modal} setModal={setModal} func={deleteRec} />
         </Layout>
     );
 }

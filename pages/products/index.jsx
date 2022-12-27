@@ -52,6 +52,7 @@ export default function Products() {
     };
 
     const saveSettings = async () => {
+        //сохраняем продукты пользователя
         try {
             const response = await ProductsService.set({
                 userId: dataUser.id,

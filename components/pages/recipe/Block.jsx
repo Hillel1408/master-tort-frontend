@@ -1,12 +1,12 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 import uuid from 'react-uuid';
-import stylesTable from '../../Table/Table.module.scss';
 import { Tr } from './Tr';
+import { Tooltip } from '../../Tooltip';
 import styles from '../../../pages/recipe/Recipe.module.scss';
-import { useState } from 'react';
 import stylesInput from '../../Input/Input.module.scss';
 import stylesBtn from '../../Btn/Btn.module.scss';
-import { Tooltip } from '../../Tooltip';
+import stylesTable from '../../Table/Table.module.scss';
 
 function Block({ item, setBlock, blockIndex, block, select }) {
     const [visiblePopup, setVisiblePopup] = useState('');
@@ -95,9 +95,9 @@ function Block({ item, setBlock, blockIndex, block, select }) {
                     )}
                 </div>
                 <span
+                    className={classNames('icon-11', stylesTable.delete)}
                     title="Удалить"
                     onClick={() => clickHandlerBlock()}
-                    className={classNames('icon-11', stylesTable.delete)}
                 ></span>
             </div>
             {item.products.length > 0 && (

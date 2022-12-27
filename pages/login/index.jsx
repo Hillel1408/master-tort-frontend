@@ -4,13 +4,13 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import Layout from '../../components/Layout';
 import { SocialLinks } from '../../components/SocialLinks';
 import { EmailForm } from '../../components/pages/login/EmailForm';
 import AuthService from '../../services/AuthService';
 import styles from './Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
-import Layout from '../../components/Layout';
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
@@ -33,6 +33,7 @@ export default function Login() {
     });
 
     const onSubmit = async (values) => {
+        //выполняем вход
         try {
             const response = await AuthService.login(values);
             localStorage.setItem('token', response.data.accessToken);
@@ -44,6 +45,7 @@ export default function Login() {
     };
 
     useEffect(() => {
+        //проверяем авторизован ли пользователь
         const checkAuth = async () => {
             try {
                 const response = await AuthService.refresh();

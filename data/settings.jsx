@@ -1,4 +1,4 @@
-const settingsNameTh = {
+const settingsTh = {
     diameter: 'Диаметр, cм.',
     height: 'Высота, см.',
     cakeWeightUpToTight: 'Вес торта до обтяжки, гр.',
@@ -19,4 +19,4 @@ const settingsText = [
     ],
 ];
 
-export { settingsNameTh, settingsText };
+export { settingsTh, settingsText };

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 import classNames from 'classnames';
 import Link from 'next/link';
@@ -6,20 +7,18 @@ import uuid from 'react-uuid';
 import Layout from '../../components/Layout';
 import { Block } from '../../components/pages/recipe/Block';
 import { Tooltip } from '../../components/Tooltip';
-import { Checkbox } from '../../components/CustomCheckbox/Checkbox';
+import { Checkbox } from '../../components/CustomCheckbox';
+import { Alert } from '../../components/Alert';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import ProductsService from '../../services/ProductsService';
 import UploadService from '../../services/UploadService';
+import { setAlert } from '../../redux/cakeSlice';
 import styles from './Recipe.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
-
-import { Alert } from '../../components/Alert';
-import { useDispatch } from 'react-redux';
-import { setAlert } from '../../redux/cakeSlice';
 
 export default function Recipe() {
     const [isAuth, setIsAuth] = useState('');
@@ -44,6 +43,7 @@ export default function Recipe() {
     const thTitle = ['Продукт', 'Брутто, гр.', 'Нетто, гр.'];
 
     useEffect(() => {
+        //делаем кнопку "сохранить" не активной если данные не заполнены
         if (btnRef.current) {
             if (checkbox) {
                 exit && height && diameter
@@ -54,6 +54,7 @@ export default function Recipe() {
     }, [exit, height, diameter, checkbox]);
 
     const saveSettings = async () => {
+        //сохраняем рецепт пользователя
         try {
             const values = {
                 products: block,
@@ -84,6 +85,7 @@ export default function Recipe() {
     };
 
     const handleSubmit = () => {
+        //добавляем полуфабрикат
         const id = uuid();
         setBlock([
             ...block,

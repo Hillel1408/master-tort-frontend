@@ -7,8 +7,8 @@ import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Tr } from '../../components/pages/purchase/Tr';
 import { Alert } from '../../components/Alert';
+import { Confirm } from '../../components/Confirm';
 import { setAlert } from '../../redux/cakeSlice';
-import { Modal } from '../../components/Modal';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Purchase.module.scss';
@@ -46,6 +46,7 @@ export default function Purchase() {
     };
 
     const deleteOrder = async () => {
+        //удаляем заказ пользователя
         setModal(false);
         document.body.classList.remove('lock');
         orders.map((a, index) => {
@@ -65,6 +66,7 @@ export default function Purchase() {
 
     const saveSettings = async () => {
         try {
+            //сохраняем закупку пользователя
             const response = await OrdersService.updateTotal(
                 dataUser.id,
                 orders
@@ -349,32 +351,7 @@ export default function Purchase() {
                 </h2>
             )}
             <Alert />
-            <Modal active={modal} setActive={setModal} closeIcon={true}>
-                <p className={classNames('text', styles.modalText)}>
-                    Подтвердите действие
-                </p>
-                <div className={styles.modalButtons}>
-                    <button
-                        className={classNames(stylesBtn.btn, 'small-text')}
-                        onClick={() => {
-                            setModal(false);
-                            document.body.classList.remove('lock');
-                        }}
-                    >
-                        Отмена
-                    </button>
-                    <button
-                        className={classNames(
-                            stylesBtn.btn,
-                            stylesBtn.btn__secondary,
-                            'small-text'
-                        )}
-                        onClick={() => deleteOrder()}
-                    >
-                        Ok
-                    </button>
-                </div>
-            </Modal>
+            <Confirm modal={modal} setModal={setModal} func={deleteOrder} />
         </Layout>
     );
 }

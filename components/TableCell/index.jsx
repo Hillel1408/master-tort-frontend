@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from '../../components/Table/Table.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
-import { settingsNameTh } from '../../data/settings';
+import { settingsTh } from '../../data/settings';
 import { useEffect } from 'react';
 
 function TableCell({
@@ -38,7 +38,7 @@ function TableCell({
                 ) : (
                     <input
                         className={stylesInput.input}
-                        value={settingsNameTh[thValue]}
+                        value={settingsTh[thValue]}
                         disabled={disabled}
                     />
                 )

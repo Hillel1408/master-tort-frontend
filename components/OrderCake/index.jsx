@@ -1,10 +1,9 @@
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import classNames from 'classnames';
 import Image from 'next/image';
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 function OrderCake({
     dropHandler,

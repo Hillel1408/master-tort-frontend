@@ -10,8 +10,8 @@ import { setAlert } from '../../redux/cakeSlice';
 import AuthService from '../../services/AuthService';
 import SettingsService from '../../services/SettingsService';
 import { settingsText } from '../../data/settings';
-import stylesTable from '../../components/Table/Table.module.scss';
 import styles from './Settings.module.scss';
+import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Settings() {

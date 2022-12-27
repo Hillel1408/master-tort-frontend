@@ -4,12 +4,12 @@ import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import classNames from 'classnames';
+import Layout from '../../components/Layout';
 import { SocialLinks } from '../../components/SocialLinks';
 import AuthService from '../../services/AuthService';
 import styles from '../login/Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
-import Layout from '../../components/Layout';
 
 export default function Registration() {
     const [error, setError] = useState('');

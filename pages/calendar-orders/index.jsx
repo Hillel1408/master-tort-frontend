@@ -3,13 +3,12 @@ import classNames from 'classnames';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
-import { Modal } from '../../components/Modal';
+import { Confirm } from '../../components/Confirm';
 import { OrdersNav } from '../../components/OrdersNav';
 import { Td } from '../../components/pages/calendar-orders/Td';
+import styles from './CalendarOrders.module.scss';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
-import styles from './CalendarOrders.module.scss';
-import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function CalendarOrders() {
     const [isAuth, setIsAuth] = useState('');
@@ -201,7 +200,6 @@ export default function CalendarOrders() {
         //фильтруем и получаем в стейт заказы текущего месяца на календаре
         const asd = {};
         const today = new Date();
-
         orders.forEach((item) => {
             const date = new Date(item.date + 'T' + item.time);
             if (date.getMonth() === month && date.getFullYear() === year) {
@@ -223,6 +221,7 @@ export default function CalendarOrders() {
     };
 
     const deleteOrder = async () => {
+        //удаляем заказ пользователя
         setModal(false);
         document.body.classList.remove('lock');
         filteredOrders[activeDay].map((item, index) => {
@@ -427,33 +426,7 @@ export default function CalendarOrders() {
                     )}
                 </div>
             </div>
-            <Modal active={modal} setActive={setModal} closeIcon={true}>
-                <span className="icon-16"></span>
-                <p className={classNames('text', styles.modalText)}>
-                    Подтвердите действие
-                </p>
-                <div className={styles.modalButtons}>
-                    <button
-                        className={classNames(stylesBtn.btn, 'small-text')}
-                        onClick={() => {
-                            setModal(false);
-                            document.body.classList.remove('lock');
-                        }}
-                    >
-                        Отмена
-                    </button>
-                    <button
-                        className={classNames(
-                            stylesBtn.btn,
-                            stylesBtn.btn__secondary,
-                            'small-text'
-                        )}
-                        onClick={() => deleteOrder()}
-                    >
-                        Принять
-                    </button>
-                </div>
-            </Modal>
+            <Confirm modal={modal} setModal={setModal} func={deleteOrder} />
         </Layout>
     );
 }

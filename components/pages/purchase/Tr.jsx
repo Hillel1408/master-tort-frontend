@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { TableCell } from '../../TableCell';
-import { Checkbox } from '../../CustomCheckbox/Checkbox';
+import { Checkbox } from '../../CustomCheckbox';
 import styles from '../../../pages/purchase/Purchase.module.scss';
 import stylesTable from '../../Table/Table.module.scss';
 

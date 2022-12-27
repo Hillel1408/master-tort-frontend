@@ -32,6 +32,7 @@ function TabContent({
 }) {
     const [drag, setDrag] = useState(false);
     const [isCake, setIsCake] = useState(undefined);
+    const [text, setText] = useState('');
 
     const [range, setRange] = useState(items[index].range);
     const [orderName, setOrderName] = useState(items[index].orderName);
@@ -48,7 +49,6 @@ function TabContent({
 
     const [data, setData] = useState(items[index].calculation);
     const [total, setTotal] = useState(items[index].total);
-    const [text, setText] = useState('');
 
     const dispatch = useDispatch();
 
@@ -67,14 +67,7 @@ function TabContent({
     };
 
     useEffect(() => {
-        if (
-            range &&
-            standWidth &&
-            standLength &&
-            cakeShape &&
-            kindCake &&
-            items[index].table.length > 0
-        ) {
+        if (data.length > 0) {
             setIsCake(true);
         } else setIsCake(false);
     }, []);
@@ -185,7 +178,6 @@ function TabContent({
         arr.push(total);
         setTotal(arr);
         items[index].total = arr;
-        console.log(items);
     };
 
     const calcPr = (data) => {
@@ -231,7 +223,17 @@ function TabContent({
         let margin = 0; //отступ от границ по вертикали canvas
         let maxWidth = 0; //самый широкий ярус торта
         const ctx = canvasRef.current.getContext('2d');
-        const width = (canvas.offsetWidth / 100) * 35 - 95;
+        const width = '';
+
+        if (window.innerWidth <= 1280) {
+            width = (canvas.offsetWidth / 100) * 35 - 55;
+        }
+        if (window.innerWidth <= 768) {
+            width = canvas.offsetWidth - 80;
+        }
+        if (window.innerWidth > 1280) {
+            width = (canvas.offsetWidth / 100) * 35 - 95;
+        }
 
         canvasRef.current.width = width;
         canvasRef.current.height = height;
@@ -923,17 +925,19 @@ function TabContent({
                             >
                                 Печать
                             </button>
-                            <button
-                                className={classNames(
-                                    stylesBtn.btn,
-                                    'small-text'
-                                )}
-                                onClick={() => {
-                                    resetSettings();
-                                }}
-                            >
-                                Сбросить
-                            </button>
+                            {!isEdit && (
+                                <button
+                                    className={classNames(
+                                        stylesBtn.btn,
+                                        'small-text'
+                                    )}
+                                    onClick={() => {
+                                        resetSettings();
+                                    }}
+                                >
+                                    Сбросить
+                                </button>
+                            )}
                         </div>
                         <div>
                             <button

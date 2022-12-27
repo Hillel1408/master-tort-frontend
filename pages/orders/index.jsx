@@ -6,11 +6,11 @@ import Layout from '../../components/Layout';
 import { OrdersNav } from '../../components/OrdersNav';
 import { OrderCake } from '../../components/OrderCake';
 import { Modal } from '../../components/Modal';
+import { Confirm } from '../../components/Confirm';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Orders.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
-import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Orders() {
     const [isAuth, setIsAuth] = useState('');
@@ -50,8 +50,8 @@ export default function Orders() {
         if (board.items.length > 0) {
             let flag = false;
             //проверяем есть ли заказ с актуальной датой
+            const today = new Date();
             board.items.map((item) => {
-                const today = new Date();
                 const date = new Date(item.date + 'T' + item.time);
                 if ((date - today) / (1000 * 3600 * 24) > 0) flag = true;
             });
@@ -105,25 +105,18 @@ export default function Orders() {
         e.preventDefault();
         e.stopPropagation();
         e.currentTarget.style.boxShadow = 'none';
-        //индекс в массиве у текущего элемента, которую держим в руке
         const currentIndex = currentBoard.items.indexOf(currentItem);
-        //удаляем этот элемент из текущей доски
         currentBoard.items.splice(currentIndex, 1);
-        //индекс элемента над которым мы держим элемент
         const droptIndex = board.items.indexOf(item);
-        //вставляем после этого элемента элемент который держим в руке
         board.items.splice(droptIndex + 1, 0, currentItem);
         setBoards(
             boards.map((b) => {
                 if (b.id === board.id) {
-                    //возвращаем доску которую мы изменили
                     return board;
                 }
                 if (b.id === currentBoard.id) {
-                    //возвращаем доску которую мы изменили
                     return currentBoard;
                 }
-                //возвращаем просто элемент итерации
                 return b;
             })
         );
@@ -149,8 +142,8 @@ export default function Orders() {
         updateStatusOrder(currentBoard, board);
     };
 
-    //проверяем есть ли заказы
     const checkOrders = (orders) => {
+        //проверяем есть ли заказы
         return (
             orders.inWork.length ||
             orders.purchase.length ||
@@ -160,6 +153,7 @@ export default function Orders() {
     };
 
     const deleteOrder = async () => {
+        //удаляем заказ пользователя
         let flag = true;
         setModal(false);
         document.body.classList.remove('lock');
@@ -287,6 +281,7 @@ export default function Orders() {
                                             <OrderCake
                                                 key={item._id}
                                                 style="kanbanCake"
+                                                dragEndHandler={dragEndHandler}
                                                 draggable={true}
                                                 dragOverHandler={
                                                     dragOverHandler
@@ -297,7 +292,6 @@ export default function Orders() {
                                                 dragStartHandler={
                                                     dragStartHandler
                                                 }
-                                                dragEndHandler={dragEndHandler}
                                                 dropHandler={dropHandler}
                                                 item={item}
                                                 board={board}
@@ -378,33 +372,7 @@ export default function Orders() {
                     Нельзя отправить в архив заказы с актуальной датой
                 </p>
             </Modal>
-            <Modal active={modal} setActive={setModal} closeIcon={true}>
-                <span className="icon-16"></span>
-                <p className={classNames('text', styles.modalText)}>
-                    Подтвердите действие
-                </p>
-                <div className={styles.modalButtons}>
-                    <button
-                        className={classNames(stylesBtn.btn, 'small-text')}
-                        onClick={() => {
-                            setModal(false);
-                            document.body.classList.remove('lock');
-                        }}
-                    >
-                        Отмена
-                    </button>
-                    <button
-                        className={classNames(
-                            stylesBtn.btn,
-                            stylesBtn.btn__secondary,
-                            'small-text'
-                        )}
-                        onClick={() => deleteOrder()}
-                    >
-                        Принять
-                    </button>
-                </div>
-            </Modal>
+            <Confirm modal={modal} setModal={setModal} func={deleteOrder} />
         </Layout>
     );
 }

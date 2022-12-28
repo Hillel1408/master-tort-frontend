@@ -11,7 +11,7 @@ import { Modal } from '../../components/Modal';
 import AuthService from '../../services/AuthService';
 import ProductsService from '../../services/ProductsService';
 import RecipeService from '../../services/RecipeService';
-import styles from './products.module.scss';
+import styles from './Products.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 

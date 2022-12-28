@@ -63,8 +63,9 @@
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     &Delete {
-        text-align: right;
+        min-width: 22px;
     }
 }
 .th {

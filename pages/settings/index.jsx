@@ -202,8 +202,22 @@ export default function Settings() {
             >
                 <span className="icon-16"></span>
                 <p className={classNames('text', styles.modalText)}>
-                    Для точности расчетов необходимо заполнить все настройки
+                    Необходимо заполнить все настройки
                 </p>
+                <button
+                    className={classNames(
+                        stylesBtn.btn,
+                        stylesBtn.btn__secondary,
+                        'small-text'
+                    )}
+                    style={{ marginTop: '14px' }}
+                    onClick={() => {
+                        setModalActive(false);
+                        document.body.classList.remove('lock');
+                    }}
+                >
+                    Понятно
+                </button>
             </Modal>
             <Alert />
         </Layout>

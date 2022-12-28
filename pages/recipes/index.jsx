@@ -397,7 +397,7 @@ export default function Recipes() {
             {group && (
                 <div className={styles.cakes}>
                     <h2 className={classNames('text', styles.groupsText)}>
-                        Торты
+                        Рецепты
                     </h2>
                     <div className={styles.cakesBlock}>
                         {filterRecipe
@@ -614,6 +614,20 @@ export default function Recipes() {
                 <p className={classNames('text', styles.modalText)}>
                     {textModal}
                 </p>
+                <button
+                    className={classNames(
+                        stylesBtn.btn,
+                        stylesBtn.btn__secondary,
+                        'small-text'
+                    )}
+                    style={{ marginTop: '14px' }}
+                    onClick={() => {
+                        setModalActive(false);
+                        document.body.classList.remove('lock');
+                    }}
+                >
+                    Понятно
+                </button>
             </Modal>
             <Confirm modal={modal} setModal={setModal} func={deleteRec} />
         </Layout>

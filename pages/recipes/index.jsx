@@ -33,7 +33,7 @@ export default function Recipes() {
     const [text, setText] = useState('Отпустите');
     const [textImage, setTextImage] = useState('');
     const [active, setActive] = useState('');
-    const [orders, setOrders] = useState('');
+    const [orders, setOrders] = useState([]);
     const [modalActive, setModalActive] = useState(false);
     const [modal, setModal] = useState(false);
     const [textModal, setTextModal] = useState('');
@@ -300,7 +300,7 @@ export default function Recipes() {
             //получаем заказы пользователя
             try {
                 const response = await OrdersService.getKanban(userId);
-                setOrders(response.data);
+                response.data && setOrders(response.data);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }

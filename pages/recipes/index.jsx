@@ -132,15 +132,16 @@ export default function Recipes() {
     const deleteRecipe = async (recipeId) => {
         let flag = false;
         //проверяем используется ли рецепт в активных заказах
-        Object.keys(orders).map((keyObj) => {
-            if (typeof orders[keyObj] === 'object') {
-                orders[keyObj].map((item) => {
-                    item.table.map((a) => {
-                        if (recipeId === a.recipe.value) flag = true;
+        orders &&
+            Object.keys(orders).map((keyObj) => {
+                if (typeof orders[keyObj] === 'object') {
+                    orders[keyObj].map((item) => {
+                        item.table.map((a) => {
+                            if (recipeId === a.recipe.value) flag = true;
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
         if (flag) {
             setTextModal(
                 'Нельзя удалить рецепт, который используется в активных заказах'

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import Image from 'next/image';
+import { IMAGE_URL } from '../../http';
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 
@@ -85,7 +86,7 @@ function OrderCake({
             ></i>
             <div className={styles.img}>
                 <Image
-                    src={`http://localhost:5000${item.imagesUrl[0]}`}
+                    src={`${IMAGE_URL}${item.imagesUrl[0]}`}
                     alt=""
                     draggable="false"
                     fill

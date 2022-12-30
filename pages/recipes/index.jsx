@@ -7,6 +7,7 @@ import { CustomSelect } from '../../components/CustomSelect';
 import { Group } from '../../components/pages/recipes/Group';
 import { Recipe } from '../../components/pages/recipes/Recipe';
 import { Confirm } from '../../components/Confirm';
+import { IMAGE_URL } from '../../http';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import UploadService from '../../services/UploadService';
@@ -190,7 +191,7 @@ export default function Recipes() {
                 userId: dataUser.id,
                 group: groupId.value,
                 recipeName: recipeName,
-                recipeUrl: `http://localhost:5000${image}`,
+                recipeUrl: `${IMAGE_URL}${image}`,
             };
             const response = await RecipeService.setRecipe(newRecipe);
             setRecipe([...recipe, response.data]);

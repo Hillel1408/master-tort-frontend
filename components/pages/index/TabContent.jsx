@@ -9,6 +9,7 @@ import { Alert } from '../../Alert';
 import { Total } from './Total';
 import { Modal } from '../../Modal';
 import { Canvas } from './Canvas';
+import { IMAGE_URL } from '../../../http';
 import UploadService from '../../../services/UploadService';
 import OrdersService from '../../../services/OrdersService';
 import { setAlert } from '../../../redux/cakeSlice';
@@ -776,7 +777,7 @@ function TabContent({
                                                 }
                                             >
                                                 <Image
-                                                    src={`http://localhost:5000${item}`}
+                                                    src={`${IMAGE_URL}${item}`}
                                                     alt=""
                                                     fill
                                                 />

@@ -9,6 +9,7 @@ import { Block } from '../../components/pages/recipe/Block';
 import { Tooltip } from '../../components/Tooltip';
 import { Checkbox } from '../../components/CustomCheckbox';
 import { Alert } from '../../components/Alert';
+import { IMAGE_URL } from '../../http';
 import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import ProductsService from '../../services/ProductsService';
@@ -62,7 +63,7 @@ export default function Recipe() {
                 exit,
                 height,
                 diameter,
-                recipeUrl: image && `http://localhost:5000${image}`,
+                recipeUrl: image && `${IMAGE_URL}${image}`,
             };
             const id = window.location.pathname.split('/recipe/')[1];
             const response = await RecipeService.updateRecipe(id, values);

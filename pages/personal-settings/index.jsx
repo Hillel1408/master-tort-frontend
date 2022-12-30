@@ -7,6 +7,7 @@ import Layout from '../../components/Layout';
 import { CustomSelect } from '../../components/CustomSelect';
 import { Tooltip } from '../../components/Tooltip';
 import AuthService from '../../services/AuthService';
+import { IMAGE_URL } from '../../http';
 import UploadService from '../../services/UploadService';
 import styles from './PersonalSettings.module.scss';
 import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
@@ -74,7 +75,7 @@ export default function PersonalSettings() {
                 userId: dataUser.id,
                 fullName,
                 email,
-                image: image && `http://localhost:5000${image}`,
+                image: image && `${IMAGE_URL}${image}`,
             });
             setDataUser(response.data);
             response.data.email !== email

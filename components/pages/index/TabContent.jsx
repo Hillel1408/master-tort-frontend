@@ -218,12 +218,12 @@ function TabContent({
         const canvas = document.querySelector('.main'); //блок где отображаем график
         const height = '434'; //высота canvas
         const length = items[index].table.length; //количество ярусов торта
-        const scale = 10; //масштаб 1 см scale пикселей
+        let scale = 10; //масштаб 1 см scale пикселей
         let sum = 0; // высота торта
         let margin = 0; //отступ от границ по вертикали canvas
         let maxWidth = 0; //самый широкий ярус торта
         const ctx = canvasRef.current.getContext('2d');
-        const width = '';
+        let width = '';
 
         if (window.innerWidth <= 1280) {
             width = (canvas.offsetWidth / 100) * 35 - 55;

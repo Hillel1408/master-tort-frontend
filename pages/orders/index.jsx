@@ -47,6 +47,8 @@ export default function Orders() {
 
     const sendArchive = async (dataUser, boards, board) => {
         //проверяем есть ли вообще элементы на доске "архив"
+        console.log(1);
+        console.log(board);
         if (board.items.length > 0) {
             let flag = false;
             //проверяем есть ли заказ с актуальной датой
@@ -187,6 +189,7 @@ export default function Orders() {
                         title: 'Предстоящие',
                         type: 'upcoming',
                         textLink: 'Добавить заказы',
+                        function: '',
                         items: orders.upcoming,
                         link: '/',
                     },
@@ -195,6 +198,7 @@ export default function Orders() {
                         title: 'Закупка',
                         type: 'purchase',
                         textLink: 'Составить закупку',
+                        function: '',
                         items: orders.purchase,
                         link: '/purchase',
                     },
@@ -203,6 +207,7 @@ export default function Orders() {
                         title: 'В работе',
                         type: 'inWork',
                         textLink: '',
+                        function: '',
                         items: orders.inWork,
                     },
                     {
@@ -210,7 +215,7 @@ export default function Orders() {
                         title: 'Готово',
                         type: 'ready',
                         textLink: 'Отправить в архив',
-                        function: sendArchive,
+                        function: 'sendArchive',
                         items: orders.ready,
                     },
                 ];
@@ -333,8 +338,9 @@ export default function Orders() {
                                                 'icon-8'
                                             )}
                                             onClick={() => {
-                                                board.function &&
-                                                    board.function(
+                                                board.function ===
+                                                    'sendArchive' &&
+                                                    sendArchive(
                                                         dataUser,
                                                         boards,
                                                         board

@@ -119,7 +119,10 @@ export default function Products() {
             <Head>
                 <title>Продукты</title>
             </Head>
-            <div className={classNames(stylesTable.overflow, 'table')}>
+            <div
+                className={classNames(stylesTable.overflow, 'table')}
+                style={{ overflow: 'auto' }}
+            >
                 <div
                     className={classNames(stylesTable.table, 'small-text')}
                     style={{

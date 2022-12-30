@@ -206,7 +206,7 @@ export default function CalendarOrders() {
                 //проверяем является ли заказ срочным
                 const day = date.getDate();
                 const a = (date - today) / (1000 * 3600 * 24);
-                const status = '';
+                let status = '';
                 if (a > 0 && a <= dataUser.rushOrder.value) status = 'urgent';
                 else if (a < 0) status = 'archive';
                 else status = 'ordinary';

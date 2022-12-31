@@ -187,7 +187,7 @@ export default function PersonalSettings() {
                             <div className={styles.infoAvatar}>
                                 {image ? (
                                     <Image
-                                        src={`http://localhost:5000${image}`}
+                                        src={`${IMAGE_URL}${image}`}
                                         alt="avatar"
                                         fill
                                     />

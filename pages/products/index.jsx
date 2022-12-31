@@ -71,6 +71,8 @@ export default function Products() {
     };
 
     useEffect(() => {
+        setStart(Math.floor(window.innerHeight / 45));
+
         const getRecipes = async (id) => {
             //получаем рецепты пользователя
             try {
@@ -108,6 +110,24 @@ export default function Products() {
         if (localStorage.getItem('token')) checkAuth();
         else setIsAuth(false);
     }, []);
+
+    const [start, setStart] = useState('');
+
+    useEffect(() => {
+        document.addEventListener('scroll', scrollHandler);
+        return function () {
+            document.removeEventListener('scroll', scrollHandler);
+        };
+    }, []);
+
+    const scrollHandler = (e) => {
+        if (
+            e.target.documentElement.scrollHeight -
+                (e.target.documentElement.scrollTop + window.innerHeight) <
+            60
+        )
+            setStart((prevState) => prevState + 20);
+    };
 
     return (
         <Layout
@@ -149,18 +169,20 @@ export default function Products() {
                     </div>
                     <div className={stylesTable.tbody}>
                         {tr.length > 0 &&
-                            tr.map((item, index) => (
-                                <Tr
-                                    key={item.id}
-                                    item={item}
-                                    tr={tr}
-                                    index={index}
-                                    setTr={setTr}
-                                    measure={measure}
-                                    recipe={recipe}
-                                    setActive={setModalActive}
-                                />
-                            ))}
+                            tr
+                                .slice(0, start)
+                                .map((item, index) => (
+                                    <Tr
+                                        key={item.id}
+                                        item={item}
+                                        tr={tr}
+                                        index={index}
+                                        setTr={setTr}
+                                        measure={measure}
+                                        recipe={recipe}
+                                        setActive={setModalActive}
+                                    />
+                                ))}
                         <div className="addBlock">
                             <span
                                 onClick={() => clickHandler()}

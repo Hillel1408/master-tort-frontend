@@ -392,6 +392,7 @@ function TabContent({
                     color: '#62ac62',
                 })
             );
+            !isEdit && resetSettings();
         } catch (e) {
             console.log(e.response?.data?.message);
             dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
@@ -586,7 +587,7 @@ function TabContent({
                                         type="radio"
                                         name={'cakeShape' + index}
                                         value="circle"
-                                        defaultChecked={cakeShape === 'circle'}
+                                        checked={cakeShape === 'circle'}
                                         onChange={(e) => {
                                             setCakeShape(e.target.value);
                                             items[index].cakeShape =
@@ -606,7 +607,7 @@ function TabContent({
                                         name={'cakeShape' + index}
                                         value="square"
                                         disabled
-                                        defaultChecked={cakeShape === 'square'}
+                                        checked={cakeShape === 'square'}
                                         onChange={(e) => {
                                             setCakeShape(e.target.value);
                                             items[index].cakeShape =
@@ -626,9 +627,7 @@ function TabContent({
                                         name={'cakeShape' + index}
                                         value="rectangle"
                                         disabled
-                                        defaultChecked={
-                                            cakeShape === 'rectangle'
-                                        }
+                                        checked={cakeShape === 'rectangle'}
                                         onChange={(e) => {
                                             setCakeShape(e.target.value);
                                             items[index].cakeShape =
@@ -661,9 +660,7 @@ function TabContent({
                                         type="radio"
                                         name={'kindCake' + index}
                                         value="open-cake"
-                                        defaultChecked={
-                                            kindCake === 'open-cake'
-                                        }
+                                        checked={kindCake === 'open-cake'}
                                         onChange={(e) => {
                                             setKindCake(e.target.value);
                                             items[index].kindCake =
@@ -684,7 +681,7 @@ function TabContent({
                                         type="radio"
                                         name={'kindCake' + index}
                                         value="buttercream-cake"
-                                        defaultChecked={
+                                        checked={
                                             kindCake === 'buttercream-cake'
                                         }
                                         onChange={(e) => {
@@ -708,9 +705,7 @@ function TabContent({
                                         name={'kindCake' + index}
                                         value="cream-cake"
                                         disabled
-                                        defaultChecked={
-                                            kindCake === 'cream-cake'
-                                        }
+                                        checked={kindCake === 'cream-cake'}
                                         onChange={(e) => {
                                             setKindCake(e.target.value);
                                             items[index].kindCake =
@@ -1005,6 +1000,20 @@ function TabContent({
             >
                 <span className="icon-16"></span>
                 <p className={classNames('text', styles.modalText)}>{text}</p>
+                <button
+                    className={classNames(
+                        stylesBtn.btn,
+                        stylesBtn.btn__secondary,
+                        'small-text'
+                    )}
+                    style={{ marginTop: '14px' }}
+                    onClick={() => {
+                        setModalActive(false);
+                        document.body.classList.remove('lock');
+                    }}
+                >
+                    Понятно
+                </button>
             </Modal>
             <Alert />
         </div>

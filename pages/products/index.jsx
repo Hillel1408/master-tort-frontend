@@ -21,6 +21,7 @@ export default function Products() {
     const [tr, setTr] = useState([]);
     const [recipe, setRecipe] = useState('');
     const [modalActive, setModalActive] = useState(false);
+    const [start, setStart] = useState('');
 
     const dispatch = useDispatch();
 
@@ -111,15 +112,6 @@ export default function Products() {
         else setIsAuth(false);
     }, []);
 
-    const [start, setStart] = useState('');
-
-    useEffect(() => {
-        document.addEventListener('scroll', scrollHandler);
-        return function () {
-            document.removeEventListener('scroll', scrollHandler);
-        };
-    }, []);
-
     const scrollHandler = (e) => {
         if (
             e.target.documentElement.scrollHeight -
@@ -128,6 +120,13 @@ export default function Products() {
         )
             setStart((prevState) => prevState + 20);
     };
+
+    useEffect(() => {
+        document.addEventListener('scroll', scrollHandler);
+        return function () {
+            document.removeEventListener('scroll', scrollHandler);
+        };
+    }, []);
 
     return (
         <Layout
@@ -183,31 +182,38 @@ export default function Products() {
                                         setActive={setModalActive}
                                     />
                                 ))}
-                        <div className="addBlock">
-                            <span
-                                onClick={() => clickHandler()}
-                                className={classNames('small-text', 'icon-8')}
-                            >
-                                Добавить продукт
-                            </span>
-                        </div>
+                        {start >= tr.length && (
+                            <div className="addBlock">
+                                <span
+                                    onClick={() => clickHandler()}
+                                    className={classNames(
+                                        'small-text',
+                                        'icon-8'
+                                    )}
+                                >
+                                    Добавить продукт
+                                </span>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
-            <div className={stylesTable.buttons}>
-                <div></div>
-                <button
-                    className={classNames(
-                        stylesBtn.btn,
-                        stylesBtn.btn__secondary,
-                        'small-text'
-                    )}
-                    href="#"
-                    onClick={() => saveSettings()}
-                >
-                    Сохранить
-                </button>
-            </div>
+            {start >= tr.length && (
+                <div className={stylesTable.buttons}>
+                    <div></div>
+                    <button
+                        className={classNames(
+                            stylesBtn.btn,
+                            stylesBtn.btn__secondary,
+                            'small-text'
+                        )}
+                        href="#"
+                        onClick={() => saveSettings()}
+                    >
+                        Сохранить
+                    </button>
+                </div>
+            )}
             <Modal
                 active={modalActive}
                 setActive={setModalActive}
@@ -217,6 +223,20 @@ export default function Products() {
                 <p className={classNames('text', styles.modalText)}>
                     Нельзя удалить продукт, который используется в рецептах
                 </p>
+                <button
+                    className={classNames(
+                        stylesBtn.btn,
+                        stylesBtn.btn__secondary,
+                        'small-text'
+                    )}
+                    style={{ marginTop: '14px' }}
+                    onClick={() => {
+                        setModalActive(false);
+                        document.body.classList.remove('lock');
+                    }}
+                >
+                    Понятно
+                </button>
             </Modal>
             <Alert />
         </Layout>

@@ -321,7 +321,7 @@ export default function Recipe() {
                                 <div className={styles.imageBlock}>
                                     {image ? (
                                         <Image
-                                            src={`http://localhost:5000${image}`}
+                                            src={`${IMAGE_URL}${image}`}
                                             fill
                                             alt=""
                                         />

@@ -10,6 +10,7 @@ import { Confirm } from '../../components/Confirm';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Orders.module.scss';
+import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
 
 export default function Orders() {
@@ -377,6 +378,20 @@ export default function Orders() {
                 <p className={classNames('text', styles.modalText)}>
                     Нельзя отправить в архив заказы с актуальной датой
                 </p>
+                <button
+                    className={classNames(
+                        stylesBtn.btn,
+                        stylesBtn.btn__secondary,
+                        'small-text'
+                    )}
+                    style={{ marginTop: '14px' }}
+                    onClick={() => {
+                        setModalActive(false);
+                        document.body.classList.remove('lock');
+                    }}
+                >
+                    Понятно
+                </button>
             </Modal>
             <Confirm modal={modal} setModal={setModal} func={deleteOrder} />
         </Layout>

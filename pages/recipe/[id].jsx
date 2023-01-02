@@ -380,7 +380,12 @@ export default function Recipe() {
                                         </span>
                                     </div>
                                     {checkbox && (
-                                        <>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                gap: '10px',
+                                            }}
+                                        >
                                             <input
                                                 title="Выход, гр."
                                                 type="number"
@@ -417,7 +422,7 @@ export default function Recipe() {
                                                     stylesInput.input
                                                 )}
                                             />
-                                        </>
+                                        </div>
                                     )}
                                 </div>
                             </div>

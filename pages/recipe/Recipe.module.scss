@@ -44,7 +44,6 @@
     background-color: white;
     border-radius: 8px;
     margin-top: 20px;
-    overflow: auto;
     &Block {
         flex: 0 0 auto;
         display: flex;
@@ -62,4 +61,7 @@
 .grid {
     display: flex;
     gap: 10px;
+    @media (max-width: 1024px) {
+        flex-direction: column;
+    }
 }

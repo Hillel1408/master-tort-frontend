@@ -77,9 +77,7 @@ const Layout = ({ children, isAuth, setIsAuth, dataUser, title, isLogin }) => (
                 </div>
             )}
         </main>
-        <br></br>
-        <br></br>
-        <br></br>
+        <div style={{ heigth: '20px' }}>&nbsp;</div>
     </div>
 );
 

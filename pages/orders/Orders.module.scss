@@ -19,6 +19,9 @@
         background-color: white;
         height: calc(100vh - 86px);
         position: relative;
+        @media (max-width: 576px) {
+            height: calc(50vh - 86px);
+        }
     }
     &Wrapper {
         overflow-y: auto;

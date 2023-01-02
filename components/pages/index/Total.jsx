@@ -16,11 +16,8 @@ function Total({ data, total }) {
                                 <div>
                                     <div>Порций в {index + 1} ярусе</div>
                                     <div>Вес начинки</div>
-
                                     <div>Вес выравнивающего крема</div>
-
                                     <div>Вес мастики</div>
-
                                     <div>Общий вес яруса</div>
                                 </div>
                                 <div>

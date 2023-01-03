@@ -704,7 +704,6 @@ function TabContent({
                                         type="radio"
                                         name={'kindCake' + index}
                                         value="cream-cake"
-                                        disabled
                                         checked={kindCake === 'cream-cake'}
                                         onChange={(e) => {
                                             setKindCake(e.target.value);

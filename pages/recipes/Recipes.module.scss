@@ -120,7 +120,7 @@
         text-align: center;
         position: relative;
         @media (max-width: 375px) {
-            padding: 10px;
+            padding: 20px 10px 10px 10px;
         }
         .groupsDelete {
             font-size: 10px;
@@ -216,12 +216,15 @@
     }
 }
 .allRecipe {
+    .groupsDelete {
+        display: none;
+    }
+    .groupsCount {
+        opacity: 1;
+        visibility: visible;
+    }
     @media (any-hover: hover) {
         &:hover {
-            .groupsDelete {
-                opacity: 0;
-                visibility: hidden;
-            }
             .groupsCount {
                 opacity: 1;
                 visibility: visible;

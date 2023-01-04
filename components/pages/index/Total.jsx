@@ -1,45 +1,50 @@
 import classNames from 'classnames';
 import styles from '../../../pages/Home.module.scss';
 
-function Total({ data, total }) {
+function Total({ data, total, totalRef }) {
     return (
         <div>
-            <div className={styles.cakeData}>
-                {data.map(
-                    (item, index) =>
-                        index !== data.length - 1 && (
-                            <div
-                                key={index}
-                                id={styles.tooltiptext}
-                                className={styles.cakeItem}
-                            >
-                                <div>
-                                    <div>Порций в {index + 1} ярусе</div>
-                                    <div>Вес начинки</div>
-                                    <div>Вес выравнивающего крема</div>
-                                    <div>Вес мастики</div>
-                                    <div>Общий вес яруса</div>
-                                </div>
-                                <div>
+            <div
+                ref={totalRef}
+                style={{ marginBottom: '20px', overflow: 'auto' }}
+            >
+                <div className={styles.cakeData}>
+                    {data.map(
+                        (item, index) =>
+                            index !== data.length - 1 && (
+                                <div
+                                    key={index}
+                                    id={styles.tooltiptext}
+                                    className={styles.cakeItem}
+                                >
                                     <div>
-                                        {item.calculat.portion.toFixed(2)}
+                                        <div>Порций в {index + 1} ярусе</div>
+                                        <div>Вес начинки</div>
+                                        <div>Вес выравнивающего крема</div>
+                                        <div>Вес мастики</div>
+                                        <div>Общий вес яруса</div>
                                     </div>
-                                    <div>{`${item.calculat.weight.toFixed(
-                                        2
-                                    )} кг.`}</div>
-                                    <div>{`${item.calculat.cream.toFixed(
-                                        0
-                                    )} гр.`}</div>
-                                    <div>{`${item.calculat.mastic.toFixed(
-                                        0
-                                    )} гр.`}</div>
-                                    <div>{`${item.calculat.totalWeight.toFixed(
-                                        2
-                                    )} кг.`}</div>
+                                    <div>
+                                        <div>
+                                            {item.calculat.portion.toFixed(2)}
+                                        </div>
+                                        <div>{`${item.calculat.weight.toFixed(
+                                            2
+                                        )} кг.`}</div>
+                                        <div>{`${item.calculat.cream.toFixed(
+                                            0
+                                        )} гр.`}</div>
+                                        <div>{`${item.calculat.mastic.toFixed(
+                                            0
+                                        )} гр.`}</div>
+                                        <div>{`${item.calculat.totalWeight.toFixed(
+                                            2
+                                        )} кг.`}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                )}
+                            )
+                    )}
+                </div>
             </div>
             <div className={classNames('total', 'small-text')}>
                 <h2 className={classNames('title', styles.cakeColumnTitle)}>

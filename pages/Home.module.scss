@@ -163,9 +163,8 @@
     }
     &Data {
         display: flex;
-        overflow: auto;
         gap: 10px;
-        margin-bottom: 20px;
+
         max-width: 688px;
         @media print {
             order: 0;
@@ -287,8 +286,6 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 10px;
-        overflow: auto;
-        padding: 2px;
         min-height: 85px;
     }
     &ImageBlock {

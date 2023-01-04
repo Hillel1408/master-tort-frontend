@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
+import { OverlayScrollbars } from 'overlayscrollbars';
 import Image from 'next/image';
 import uuid from 'react-uuid';
 import { useDispatch } from 'react-redux';
@@ -57,6 +58,18 @@ function TabContent({
     const btnRef = useRef('');
     const buttonRef = useRef('');
     const canvasRef = useRef('');
+
+    const cakeShapeRef = useRef('');
+    cakeShapeRef.current && OverlayScrollbars(cakeShapeRef.current, {});
+
+    const kindCakeRef = useRef('');
+    kindCakeRef.current && OverlayScrollbars(kindCakeRef.current, {});
+
+    const imageRef = useRef('');
+    imageRef.current && OverlayScrollbars(imageRef.current, {});
+
+    const totalRef = useRef('');
+    totalRef.current && OverlayScrollbars(totalRef.current, {});
 
     const thTitle = ['Диаметр, см.', 'Высота, см.', 'Рецепт', 'Отступ, см.'];
 
@@ -489,6 +502,7 @@ function TabContent({
                                 type="range"
                                 min="0"
                                 max="250"
+                                step="25"
                                 className={classNames(
                                     styles.informationSlider,
                                     styles.slider
@@ -576,68 +590,73 @@ function TabContent({
                             >
                                 Форма торта
                             </h3>
-                            <div className={styles.informationLabelBlock}>
-                                <label
-                                    className={classNames(
-                                        'small-text',
-                                        styles.informationLabel
-                                    )}
-                                >
-                                    <input
-                                        type="radio"
-                                        name={'cakeShape' + index}
-                                        value="circle"
-                                        checked={cakeShape === 'circle'}
-                                        onChange={(e) => {
-                                            setCakeShape(e.target.value);
-                                            items[index].cakeShape =
-                                                e.target.value;
-                                        }}
-                                    />
-                                    <span className="icon-13">Круг</span>
-                                </label>
-                                <label
-                                    className={classNames(
-                                        'small-text',
-                                        styles.informationLabel
-                                    )}
-                                >
-                                    <input
-                                        type="radio"
-                                        name={'cakeShape' + index}
-                                        value="square"
-                                        disabled
-                                        checked={cakeShape === 'square'}
-                                        onChange={(e) => {
-                                            setCakeShape(e.target.value);
-                                            items[index].cakeShape =
-                                                e.target.value;
-                                        }}
-                                    />
-                                    <span className="icon-14">Квадрат</span>
-                                </label>
-                                <label
-                                    className={classNames(
-                                        'small-text',
-                                        styles.informationLabel
-                                    )}
-                                >
-                                    <input
-                                        type="radio"
-                                        name={'cakeShape' + index}
-                                        value="rectangle"
-                                        disabled
-                                        checked={cakeShape === 'rectangle'}
-                                        onChange={(e) => {
-                                            setCakeShape(e.target.value);
-                                            items[index].cakeShape =
-                                                e.target.value;
-                                        }}
-                                    />
-                                    <span className="icon-15">
-                                        Прямоугольник
-                                    </span>
-                                </label>
+                            <div
+                                ref={cakeShapeRef}
+                                style={{ overflow: 'auto' }}
+                            >
+                                <div className={styles.informationLabelBlock}>
+                                    <label
+                                        className={classNames(
+                                            'small-text',
+                                            styles.informationLabel
+                                        )}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={'cakeShape' + index}
+                                            value="circle"
+                                            checked={cakeShape === 'circle'}
+                                            onChange={(e) => {
+                                                setCakeShape(e.target.value);
+                                                items[index].cakeShape =
+                                                    e.target.value;
+                                            }}
+                                        />
+                                        <span className="icon-13">Круг</span>
+                                    </label>
+                                    <label
+                                        className={classNames(
+                                            'small-text',
+                                            styles.informationLabel
+                                        )}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={'cakeShape' + index}
+                                            value="square"
+                                            disabled
+                                            checked={cakeShape === 'square'}
+                                            onChange={(e) => {
+                                                setCakeShape(e.target.value);
+                                                items[index].cakeShape =
+                                                    e.target.value;
+                                            }}
+                                        />
+                                        <span className="icon-14">Квадрат</span>
+                                    </label>
+                                    <label
+                                        className={classNames(
+                                            'small-text',
+                                            styles.informationLabel
+                                        )}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={'cakeShape' + index}
+                                            value="rectangle"
+                                            disabled
+                                            checked={cakeShape === 'rectangle'}
+                                            onChange={(e) => {
+                                                setCakeShape(e.target.value);
+                                                items[index].cakeShape =
+                                                    e.target.value;
+                                            }}
+                                        />
+                                        <span className="icon-15">
+                                            Прямоугольник
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div className={styles.information}>
@@ -649,72 +668,74 @@ function TabContent({
                             >
                                 Вид торта
                             </h3>
-                            <div className={styles.informationLabelBlock}>
-                                <label
-                                    className={classNames(
-                                        'small-text',
-                                        styles.informationLabel
-                                    )}
-                                >
-                                    <input
-                                        type="radio"
-                                        name={'kindCake' + index}
-                                        value="open-cake"
-                                        checked={kindCake === 'open-cake'}
-                                        onChange={(e) => {
-                                            setKindCake(e.target.value);
-                                            items[index].kindCake =
-                                                e.target.value;
-                                        }}
-                                    />
-                                    <span className="icon-12">
-                                        Открытый торт
-                                    </span>
-                                </label>
-                                <label
-                                    className={classNames(
-                                        'small-text',
-                                        styles.informationLabel
-                                    )}
-                                >
-                                    <input
-                                        type="radio"
-                                        name={'kindCake' + index}
-                                        value="buttercream-cake"
-                                        checked={
-                                            kindCake === 'buttercream-cake'
-                                        }
-                                        onChange={(e) => {
-                                            setKindCake(e.target.value);
-                                            items[index].kindCake =
-                                                e.target.value;
-                                        }}
-                                    />
-                                    <span className="icon-13">
-                                        Мастичный торт
-                                    </span>
-                                </label>
-                                <label
-                                    className={classNames(
-                                        'small-text',
-                                        styles.informationLabel
-                                    )}
-                                >
-                                    <input
-                                        type="radio"
-                                        name={'kindCake' + index}
-                                        value="cream-cake"
-                                        checked={kindCake === 'cream-cake'}
-                                        onChange={(e) => {
-                                            setKindCake(e.target.value);
-                                            items[index].kindCake =
-                                                e.target.value;
-                                        }}
-                                    />
-                                    <span className="icon-13">
-                                        Кремовый торт
-                                    </span>
-                                </label>
+                            <div ref={kindCakeRef} style={{ overflow: 'auto' }}>
+                                <div className={styles.informationLabelBlock}>
+                                    <label
+                                        className={classNames(
+                                            'small-text',
+                                            styles.informationLabel
+                                        )}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={'kindCake' + index}
+                                            value="open-cake"
+                                            checked={kindCake === 'open-cake'}
+                                            onChange={(e) => {
+                                                setKindCake(e.target.value);
+                                                items[index].kindCake =
+                                                    e.target.value;
+                                            }}
+                                        />
+                                        <span className="icon-12">
+                                            Открытый торт
+                                        </span>
+                                    </label>
+                                    <label
+                                        className={classNames(
+                                            'small-text',
+                                            styles.informationLabel
+                                        )}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={'kindCake' + index}
+                                            value="buttercream-cake"
+                                            checked={
+                                                kindCake === 'buttercream-cake'
+                                            }
+                                            onChange={(e) => {
+                                                setKindCake(e.target.value);
+                                                items[index].kindCake =
+                                                    e.target.value;
+                                            }}
+                                        />
+                                        <span className="icon-13">
+                                            Мастичный торт
+                                        </span>
+                                    </label>
+                                    <label
+                                        className={classNames(
+                                            'small-text',
+                                            styles.informationLabel
+                                        )}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={'kindCake' + index}
+                                            value="cream-cake"
+                                            checked={kindCake === 'cream-cake'}
+                                            onChange={(e) => {
+                                                setKindCake(e.target.value);
+                                                items[index].kindCake =
+                                                    e.target.value;
+                                            }}
+                                        />
+                                        <span className="icon-13">
+                                            Кремовый торт
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div className={styles.information}>
@@ -726,68 +747,88 @@ function TabContent({
                             >
                                 Фотографии
                             </h3>
-                            <div className={styles.informationImageBlock}>
-                                {drag ? (
-                                    <span
-                                        onDragStart={(e) => dragStartHandler(e)}
-                                        onDragLeave={(e) => dragLeaveHandler(e)}
-                                        onDragOver={(e) => dragStartHandler(e)}
-                                        onDrop={(e) => onDropHandler(e)}
-                                        style={{
-                                            fontSize: '12px',
-                                            color: '#7a7a7a',
-                                            borderColor: '#7a7a7a',
-                                        }}
-                                        className={classNames(styles.icon12)}
-                                    >
-                                        Отпустите
-                                    </span>
-                                ) : (
-                                    <span
-                                        onDragStart={(e) => dragStartHandler(e)}
-                                        onDragLeave={(e) => dragLeaveHandler(e)}
-                                        onDragOver={(e) => dragStartHandler(e)}
-                                        className={classNames(styles.icon12)}
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
+                            <div ref={imageRef} style={{ overflow: 'auto' }}>
+                                <div className={styles.informationImageBlock}>
+                                    {drag ? (
+                                        <span
+                                            onDragStart={(e) =>
+                                                dragStartHandler(e)
+                                            }
+                                            onDragLeave={(e) =>
+                                                dragLeaveHandler(e)
+                                            }
+                                            onDragOver={(e) =>
+                                                dragStartHandler(e)
+                                            }
+                                            onDrop={(e) => onDropHandler(e)}
+                                            style={{
+                                                fontSize: '12px',
+                                                color: '#7a7a7a',
+                                                borderColor: '#7a7a7a',
+                                            }}
+                                            className={classNames(
+                                                styles.icon12
+                                            )}
                                         >
-                                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                                        </svg>
-                                    </span>
-                                )}
-                                {image.length > 0 &&
-                                    image.map((item) => (
-                                        <div
-                                            key={item}
-                                            className={styles.informationImage}
+                                            Отпустите
+                                        </span>
+                                    ) : (
+                                        <span
+                                            onDragStart={(e) =>
+                                                dragStartHandler(e)
+                                            }
+                                            onDragLeave={(e) =>
+                                                dragLeaveHandler(e)
+                                            }
+                                            onDragOver={(e) =>
+                                                dragStartHandler(e)
+                                            }
+                                            className={classNames(
+                                                styles.icon12
+                                            )}
                                         >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                                            </svg>
+                                        </span>
+                                    )}
+                                    {image.length > 0 &&
+                                        image.map((item) => (
                                             <div
+                                                key={item}
                                                 className={
-                                                    styles.informationImageImg
+                                                    styles.informationImage
                                                 }
                                             >
-                                                <Image
-                                                    src={`${IMAGE_URL}${item}`}
-                                                    alt=""
-                                                    fill
-                                                />
+                                                <div
+                                                    className={
+                                                        styles.informationImageImg
+                                                    }
+                                                >
+                                                    <Image
+                                                        src={`${IMAGE_URL}${item}`}
+                                                        alt=""
+                                                        fill
+                                                    />
+                                                </div>
+                                                <i
+                                                    title="Удалить"
+                                                    className={classNames(
+                                                        'icon-11',
+                                                        styles.informationImageDelete
+                                                    )}
+                                                    onClick={() =>
+                                                        deleteImage(item)
+                                                    }
+                                                ></i>
                                             </div>
-                                            <i
-                                                title="Удалить"
-                                                className={classNames(
-                                                    'icon-11',
-                                                    styles.informationImageDelete
-                                                )}
-                                                onClick={() =>
-                                                    deleteImage(item)
-                                                }
-                                            ></i>
-                                        </div>
-                                    ))}
+                                        ))}
+                                </div>
                             </div>
                             <div
                                 className={classNames(
@@ -990,7 +1031,9 @@ function TabContent({
                         </div>
                     )}
                 </div>
-                {total.length > 0 && <Total data={data} total={total} />}
+                {total.length > 0 && (
+                    <Total data={data} total={total} totalRef={totalRef} />
+                )}
             </div>
             <Modal
                 active={modalActive}

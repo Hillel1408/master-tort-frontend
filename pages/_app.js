@@ -1,5 +1,6 @@
 import NextNprogress from 'nextjs-progressbar';
 import '../styles/globals.scss';
+import 'overlayscrollbars/overlayscrollbars.css';
 import MainLayout from '../components/MainLayout';
 
 import { wrapper } from '../redux/store';

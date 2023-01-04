@@ -109,16 +109,8 @@ body.lock {
         overflow: hidden !important;
     }
 }
-.my-node-enter {
-    opacity: 0;
-}
-.my-node-enter-active {
-    transition: opacity 1200ms;
-}
-.my-node-exit {
-    opacity: 1;
-}
-.my-node-exit-active {
-    opacity: 0;
-    transition: opacity 1200ms;
+.os-scrollbar-handle {
+    height: 3px !important;
+    opacity: 0.3;
+    margin-top: 5px;
 }

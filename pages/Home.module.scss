@@ -287,6 +287,7 @@
         grid-template-columns: 1fr 1fr 1fr;
         gap: 10px;
         min-height: 85px;
+        //padding-bottom: 4px;
     }
     &ImageBlock {
         display: flex;
@@ -422,6 +423,7 @@
     border: 1px dashed #cccccc;
     border-radius: 8px;
     min-width: 120px;
+    height: 81px;
     display: inline-flex;
     align-items: center;
     justify-content: center;

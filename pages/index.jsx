@@ -68,6 +68,7 @@ export default function Home() {
                 const response = await AuthService.refresh();
                 localStorage.setItem('token', response.data.accessToken);
                 setDataUser(response.data.user);
+                console.log(response.data.user);
                 getRecipes(response.data.user.id);
                 getProducts(response.data.user.id);
                 setIsAuth(true);

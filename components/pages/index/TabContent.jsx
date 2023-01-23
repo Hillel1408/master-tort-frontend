@@ -59,17 +59,23 @@ function TabContent({
     const buttonRef = useRef('');
     const canvasRef = useRef('');
 
+    const config = {
+        scrollbars: {
+            autoHide: 'leave',
+        },
+    };
+
     const cakeShapeRef = useRef('');
-    cakeShapeRef.current && OverlayScrollbars(cakeShapeRef.current, {});
+    cakeShapeRef.current && OverlayScrollbars(cakeShapeRef.current, config);
 
     const kindCakeRef = useRef('');
-    kindCakeRef.current && OverlayScrollbars(kindCakeRef.current, {});
+    kindCakeRef.current && OverlayScrollbars(kindCakeRef.current, config);
 
     const imageRef = useRef('');
-    imageRef.current && OverlayScrollbars(imageRef.current, {});
+    imageRef.current && OverlayScrollbars(imageRef.current, config);
 
     const totalRef = useRef('');
-    totalRef.current && OverlayScrollbars(totalRef.current, {});
+    totalRef.current && OverlayScrollbars(totalRef.current, config);
 
     const thTitle = ['Диаметр, см.', 'Высота, см.', 'Рецепт', 'Отступ, см.'];
 

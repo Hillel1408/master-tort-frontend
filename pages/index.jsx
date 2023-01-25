@@ -36,7 +36,7 @@ export default function Home() {
     const [select, setSelect] = useState('');
 
     useEffect(() => {
-        //получаем продукты пользователя
+        //получаем продукты
         const getProducts = async (user) => {
             const response = await ProductsService.get(user);
             response.data && setProducts(response.data.products);

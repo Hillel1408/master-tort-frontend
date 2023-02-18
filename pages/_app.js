@@ -1,38 +1,43 @@
 import NextNprogress from 'nextjs-progressbar';
-import { parseCookies } from 'nookies';
+import { setCookie, parseCookies } from 'nookies';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setDataUser_2 } from '../redux/cakeSlice';
+import AuthService from '../services/AuthService';
+import { wrapper } from '../redux/store';
+import MainLayout from '../components/MainLayout';
 import '../styles/globals.scss';
 import 'overlayscrollbars/overlayscrollbars.css';
-import MainLayout from '../components/MainLayout';
-
-import { wrapper } from '../redux/store';
 
 function MyApp({ Component, pageProps }) {
+    const [checkAuth, setCheckAuth] = useState('');
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                //проверяем авторизован ли пользователь
+                const response = await AuthService.refresh();
+                setCookie(null, 'token', response.data.accessToken, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                });
+                dispatch(setDataUser_2(response.data.user));
+            } catch (e) {
+                console.log(e.response?.data?.message);
+            } finally {
+                setCheckAuth(true);
+            }
+        };
+        if (parseCookies().token) checkAuth();
+        else setCheckAuth(true);
+    }, []);
     return (
         <>
             <NextNprogress color="#009998" height="2" />
-            <MainLayout>
-                <Component {...pageProps} />
-            </MainLayout>
+            <MainLayout>{checkAuth && <Component {...pageProps} />}</MainLayout>
         </>
     );
 }
-
-MyApp.getInitialProps = wrapper.getInitialAppProps(
-    (store) =>
-        async ({ ctx, Component }) => {
-            try {
-                const { token } = parseCookies(ctx);
-                if (token) {
-                }
-            } catch (err) {
-                console.log(err);
-            }
-            return {
-                pageProps: Component.getInitialProps
-                    ? await Component.getInitialProps({ ...ctx, store })
-                    : {},
-            };
-        }
-);
 
 export default wrapper.withRedux(MyApp);

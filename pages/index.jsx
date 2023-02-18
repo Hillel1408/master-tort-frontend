@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { parseCookies, setCookie } from 'nookies';
+import { useSelector } from 'react-redux';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import { Tab } from '../components/pages/index/Tab';
 import { TabContent } from '../components/pages/index/TabContent';
-import AuthService from '../services/AuthService';
 import RecipeService from '../services/RecipeService';
 import ProductsService from '../services/ProductsService';
 import styles from './Home.module.scss';
@@ -15,6 +14,8 @@ export default function Home() {
     const [active, setActive] = useState(0);
     const [products, setProducts] = useState([]);
     const [recipe, setRecipe] = useState('');
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const value = {
         orderName: '',
@@ -63,25 +64,13 @@ export default function Home() {
             }
         };
 
-        const checkAuth = async () => {
-            try {
-                //проверяем авторизован ли пользователь
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getRecipes(response.data.user.id);
-                getProducts(response.data.user.id);
-                setIsAuth(true);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getRecipes(dataUser_2.id);
+            getProducts(dataUser_2.id);
+            setIsAuth(true);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

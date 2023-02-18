@@ -10,4 +10,4 @@ export function makeStore() {
     });
 }
 
-export const wrapper = createWrapper(makeStore);
+export const wrapper = createWrapper(makeStore, { debug: true });

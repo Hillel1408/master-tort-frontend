@@ -6,7 +6,7 @@ const cakeSlice = createSlice({
     initialState: {
         alertName: '',
         alertColor: '',
-        dataUser: '',
+        dataUser_2: '',
     },
     reducers: {
         setAlert(state, action) {
@@ -16,19 +16,19 @@ const cakeSlice = createSlice({
         resetAlert(state) {
             state.alertName = '';
         },
-        setDataUser(state, action) {
-            state.dataUser = action.payload;
+        setDataUser_2(state, action) {
+            state.dataUser_2 = action.payload;
         },
     },
     extraReducers: {
         [HYDRATE]: (state, action) => {
             state.alertName = action.payload.cakes.alertName;
             state.alertColor = action.payload.cakes.alertColor;
-            state.dataUser = action.payload.sdaem.dataUser;
+            state.dataUser_2 = action.payload.cakes.dataUser;
         },
     },
 });
 
-export const { setAlert, resetAlert } = cakeSlice.actions;
+export const { setAlert, resetAlert, setDataUser_2 } = cakeSlice.actions;
 
 export default cakeSlice.reducer;

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { parseCookies, setCookie } from 'nookies';
+import { setCookie } from 'nookies';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataUser_2 } from '../../redux/cakeSlice';
 import Head from 'next/head';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
@@ -21,6 +23,9 @@ export default function Login() {
 
     const router = useRouter();
 
+    const dispatch = useDispatch();
+    const { dataUser_2 } = useSelector((state) => state.cakes);
+
     const {
         register,
         handleSubmit,
@@ -37,11 +42,11 @@ export default function Login() {
         //выполняем вход
         try {
             const response = await AuthService.login(values);
-            //localStorage.setItem('token', response.data.accessToken);
             setCookie(null, 'token', response.data.accessToken, {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/',
             });
+            dispatch(setDataUser_2(response.data.user));
             router.push('/');
         } catch (e) {
             console.log(e.response?.data?.message);
@@ -50,23 +55,11 @@ export default function Login() {
     };
 
     useEffect(() => {
-        //проверяем авторизован ли пользователь
-        const checkAuth = async () => {
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                setIsAuth(true);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            setIsAuth(true);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

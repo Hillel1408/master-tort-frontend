@@ -10,7 +10,6 @@ function NoAccess({ title, text, linkBtn, textBtn, isLogin, setIsAuth }) {
     const logout = async () => {
         try {
             const response = await AuthService.logout();
-            //localStorage.removeItem('token');
             destroyCookie(null, 'token');
             setIsAuth(false);
         } catch (e) {

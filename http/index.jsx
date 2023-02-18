@@ -31,7 +31,6 @@ $api.interceptors.response.use(
                 const response = await axios.get(`${API_URL}/refresh`, {
                     withCredentials: true,
                 });
-                //localStorage.setItem('token', response.data.accessToken);
                 setCookie(null, 'token', response.data.accessToken, {
                     maxAge: 30 * 24 * 60 * 60,
                     path: '/',

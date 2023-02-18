@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import { destroyCookie } from 'nookies';
+import { useDispatch } from 'react-redux';
+import { setDataUser_2 } from '../../redux/cakeSlice';
 import Link from 'next/link';
 import styles from './NoAccess.module.scss';
 import stylesLogin from '../../pages/login/Login.module.scss';
@@ -7,10 +9,13 @@ import stylesBtn from '../../components/Btn/Btn.module.scss';
 import AuthService from '../../services/AuthService';
 
 function NoAccess({ title, text, linkBtn, textBtn, isLogin, setIsAuth }) {
+    const dispatch = useDispatch();
+
     const logout = async () => {
         try {
             const response = await AuthService.logout();
             destroyCookie(null, 'token');
+            dispatch(setDataUser_2(''));
             setIsAuth(false);
         } catch (e) {
             console.log(e.response?.data?.message);

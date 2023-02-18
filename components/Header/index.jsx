@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { destroyCookie } from 'nookies';
+import { useDispatch } from 'react-redux';
+import { setDataUser_2 } from '../../redux/cakeSlice';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Tooltip } from '../Tooltip';
@@ -10,10 +12,13 @@ import classNames from 'classnames';
 function Header({ isAuth, setIsAuth, userName, avatar }) {
     const [tooltipActive, setTooltipActive] = useState('');
 
+    const dispatch = useDispatch();
+
     const logout = async () => {
         try {
             const response = await AuthService.logout();
             destroyCookie(null, 'token');
+            dispatch(setDataUser_2(''));
             setIsAuth(false);
         } catch (e) {
             console.log(e.response?.data?.message);

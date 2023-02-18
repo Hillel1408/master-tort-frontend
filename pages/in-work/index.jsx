@@ -12,7 +12,7 @@ import { Confirm } from '../../components/Confirm';
 import { setAlert } from '../../redux/cakeSlice';
 import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
-import styles from './Purchase.module.scss';
+import styles from '../purchase/Purchase.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
@@ -22,125 +22,44 @@ export default function Purchase() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [orders, setOrders] = useState([]);
-    const [sumProducts, setSumProducts] = useState('');
+    const [sumProducts, setSumProducts] = useState(true);
     const [checkbox, setCheckbox] = useState('');
     const [modal, setModal] = useState(false);
     const [itemId, setItemId] = useState('');
 
     const dispatch = useDispatch();
 
-    const clickHandler = () => {
-        setCheckbox(!checkbox);
-        sumProducts.map((item, index) => {
-            index !== sumProducts.length - 1
-                ? (item[1].checked = !checkbox)
-                : '';
-        });
-        orders.map((order, orderIndex) => {
-            order.total.map((a, totalIndex) => {
-                totalIndex !== order.total.length - 1
-                    ? (orders[orderIndex].total[totalIndex].checked = !checkbox)
-                    : '';
-            });
-        });
-        setSumProducts([...sumProducts]);
-    };
-
-    const deleteOrder = async () => {
-        //удаляем заказ пользователя
-        setModal(false);
-        document.body.classList.remove('lock');
-        orders.map((a, index) => {
-            if (a._id === itemId) {
-                orders.splice(index, 1);
-            }
-        });
-        if (orders.length === 0) setOrders([]);
-        try {
-            const response = await OrdersService.deleteOrder(itemId, {
-                userId: dataUser.id,
-            });
-        } catch (e) {
-            console.log(e.response?.data?.message);
-        }
-    };
-
-    const saveSettings = async () => {
-        try {
-            //сохраняем закупку пользователя
-            const response = await OrdersService.updateTotal(
-                dataUser.id,
-                orders
-            );
-            dispatch(
-                setAlert({
-                    text: 'Закупка успешно сохранена',
-                    color: '#62ac62',
-                })
-            );
-        } catch (e) {
-            console.log(e.response?.data?.message);
-            dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
-        }
-    };
+    const clickHandler = () => {};
 
     useEffect(() => {
-        //считаем сумму продуктов и общий итог по ярусам
         const sumProducts = (data) => {
-            const sum = {};
-            let total = 0;
-            let isChecked = true;
-            data.map((item) => {
-                item.total.map((product, index) => {
-                    product.checked === false ? (isChecked = false) : '';
-                    //вспомогательный объект и функция
-                    const obj = {
-                        name: product.name,
-                        count: product.count,
-                        price: product.price,
-                        checked: product.checked,
-                    };
-                    const objFunc = (item) => {
-                        return {
-                            ...sum[item],
-                            count: sum[item].count + product.count,
-                            price: sum[item].price + product.price,
-                        };
-                    };
-                    //последний элемент не сморим, так как там итог
-                    if (index !== item.total.length - 1) {
-                        //если продукт с ID уже есть в нашем объекте, то...
-                        if (sum[product.id]) {
-                            //делим продукты на закупленные и не закупленные
-                            if (sum[product.id].checked === product.checked)
-                                sum[product.id] = {
-                                    ...objFunc(product.id),
-                                };
-                            else {
-                                //хз как объяснить но работает отлично :D
-                                if (sum[`${product.id}ch`])
-                                    sum[`${product.id}ch`] = {
-                                        ...objFunc(`${product.id}ch`),
-                                    };
-                                else
-                                    sum[`${product.id}ch`] = {
-                                        ...obj,
-                                    };
+            const obj = {};
+            data.map((order) => {
+                order.table.map((tableItem, index) => {
+                    if (obj[tableItem.recipe.value]) {
+                        obj[tableItem.recipe.value].products.map(
+                            (item, index2) => {
+                                item.products.map((elem, index3) => {
+                                    obj[tableItem.recipe.value].products[
+                                        index2
+                                    ].products[index3].net =
+                                        obj[tableItem.recipe.value].products[
+                                            index2
+                                        ].products[index3].net +
+                                        order.calculation[index].products[
+                                            index2
+                                        ].products[index3].net;
+                                });
                             }
-                        } //иначе создаем его
-                        else
-                            sum[product.id] = {
-                                ...obj,
-                            };
-                    } else total = total + product;
+                        );
+                    } else
+                        obj[tableItem.recipe.value] = {
+                            label: tableItem.recipe.label,
+                            products: order.calculation[index].products,
+                        };
                 });
             });
-            sum.total = total;
-            setCheckbox(isChecked);
-            //преобразуем объект в массив чтобы отсортировать по checked
-            setSumProducts(
-                Object.entries(sum).sort((a, b) => b[1].checked - a[1].checked)
-            );
+            console.log(obj);
         };
 
         const getOrders = async (userId) => {
@@ -148,9 +67,10 @@ export default function Purchase() {
             try {
                 const response = await OrdersService.getKanban(userId);
                 if (response.data) {
-                    setOrders(response.data.purchase);
-                    sumProducts(response.data.purchase);
+                    setOrders(response.data.inWork);
+                    sumProducts(response.data.inWork);
                 }
+                console.log(response.data);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -182,10 +102,10 @@ export default function Purchase() {
             isAuth={isAuth}
             setIsAuth={setIsAuth}
             dataUser={dataUser}
-            title="Закупка"
+            title="В работе"
         >
             <Head>
-                <title>Закупка</title>
+                <title>В работе</title>
             </Head>
             {orders.length > 0 ? (
                 <div className={styles.columns}>
@@ -269,35 +189,19 @@ export default function Purchase() {
                                                 }}
                                             >
                                                 <div className={stylesTable.th}>
-                                                    Наименование
+                                                    Начинка
                                                 </div>
                                                 <div className={stylesTable.th}>
-                                                    Количество
+                                                    Кольца
                                                 </div>
                                                 <div className={stylesTable.th}>
-                                                    Стоимость, ₽
+                                                    Рецепт
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className={stylesTable.tbody}>
-                                            {sumProducts.map(
-                                                (item) =>
-                                                    item[0] !== 'total' && (
-                                                        <Tr
-                                                            key={item[0]}
-                                                            product={item[1]}
-                                                            index={item[0]}
-                                                            orders={orders}
-                                                            sumProducts={
-                                                                sumProducts
-                                                            }
-                                                            setSumProducts={
-                                                                setSumProducts
-                                                            }
-                                                        />
-                                                    )
-                                            )}
-                                        </div>
+                                        <div
+                                            className={stylesTable.tbody}
+                                        ></div>
                                     </>
                                 )}
                             </div>
@@ -306,18 +210,6 @@ export default function Purchase() {
                             <p className={classNames('text', styles.totalText)}>
                                 Итоговая стоимость продуктов
                             </p>
-                            {sumProducts && (
-                                <span
-                                    className={classNames(
-                                        'text',
-                                        styles.totalPrice
-                                    )}
-                                >
-                                    {`${sumProducts[
-                                        sumProducts.length - 1
-                                    ][1].toFixed(2)} руб.`}
-                                </span>
-                            )}
                         </div>
                         <div className={styles.buttons}>
                             <button
@@ -352,11 +244,11 @@ export default function Purchase() {
                         stylesNoAccess.title
                     )}
                 >
-                    У вас нет заказов в закупке
+                    У вас нет заказов в работе
                 </h2>
             )}
             <Alert />
-            <Confirm modal={modal} setModal={setModal} func={deleteOrder} />
+            <Confirm modal={modal} setModal={setModal} />
         </Layout>
     );
 }

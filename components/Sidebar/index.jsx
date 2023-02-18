@@ -35,6 +35,11 @@ function Sidebar() {
             icon: 'icon-4',
         },
         {
+            href: '/in-work',
+            name: 'В работе',
+            icon: 'icon-4',
+        },
+        {
             href: '/recipes',
             name: 'Мои рецепты',
             icon: 'icon-5',

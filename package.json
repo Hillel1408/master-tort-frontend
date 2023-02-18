@@ -16,6 +16,7 @@
         "next": "^13.0.2",
         "next-redux-wrapper": "^7.0.2",
         "nextjs-progressbar": "0.0.16",
+        "nookies": "^2.5.2",
         "npm": "^8.19.2",
         "overlayscrollbars": "^2.0.3",
         "react": "18.2.0",

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { parseCookies, setCookie } from 'nookies';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
@@ -37,7 +38,11 @@ export default function Registration() {
         try {
             setIsLoading(true);
             const response = await AuthService.registration(values);
-            localStorage.setItem('token', response.data.accessToken);
+            //localStorage.setItem('token', response.data.accessToken);
+            setCookie(null, 'token', response.data.accessToken, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: '/',
+            });
             router.push('/');
         } catch (e) {
             console.log(e.response?.data?.message);
@@ -53,7 +58,11 @@ export default function Registration() {
         const checkAuth = async () => {
             try {
                 const response = await AuthService.refresh();
-                localStorage.setItem('token', response.data.accessToken);
+                //localStorage.setItem('token', response.data.accessToken);
+                setCookie(null, 'token', response.data.accessToken, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                });
                 setDataUser(response.data.user);
                 setIsAuth(true);
             } catch (e) {
@@ -61,7 +70,7 @@ export default function Registration() {
                 setIsAuth(false);
             }
         };
-        if (localStorage.getItem('token')) checkAuth();
+        if (parseCookies().token) checkAuth();
         else setIsAuth(false);
     }, []);
 

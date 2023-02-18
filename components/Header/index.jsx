@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { destroyCookie } from 'nookies';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Tooltip } from '../Tooltip';
@@ -12,7 +13,8 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
     const logout = async () => {
         try {
             const response = await AuthService.logout();
-            localStorage.removeItem('token');
+            //localStorage.removeItem('token');
+            destroyCookie(null, 'token');
             setIsAuth(false);
         } catch (e) {
             console.log(e.response?.data?.message);

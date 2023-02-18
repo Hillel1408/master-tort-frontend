@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { destroyCookie } from 'nookies';
 import Link from 'next/link';
 import styles from './NoAccess.module.scss';
 import stylesLogin from '../../pages/login/Login.module.scss';
@@ -9,7 +10,8 @@ function NoAccess({ title, text, linkBtn, textBtn, isLogin, setIsAuth }) {
     const logout = async () => {
         try {
             const response = await AuthService.logout();
-            localStorage.removeItem('token');
+            //localStorage.removeItem('token');
+            destroyCookie(null, 'token');
             setIsAuth(false);
         } catch (e) {
             console.log(e.response?.data?.message);

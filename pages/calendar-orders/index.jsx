@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { parseCookies, setCookie } from 'nookies';
 import classNames from 'classnames';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
@@ -184,7 +185,11 @@ export default function CalendarOrders() {
             //проверяем авторизован ли пользователь
             try {
                 const response = await AuthService.refresh();
-                localStorage.setItem('token', response.data.accessToken);
+                //localStorage.setItem('token', response.data.accessToken);
+                setCookie(null, 'token', response.data.accessToken, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                });
                 setDataUser(response.data.user);
                 getOrders(response.data.user.id);
             } catch (e) {
@@ -192,7 +197,7 @@ export default function CalendarOrders() {
                 setIsAuth(false);
             }
         };
-        if (localStorage.getItem('token')) checkAuth();
+        if (parseCookies().token) checkAuth();
         else setIsAuth(false);
     }, []);
 

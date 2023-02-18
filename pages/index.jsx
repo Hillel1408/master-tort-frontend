@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { parseCookies, setCookie } from 'nookies';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import { Tab } from '../components/pages/index/Tab';
@@ -66,9 +67,12 @@ export default function Home() {
             try {
                 //проверяем авторизован ли пользователь
                 const response = await AuthService.refresh();
-                localStorage.setItem('token', response.data.accessToken);
+                //localStorage.setItem('token', response.data.accessToken);
+                setCookie(null, 'token', response.data.accessToken, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                });
                 setDataUser(response.data.user);
-                console.log(response.data.user);
                 getRecipes(response.data.user.id);
                 getProducts(response.data.user.id);
                 setIsAuth(true);
@@ -77,7 +81,7 @@ export default function Home() {
                 setIsAuth(false);
             }
         };
-        if (localStorage.getItem('token')) checkAuth();
+        if (parseCookies().token) checkAuth();
         else setIsAuth(false);
     }, []);
 

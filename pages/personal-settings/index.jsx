@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import { parseCookies, setCookie } from 'nookies';
 import Image from 'next/image';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
@@ -153,7 +154,11 @@ export default function PersonalSettings() {
             //проверяем авторизован ли пользователь
             try {
                 const response = await AuthService.refresh();
-                localStorage.setItem('token', response.data.accessToken);
+                //localStorage.setItem('token', response.data.accessToken);
+                setCookie(null, 'token', response.data.accessToken, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                });
                 setDataUser(response.data.user);
                 setFullName(response.data.user.fullName);
                 setEmail(response.data.user.email);
@@ -163,7 +168,7 @@ export default function PersonalSettings() {
                 setIsAuth(false);
             }
         };
-        if (localStorage.getItem('token')) checkAuth();
+        if (parseCookies().token) checkAuth();
         else setIsAuth(false);
     }, []);
 

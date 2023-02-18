@@ -1,4 +1,5 @@
 import NextNprogress from 'nextjs-progressbar';
+import { parseCookies } from 'nookies';
 import '../styles/globals.scss';
 import 'overlayscrollbars/overlayscrollbars.css';
 import MainLayout from '../components/MainLayout';
@@ -15,5 +16,23 @@ function MyApp({ Component, pageProps }) {
         </>
     );
 }
+
+MyApp.getInitialProps = wrapper.getInitialAppProps(
+    (store) =>
+        async ({ ctx, Component }) => {
+            try {
+                const { token } = parseCookies(ctx);
+                if (token) {
+                }
+            } catch (err) {
+                console.log(err);
+            }
+            return {
+                pageProps: Component.getInitialProps
+                    ? await Component.getInitialProps({ ...ctx, store })
+                    : {},
+            };
+        }
+);
 
 export default wrapper.withRedux(MyApp);

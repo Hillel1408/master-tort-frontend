@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { parseCookies, setCookie } from 'nookies';
 import Image from 'next/image';
 import classNames from 'classnames';
 import Link from 'next/link';
@@ -148,6 +149,7 @@ export default function Recipe() {
                 setHeight(response.data.height);
                 setCheckbox(response.data.checkbox);
                 setBlock(response.data.products);
+                console.log(response.data.products);
             } catch (e) {
                 console.log(e.response?.data?.message);
             } finally {
@@ -159,7 +161,11 @@ export default function Recipe() {
             //проверяем авторизован ли пользователь
             try {
                 const response = await AuthService.refresh();
-                localStorage.setItem('token', response.data.accessToken);
+                //localStorage.setItem('token', response.data.accessToken);
+                setCookie(null, 'token', response.data.accessToken, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                });
                 setDataUser(response.data.user);
                 getRecipe();
                 getProducts(response.data.user.id);
@@ -168,7 +174,7 @@ export default function Recipe() {
                 setIsAuth(false);
             }
         };
-        if (localStorage.getItem('token')) checkAuth();
+        if (parseCookies().token) checkAuth();
         else setIsAuth(false);
     }, []);
 

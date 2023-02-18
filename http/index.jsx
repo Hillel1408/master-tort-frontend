@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { parseCookies, setCookie } from 'nookies';
 
 export const API_URL = `http://localhost:5000/api`;
 export const IMAGE_URL = `http://localhost:5000`;
@@ -9,7 +10,8 @@ const $api = axios.create({
 });
 
 $api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    const cookies = parseCookies();
+    config.headers.Authorization = `Bearer ${cookies.token}`;
     return config;
 });
 
@@ -29,7 +31,11 @@ $api.interceptors.response.use(
                 const response = await axios.get(`${API_URL}/refresh`, {
                     withCredentials: true,
                 });
-                localStorage.setItem('token', response.data.accessToken);
+                //localStorage.setItem('token', response.data.accessToken);
+                setCookie(null, 'token', response.data.accessToken, {
+                    maxAge: 30 * 24 * 60 * 60,
+                    path: '/',
+                });
                 return $api.request(originalRequest);
             } catch (e) {
                 console.log('НЕ АВТОРИЗОВАН');

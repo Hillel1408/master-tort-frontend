@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import dateFormat, { masks } from 'dateformat';
 import Link from 'next/link';
 import classNames from 'classnames';
 import Image from 'next/image';
@@ -107,12 +108,12 @@ function OrderCake({
                             'small-text'
                         )}
                     >
-                        {/*item.date*/}
+                        {dateFormat(item.date, 'mm/dd/yyyy')}
                     </span>
                     <span
                         className={classNames(styles.contentTime, 'small-text')}
                     >
-                        {/*item.time*/}
+                        {dateFormat(item.time, 'HH:MM')}
                     </span>
                 </div>
                 {draggable && (

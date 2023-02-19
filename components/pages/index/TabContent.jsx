@@ -475,7 +475,7 @@ function TabContent({
                                     )}
                                     onChange={(date) => {
                                         setDate(date);
-                                        items[index].date = date.toString();
+                                        items[index].date = date?.toString();
                                     }}
                                 />
                                 <DatePicker
@@ -483,7 +483,7 @@ function TabContent({
                                     placeholderText="Время"
                                     selected={time}
                                     onChange={(date) => {
-                                        items[index].time = date.toString();
+                                        items[index].time = date?.toString();
                                         setTime(date);
                                     }}
                                     className={classNames(

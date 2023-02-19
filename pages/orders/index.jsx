@@ -257,8 +257,9 @@ export default function Orders() {
             <OrdersNav visibleTabs={true} />
             {boards ? (
                 <div className={styles.kanban}>
-                    {boards.map((board) => (
+                    {boards.map((board, index) => (
                         <div
+                            key={index}
                             className={classNames(
                                 styles.kanbanColumn,
                                 'column'

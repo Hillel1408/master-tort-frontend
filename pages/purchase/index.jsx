@@ -183,9 +183,9 @@ export default function Purchase() {
                         </h2>
                         {orders.length > 0 && (
                             <div className={styles.orders}>
-                                {orders.map((item) => (
+                                {orders.map((item, index) => (
                                     <OrderCake
-                                        key={item.id}
+                                        key={index}
                                         item={item}
                                         style="purchaseCake"
                                         setModal={setModal}
@@ -238,6 +238,7 @@ export default function Purchase() {
                                                     <input
                                                         type="checkbox"
                                                         checked={checkbox}
+                                                        readOnly
                                                     />
                                                     <span
                                                         onClick={() =>

@@ -314,9 +314,10 @@ export default function CalendarOrders() {
                                     </thead>
                                     <tbody>
                                         {nums.map((item, indexTr) => (
-                                            <tr>
+                                            <tr key={indexTr}>
                                                 {item.map((amount, indexTd) => (
                                                     <Td
+                                                        key={indexTd}
                                                         st={
                                                             (indexTr === 0 &&
                                                                 indexTd <

@@ -55,7 +55,11 @@ function OrderCake({
 
     useEffect(() => {
         if (item.status !== 'archive') {
-            const date = new Date(item.date + 'T' + item.time);
+            const date = new Date(
+                dateFormat(item.date, 'yyyy-mm-dd') +
+                    'T' +
+                    dateFormat(item.time, 'HH:MM')
+            );
             const today = new Date();
             const a = (date - today) / (1000 * 3600 * 24);
             if (a < 0) setTypeOrder('normal');

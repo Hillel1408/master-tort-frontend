@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import dateFormat, { masks } from 'dateformat';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -50,14 +51,16 @@ export default function Orders() {
 
     const sendArchive = async (dataUser, boards, board) => {
         //проверяем есть ли вообще элементы на доске "архив"
-        console.log(1);
-        console.log(board);
         if (board.items.length > 0) {
             let flag = false;
             //проверяем есть ли заказ с актуальной датой
             const today = new Date();
             board.items.map((item) => {
-                const date = new Date(item.date + 'T' + item.time);
+                const date = new Date(
+                    dateFormat(item.date, 'yyyy-mm-dd') +
+                        'T' +
+                        dateFormat(item.time, 'HH:MM')
+                );
                 if ((date - today) / (1000 * 3600 * 24) > 0) flag = true;
             });
             if (flag) {

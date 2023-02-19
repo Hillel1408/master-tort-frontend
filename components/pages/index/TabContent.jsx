@@ -494,7 +494,7 @@ function TabContent({
                                     showTimeSelectOnly
                                     timeIntervals={15}
                                     timeCaption="Время"
-                                    dateFormat="h:mm aa"
+                                    dateFormat="HH:mm"
                                 />
                             </div>
                             <textarea

@@ -107,12 +107,12 @@ function OrderCake({
                             'small-text'
                         )}
                     >
-                        {item.date}
+                        {/*item.date*/}
                     </span>
                     <span
                         className={classNames(styles.contentTime, 'small-text')}
                     >
-                        {item.time}
+                        {/*item.time*/}
                     </span>
                 </div>
                 {draggable && (

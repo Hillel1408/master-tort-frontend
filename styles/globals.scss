@@ -114,3 +114,11 @@ body.lock {
     opacity: 0.4;
     margin-top: 4px;
 }
+
+.react-datepicker__tab-loop {
+    position: absolute;
+    top: 0;
+}
+.react-datepicker__triangle {
+    left: -20px !important;
+}

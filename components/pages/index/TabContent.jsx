@@ -1,5 +1,8 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ru from 'date-fns/locale/ru';
+registerLocale('ru', ru);
 import { OverlayScrollbars } from 'overlayscrollbars';
 import Image from 'next/image';
 import uuid from 'react-uuid';
@@ -14,6 +17,7 @@ import { IMAGE_URL } from '../../../http';
 import UploadService from '../../../services/UploadService';
 import OrdersService from '../../../services/OrdersService';
 import { setAlert } from '../../../redux/cakeSlice';
+import 'react-datepicker/dist/react-datepicker.css';
 import styles from '../../../pages/Home.module.scss';
 import stylesTable from '../../Table/Table.module.scss';
 import stylesTooltip from '../../Tooltip/Tooltip.module.scss';
@@ -38,8 +42,12 @@ function TabContent({
 
     const [range, setRange] = useState(items[index].range);
     const [orderName, setOrderName] = useState(items[index].orderName);
-    const [date, setDate] = useState(items[index].date);
-    const [time, setTime] = useState(items[index].time);
+    const [date, setDate] = useState(
+        items[index].date ? new Date(items[index].date) : ''
+    );
+    const [time, setTime] = useState(
+        items[index].time ? new Date(items[index].time) : ''
+    );
     const [image, setImage] = useState(items[index].imagesUrl);
     const [standWidth, setStandWidth] = useState(items[index].standWidth);
     const [standLength, setStandLength] = useState(items[index].standLength);
@@ -457,29 +465,36 @@ function TabContent({
                                 }}
                             />
                             <div className={styles.informationInputBlock}>
-                                <input
-                                    type="date"
+                                <DatePicker
+                                    locale="ru"
+                                    placeholderText="Дата"
+                                    selected={date}
                                     className={classNames(
                                         stylesInput.input,
                                         styles.informationInput
                                     )}
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)}
-                                    onBlur={() => {
-                                        items[index].date = date;
+                                    onChange={(date) => {
+                                        setDate(date);
+                                        items[index].date = date.toString();
                                     }}
                                 />
-                                <input
-                                    type="time"
+                                <DatePicker
+                                    locale="ru"
+                                    placeholderText="Время"
+                                    selected={time}
+                                    onChange={(date) => {
+                                        items[index].time = date.toString();
+                                        setTime(date);
+                                    }}
                                     className={classNames(
                                         stylesInput.input,
                                         styles.informationInput
                                     )}
-                                    value={time}
-                                    onChange={(e) => setTime(e.target.value)}
-                                    onBlur={() => {
-                                        items[index].time = time;
-                                    }}
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={15}
+                                    timeCaption="Время"
+                                    dateFormat="h:mm aa"
                                 />
                             </div>
                             <textarea

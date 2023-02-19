@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { parseCookies, setCookie } from 'nookies';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
@@ -8,7 +8,6 @@ import { Confirm } from '../../components/Confirm';
 import { OrdersNav } from '../../components/OrdersNav';
 import { Td } from '../../components/pages/calendar-orders/Td';
 import styles from './CalendarOrders.module.scss';
-import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 
 export default function CalendarOrders() {
@@ -25,6 +24,8 @@ export default function CalendarOrders() {
     const [isActive, setIsActive] = useState('');
     const [modal, setModal] = useState(false);
     const [itemId, setItemId] = useState('');
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const monthArr = [
         ['январь', 'января'],
@@ -181,23 +182,11 @@ export default function CalendarOrders() {
             }
         };
 
-        const checkAuth = async () => {
-            //проверяем авторизован ли пользователь
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getOrders(response.data.user.id);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getOrders(dataUser_2.id);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

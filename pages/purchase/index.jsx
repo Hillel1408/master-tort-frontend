@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { parseCookies, setCookie } from 'nookies';
+import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Link from 'next/link';
@@ -10,7 +9,6 @@ import { Tr } from '../../components/pages/purchase/Tr';
 import { Alert } from '../../components/Alert';
 import { Confirm } from '../../components/Confirm';
 import { setAlert } from '../../redux/cakeSlice';
-import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Purchase.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
@@ -28,6 +26,8 @@ export default function Purchase() {
     const [itemId, setItemId] = useState('');
 
     const dispatch = useDispatch();
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const clickHandler = () => {
         setCheckbox(!checkbox);
@@ -157,23 +157,11 @@ export default function Purchase() {
             }
         };
 
-        const checkAuth = async () => {
-            //проверяем авторизован ли пользователь
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getOrders(response.data.user.id);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getOrders(dataUser_2.id);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

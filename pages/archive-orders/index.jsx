@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { parseCookies, setCookie } from 'nookies';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
 import { Confirm } from '../../components/Confirm';
-import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
 import styles from '../purchase/Purchase.module.scss';
@@ -17,6 +16,8 @@ export default function ArchiveOrders() {
     const [orders, setOrders] = useState(undefined);
     const [modal, setModal] = useState(false);
     const [itemId, setItemId] = useState('');
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const deleteOrder = async () => {
         //удаляем заказ пользователя
@@ -61,23 +62,11 @@ export default function ArchiveOrders() {
             }
         };
 
-        const checkAuth = async () => {
-            //проверяем авторизован ли пользователь
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getOrders(response.data.user.id);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getOrders(dataUser_2.id);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

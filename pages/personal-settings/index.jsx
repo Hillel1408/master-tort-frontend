@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { parseCookies, setCookie } from 'nookies';
+import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
@@ -28,6 +28,8 @@ export default function PersonalSettings() {
 
     const inputFileRef = useRef('');
     const btnRef = useRef();
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     //опции выпадающего списка
     const measure = [
@@ -150,25 +152,13 @@ export default function PersonalSettings() {
     };
 
     useEffect(() => {
-        const checkAuth = async () => {
-            //проверяем авторизован ли пользователь
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                setFullName(response.data.user.fullName);
-                setEmail(response.data.user.email);
-                setIsAuth(true);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            setFullName(dataUser_2.fullName);
+            setEmail(dataUser_2.email);
+            setIsAuth(true);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

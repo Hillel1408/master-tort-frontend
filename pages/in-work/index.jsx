@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { parseCookies, setCookie } from 'nookies';
 import Head from 'next/head';
 import classNames from 'classnames';
@@ -28,6 +28,8 @@ export default function Purchase() {
     const [itemId, setItemId] = useState('');
 
     const dispatch = useDispatch();
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const clickHandler = () => {};
 
@@ -77,23 +79,11 @@ export default function Purchase() {
             }
         };
 
-        const checkAuth = async () => {
-            //проверяем авторизован ли пользователь
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getOrders(response.data.user.id);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getOrders(dataUser_2.id);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

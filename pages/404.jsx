@@ -1,33 +1,23 @@
 import { useEffect, useState } from 'react';
-import { parseCookies, setCookie } from 'nookies';
+import { useSelector } from 'react-redux';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Layout from '../components/Layout';
-import AuthService from '../services/AuthService';
 import stylesNoAccess from '../components/NoAccess/NoAccess.module.scss';
 
 export default function Home() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
 
+    const { dataUser_2 } = useSelector((state) => state.cakes);
+
     useEffect(() => {
         //проверяем авторизован ли пользователь
-        const checkAuth = async () => {
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                setIsAuth(true);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            setIsAuth(true);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

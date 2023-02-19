@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { parseCookies, setCookie } from 'nookies';
+import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import classNames from 'classnames';
 import Link from 'next/link';
@@ -11,7 +10,6 @@ import { Tooltip } from '../../components/Tooltip';
 import { Checkbox } from '../../components/CustomCheckbox';
 import { Alert } from '../../components/Alert';
 import { IMAGE_URL } from '../../http';
-import AuthService from '../../services/AuthService';
 import RecipeService from '../../services/RecipeService';
 import ProductsService from '../../services/ProductsService';
 import UploadService from '../../services/UploadService';
@@ -41,6 +39,8 @@ export default function Recipe() {
     const btnRef = useRef('');
 
     const dispatch = useDispatch();
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const thTitle = ['Продукт', 'Брутто, гр.', 'Нетто, гр.'];
 
@@ -149,7 +149,6 @@ export default function Recipe() {
                 setHeight(response.data.height);
                 setCheckbox(response.data.checkbox);
                 setBlock(response.data.products);
-                console.log(response.data.products);
             } catch (e) {
                 console.log(e.response?.data?.message);
             } finally {
@@ -157,24 +156,12 @@ export default function Recipe() {
             }
         };
 
-        const checkAuth = async () => {
-            //проверяем авторизован ли пользователь
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getRecipe();
-                getProducts(response.data.user.id);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getRecipe();
+            getProducts(dataUser_2.id);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

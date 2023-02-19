@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { parseCookies, setCookie } from 'nookies';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
@@ -8,7 +8,6 @@ import { OrdersNav } from '../../components/OrdersNav';
 import { OrderCake } from '../../components/OrderCake';
 import { Modal } from '../../components/Modal';
 import { Confirm } from '../../components/Confirm';
-import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from './Orders.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
@@ -23,6 +22,8 @@ export default function Orders() {
     const [modalActive, setModalActive] = useState(false);
     const [modal, setModal] = useState(false);
     const [itemId, setItemId] = useState('');
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const updateStatusOrder = async (currentBoard, board) => {
         //обновляем доски на сервере, так как у них меняются элементы и их порядок
@@ -236,23 +237,11 @@ export default function Orders() {
             }
         };
 
-        const checkAuth = async () => {
-            //проверяем авторизован ли пользователь
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getOrders(response.data.user.id);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getOrders(dataUser_2.id);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
     return (

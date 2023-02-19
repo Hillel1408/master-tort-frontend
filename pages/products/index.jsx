@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { parseCookies, setCookie } from 'nookies';
+import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import classNames from 'classnames';
 import uuid from 'react-uuid';
@@ -9,7 +8,6 @@ import { Tr } from '../../components/pages/products/Tr';
 import { Alert } from '../../components/Alert';
 import { setAlert } from '../../redux/cakeSlice';
 import { Modal } from '../../components/Modal';
-import AuthService from '../../services/AuthService';
 import ProductsService from '../../services/ProductsService';
 import RecipeService from '../../services/RecipeService';
 import styles from './Products.module.scss';
@@ -25,6 +23,8 @@ export default function Products() {
     const [start, setStart] = useState('');
 
     const dispatch = useDispatch();
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const trValue = {
         name: '',
@@ -96,24 +96,12 @@ export default function Products() {
             }
         };
 
-        const checkAuth = async () => {
-            //проверяем авторизован ли пользователь
-            try {
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getSettings(response.data.user.id);
-                getRecipes(response.data.user.id);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getSettings(dataUser_2.id);
+            getRecipes(dataUser_2.id);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

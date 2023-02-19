@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { parseCookies, setCookie } from 'nookies';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { Tab } from '../components/pages/index/Tab';
 import { TabContent } from '../components/pages/index/TabContent';
-import AuthService from '../services/AuthService';
 import OrdersService from '../services/OrdersService';
 import RecipeService from '../services/RecipeService';
 import ProductsService from '../services/ProductsService';
@@ -23,6 +22,8 @@ export default function Home() {
     const [recipe, setRecipe] = useState('');
 
     const router = useRouter();
+
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const value = {
         orderName: '',
@@ -80,25 +81,13 @@ export default function Home() {
             }
         };
 
-        const checkAuth = async () => {
-            try {
-                //проверяем авторизован ли пользователь
-                const response = await AuthService.refresh();
-                //localStorage.setItem('token', response.data.accessToken);
-                setCookie(null, 'token', response.data.accessToken, {
-                    maxAge: 30 * 24 * 60 * 60,
-                    path: '/',
-                });
-                setDataUser(response.data.user);
-                getOrder();
-                getRecipes(response.data.user.id);
-                getProducts(response.data.user.id);
-            } catch (e) {
-                console.log(e.response?.data?.message);
-                setIsAuth(false);
-            }
+        const checkAuth = () => {
+            setDataUser(dataUser_2);
+            getOrder();
+            getRecipes(dataUser_2.id);
+            getProducts(dataUser_2.id);
         };
-        if (parseCookies().token) checkAuth();
+        if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import dateFormat, { masks } from 'dateformat';
 import classNames from 'classnames';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
@@ -195,7 +196,11 @@ export default function CalendarOrders() {
         const asd = {};
         const today = new Date();
         orders.forEach((item) => {
-            const date = new Date(item.date + 'T' + item.time);
+            const date = new Date(
+                dateFormat(item.date, 'yyyy-mm-dd') +
+                    'T' +
+                    dateFormat(item.time, 'HH:MM')
+            );
             if (date.getMonth() === month && date.getFullYear() === year) {
                 //проверяем является ли заказ срочным
                 const day = date.getDate();

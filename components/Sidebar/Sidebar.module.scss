@@ -51,7 +51,7 @@
             justify-content: center;
         }
         &Active {
-            color: var(--mainColor);
+            color: var(--mainColor) !important;
         }
     }
     &Icon {

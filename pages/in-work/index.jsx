@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Checkbox } from '../../components/CustomCheckbox';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Alert } from '../../components/Alert';
+import { Tr } from '../../components/pages/in-work/Tr';
 import { Confirm } from '../../components/Confirm';
 import OrdersService from '../../services/OrdersService';
 import styles from '../purchase/Purchase.module.scss';
@@ -19,7 +19,7 @@ export default function Purchase() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [orders, setOrders] = useState([]);
-    const [sumProducts, setSumProducts] = useState(true);
+    const [sumProducts, setSumProducts] = useState('');
     const [checkbox, setCheckbox] = useState('');
     const [modal, setModal] = useState(false);
     const [itemId, setItemId] = useState('');
@@ -35,30 +35,32 @@ export default function Purchase() {
             const obj = {};
             data.map((order) => {
                 order.table.map((tableItem, index) => {
-                    if (obj[tableItem.recipe.value]) {
-                        obj[tableItem.recipe.value].products.map(
-                            (item, index2) => {
-                                item.products.map((elem, index3) => {
-                                    obj[tableItem.recipe.value].products[
-                                        index2
-                                    ].products[index3].net =
-                                        obj[tableItem.recipe.value].products[
-                                            index2
-                                        ].products[index3].net +
-                                        order.calculation[index].products[
-                                            index2
-                                        ].products[index3].net;
-                                });
-                            }
+                    const a = tableItem.recipe.value;
+                    if (obj[a]) {
+                        obj[a].rings.push(
+                            `⌀ ${tableItem.diameter}` + ` ↑ ${tableItem.height}`
                         );
+                        obj[a].products.map((item, index2) => {
+                            item.products.map((index3) => {
+                                obj[a].products[index2].products[index3].net =
+                                    obj[a].products[index2].products[index3]
+                                        .net +
+                                    order.calculation[index].products[index2]
+                                        .products[index3].net;
+                            });
+                        });
                     } else
-                        obj[tableItem.recipe.value] = {
+                        obj[a] = {
                             label: tableItem.recipe.label,
+                            rings: [
+                                `⌀ ${tableItem.diameter}` +
+                                    ` ↑ ${tableItem.height}`,
+                            ],
                             products: order.calculation[index].products,
                         };
                 });
             });
-            console.log(obj);
+            setSumProducts(obj);
         };
 
         const getOrders = async (userId) => {
@@ -181,42 +183,25 @@ export default function Purchase() {
                                             </div>
                                         </div>
                                         <div className={stylesTable.tbody}>
-                                            <div
-                                                className={classNames(
-                                                    stylesTable.wrapper,
-                                                    styles.tableTr
-                                                )}
-                                            >
-                                                <div className={stylesTable.td}>
-                                                    <Checkbox />
-                                                </div>
-                                                <div
-                                                    className={stylesTable.tr}
-                                                    style={{
-                                                        gridTemplateColumns:
-                                                            '100%',
-                                                        padding: '5px',
-                                                    }}
-                                                >
-                                                    <p
-                                                        className={classNames(
-                                                            'small-text',
-                                                            styles.work
-                                                        )}
-                                                    >
-                                                        Медовик
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            {Object.keys(sumProducts).map(
+                                                (keyObj) => (
+                                                    <Tr
+                                                        key={keyObj}
+                                                        cake={
+                                                            sumProducts[keyObj]
+                                                                .label
+                                                        }
+                                                        rings={
+                                                            sumProducts[keyObj]
+                                                                .rings
+                                                        }
+                                                    />
+                                                )
+                                            )}
                                         </div>
                                     </>
                                 )}
                             </div>
-                        </div>
-                        <div className={styles.total}>
-                            <p className={classNames('text', styles.totalText)}>
-                                Итоговая стоимость продуктов
-                            </p>
                         </div>
                         <div className={styles.buttons}>
                             <button

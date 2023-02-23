@@ -92,5 +92,21 @@
 }
 .work {
     color: #002222;
-    margin-bottom: 16px;
+    &Link {
+        margin-top: 3px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        &::before {
+            position: absolute;
+            right: -20px;
+            transform: rotate(180deg);
+        }
+    }
+    &Flex {
+        display: flex;
+        column-gap: 8px;
+        flex-wrap: wrap;
+    }
 }

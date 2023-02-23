@@ -35,7 +35,11 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
             <NextNprogress color="#009998" />
-            <MainLayout>{checkAuth && <Component {...pageProps} />}</MainLayout>
+            {checkAuth && (
+                <MainLayout>
+                    <Component {...pageProps} />
+                </MainLayout>
+            )}
         </>
     );
 }

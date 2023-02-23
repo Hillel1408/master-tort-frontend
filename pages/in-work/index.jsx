@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { parseCookies, setCookie } from 'nookies';
+import { Checkbox } from '../../components/CustomCheckbox';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
-import { Tr } from '../../components/pages/purchase/Tr';
 import { Alert } from '../../components/Alert';
 import { Confirm } from '../../components/Confirm';
-import { setAlert } from '../../redux/cakeSlice';
-import AuthService from '../../services/AuthService';
 import OrdersService from '../../services/OrdersService';
 import styles from '../purchase/Purchase.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
@@ -175,24 +172,43 @@ export default function Purchase() {
                                                     stylesTable.thead
                                                 )}
                                                 style={{
-                                                    gridTemplateColumns:
-                                                        '33.3% 33.3% 33.3%',
+                                                    gridTemplateColumns: '100%',
                                                 }}
                                             >
                                                 <div className={stylesTable.th}>
-                                                    Начинка
-                                                </div>
-                                                <div className={stylesTable.th}>
-                                                    Кольца
-                                                </div>
-                                                <div className={stylesTable.th}>
-                                                    Рецепт
+                                                    Наименование
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
-                                            className={stylesTable.tbody}
-                                        ></div>
+                                        <div className={stylesTable.tbody}>
+                                            <div
+                                                className={classNames(
+                                                    stylesTable.wrapper,
+                                                    styles.tableTr
+                                                )}
+                                            >
+                                                <div className={stylesTable.td}>
+                                                    <Checkbox />
+                                                </div>
+                                                <div
+                                                    className={stylesTable.tr}
+                                                    style={{
+                                                        gridTemplateColumns:
+                                                            '100%',
+                                                        padding: '5px',
+                                                    }}
+                                                >
+                                                    <p
+                                                        className={classNames(
+                                                            'small-text',
+                                                            styles.work
+                                                        )}
+                                                    >
+                                                        Медовик
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </>
                                 )}
                             </div>

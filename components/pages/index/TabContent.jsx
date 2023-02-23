@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
-registerLocale('ru', ru);
 import { OverlayScrollbars } from 'overlayscrollbars';
 import Image from 'next/image';
 import uuid from 'react-uuid';
@@ -62,6 +61,8 @@ function TabContent({
 
     const dispatch = useDispatch();
 
+    registerLocale('ru', ru);
+
     const inputFileRef = useRef('');
     const btnRef = useRef('');
     const buttonRef = useRef('');
@@ -73,6 +74,7 @@ function TabContent({
         },
     };
 
+    //кастомные скроллы
     const cakeShapeRef = useRef('');
     cakeShapeRef.current && OverlayScrollbars(cakeShapeRef.current, config);
 

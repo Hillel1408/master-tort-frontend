@@ -2,21 +2,12 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { Checkbox } from '../../CustomCheckbox';
 import styles from '../../../pages/purchase/Purchase.module.scss';
-import stylesTable from '../../Table/Table.module.scss';
 
 function Tr({ cake, rings }) {
     return (
-        <div className={classNames(stylesTable.wrapper, styles.tableTr)}>
-            <div className={stylesTable.td}>
-                <Checkbox />
-            </div>
-            <div
-                className={stylesTable.tr}
-                style={{
-                    gridTemplateColumns: '100%',
-                    padding: '5px',
-                }}
-            >
+        <div className={styles.workGridItem}>
+            <Checkbox />
+            <div>
                 <p
                     className={classNames('small-text', styles.work)}
                     style={{

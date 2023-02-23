@@ -10,17 +10,14 @@ import { Tr } from '../../components/pages/in-work/Tr';
 import { Confirm } from '../../components/Confirm';
 import OrdersService from '../../services/OrdersService';
 import styles from '../purchase/Purchase.module.scss';
-import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
-import stylesCheckbox from '../../components/CustomCheckbox/Checkbox.module.scss';
 
 export default function Purchase() {
     const [isAuth, setIsAuth] = useState('');
     const [dataUser, setDataUser] = useState('');
     const [orders, setOrders] = useState([]);
     const [sumProducts, setSumProducts] = useState('');
-    const [checkbox, setCheckbox] = useState('');
     const [modal, setModal] = useState(false);
     const [itemId, setItemId] = useState('');
 
@@ -41,7 +38,7 @@ export default function Purchase() {
                             `⌀ ${tableItem.diameter}` + ` ↑ ${tableItem.height}`
                         );
                         obj[a].products.map((item, index2) => {
-                            item.products.map((index3) => {
+                            item.products.map((elem, index3) => {
                                 obj[a].products[index2].products[index3].net =
                                     obj[a].products[index2].products[index3]
                                         .net +
@@ -61,6 +58,7 @@ export default function Purchase() {
                 });
             });
             setSumProducts(obj);
+            console.log(obj);
         };
 
         const getOrders = async (userId) => {
@@ -133,75 +131,21 @@ export default function Purchase() {
                             </div>
                         </Link>
                     </div>
-                    <div className={styles.column}>
-                        <div className={stylesTable.overflow}>
-                            <div
-                                className={classNames(
-                                    stylesTable.table,
-                                    'small-text',
-                                    styles.table
-                                )}
-                            >
-                                {sumProducts && (
-                                    <>
-                                        <div
-                                            className={stylesTable.wrapperHead}
-                                        >
-                                            <div
-                                                className={stylesTable.th}
-                                                style={{ display: 'flex' }}
-                                            >
-                                                <label
-                                                    className={
-                                                        stylesCheckbox.customCheckbox
-                                                    }
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={checkbox}
-                                                        readOnly
-                                                    />
-                                                    <span
-                                                        onClick={() =>
-                                                            clickHandler()
-                                                        }
-                                                    ></span>
-                                                </label>
-                                            </div>
-                                            <div
-                                                className={classNames(
-                                                    'text',
-                                                    stylesTable.thead
-                                                )}
-                                                style={{
-                                                    gridTemplateColumns: '100%',
-                                                }}
-                                            >
-                                                <div className={stylesTable.th}>
-                                                    Наименование
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className={stylesTable.tbody}>
-                                            {Object.keys(sumProducts).map(
-                                                (keyObj) => (
-                                                    <Tr
-                                                        key={keyObj}
-                                                        cake={
-                                                            sumProducts[keyObj]
-                                                                .label
-                                                        }
-                                                        rings={
-                                                            sumProducts[keyObj]
-                                                                .rings
-                                                        }
-                                                    />
-                                                )
-                                            )}
-                                        </div>
-                                    </>
-                                )}
-                            </div>
+                    <div
+                        className={classNames(styles.column, styles.workColumn)}
+                    >
+                        <h2 className={classNames('text', styles.title)}>
+                            Рецепты
+                        </h2>
+                        <div className={classNames(styles.workGrid)}>
+                            {sumProducts &&
+                                Object.keys(sumProducts).map((keyObj) => (
+                                    <Tr
+                                        key={keyObj}
+                                        cake={sumProducts[keyObj].label}
+                                        rings={sumProducts[keyObj].rings}
+                                    />
+                                ))}
                         </div>
                         <div className={styles.buttons}>
                             <button

@@ -25,27 +25,79 @@ export default function Purchase() {
 
     const { dataUser_2 } = useSelector((state) => state.cakes);
 
-    const clickHandler = () => {};
+    const deleteOrder = async () => {
+        //удаляем заказ пользователя
+        setModal(false);
+        document.body.classList.remove('lock');
+        orders.map((a, index) => {
+            if (a._id === itemId) {
+                orders.splice(index, 1);
+            }
+        });
+        if (orders.length === 0) setOrders([]);
+        try {
+            const response = await OrdersService.deleteOrder(itemId, {
+                userId: dataUser.id,
+            });
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    };
 
     useEffect(() => {
         const sumProducts = (data) => {
+            //считаем сумму продуктов по ярусам
             const obj = {};
             data.map((order) => {
                 order.table.map((tableItem, index) => {
                     const a = tableItem.recipe.value;
                     if (obj[a]) {
-                        obj[a].rings.push(
-                            `⌀ ${tableItem.diameter}` + ` ↑ ${tableItem.height}`
-                        );
-                        obj[a].products.map((item, index2) => {
-                            item.products.map((elem, index3) => {
-                                obj[a].products[index2].products[index3].net =
-                                    obj[a].products[index2].products[index3]
-                                        .net +
-                                    order.calculation[index].products[index2]
-                                        .products[index3].net;
+                        if (tableItem.checked === obj[a].checked) {
+                            obj[a].rings.push(
+                                `⌀ ${tableItem.diameter}` +
+                                    ` ↑ ${tableItem.height}`
+                            );
+                            obj[a].products.map((item, index2) => {
+                                item.products.map((elem, index3) => {
+                                    obj[a].products[index2].products[
+                                        index3
+                                    ].net =
+                                        obj[a].products[index2].products[index3]
+                                            .net +
+                                        order.calculation[index].products[
+                                            index2
+                                        ].products[index3].net;
+                                });
                             });
-                        });
+                        } else {
+                            if (obj[`${a}ch`]) {
+                                obj[`${a}ch`].rings.push(
+                                    `⌀ ${tableItem.diameter}` +
+                                        ` ↑ ${tableItem.height}`
+                                );
+                                obj[`${a}ch`].products.map((item, index2) => {
+                                    item.products.map((elem, index3) => {
+                                        obj[`${a}ch`].products[index2].products[
+                                            index3
+                                        ].net =
+                                            obj[`${a}ch`].products[index2]
+                                                .products[index3].net +
+                                            order.calculation[index].products[
+                                                index2
+                                            ].products[index3].net;
+                                    });
+                                });
+                            } else
+                                obj[`${a}ch`] = {
+                                    label: tableItem.recipe.label,
+                                    rings: [
+                                        `⌀ ${tableItem.diameter}` +
+                                            ` ↑ ${tableItem.height}`,
+                                    ],
+                                    checked: tableItem.checked,
+                                    products: order.calculation[index].products,
+                                };
+                        }
                     } else
                         obj[a] = {
                             label: tableItem.recipe.label,
@@ -53,6 +105,7 @@ export default function Purchase() {
                                 `⌀ ${tableItem.diameter}` +
                                     ` ↑ ${tableItem.height}`,
                             ],
+                            checked: tableItem.checked,
                             products: order.calculation[index].products,
                         };
                 });
@@ -69,7 +122,6 @@ export default function Purchase() {
                     setOrders(response.data.inWork);
                     sumProducts(response.data.inWork);
                 }
-                console.log(response.data);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -144,6 +196,7 @@ export default function Purchase() {
                                         key={keyObj}
                                         cake={sumProducts[keyObj].label}
                                         rings={sumProducts[keyObj].rings}
+                                        checked={sumProducts[keyObj].checked}
                                     />
                                 ))}
                         </div>
@@ -184,7 +237,7 @@ export default function Purchase() {
                 </h2>
             )}
             <Alert />
-            <Confirm modal={modal} setModal={setModal} />
+            <Confirm modal={modal} setModal={setModal} func={deleteOrder} />
         </Layout>
     );
 }

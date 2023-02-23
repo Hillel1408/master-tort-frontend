@@ -49,7 +49,8 @@ function Tr({ select, index, item, items, tableIndex, setItems }) {
                             />
                         </div>
                     ) : (
-                        keyObj !== 'id' && (
+                        keyObj !== 'id' &&
+                        keyObj !== 'checked' && (
                             <TableCell
                                 key={keyObj}
                                 value={item[keyObj]}

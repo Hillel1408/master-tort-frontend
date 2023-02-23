@@ -94,6 +94,7 @@ function TabContent({
         height: '',
         recipe: { value: '', label: '' },
         indent: '',
+        checked: false,
     };
 
     useEffect(() => {

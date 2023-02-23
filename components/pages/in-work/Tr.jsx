@@ -3,10 +3,12 @@ import Link from 'next/link';
 import { Checkbox } from '../../CustomCheckbox';
 import styles from '../../../pages/purchase/Purchase.module.scss';
 
-function Tr({ cake, rings }) {
+function Tr({ cake, rings, checked }) {
+    const clickHandler = () => {};
+
     return (
         <div className={styles.workGridItem}>
-            <Checkbox />
+            <Checkbox checkbox={checked} clickHandler={clickHandler} />
             <div>
                 <p
                     className={classNames('small-text', styles.work)}

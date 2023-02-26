@@ -51,67 +51,50 @@ export default function Purchase() {
             data.map((order) => {
                 order.table.map((tableItem, index) => {
                     const a = tableItem.recipe.value;
+                    const value = {
+                        label: tableItem.recipe.label,
+                        rings: [
+                            `⌀ ${tableItem.diameter}` +
+                                ` ↑ ${tableItem.height}`,
+                        ],
+                        checked: tableItem.checked,
+                        products: order.calculation[index].products,
+                    };
+                    const pushFunc = (a) => {
+                        obj[a].rings.push(
+                            `⌀ ${tableItem.diameter}` + ` ↑ ${tableItem.height}`
+                        );
+                    };
+                    const func = (a) => {
+                        obj[a].products.map((item, index2) => {
+                            item.products.map((elem, index3) => {
+                                obj[a].products[index2].products[index3].net +=
+                                    order.calculation[index].products[
+                                        index2
+                                    ].products[index3].net;
+                            });
+                        });
+                    };
                     if (obj[a]) {
                         if (tableItem.checked === obj[a].checked) {
-                            obj[a].rings.push(
-                                `⌀ ${tableItem.diameter}` +
-                                    ` ↑ ${tableItem.height}`
-                            );
-                            obj[a].products.map((item, index2) => {
-                                item.products.map((elem, index3) => {
-                                    obj[a].products[index2].products[
-                                        index3
-                                    ].net =
-                                        obj[a].products[index2].products[index3]
-                                            .net +
-                                        order.calculation[index].products[
-                                            index2
-                                        ].products[index3].net;
-                                });
-                            });
+                            pushFunc(a);
+                            func(a);
                         } else {
                             if (obj[`${a}ch`]) {
-                                obj[`${a}ch`].rings.push(
-                                    `⌀ ${tableItem.diameter}` +
-                                        ` ↑ ${tableItem.height}`
-                                );
-                                obj[`${a}ch`].products.map((item, index2) => {
-                                    item.products.map((elem, index3) => {
-                                        obj[`${a}ch`].products[index2].products[
-                                            index3
-                                        ].net =
-                                            obj[`${a}ch`].products[index2]
-                                                .products[index3].net +
-                                            order.calculation[index].products[
-                                                index2
-                                            ].products[index3].net;
-                                    });
-                                });
+                                pushFunc(`${a}ch`);
+                                func(`${a}ch`);
                             } else
                                 obj[`${a}ch`] = {
-                                    label: tableItem.recipe.label,
-                                    rings: [
-                                        `⌀ ${tableItem.diameter}` +
-                                            ` ↑ ${tableItem.height}`,
-                                    ],
-                                    checked: tableItem.checked,
-                                    products: order.calculation[index].products,
+                                    ...value,
                                 };
                         }
                     } else
                         obj[a] = {
-                            label: tableItem.recipe.label,
-                            rings: [
-                                `⌀ ${tableItem.diameter}` +
-                                    ` ↑ ${tableItem.height}`,
-                            ],
-                            checked: tableItem.checked,
-                            products: order.calculation[index].products,
+                            ...value,
                         };
                 });
             });
             setSumProducts(obj);
-            console.log(obj);
         };
 
         const getOrders = async (userId) => {

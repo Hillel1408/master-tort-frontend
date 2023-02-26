@@ -3,8 +3,27 @@ import Link from 'next/link';
 import { Checkbox } from '../../CustomCheckbox';
 import styles from '../../../pages/purchase/Purchase.module.scss';
 
-function Tr({ cake, rings, checked }) {
-    const clickHandler = () => {};
+function Tr({
+    orders,
+    cake,
+    rings,
+    checked,
+    sumProducts,
+    setSumProducts,
+    keyObj,
+}) {
+    const clickHandler = () => {
+        const indexSplit = keyObj.split('ch')[0];
+        orders.map((order, orderIndex) => {
+            order.table.map((item, tableIndex) => {
+                if (item.recipe.value === indexSplit) {
+                    orders[orderIndex].table[tableIndex].checked = !checked;
+                }
+            });
+        });
+        sumProducts[keyObj].checked = !checked;
+        setSumProducts({ ...sumProducts });
+    };
 
     return (
         <div className={styles.workGridItem}>

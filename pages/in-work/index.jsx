@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Alert } from '../../components/Alert';
+import { setAlert } from '../../redux/cakeSlice';
 import { Tr } from '../../components/pages/in-work/Tr';
 import { Confirm } from '../../components/Confirm';
 import OrdersService from '../../services/OrdersService';
@@ -41,6 +42,25 @@ export default function Purchase() {
             });
         } catch (e) {
             console.log(e.response?.data?.message);
+        }
+    };
+
+    const saveSettings = async () => {
+        try {
+            //сохраняем закупку пользователя
+            const response = await OrdersService.updateTable(
+                dataUser.id,
+                orders
+            );
+            dispatch(
+                setAlert({
+                    text: 'Закупка успешно сохранена',
+                    color: '#62ac62',
+                })
+            );
+        } catch (e) {
+            console.log(e.response?.data?.message);
+            dispatch(setAlert({ text: 'Возникла ошибка', color: '#c34a43' }));
         }
     };
 
@@ -180,6 +200,10 @@ export default function Purchase() {
                                         cake={sumProducts[keyObj].label}
                                         rings={sumProducts[keyObj].rings}
                                         checked={sumProducts[keyObj].checked}
+                                        orders={orders}
+                                        sumProducts={sumProducts}
+                                        setSumProducts={setSumProducts}
+                                        keyObj={keyObj}
                                     />
                                 ))}
                         </div>

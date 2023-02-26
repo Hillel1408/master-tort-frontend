@@ -190,6 +190,7 @@ export default function Purchase() {
                                         style="purchaseCake"
                                         setModal={setModal}
                                         setItemId={setItemId}
+                                        rushOrder={dataUser.rushOrder.value}
                                     />
                                 ))}
                             </div>

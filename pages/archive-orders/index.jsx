@@ -91,6 +91,7 @@ export default function ArchiveOrders() {
                             item={item}
                             setModal={setModal}
                             setItemId={setItemId}
+                            rushOrder={dataUser.rushOrder.value}
                         />
                     ))}
                 </div>

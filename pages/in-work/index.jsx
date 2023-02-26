@@ -164,6 +164,7 @@ export default function Purchase() {
                                         style="purchaseCake"
                                         setModal={setModal}
                                         setItemId={setItemId}
+                                        rushOrder={dataUser.rushOrder.value}
                                     />
                                 ))}
                             </div>
@@ -189,23 +190,27 @@ export default function Purchase() {
                     <div
                         className={classNames(styles.column, styles.workColumn)}
                     >
-                        <h2 className={classNames('text', styles.title)}>
-                            Рецепты
-                        </h2>
-                        <div className={classNames(styles.workGrid)}>
-                            {sumProducts &&
-                                Object.keys(sumProducts).map((keyObj) => (
-                                    <Tr
-                                        key={keyObj}
-                                        cake={sumProducts[keyObj].label}
-                                        rings={sumProducts[keyObj].rings}
-                                        checked={sumProducts[keyObj].checked}
-                                        orders={orders}
-                                        sumProducts={sumProducts}
-                                        setSumProducts={setSumProducts}
-                                        keyObj={keyObj}
-                                    />
-                                ))}
+                        <div className={styles.workColumnWrapper}>
+                            <h2 className={classNames('text', styles.title)}>
+                                Рецепты
+                            </h2>
+                            <div className={classNames(styles.workGrid)}>
+                                {sumProducts &&
+                                    Object.keys(sumProducts).map((keyObj) => (
+                                        <Tr
+                                            key={keyObj}
+                                            cake={sumProducts[keyObj].label}
+                                            rings={sumProducts[keyObj].rings}
+                                            checked={
+                                                sumProducts[keyObj].checked
+                                            }
+                                            orders={orders}
+                                            sumProducts={sumProducts}
+                                            setSumProducts={setSumProducts}
+                                            keyObj={keyObj}
+                                        />
+                                    ))}
+                            </div>
                         </div>
                         <div className={styles.buttons}>
                             <button

@@ -44,8 +44,8 @@ function Tr({
                         styles.workFlex
                     )}
                 >
-                    {rings.map((item) => (
-                        <span>{item}</span>
+                    {rings.map((item, index) => (
+                        <span key={index}>{item}</span>
                     ))}
                 </p>
                 <Link href="/recipe">

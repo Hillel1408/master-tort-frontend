@@ -19,6 +19,9 @@ export default class OrdersService {
     static async updateOrders(user, values) {
         return $api.patch(`/update-orders/${user}`, values);
     }
+    static async updateTable(user, values) {
+        return $api.patch(`/update-table/${user}`, values);
+    }
     static async calculationOrder(values) {
         return $api.post('/calculation/', values);
     }

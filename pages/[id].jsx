@@ -112,7 +112,7 @@ export default function Home() {
                                 styles.backLink
                             )}
                         >
-                            <span onClick={() => router.back()}>
+                            <span onClick={() => router.push('/orders')}>
                                 Вернуться к заказам
                             </span>
                         </div>

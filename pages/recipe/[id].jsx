@@ -190,7 +190,11 @@ export default function Recipe() {
                             'small-text',
                             styles.backLink
                         )}
-                        onClick={() => router.back()}
+                        onClick={() =>
+                            isEdit
+                                ? router.push('/recipes')
+                                : router.push('/in-work')
+                        }
                     >
                         {isEdit
                             ? 'Вернуться к рецептам'

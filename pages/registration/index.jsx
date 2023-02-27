@@ -152,13 +152,13 @@ export default function Registration() {
                                 : 'Зарегистрироваться'}
                         </button>
                     </form>
-                    <div className={styles.or}>
+                    {/*<div className={styles.or}>
                         <span>или</span>
                     </div>
                     <p className={classNames('small-text', styles.textBottom)}>
                         Регистрация с помощью:
                     </p>
-                    <SocialLinks />
+                            <SocialLinks />*/}
                 </div>
             </div>
         </Layout>

@@ -37,7 +37,7 @@ function Sidebar() {
         {
             href: '/in-work',
             name: 'В работе',
-            icon: 'icon-4',
+            icon: 'icon-6',
         },
         {
             href: '/recipes',

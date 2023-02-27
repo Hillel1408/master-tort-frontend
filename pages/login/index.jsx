@@ -142,7 +142,7 @@ export default function Login() {
                         >
                             Забыли пароль?
                         </a>
-                        <div className={styles.or}>
+                        {/*<div className={styles.or}>
                             <span>или</span>
                         </div>
                         <p
@@ -153,7 +153,7 @@ export default function Login() {
                         >
                             Вход с помощью:
                         </p>
-                        <SocialLinks />
+                            <SocialLinks />*/}
                     </div>
                 </div>
             ) : (

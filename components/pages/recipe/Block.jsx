@@ -8,7 +8,7 @@ import stylesInput from '../../Input/Input.module.scss';
 import stylesBtn from '../../Btn/Btn.module.scss';
 import stylesTable from '../../Table/Table.module.scss';
 
-function Block({ item, setBlock, blockIndex, block, select }) {
+function Block({ item, setBlock, blockIndex, block, select, isEdit }) {
     const [visiblePopup, setVisiblePopup] = useState('');
     const [value, setValue] = useState(item.title);
 
@@ -111,18 +111,21 @@ function Block({ item, setBlock, blockIndex, block, select }) {
                             block={block}
                             setBlock={setBlock}
                             select={select}
+                            isEdit={isEdit}
                         />
                     ))}
                 </div>
             )}
-            <div className={classNames('addBlock', stylesTable.addBlock)}>
-                <span
-                    className={classNames('icon-8', 'small-text')}
-                    onClick={() => clickHandler()}
-                >
-                    Добавить продукт
-                </span>
-            </div>
+            {isEdit && (
+                <div className={classNames('addBlock', stylesTable.addBlock)}>
+                    <span
+                        className={classNames('icon-8', 'small-text')}
+                        onClick={() => clickHandler()}
+                    >
+                        Добавить продукт
+                    </span>
+                </div>
+            )}
         </div>
     );
 }

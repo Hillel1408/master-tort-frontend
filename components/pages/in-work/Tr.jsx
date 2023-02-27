@@ -48,7 +48,7 @@ function Tr({
                         <span key={index}>{item}</span>
                     ))}
                 </p>
-                <Link href="/recipe">
+                <Link href={`/recipe/${keyObj}?flag=true`}>
                     <span
                         className={classNames(
                             'icon-28',

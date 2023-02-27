@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import classNames from 'classnames';
 import Link from 'next/link';
@@ -29,6 +30,7 @@ export default function Recipe() {
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [value, setValue] = useState('');
     const [image, setImage] = useState('');
+    const [isEdit, setIsEdit] = useState(true);
 
     const [checkbox, setCheckbox] = useState(false);
     const [exit, setExit] = useState(recipe.exit);
@@ -40,9 +42,11 @@ export default function Recipe() {
 
     const dispatch = useDispatch();
 
-    const { dataUser_2 } = useSelector((state) => state.cakes);
+    const { dataUser_2, recipes } = useSelector((state) => state.cakes);
 
     const thTitle = ['Продукт', 'Брутто, гр.', 'Нетто, гр.'];
+
+    const router = useRouter();
 
     useEffect(() => {
         //делаем кнопку "сохранить" не активной если данные не заполнены
@@ -148,7 +152,10 @@ export default function Recipe() {
                 setDiameter(response.data.diameter);
                 setHeight(response.data.height);
                 setCheckbox(response.data.checkbox);
-                setBlock(response.data.products);
+                if (router.query.flag === 'true' && recipes) {
+                    setBlock(recipes[router.query.id].products);
+                    setIsEdit(false);
+                } else setBlock(response.data.products);
             } catch (e) {
                 console.log(e.response?.data?.message);
             } finally {
@@ -229,85 +236,98 @@ export default function Recipe() {
                                                     blockIndex={index}
                                                     block={block}
                                                     select={select}
+                                                    isEdit={isEdit}
                                                 />
                                             ))}
-                                        <div
-                                            className={classNames(
-                                                'addBlock',
-                                                stylesTable.addBlock
-                                            )}
-                                        >
-                                            <span
+                                        {isEdit && (
+                                            <div
                                                 className={classNames(
-                                                    'icon-8',
-                                                    'small-text'
+                                                    'addBlock',
+                                                    stylesTable.addBlock
                                                 )}
-                                                onClick={(e) =>
-                                                    setVisiblePopup(e)
-                                                }
                                             >
-                                                Добавить полуфабрикат
-                                            </span>
-                                            {visiblePopup && (
-                                                <Tooltip
-                                                    style={styles.tooltiptext}
-                                                    visiblePopup={visiblePopup}
-                                                    setVisiblePopup={
-                                                        setVisiblePopup
+                                                <span
+                                                    className={classNames(
+                                                        'icon-8',
+                                                        'small-text'
+                                                    )}
+                                                    onClick={(e) =>
+                                                        setVisiblePopup(e)
                                                     }
-                                                    close={true}
                                                 >
-                                                    <input
-                                                        className={
-                                                            stylesInput.input
+                                                    Добавить полуфабрикат
+                                                </span>
+                                                {visiblePopup && (
+                                                    <Tooltip
+                                                        style={
+                                                            styles.tooltiptext
                                                         }
-                                                        placeholder="Введите название"
-                                                        value={value}
-                                                        onChange={(e) =>
-                                                            setValue(
-                                                                e.target.value
-                                                            )
+                                                        visiblePopup={
+                                                            visiblePopup
                                                         }
-                                                        onKeyDown={handleKey}
-                                                    />
-                                                    <button
-                                                        className={classNames(
-                                                            stylesBtn.btn,
-                                                            stylesBtn.btn__secondary,
-                                                            'small-text'
-                                                        )}
-                                                        style={{
-                                                            width: '100%',
-                                                            marginTop: '10px',
-                                                        }}
-                                                        onClick={() => {
-                                                            if (value) {
-                                                                handleSubmit();
-                                                            }
-                                                        }}
+                                                        setVisiblePopup={
+                                                            setVisiblePopup
+                                                        }
+                                                        close={true}
                                                     >
-                                                        Добавить
-                                                    </button>
-                                                </Tooltip>
-                                            )}
-                                        </div>
+                                                        <input
+                                                            className={
+                                                                stylesInput.input
+                                                            }
+                                                            placeholder="Введите название"
+                                                            value={value}
+                                                            onChange={(e) =>
+                                                                setValue(
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                            onKeyDown={
+                                                                handleKey
+                                                            }
+                                                        />
+                                                        <button
+                                                            className={classNames(
+                                                                stylesBtn.btn,
+                                                                stylesBtn.btn__secondary,
+                                                                'small-text'
+                                                            )}
+                                                            style={{
+                                                                width: '100%',
+                                                                marginTop:
+                                                                    '10px',
+                                                            }}
+                                                            onClick={() => {
+                                                                if (value) {
+                                                                    handleSubmit();
+                                                                }
+                                                            }}
+                                                        >
+                                                            Добавить
+                                                        </button>
+                                                    </Tooltip>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
-                            <div className={stylesTable.buttons}>
-                                <button
-                                    ref={btnRef}
-                                    className={classNames(
-                                        stylesBtn.btn,
-                                        stylesBtn.btn__secondary,
-                                        'small-text'
-                                    )}
-                                    onClick={() => saveSettings()}
-                                >
-                                    Сохранить
-                                </button>
-                                <div></div>
-                            </div>
+                            {isEdit && (
+                                <div className={stylesTable.buttons}>
+                                    <button
+                                        ref={btnRef}
+                                        className={classNames(
+                                            stylesBtn.btn,
+                                            stylesBtn.btn__secondary,
+                                            'small-text'
+                                        )}
+                                        onClick={() => saveSettings()}
+                                    >
+                                        Сохранить
+                                    </button>
+                                    <div></div>
+                                </div>
+                            )}
                         </div>
                         <div>
                             <div className={styles.image}>
@@ -326,99 +346,107 @@ export default function Recipe() {
                                         />
                                     )}
                                 </div>
-                                <div className="addBlock">
-                                    <span
-                                        onClick={() =>
-                                            inputFileRef.current.click()
-                                        }
-                                        className={classNames(
-                                            'icon-8',
-                                            'small-text'
-                                        )}
-                                    >
-                                        Загрузить новое фото
-                                    </span>
-                                    <input
-                                        ref={inputFileRef}
-                                        type="file"
-                                        onChange={(e) => {
-                                            handleChangeFile(e);
-                                        }}
-                                        hidden
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles.params}>
-                                <div
-                                    className={stylesTable.titleWrapper}
-                                    style={{ marginBottom: '20px' }}
-                                >
-                                    Параметры
-                                </div>
-                                <div className={styles.grid}>
-                                    <div className={styles.paramsBlock}>
-                                        <Checkbox
-                                            checkbox={checkbox}
-                                            clickHandler={() =>
-                                                setCheckbox(!checkbox)
-                                            }
-                                        />
+                                {isEdit && (
+                                    <div className="addBlock">
                                         <span
                                             onClick={() =>
-                                                setCheckbox(!checkbox)
+                                                inputFileRef.current.click()
                                             }
-                                            className="small-text"
+                                            className={classNames(
+                                                'icon-8',
+                                                'small-text'
+                                            )}
                                         >
-                                            Использовать в расчетах
+                                            Загрузить новое фото
                                         </span>
-                                    </div>
-                                    {checkbox && (
-                                        <div
-                                            style={{
-                                                display: 'flex',
-                                                gap: '10px',
+                                        <input
+                                            ref={inputFileRef}
+                                            type="file"
+                                            onChange={(e) => {
+                                                handleChangeFile(e);
                                             }}
-                                        >
-                                            <input
-                                                title="Выход, гр."
-                                                type="number"
-                                                placeholder="Выход, гр."
-                                                value={exit}
-                                                onChange={(e) =>
-                                                    setExit(e.target.value)
-                                                }
-                                                className={classNames(
-                                                    stylesInput.input
-                                                )}
-                                            />
-                                            <input
-                                                title="Диаметр, см."
-                                                type="number"
-                                                placeholder="Диаметр, см."
-                                                value={diameter}
-                                                onChange={(e) =>
-                                                    setDiameter(e.target.value)
-                                                }
-                                                className={classNames(
-                                                    stylesInput.input
-                                                )}
-                                            />
-                                            <input
-                                                title="Высота, см."
-                                                type="number"
-                                                placeholder="Высота, см."
-                                                value={height}
-                                                onChange={(e) =>
-                                                    setHeight(e.target.value)
-                                                }
-                                                className={classNames(
-                                                    stylesInput.input
-                                                )}
-                                            />
-                                        </div>
-                                    )}
-                                </div>
+                                            hidden
+                                        />
+                                    </div>
+                                )}
                             </div>
+                            {isEdit && (
+                                <div className={styles.params}>
+                                    <div
+                                        className={stylesTable.titleWrapper}
+                                        style={{ marginBottom: '20px' }}
+                                    >
+                                        Параметры
+                                    </div>
+                                    <div className={styles.grid}>
+                                        <div className={styles.paramsBlock}>
+                                            <Checkbox
+                                                checkbox={checkbox}
+                                                clickHandler={() =>
+                                                    setCheckbox(!checkbox)
+                                                }
+                                            />
+                                            <span
+                                                onClick={() =>
+                                                    setCheckbox(!checkbox)
+                                                }
+                                                className="small-text"
+                                            >
+                                                Использовать в расчетах
+                                            </span>
+                                        </div>
+                                        {checkbox && (
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    gap: '10px',
+                                                }}
+                                            >
+                                                <input
+                                                    title="Выход, гр."
+                                                    type="number"
+                                                    placeholder="Выход, гр."
+                                                    value={exit}
+                                                    onChange={(e) =>
+                                                        setExit(e.target.value)
+                                                    }
+                                                    className={classNames(
+                                                        stylesInput.input
+                                                    )}
+                                                />
+                                                <input
+                                                    title="Диаметр, см."
+                                                    type="number"
+                                                    placeholder="Диаметр, см."
+                                                    value={diameter}
+                                                    onChange={(e) =>
+                                                        setDiameter(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    className={classNames(
+                                                        stylesInput.input
+                                                    )}
+                                                />
+                                                <input
+                                                    title="Высота, см."
+                                                    type="number"
+                                                    placeholder="Высота, см."
+                                                    value={height}
+                                                    onChange={(e) =>
+                                                        setHeight(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    className={classNames(
+                                                        stylesInput.input
+                                                    )}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </>

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Alert } from '../../components/Alert';
-import { setAlert } from '../../redux/cakeSlice';
+import { setAlert, setRecipes } from '../../redux/cakeSlice';
 import { Tr } from '../../components/pages/in-work/Tr';
 import { Confirm } from '../../components/Confirm';
 import OrdersService from '../../services/OrdersService';
@@ -115,6 +115,7 @@ export default function Purchase() {
                 });
             });
             setSumProducts(obj);
+            dispatch(setRecipes(obj));
         };
 
         const getOrders = async (userId) => {

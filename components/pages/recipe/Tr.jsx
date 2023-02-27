@@ -2,8 +2,9 @@ import classNames from 'classnames';
 import { TableCell } from '../../TableCell';
 import { CustomSelect } from '../../CustomSelect/';
 import stylesTable from '../../Table/Table.module.scss';
+import { useEffect } from 'react';
 
-function Tr({ item, index, blockIndex, block, setBlock, select }) {
+function Tr({ item, index, blockIndex, block, setBlock, select, isEdit }) {
     const clickHandler = () => {
         block[blockIndex].products.splice(index, 1);
         setBlock([...block]);
@@ -21,6 +22,7 @@ function Tr({ item, index, blockIndex, block, setBlock, select }) {
                     keyObj === 'product' ? (
                         <div key={item.id + keyObj} className={stylesTable.td}>
                             <CustomSelect
+                                disabled={isEdit}
                                 default={item.product}
                                 key={keyObj}
                                 isSearchable={true}
@@ -40,7 +42,11 @@ function Tr({ item, index, blockIndex, block, setBlock, select }) {
                         keyObj !== 'id' && (
                             <TableCell
                                 key={keyObj}
-                                value={item[keyObj]}
+                                value={
+                                    keyObj === 'net'
+                                        ? Number(item[keyObj]).toFixed(1)
+                                        : item[keyObj]
+                                }
                                 thValue={keyObj}
                                 type={keyObj === 'name' ? 'text' : 'number'}
                                 index={index}
@@ -50,6 +56,7 @@ function Tr({ item, index, blockIndex, block, setBlock, select }) {
                                         [thValue]: item,
                                     };
                                 }}
+                                disabled={!isEdit}
                             />
                         )
                     )

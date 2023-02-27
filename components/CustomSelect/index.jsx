@@ -18,6 +18,7 @@ function CustomSelect(props) {
             ...styles,
             borderRadius: '8px',
             boxShadow: 'none',
+            pointerEvents: props.disabled ? '' : 'none',
             borderColor: '#cccccc',
             padding: '0 2px',
             minHeight: props.height,

@@ -114,7 +114,7 @@ export default function Purchase() {
                         };
                 });
             });
-            setSumProducts(obj);
+            setSumProducts(JSON.parse(JSON.stringify(obj)));
             dispatch(setRecipes(obj));
         };
 

@@ -347,6 +347,7 @@ export default function PersonalSettings() {
                             options={measure}
                             placeholder="Срочный заказ"
                             setGroupIcon={(e) => onSubmitSelect(e)}
+                            disabled={true}
                         />
                         <div
                             className={classNames(

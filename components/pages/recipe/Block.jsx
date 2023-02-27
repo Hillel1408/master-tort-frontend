@@ -97,7 +97,7 @@ function Block({ item, setBlock, blockIndex, block, select, isEdit }) {
                 <span
                     className={classNames('icon-11', stylesTable.delete)}
                     title="Удалить"
-                    onClick={() => clickHandlerBlock()}
+                    onClick={() => (isEdit ? clickHandlerBlock() : '')}
                 ></span>
             </div>
             {item.products.length > 0 && (

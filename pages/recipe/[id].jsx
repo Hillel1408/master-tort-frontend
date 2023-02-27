@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import classNames from 'classnames';
-import Link from 'next/link';
 import uuid from 'react-uuid';
 import Layout from '../../components/Layout';
 import { Block } from '../../components/pages/recipe/Block';
@@ -153,7 +152,11 @@ export default function Recipe() {
                 setHeight(response.data.height);
                 setCheckbox(response.data.checkbox);
                 if (router.query.flag === 'true' && recipes) {
-                    setBlock(recipes[router.query.id].products);
+                    setBlock(
+                        JSON.parse(
+                            JSON.stringify(recipes[router.query.id].products)
+                        )
+                    );
                     setIsEdit(false);
                 } else setBlock(response.data.products);
             } catch (e) {
@@ -181,17 +184,18 @@ export default function Recipe() {
         >
             {recipe ? (
                 <>
-                    <Link href="/recipes">
-                        <span
-                            className={classNames(
-                                'icon-28',
-                                'small-text',
-                                styles.backLink
-                            )}
-                        >
-                            Вернуться к рецептам
-                        </span>
-                    </Link>
+                    <span
+                        className={classNames(
+                            'icon-28',
+                            'small-text',
+                            styles.backLink
+                        )}
+                        onClick={() => router.back()}
+                    >
+                        {isEdit
+                            ? 'Вернуться к рецептам'
+                            : 'Вернуться к заказам'}
+                    </span>
                     <div className={styles.root}>
                         <div className={styles.products}>
                             <div className={stylesTable.overflow}>

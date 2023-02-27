@@ -48,6 +48,7 @@ function Tr({ item, tr, setTr, index, measure, recipe, setActive }) {
                                     };
                                 }}
                                 portalTarget={true}
+                                disabled={true}
                             />
                         </div>
                     ) : (

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { Checkbox } from '../../CustomCheckbox';
 import styles from '../../../pages/purchase/Purchase.module.scss';
+import { useEffect } from 'react';
 
 function Tr({
     orders,

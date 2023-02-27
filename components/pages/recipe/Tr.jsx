@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import { TableCell } from '../../TableCell';
 import { CustomSelect } from '../../CustomSelect/';
 import stylesTable from '../../Table/Table.module.scss';
-import { useEffect } from 'react';
 
 function Tr({ item, index, blockIndex, block, setBlock, select, isEdit }) {
     const clickHandler = () => {
@@ -57,6 +56,7 @@ function Tr({ item, index, blockIndex, block, setBlock, select, isEdit }) {
                                     };
                                 }}
                                 disabled={!isEdit}
+                                purchase={true}
                             />
                         )
                     )
@@ -65,7 +65,7 @@ function Tr({ item, index, blockIndex, block, setBlock, select, isEdit }) {
             <div className={classNames(stylesTable.td, stylesTable.tdDelete)}>
                 <span
                     title="Удалить"
-                    onClick={() => clickHandler()}
+                    onClick={() => (isEdit ? clickHandler() : '')}
                     className={classNames('icon-11', stylesTable.delete)}
                 ></span>
             </div>

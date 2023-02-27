@@ -477,6 +477,7 @@ export default function Recipes() {
                     setGroupIcon={setGroupIcon}
                     height="43px"
                     width="280px"
+                    disabled={true}
                 />
                 <p className={styles.addRecipeText}></p>
                 <button
@@ -519,6 +520,7 @@ export default function Recipes() {
                         setGroupIcon={setGroupId}
                         height="43px"
                         width="280px"
+                        disabled={true}
                     />
                 )}
                 {drag ? (

@@ -46,6 +46,7 @@ function Tr({ select, index, item, items, tableIndex, setItems }) {
                                     items[index].table[tableIndex].recipe = e;
                                 }}
                                 portalTarget={true}
+                                disabled={true}
                             />
                         </div>
                     ) : (

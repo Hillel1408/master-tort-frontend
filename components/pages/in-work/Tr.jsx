@@ -1,8 +1,8 @@
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Checkbox } from '../../CustomCheckbox';
 import styles from '../../../pages/purchase/Purchase.module.scss';
-import { useEffect } from 'react';
 
 function Tr({
     orders,
@@ -13,6 +13,8 @@ function Tr({
     setSumProducts,
     keyObj,
 }) {
+    const router = useRouter();
+
     const clickHandler = () => {
         const indexSplit = keyObj.split('ch')[0];
         orders.map((order, orderIndex) => {
@@ -24,6 +26,13 @@ function Tr({
         });
         sumProducts[keyObj].checked = !checked;
         setSumProducts({ ...sumProducts });
+    };
+
+    const func = () => {
+        if (keyObj.indexOf('ch') === -1) {
+            router.push(`/recipe/${keyObj}?flag=true`);
+        } else
+            router.push(`/recipe/${keyObj.split('ch')[0]}?flag=true&ch=true`);
     };
 
     return (
@@ -49,17 +58,16 @@ function Tr({
                         <span key={index}>{item}</span>
                     ))}
                 </p>
-                <Link href={`/recipe/${keyObj}?flag=true`}>
-                    <span
-                        className={classNames(
-                            'icon-28',
-                            'small-text',
-                            styles.workLink
-                        )}
-                    >
-                        Смотреть рецепт
-                    </span>
-                </Link>
+                <span
+                    className={classNames(
+                        'icon-28',
+                        'small-text',
+                        styles.workLink
+                    )}
+                    onClick={() => func()}
+                >
+                    Смотреть рецепт
+                </span>
             </div>
         </div>
     );

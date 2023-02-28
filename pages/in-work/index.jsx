@@ -79,6 +79,7 @@ export default function Purchase() {
                         ],
                         checked: tableItem.checked,
                         products: order.calculation[index].products,
+                        size: order.calculation[index].calculat.size,
                     };
                     const pushFunc = (a) => {
                         obj[a].rings.push(
@@ -94,6 +95,7 @@ export default function Purchase() {
                                     ].products[index3].net;
                             });
                         });
+                        obj[a].size += order.calculation[index].calculat.size;
                     };
                     if (obj[a]) {
                         if (tableItem.checked === obj[a].checked) {

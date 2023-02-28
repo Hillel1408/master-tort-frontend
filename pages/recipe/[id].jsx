@@ -151,10 +151,21 @@ export default function Recipe() {
                 setDiameter(response.data.diameter);
                 setHeight(response.data.height);
                 setCheckbox(response.data.checkbox);
+                console.log(
+                    response.data.exit,
+                    response.data.totalVolume,
+                    recipes
+                );
                 if (router.query.flag === 'true' && recipes) {
                     setBlock(
                         JSON.parse(
-                            JSON.stringify(recipes[router.query.id].products)
+                            JSON.stringify(
+                                recipes[
+                                    router.query.ch === 'true'
+                                        ? `${router.query.id}ch`
+                                        : router.query.id
+                                ].products
+                            )
                         )
                     );
                     setIsEdit(false);

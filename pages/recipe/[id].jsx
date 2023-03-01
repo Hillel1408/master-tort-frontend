@@ -147,15 +147,9 @@ export default function Recipe() {
                 const id = window.location.pathname.split('/recipe/')[1];
                 const response = await RecipeService.getRecipe(id);
                 setRecipe(response.data);
-                setExit(response.data.exit);
                 setDiameter(response.data.diameter);
                 setHeight(response.data.height);
                 setCheckbox(response.data.checkbox);
-                console.log(
-                    response.data.exit,
-                    response.data.totalVolume,
-                    recipes
-                );
                 if (router.query.flag === 'true' && recipes) {
                     setBlock(
                         JSON.parse(
@@ -169,7 +163,19 @@ export default function Recipe() {
                         )
                     );
                     setIsEdit(false);
-                } else setBlock(response.data.products);
+                    setExit(
+                        (response.data.exit *
+                            recipes[
+                                router.query.ch === 'true'
+                                    ? `${router.query.id}ch`
+                                    : router.query.id
+                            ].size) /
+                            response.data.totalVolume
+                    );
+                } else {
+                    setBlock(response.data.products);
+                    setExit(response.data.exit);
+                }
             } catch (e) {
                 console.log(e.response?.data?.message);
             } finally {
@@ -345,6 +351,29 @@ export default function Recipe() {
                                         Сохранить
                                     </button>
                                     <div></div>
+                                </div>
+                            )}
+                            {!isEdit && (
+                                <div
+                                    className={classNames(
+                                        'small-text',
+                                        styles.ringsBlock
+                                    )}
+                                >
+                                    <p className={styles.rings}>
+                                        Ярусы:
+                                        {recipes[
+                                            router.query.ch === 'true'
+                                                ? `${router.query.id}ch`
+                                                : router.query.id
+                                        ].rings.map((item, index) => (
+                                            <span key={index}>{item}</span>
+                                        ))}
+                                    </p>
+                                    <p className={styles.rings}>
+                                        Выход:{' '}
+                                        <span>{exit.toFixed(0)} гр.</span>
+                                    </p>
                                 </div>
                             )}
                         </div>

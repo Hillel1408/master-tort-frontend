@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { Checkbox } from '../../CustomCheckbox';
 import styles from '../../../pages/purchase/Purchase.module.scss';
 
@@ -12,6 +11,7 @@ function Tr({
     sumProducts,
     setSumProducts,
     keyObj,
+    id,
 }) {
     const router = useRouter();
 
@@ -19,7 +19,7 @@ function Tr({
         const indexSplit = keyObj.split('ch')[0];
         orders.map((order, orderIndex) => {
             order.table.map((item, tableIndex) => {
-                if (item.recipe.value === indexSplit) {
+                if (item.recipe.value === indexSplit && id.includes(item.id)) {
                     orders[orderIndex].table[tableIndex].checked = !checked;
                 }
             });

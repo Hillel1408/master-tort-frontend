@@ -80,11 +80,13 @@ export default function Purchase() {
                         checked: tableItem.checked,
                         products: order.calculation[index].products,
                         size: order.calculation[index].calculat.size,
+                        id: [tableItem.id],
                     };
                     const pushFunc = (a) => {
                         obj[a].rings.push(
                             `⌀ ${tableItem.diameter}` + ` ↑ ${tableItem.height}`
                         );
+                        obj[a].id.push(tableItem.id);
                     };
                     const func = (a) => {
                         obj[a].products.map((item, index2) => {
@@ -211,6 +213,7 @@ export default function Purchase() {
                                             sumProducts={sumProducts}
                                             setSumProducts={setSumProducts}
                                             keyObj={keyObj}
+                                            id={sumProducts[keyObj].id}
                                         />
                                     ))}
                             </div>

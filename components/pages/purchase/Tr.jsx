@@ -9,7 +9,7 @@ function Tr({ product, index, orders, sumProducts, setSumProducts }) {
         const indexSplit = index.split('ch')[0];
         orders.map((order, orderIndex) => {
             order.total.map((item, totalIndex) => {
-                if (item.id === indexSplit) {
+                if (item.id === indexSplit && product.key.includes(item.key)) {
                     orders[orderIndex].total[totalIndex].checked =
                         !product.checked;
                 }

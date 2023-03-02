@@ -99,12 +99,14 @@ export default function Purchase() {
                         count: product.count,
                         price: product.price,
                         checked: product.checked,
+                        key: [product.key],
                     };
                     const objFunc = (item) => {
                         return {
                             ...sum[item],
                             count: sum[item].count + product.count,
                             price: sum[item].price + product.price,
+                            key: [...sum[item].key, product.key],
                         };
                     };
                     //последний элемент не сморим, так как там итог

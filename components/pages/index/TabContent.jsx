@@ -202,6 +202,7 @@ function TabContent({
                 count: newPr[key],
                 price: b,
                 checked: false,
+                key: uuid(),
             });
             //общая стоимость всех продуктов
             total = total + Number(b);

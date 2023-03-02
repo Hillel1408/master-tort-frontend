@@ -71,11 +71,17 @@
 .rings {
     display: flex;
     column-gap: 8px;
-    flex-wrap: wrap;
+
     &Block {
         color: var(--textColor);
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
     }
     span {
         cursor: default;
+    }
+    &:first-child {
+        flex-wrap: wrap;
     }
 }

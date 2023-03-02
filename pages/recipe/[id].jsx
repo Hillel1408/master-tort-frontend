@@ -353,29 +353,6 @@ export default function Recipe() {
                                     <div></div>
                                 </div>
                             )}
-                            {!isEdit && (
-                                <div
-                                    className={classNames(
-                                        'small-text',
-                                        styles.ringsBlock
-                                    )}
-                                >
-                                    <p className={styles.rings}>
-                                        Ярусы:
-                                        {recipes[
-                                            router.query.ch === 'true'
-                                                ? `${router.query.id}ch`
-                                                : router.query.id
-                                        ].rings.map((item, index) => (
-                                            <span key={index}>{item}</span>
-                                        ))}
-                                    </p>
-                                    <p className={styles.rings}>
-                                        Выход:{' '}
-                                        <span>{exit.toFixed(0)} гр.</span>
-                                    </p>
-                                </div>
-                            )}
                         </div>
                         <div>
                             <div className={styles.image}>
@@ -418,14 +395,15 @@ export default function Recipe() {
                                     </div>
                                 )}
                             </div>
-                            {isEdit && (
-                                <div className={styles.params}>
-                                    <div
-                                        className={stylesTable.titleWrapper}
-                                        style={{ marginBottom: '20px' }}
-                                    >
-                                        Параметры
-                                    </div>
+
+                            <div className={styles.params}>
+                                <div
+                                    className={stylesTable.titleWrapper}
+                                    style={{ marginBottom: '20px' }}
+                                >
+                                    Параметры
+                                </div>
+                                {isEdit ? (
                                     <div className={styles.grid}>
                                         <div className={styles.paramsBlock}>
                                             <Checkbox
@@ -493,8 +471,30 @@ export default function Recipe() {
                                             </div>
                                         )}
                                     </div>
-                                </div>
-                            )}
+                                ) : (
+                                    <div
+                                        className={classNames(
+                                            'small-text',
+                                            styles.ringsBlock
+                                        )}
+                                    >
+                                        <p className={styles.rings}>
+                                            Ярусы:
+                                            {recipes[
+                                                router.query.ch === 'true'
+                                                    ? `${router.query.id}ch`
+                                                    : router.query.id
+                                            ].rings.map((item, index) => (
+                                                <span key={index}>{item}</span>
+                                            ))}
+                                        </p>
+                                        <p className={styles.rings}>
+                                            Выход:{' '}
+                                            <span>{exit.toFixed(0)} гр.</span>
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </>

@@ -54,7 +54,7 @@ export default function Purchase() {
             );
             dispatch(
                 setAlert({
-                    text: 'Закупка успешно сохранена',
+                    text: 'Рецепты успешно сохранены',
                     color: '#62ac62',
                 })
             );

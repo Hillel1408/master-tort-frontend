@@ -12,6 +12,7 @@ function Tr({
     setSumProducts,
     keyObj,
     id,
+    idRecipes,
 }) {
     const router = useRouter();
 
@@ -29,10 +30,7 @@ function Tr({
     };
 
     const func = () => {
-        if (keyObj.indexOf('ch') === -1) {
-            router.push(`/recipe/${keyObj}?flag=true`);
-        } else
-            router.push(`/recipe/${keyObj.split('ch')[0]}?flag=true&ch=true`);
+        router.push(`/recipe/${keyObj.split('ch')[0]}?key=${idRecipes}`);
     };
 
     return (

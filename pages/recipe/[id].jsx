@@ -8,6 +8,7 @@ import Layout from '../../components/Layout';
 import { Block } from '../../components/pages/recipe/Block';
 import { Tooltip } from '../../components/Tooltip';
 import { Checkbox } from '../../components/CustomCheckbox';
+import { NoAccess } from '../../components/NoAccess';
 import { Alert } from '../../components/Alert';
 import { IMAGE_URL } from '../../http';
 import RecipeService from '../../services/RecipeService';
@@ -35,13 +36,16 @@ export default function Recipe() {
     const [exit, setExit] = useState(recipe.exit);
     const [height, setHeight] = useState('');
     const [diameter, setDiameter] = useState('');
+    const [rings, setRings] = useState('');
+
+    const [error, setError] = useState('');
 
     const inputFileRef = useRef('');
     const btnRef = useRef('');
 
     const dispatch = useDispatch();
 
-    const { dataUser_2, recipes } = useSelector((state) => state.cakes);
+    const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const thTitle = ['Продукт', 'Брутто, гр.', 'Нетто, гр.'];
 
@@ -150,28 +154,31 @@ export default function Recipe() {
                 setDiameter(response.data.diameter);
                 setHeight(response.data.height);
                 setCheckbox(response.data.checkbox);
-                if (router.query.flag === 'true' && recipes) {
-                    setBlock(
-                        JSON.parse(
-                            JSON.stringify(
-                                recipes[
-                                    router.query.ch === 'true'
-                                        ? `${router.query.id}ch`
-                                        : router.query.id
-                                ].products
-                            )
-                        )
-                    );
-                    setIsEdit(false);
-                    setExit(
-                        (response.data.exit *
-                            recipes[
-                                router.query.ch === 'true'
-                                    ? `${router.query.id}ch`
-                                    : router.query.id
-                            ].size) /
-                            response.data.totalVolume
-                    );
+                if (router.query.key) {
+                    const storageItem = localStorage.getItem('recipes');
+                    if (storageItem) {
+                        const storage = JSON.parse(storageItem);
+                        const flag = true;
+                        Object.keys(storage).map((key) => {
+                            if (storage[key].idRecipes === router.query.key) {
+                                setBlock(storage[key].products);
+                                setExit(
+                                    (response.data.exit * storage[key].size) /
+                                        response.data.totalVolume
+                                );
+                                setRings(storage[key].rings);
+                                setIsEdit(false);
+                                flag = false;
+                            }
+                        });
+                        if (flag) {
+                            setRecipe('');
+                            setError(true);
+                        }
+                    } else {
+                        setRecipe('');
+                        setError(true);
+                    }
                 } else {
                     setBlock(response.data.products);
                     setExit(response.data.exit);
@@ -480,13 +487,12 @@ export default function Recipe() {
                                     >
                                         <p className={styles.rings}>
                                             Ярусы:
-                                            {recipes[
-                                                router.query.ch === 'true'
-                                                    ? `${router.query.id}ch`
-                                                    : router.query.id
-                                            ].rings.map((item, index) => (
-                                                <span key={index}>{item}</span>
-                                            ))}
+                                            {rings &&
+                                                rings.map((item, index) => (
+                                                    <span key={index}>
+                                                        {item}
+                                                    </span>
+                                                ))}
                                         </p>
                                         <p className={styles.rings}>
                                             Выход:{' '}
@@ -498,6 +504,15 @@ export default function Recipe() {
                         </div>
                     </div>
                 </>
+            ) : error ? (
+                <NoAccess
+                    title={'Ссылка больше не действительна'}
+                    text={
+                        'Перейдите в раздел "В работе" и откройте нужный рецепт'
+                    }
+                    linkBtn={'/in-work'}
+                    textBtn={'Перейти'}
+                />
             ) : (
                 <h2
                     className={classNames(

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import uuid from 'react-uuid';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Alert } from '../../components/Alert';
-import { setAlert, setRecipes } from '../../redux/cakeSlice';
+import { setAlert } from '../../redux/cakeSlice';
 import { Tr } from '../../components/pages/in-work/Tr';
 import { Confirm } from '../../components/Confirm';
 import OrdersService from '../../services/OrdersService';
@@ -81,6 +82,7 @@ export default function Purchase() {
                         products: order.calculation[index].products,
                         size: order.calculation[index].calculat.size,
                         id: [tableItem.id],
+                        idRecipes: uuid(),
                     };
                     const pushFunc = (a) => {
                         obj[a].rings.push(
@@ -119,7 +121,7 @@ export default function Purchase() {
                 });
             });
             setSumProducts(JSON.parse(JSON.stringify(obj)));
-            dispatch(setRecipes(obj));
+            localStorage.setItem('recipes', JSON.stringify(obj));
         };
 
         const getOrders = async (userId) => {
@@ -214,6 +216,9 @@ export default function Purchase() {
                                             setSumProducts={setSumProducts}
                                             keyObj={keyObj}
                                             id={sumProducts[keyObj].id}
+                                            idRecipes={
+                                                sumProducts[keyObj].idRecipes
+                                            }
                                         />
                                     ))}
                             </div>

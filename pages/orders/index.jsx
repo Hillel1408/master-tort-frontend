@@ -212,9 +212,10 @@ export default function Orders() {
                         id: 3,
                         title: 'В работе',
                         type: 'inWork',
-                        textLink: '',
+                        textLink: 'Составить рецепты',
                         function: '',
                         items: orders.inWork,
+                        link: '/in-work',
                     },
                     {
                         id: 4,

@@ -9,13 +9,16 @@ const settingsTh = {
 
 const settingsText = [
     [
-        'Energistically recaptiualize pandemic innovation through web-enabled networks. Conveniently engineer leveraged internal or "organic" sources through frictionless benefits. Monotonectally synergize integrated core competencies and cross-unit "outside the box" thinking. Rapidiously empower professional interfaces through effective bandwidth. Uniquely leverage others quality resources with customized technologies.',
-        'Enthusiastically empower dynamic internal or "organic" sources without high-quality platforms. Progressively whiteboard ubiquitous outsourcing vis-a-vis fully tested data.',
-        'Completely enable strategic collaboration and idea-sharing after effective collaboration and.',
+        'Для более корректного отображения всех расчетов в программе предусмотрена возможность учитывать индивидуальные параметры каждого пользователя. Каждый кондитер делает обтяжку торта мастикой разной толщины. То же самое касается и выравнивания кремом. По умолчанию программа учитывает примерный усредненный результат. Но каждый пользователь может произвести проработку, зафиксировать данные в программе по расчету тортов и тогда будут учитываться в расчете ваши индивидуальные параметры. Таким образом вы сможете получить на выходе более точный результат.',
+        'Для проработки толщины мастики:',
+        'Перед тем как начать проработку толщины мастики (а так же выравнивающего крема) зафиксируйте размер яруса на котором вы будете производить отработку, лучше использовать самый часто используемый вами размер торта (не сильно маленький и не сильно большой), самый оптимальный размер 18 см диаметр 7 см высота. Так же зафиксируйте вес самого торта (начинки) а так же вес подставки которую вы используете для выравнивания яруса (если вы не используете подставки, поставьте в таблицу ниже значение 0).',
     ],
     [
-        'Holisticly embrace resource-leveling platforms and e-business internal or "organic" sources. Professionally extend accurate process improvements via progressive technologies. Efficiently promote clicks-and-mortar intellectual capital without installed base results. Distinctively fabricate premier mindshare and cross functional core competencies. Completely facilitate compelling users vis-a-vis plug-and-play e-business.',
-        'Objectively transition team driven web services before multifunctional catalysts for change. Authoritatively mesh inexpensive manufactured products vis-a-vis future-proof methods of empowerment. Proactively customize prospective infomediaries via professional e-services. Authoritatively strategize.',
+        'Произведите выравнивание торта, то как вы это делаете обычно, взвесьте получившийся результат (включает в себя начинку, подставку под торт и выравнивающий крем).',
+        'Произведите обтяжку торта мастикой, так же зафиксируйте результат. После заполнения таблицы не забудьте нажать кнопку «сохранить».',
+        'Для проработки толщины крема:',
+        'Обычно для изготовления кремового торта, по отношению к мастичному используют более толстый слой крема, потому что это является финишным слоем. Когда идет речь о выравнивании слоем крема под мастику, то здесь необходимо только лишь выровнять поверхность и поэтому мы используют максимально тонкий слой крема (сквозь крем могут проглядывать какие-то части начинки, бисквита и т.л.) именно поэтому мы предусмотрели отдельные настройки для кремового торта.',
+        'В точно такой же последовательности произведите проработку. Зафиксируйте все данные в таблицу ниже.',
     ],
 ];
 

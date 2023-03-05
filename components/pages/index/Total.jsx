@@ -20,8 +20,12 @@ function Total({ data, total, totalRef }) {
                                     <div>
                                         <div>Порций в {index + 1} ярусе</div>
                                         <div>Вес начинки</div>
-                                        <div>Вес выравнивающего крема</div>
-                                        <div>Вес мастики</div>
+                                        {item.calculat.cream && (
+                                            <div>Вес выравнивающего крема</div>
+                                        )}
+                                        {item.calculat.mastic && (
+                                            <div>Вес мастики</div>
+                                        )}
                                         <div>Общий вес яруса</div>
                                     </div>
                                     <div>
@@ -31,12 +35,16 @@ function Total({ data, total, totalRef }) {
                                         <div>{`${item.calculat.weight.toFixed(
                                             2
                                         )} кг.`}</div>
-                                        <div>{`${item.calculat.cream.toFixed(
-                                            0
-                                        )} гр.`}</div>
-                                        <div>{`${item.calculat.mastic.toFixed(
-                                            0
-                                        )} гр.`}</div>
+                                        {item.calculat.cream && (
+                                            <div>{`${item.calculat.cream.toFixed(
+                                                0
+                                            )} гр.`}</div>
+                                        )}
+                                        {item.calculat.mastic && (
+                                            <div>{`${item.calculat.mastic.toFixed(
+                                                0
+                                            )} гр.`}</div>
+                                        )}
                                         <div>{`${item.calculat.totalWeight.toFixed(
                                             2
                                         )} кг.`}</div>
@@ -55,18 +63,24 @@ function Total({ data, total, totalRef }) {
                         <div>Порций в торте</div>
                         <div>{data[data.length - 1].portion.toFixed(2)}</div>
                     </div>
-                    <div className={styles.cakeColumn}>
-                        <div>Общий вес выравнивающего крема</div>
-                        <div>
-                            {`${data[data.length - 1].cream.toFixed(0)} гр.`}
+                    {data[data.length - 1].cream !== 0 && (
+                        <div className={styles.cakeColumn}>
+                            <div>Общий вес выравнивающего крема</div>
+                            <div>
+                                {`${data[data.length - 1].cream.toFixed(
+                                    0
+                                )} гр.`}
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles.cakeColumn}>
-                        <div>Общий вес мастики</div>
-                        <div>{`${data[data.length - 1].mastic.toFixed(
-                            0
-                        )} гр.`}</div>
-                    </div>
+                    )}
+                    {data[data.length - 1].mastic !== 0 && (
+                        <div className={styles.cakeColumn}>
+                            <div>Общий вес мастики</div>
+                            <div>{`${data[data.length - 1].mastic.toFixed(
+                                0
+                            )} гр.`}</div>
+                        </div>
+                    )}
                     <div className={styles.cakeColumn}>
                         <div>Общий вес торта</div>
                         <div>{`${data[data.length - 1].totalWeight.toFixed(

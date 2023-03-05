@@ -230,6 +230,10 @@ function TabContent({
                 });
             }
         });
+        if (data[data.length - 1].mastic) {
+            newPr['78ca81be-b864-cd43-54ff-1f695c3dc556'] =
+                data[data.length - 1].mastic;
+        }
         calcOrder(newPr);
     };
 

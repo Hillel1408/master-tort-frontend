@@ -9,7 +9,11 @@ function Tr({ item, tr, setTr, index, measure, recipe, setActive }) {
         recipe.map((b) => {
             b.products.map((product) => {
                 product.products.map((a) => {
-                    if (a.product.value === item.id) flag = true;
+                    if (
+                        a.product.value === item.id ||
+                        item.id === '78ca81be-b864-cd43-54ff-1f695c3dc556'
+                    )
+                        flag = true;
                 });
             });
         });

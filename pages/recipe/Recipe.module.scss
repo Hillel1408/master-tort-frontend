@@ -60,6 +60,9 @@
             margin-right: 10px;
         }
     }
+    &Flex {
+        display: flex;
+    }
 }
 .grid {
     display: flex;
@@ -71,7 +74,6 @@
 .rings {
     display: flex;
     column-gap: 8px;
-
     &Block {
         color: var(--textColor);
         display: flex;

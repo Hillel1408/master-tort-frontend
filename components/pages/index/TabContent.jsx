@@ -11,6 +11,7 @@ import { Tr } from './Tr';
 import { Alert } from '../../Alert';
 import { Total } from './Total';
 import { Modal } from '../../Modal';
+import { CustomSelect } from '../../CustomSelect/';
 import { Canvas } from './Canvas';
 import { IMAGE_URL } from '../../../http';
 import UploadService from '../../../services/UploadService';
@@ -31,6 +32,7 @@ function TabContent({
     isEdit,
     setItems,
     select,
+    select2,
     value,
     products,
     recipe,
@@ -54,6 +56,7 @@ function TabContent({
     const [kindCake, setKindCake] = useState(items[index].kindCake);
     const [info, setInfo] = useState(items[index].info);
     const [price, setPrice] = useState(items[index].price);
+    const [cream, setCream] = useState(items[index].cream);
     const [modalActive, setModalActive] = useState(false);
 
     const [data, setData] = useState(items[index].calculation);
@@ -155,6 +158,7 @@ function TabContent({
         setImage([]);
         setData('');
         setTotal('');
+        setCream('');
         setIsCake(false);
     };
 
@@ -212,7 +216,7 @@ function TabContent({
         items[index].total = arr;
     };
 
-    const calcPr = (data) => {
+    const calcPr = (data, data2) => {
         const newPr = {};
         //считаем сколько и каких нужно продуктов на заказ
         data.map((item) => {
@@ -222,13 +226,18 @@ function TabContent({
                         //проверяем есть ли в нашем объекте продукт
                         if (newPr[item.product.value])
                             //если да, то считаем общее количество
-                            newPr[item.product.value] =
-                                newPr[item.product.value] + item.net;
+                            newPr[item.product.value] += item.net;
                         //если нет, то создаем его
                         else newPr[item.product.value] = item.net;
                     });
                 });
             }
+        });
+        data2.map((item) => {
+            item.products.map((pr) => {
+                if (newPr[pr.product.value]) newPr[pr.product.value] += pr.net;
+                else newPr[pr.product.value] = pr.net;
+            });
         });
         if (data[data.length - 1].mastic) {
             newPr['78ca81be-b864-cd43-54ff-1f695c3dc556'] =
@@ -392,9 +401,9 @@ function TabContent({
                     ...items[index],
                     user: userId,
                 });
-                setData(response.data);
-                items[index].calculation = response.data;
-                calcPr(response.data);
+                setData(response.data.calculation);
+                items[index].calculation = response.data.calculation;
+                calcPr(response.data.calculation, response.data.recipeCream);
                 canvas();
             } catch (e) {
                 console.log(e.response?.data?.message);
@@ -518,31 +527,61 @@ function TabContent({
                                 }}
                             ></textarea>
                         </div>
-                        <div className={styles.information}>
-                            <h3
-                                className={classNames(
-                                    'text',
-                                    styles.informationText
-                                )}
-                            >
-                                Вес 1 порции: {range && `${range} гр.`}
-                            </h3>
-                            <input
-                                type="range"
-                                min="0"
-                                max="250"
-                                step="25"
-                                className={classNames(
-                                    styles.informationSlider,
-                                    styles.slider
-                                )}
-                                value={range}
-                                onChange={(e) => {
-                                    setRange(e.target.value);
-                                    items[index].range = e.target.value;
-                                }}
-                                id="myRange"
-                            />
+                        <div
+                            className={classNames(
+                                styles.informationInputBlock2,
+                                styles.informationInputBlock2Gap
+                            )}
+                        >
+                            <div className={styles.information}>
+                                <h3
+                                    className={classNames(
+                                        'text',
+                                        styles.informationText
+                                    )}
+                                >
+                                    Вес 1 порции: {range && `${range} гр.`}
+                                </h3>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="250"
+                                    step="25"
+                                    className={classNames(
+                                        styles.informationSlider,
+                                        styles.slider
+                                    )}
+                                    value={range}
+                                    onChange={(e) => {
+                                        setRange(e.target.value);
+                                        items[index].range = e.target.value;
+                                    }}
+                                    id="myRange"
+                                />
+                            </div>
+                            <div className={styles.information}>
+                                <h3
+                                    className={classNames(
+                                        'text',
+                                        styles.informationText
+                                    )}
+                                >
+                                    Крем
+                                </h3>
+                                <CustomSelect
+                                    isSearchable={true}
+                                    options={select2}
+                                    height="43px"
+                                    width="100%"
+                                    placeholder="Выравн. крем"
+                                    portalTarget={true}
+                                    disabled={true}
+                                    value={cream}
+                                    setGroupIcon={(e) => {
+                                        items[index].cream = e;
+                                    }}
+                                />
+                            </div>
                         </div>
                         <div
                             className={classNames(

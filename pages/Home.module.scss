@@ -47,7 +47,7 @@
                 gap: 20px;
             }
             & > .information:nth-child(1),
-            & > .information:nth-child(2),
+            & > .informationInputBlock2,
             & > .informationInputBlock {
                 width: calc(55% - 10px);
             }
@@ -61,7 +61,7 @@
                     order: 1;
                     width: calc(62% - 10px);
                 }
-                & > .information:nth-child(2) {
+                & > .informationInputBlock2 {
                     order: 4;
                     width: calc(62% - 10px);
                 }
@@ -89,7 +89,7 @@
                     order: 1;
                     width: 100%;
                 }
-                & > .information:nth-child(2) {
+                & > .informationInputBlock2 {
                     order: 4;
                     width: 100%;
                 }
@@ -263,13 +263,14 @@
             height: 68px;
         }
     }
-    &InputBlock {
+    &InputBlock,
+    &InputBlock2 {
         display: grid;
         grid-template-columns: 1fr 1fr;
         overflow: auto;
         gap: 10px;
         & > .information {
-            min-width: 150px;
+            min-width: 200px;
         }
         &Gap {
             gap: 20px;
@@ -278,7 +279,7 @@
             }
         }
         input {
-            padding: 12px !important;
+            padding: 12px;
         }
     }
     &LabelBlock,
@@ -334,7 +335,7 @@
         }
     }
     &Slider {
-        margin-bottom: 25px;
+        margin-bottom: 29px;
     }
     &Image {
         min-width: 120px;
@@ -389,6 +390,7 @@
     outline: none;
     opacity: 0.7;
     transition: opacity 0.2s;
+    padding: 0 !important;
     &:hover {
         opacity: 1;
     }

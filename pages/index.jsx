@@ -32,10 +32,12 @@ export default function Home() {
         table: [],
         calculation: [],
         total: [],
+        cream: '',
     };
 
     const [items, setItems] = useState([value]);
     const [select, setSelect] = useState('');
+    const [select2, setSelect2] = useState('');
 
     useEffect(() => {
         //получаем продукты
@@ -50,15 +52,24 @@ export default function Home() {
                 const response = await RecipeService.getRecipes(id);
                 //формируем значения выпадающего списка с рецептами
                 const select = [];
+                const select2 = [];
                 response.data.map((item) => {
-                    item.checkbox &&
-                        select.push({
-                            value: item._id,
-                            label: item.recipeName,
-                        });
+                    if (item.checkbox) {
+                        if (item.isCream) {
+                            select2.push({
+                                value: item._id,
+                                label: item.recipeName,
+                            });
+                        } else
+                            select.push({
+                                value: item._id,
+                                label: item.recipeName,
+                            });
+                    }
                 });
                 setRecipe(response.data);
                 setSelect(select);
+                setSelect2(select2);
             } catch (e) {
                 console.log(e.response?.data?.message);
             }
@@ -109,6 +120,7 @@ export default function Home() {
                     userId={dataUser.id}
                     setItems={setItems}
                     select={select}
+                    select2={select2}
                     value={value}
                     products={products}
                     recipe={recipe}

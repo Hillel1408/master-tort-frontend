@@ -33,6 +33,7 @@ export default function Recipe() {
     const [isEdit, setIsEdit] = useState(true);
 
     const [checkbox, setCheckbox] = useState(false);
+    const [isCream, setIsCream] = useState(false);
     const [exit, setExit] = useState(recipe.exit);
     const [height, setHeight] = useState('');
     const [diameter, setDiameter] = useState('');
@@ -55,9 +56,14 @@ export default function Recipe() {
         //делаем кнопку "сохранить" не активной если данные не заполнены
         if (btnRef.current) {
             if (checkbox) {
-                exit && height && diameter
-                    ? (btnRef.current.disabled = false)
-                    : (btnRef.current.disabled = true);
+                if (isCream) {
+                    exit
+                        ? (btnRef.current.disabled = false)
+                        : (btnRef.current.disabled = true);
+                } else
+                    exit && height && diameter
+                        ? (btnRef.current.disabled = false)
+                        : (btnRef.current.disabled = true);
             } else btnRef.current.disabled = false;
         }
     }, [exit, height, diameter, checkbox]);
@@ -68,6 +74,7 @@ export default function Recipe() {
             const values = {
                 products: block,
                 checkbox,
+                isCream,
                 exit,
                 height,
                 diameter,
@@ -153,6 +160,7 @@ export default function Recipe() {
                 setRecipe(response.data);
                 setDiameter(response.data.diameter);
                 setHeight(response.data.height);
+                setIsCream(response.data.isCream);
                 setCheckbox(response.data.checkbox);
                 if (router.query.key) {
                     const storageItem = localStorage.getItem('recipes');
@@ -413,20 +421,52 @@ export default function Recipe() {
                                 {isEdit ? (
                                     <div className={styles.grid}>
                                         <div className={styles.paramsBlock}>
-                                            <Checkbox
-                                                checkbox={checkbox}
-                                                clickHandler={() =>
-                                                    setCheckbox(!checkbox)
-                                                }
-                                            />
-                                            <span
-                                                onClick={() =>
-                                                    setCheckbox(!checkbox)
-                                                }
-                                                className="small-text"
-                                            >
-                                                Использовать в расчетах
-                                            </span>
+                                            <div>
+                                                <div
+                                                    className={
+                                                        styles.paramsFlex
+                                                    }
+                                                >
+                                                    <Checkbox
+                                                        checkbox={checkbox}
+                                                        clickHandler={() =>
+                                                            setCheckbox(
+                                                                !checkbox
+                                                            )
+                                                        }
+                                                    />
+                                                    <span
+                                                        onClick={() =>
+                                                            setCheckbox(
+                                                                !checkbox
+                                                            )
+                                                        }
+                                                        className="small-text"
+                                                    >
+                                                        Использовать в расчетах
+                                                    </span>
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.paramsFlex
+                                                    }
+                                                >
+                                                    <Checkbox
+                                                        checkbox={isCream}
+                                                        clickHandler={() =>
+                                                            setIsCream(!isCream)
+                                                        }
+                                                    />
+                                                    <span
+                                                        onClick={() =>
+                                                            setIsCream(!isCream)
+                                                        }
+                                                        className="small-text"
+                                                    >
+                                                        Выравнивающий крем
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                         {checkbox && (
                                             <div
@@ -447,34 +487,40 @@ export default function Recipe() {
                                                         stylesInput.input
                                                     )}
                                                 />
-                                                <input
-                                                    title="Диаметр, см."
-                                                    type="number"
-                                                    placeholder="Диаметр, см."
-                                                    value={diameter}
-                                                    onChange={(e) =>
-                                                        setDiameter(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    className={classNames(
-                                                        stylesInput.input
-                                                    )}
-                                                />
-                                                <input
-                                                    title="Высота, см."
-                                                    type="number"
-                                                    placeholder="Высота, см."
-                                                    value={height}
-                                                    onChange={(e) =>
-                                                        setHeight(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    className={classNames(
-                                                        stylesInput.input
-                                                    )}
-                                                />
+                                                {!isCream && (
+                                                    <>
+                                                        <input
+                                                            title="Диаметр, см."
+                                                            type="number"
+                                                            placeholder="Диаметр, см."
+                                                            value={diameter}
+                                                            onChange={(e) =>
+                                                                setDiameter(
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                            className={classNames(
+                                                                stylesInput.input
+                                                            )}
+                                                        />
+                                                        <input
+                                                            title="Высота, см."
+                                                            type="number"
+                                                            placeholder="Высота, см."
+                                                            value={height}
+                                                            onChange={(e) =>
+                                                                setHeight(
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                            className={classNames(
+                                                                stylesInput.input
+                                                            )}
+                                                        />
+                                                    </>
+                                                )}
                                             </div>
                                         )}
                                     </div>

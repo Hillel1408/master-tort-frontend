@@ -58,6 +58,11 @@ export default function Recipes() {
             icon: <i className={classNames('icon-2', styles.icon2)}></i>,
         },
         {
+            value: 'icon-19',
+            label: 'Выравнивающие крема',
+            icon: <i className={classNames('icon-19', styles.icon19)}></i>,
+        },
+        {
             value: 'icon-17',
             label: 'Эклеры',
             icon: <i className={classNames('icon-17', styles.icon17)}></i>,
@@ -66,11 +71,6 @@ export default function Recipes() {
             value: 'icon-18',
             label: 'Выпечка',
             icon: <i className={classNames('icon-18', styles.icon18)}></i>,
-        },
-        {
-            value: 'icon-19',
-            label: 'Декор',
-            icon: <i className={classNames('icon-19', styles.icon19)}></i>,
         },
         {
             value: 'icon-20',

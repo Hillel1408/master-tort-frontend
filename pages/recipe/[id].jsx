@@ -446,26 +446,32 @@ export default function Recipe() {
                                                         Использовать в расчетах
                                                     </span>
                                                 </div>
-                                                <div
-                                                    className={
-                                                        styles.paramsFlex
-                                                    }
-                                                >
-                                                    <Checkbox
-                                                        checkbox={isCream}
-                                                        clickHandler={() =>
-                                                            setIsCream(!isCream)
+                                                {checkbox && (
+                                                    <div
+                                                        className={
+                                                            styles.paramsFlex
                                                         }
-                                                    />
-                                                    <span
-                                                        onClick={() =>
-                                                            setIsCream(!isCream)
-                                                        }
-                                                        className="small-text"
                                                     >
-                                                        Выравнивающий крем
-                                                    </span>
-                                                </div>
+                                                        <Checkbox
+                                                            checkbox={isCream}
+                                                            clickHandler={() =>
+                                                                setIsCream(
+                                                                    !isCream
+                                                                )
+                                                            }
+                                                        />
+                                                        <span
+                                                            onClick={() =>
+                                                                setIsCream(
+                                                                    !isCream
+                                                                )
+                                                            }
+                                                            className="small-text"
+                                                        >
+                                                            Выравнивающий крем
+                                                        </span>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                         {checkbox && (

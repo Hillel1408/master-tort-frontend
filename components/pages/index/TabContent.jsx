@@ -118,11 +118,11 @@ function TabContent({
     useEffect(() => {
         //проверяем заполнил ли пользователь данные, необходимые для расчета заказа
         if (buttonRef.current) {
-            range && standWidth && standLength && cakeShape && kindCake
+            range && standWidth && standLength && cakeShape && kindCake && cream
                 ? (buttonRef.current.disabled = false)
                 : (buttonRef.current.disabled = true);
         }
-    }, [range, standWidth, standLength, cakeShape, kindCake]);
+    }, [range, standWidth, standLength, cakeShape, kindCake, cream]);
 
     const sendImage = async (file) => {
         //отправляем картинку торта на сервер
@@ -576,9 +576,11 @@ function TabContent({
                                     placeholder="Выравн. крем"
                                     portalTarget={true}
                                     disabled={true}
+                                    default={cream}
                                     value={cream}
                                     setGroupIcon={(e) => {
                                         items[index].cream = e;
+                                        setCream(e);
                                     }}
                                 />
                             </div>

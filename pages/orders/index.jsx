@@ -7,6 +7,7 @@ import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrdersNav } from '../../components/OrdersNav';
 import { OrderCake } from '../../components/OrderCake';
+import { NoAccess } from '../../components/NoAccess';
 import { Modal } from '../../components/Modal';
 import { Confirm } from '../../components/Confirm';
 import OrdersService from '../../services/OrdersService';
@@ -357,15 +358,12 @@ export default function Orders() {
                 </div>
             ) : (
                 boards !== undefined && (
-                    <h2
-                        className={classNames(
-                            'title',
-                            stylesNoAccess.noOrders,
-                            stylesNoAccess.title
-                        )}
-                    >
-                        У вас нет активных заказов
-                    </h2>
+                    <NoAccess
+                        title={'У вас нет активных заказов'}
+                        text={''}
+                        linkBtn={'/'}
+                        textBtn={'Добавить'}
+                    />
                 )
             )}
             <Modal

@@ -32,7 +32,9 @@ function NoAccess({ title, text, linkBtn, textBtn, isLogin, setIsAuth }) {
     return (
         <div className={stylesLogin.wrapper}>
             <h2 className={classNames('title', styles.title)}>{title}</h2>
-            <p className={classNames('small-text', styles.text)}>{text}</p>
+            {text && (
+                <p className={classNames('small-text', styles.text)}>{text}</p>
+            )}
             {isLogin ? (
                 <button
                     className={classNames(...styleBtn)}

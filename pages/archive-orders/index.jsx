@@ -5,9 +5,9 @@ import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
+import { NoAccess } from '../../components/NoAccess';
 import { Confirm } from '../../components/Confirm';
 import OrdersService from '../../services/OrdersService';
-import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
 import styles from '../purchase/Purchase.module.scss';
 
 export default function ArchiveOrders() {
@@ -97,15 +97,14 @@ export default function ArchiveOrders() {
                 </div>
             ) : (
                 orders !== undefined && (
-                    <h2
-                        className={classNames(
-                            'title',
-                            stylesNoAccess.noOrders,
-                            stylesNoAccess.title
-                        )}
-                    >
-                        У вас нет архивных заказов
-                    </h2>
+                    <NoAccess
+                        title={'У вас нет архивных заказов'}
+                        text={
+                            'Перенесите заказ в раздел "Готово" на канбан доске и отправьте в архив'
+                        }
+                        linkBtn={'/orders'}
+                        textBtn={'Перенести'}
+                    />
                 )
             )}
             <Confirm modal={modal} setModal={setModal} func={deleteOrder} />

@@ -8,12 +8,12 @@ import { OrderCake } from '../../components/OrderCake';
 import { Tr } from '../../components/pages/purchase/Tr';
 import { Alert } from '../../components/Alert';
 import { Confirm } from '../../components/Confirm';
+import { NoAccess } from '../../components/NoAccess';
 import { setAlert } from '../../redux/cakeSlice';
 import OrdersService from '../../services/OrdersService';
 import styles from './Purchase.module.scss';
 import stylesTable from '../../components/Table/Table.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
-import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
 import stylesCheckbox from '../../components/CustomCheckbox/Checkbox.module.scss';
 
 export default function Purchase() {
@@ -337,15 +337,12 @@ export default function Purchase() {
                     </div>
                 </div>
             ) : (
-                <h2
-                    className={classNames(
-                        'title',
-                        stylesNoAccess.noOrders,
-                        stylesNoAccess.title
-                    )}
-                >
-                    У вас нет заказов в закупке
-                </h2>
+                <NoAccess
+                    title={'У вас нет заказов в закупке'}
+                    text={'Перенесите заказ в раздел "Закупка" на канбан доске'}
+                    linkBtn={'/orders'}
+                    textBtn={'Перенести'}
+                />
             )}
             <Alert />
             <Confirm modal={modal} setModal={setModal} func={deleteOrder} />

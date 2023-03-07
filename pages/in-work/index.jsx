@@ -9,11 +9,11 @@ import { OrderCake } from '../../components/OrderCake';
 import { Alert } from '../../components/Alert';
 import { setAlert } from '../../redux/cakeSlice';
 import { Tr } from '../../components/pages/in-work/Tr';
+import { NoAccess } from '../../components/NoAccess';
 import { Confirm } from '../../components/Confirm';
 import OrdersService from '../../services/OrdersService';
 import styles from '../purchase/Purchase.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
-import stylesNoAccess from '../../components/NoAccess/NoAccess.module.scss';
 
 export default function Purchase() {
     const [isAuth, setIsAuth] = useState('');
@@ -249,15 +249,14 @@ export default function Purchase() {
                     </div>
                 </div>
             ) : (
-                <h2
-                    className={classNames(
-                        'title',
-                        stylesNoAccess.noOrders,
-                        stylesNoAccess.title
-                    )}
-                >
-                    У вас нет заказов в работе
-                </h2>
+                <NoAccess
+                    title={'У вас нет заказов в работе'}
+                    text={
+                        'Перенесите заказ в раздел "В работе" на канбан доске'
+                    }
+                    linkBtn={'/orders'}
+                    textBtn={'Перенести'}
+                />
             )}
             <Alert />
             <Confirm modal={modal} setModal={setModal} func={deleteOrder} />

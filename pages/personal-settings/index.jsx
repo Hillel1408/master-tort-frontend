@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setDataUser_2 } from '../../redux/cakeSlice';
 import Image from 'next/image';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
@@ -25,11 +26,14 @@ export default function PersonalSettings() {
     const [errorPas, setErrorPas] = useState('');
     const [success, setSuccess] = useState('');
     const [successPas, setSuccessPas] = useState('');
+    const [rushOrder, setRushOrder] = useState('');
 
     const inputFileRef = useRef('');
     const btnRef = useRef();
 
     const { dataUser_2 } = useSelector((state) => state.cakes);
+
+    const dispatch = useDispatch();
 
     //опции выпадающего списка
     const measure = [
@@ -80,6 +84,13 @@ export default function PersonalSettings() {
                 email,
                 image: image && `${IMAGE_URL}${image}`,
             });
+            dispatch(
+                setDataUser_2({
+                    ...dataUser,
+                    avatar: image && `${IMAGE_URL}${image}`,
+                    fullName: fullName,
+                })
+            );
             setDataUser(response.data);
             response.data.email !== email
                 ? setSuccess(
@@ -97,6 +108,7 @@ export default function PersonalSettings() {
 
     const onSubmitSelect = async (e) => {
         //отправляем срочный заказ на сервер
+        dispatch(setDataUser_2({ ...dataUser, rushOrder: e }));
         try {
             const response = await AuthService.updateRushOrder({
                 userId: dataUser.id,
@@ -161,6 +173,28 @@ export default function PersonalSettings() {
         if (dataUser_2) checkAuth();
         else setIsAuth(false);
     }, []);
+
+    const func = (rushOrder) => {
+        let a;
+        switch (rushOrder) {
+            case '1':
+                a = 'день';
+                break;
+            case '2':
+                a = 'дня';
+                break;
+            case '3':
+                a = 'дня';
+                break;
+            case '4':
+                a = 'дня';
+                break;
+            case '5':
+                a = 'дней';
+                break;
+        }
+        return `${rushOrder} ${a} до даты заказа`;
+    };
 
     return (
         <Layout
@@ -346,7 +380,10 @@ export default function PersonalSettings() {
                             width="100%"
                             options={measure}
                             placeholder="Срочный заказ"
-                            setGroupIcon={(e) => onSubmitSelect(e)}
+                            setGroupIcon={(e) => {
+                                onSubmitSelect(e);
+                                setRushOrder(e.value);
+                            }}
                             disabled={true}
                         />
                         <div
@@ -359,8 +396,13 @@ export default function PersonalSettings() {
                             <Tooltip>
                                 <span className="small-text">
                                     Помечать заказ как “Срочный” (
-                                    <i className="icon-27"></i>) за 2 дня до
-                                    даты заказа
+                                    <i className="icon-27"></i>) за{' '}
+                                    {dataUser &&
+                                        func(
+                                            rushOrder
+                                                ? rushOrder
+                                                : dataUser.rushOrder.value
+                                        )}
                                 </span>
                             </Tooltip>
                         </div>

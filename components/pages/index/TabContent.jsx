@@ -1019,7 +1019,7 @@ function TabContent({
                     </div>
                     <div className={styles.tabContentButtons}>
                         <div>
-                            <button
+                            {/*<button
                                 onClick={() => {
                                     window.print();
                                 }}
@@ -1030,7 +1030,7 @@ function TabContent({
                                 style={{ marginRight: '10px' }}
                             >
                                 Печать
-                            </button>
+                                </button>*/}
                             {!isEdit && (
                                 <button
                                     className={classNames(

@@ -224,7 +224,7 @@ export default function Purchase() {
                             </div>
                         </div>
                         <div className={styles.buttons}>
-                            <button
+                            {/*<button
                                 className={classNames(
                                     stylesBtn.btn,
                                     'small-text'
@@ -234,7 +234,7 @@ export default function Purchase() {
                                 }}
                             >
                                 Печать
-                            </button>
+                            </button>*/}
                             <button
                                 className={classNames(
                                     stylesBtn.btn,

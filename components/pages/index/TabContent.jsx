@@ -41,7 +41,9 @@ function TabContent({
     const [isCake, setIsCake] = useState(undefined);
     const [text, setText] = useState('');
 
-    const [range, setRange] = useState(items[index].range);
+    const [range, setRange] = useState(
+        items[index].range ? items[index].range : 125
+    );
     const [orderName, setOrderName] = useState(items[index].orderName);
     const [date, setDate] = useState(
         items[index].date ? new Date(items[index].date) : ''
@@ -109,11 +111,11 @@ function TabContent({
     useEffect(() => {
         //проверяем заполнил ли пользователь данные, необходимые для добавления заказа
         if (btnRef.current) {
-            orderName && date && time && image.length !== 0
+            orderName && date && time
                 ? (btnRef.current.disabled = false)
                 : (btnRef.current.disabled = true);
         }
-    }, [orderName, date, time, image]);
+    }, [orderName, date, time]);
 
     useEffect(() => {
         //проверяем заполнил ли пользователь данные, необходимые для расчета заказа
@@ -149,7 +151,7 @@ function TabContent({
         setDate('');
         setTime('');
         setInfo('');
-        setRange('');
+        setRange(125);
         setStandWidth('');
         setStandLength('');
         setPrice('');

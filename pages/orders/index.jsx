@@ -360,7 +360,9 @@ export default function Orders() {
                 boards !== undefined && (
                     <NoAccess
                         title={'У вас нет активных заказов'}
-                        text={''}
+                        text={
+                            'Заполните ВСЕ параметры торты, рассчитайте и добавьте заказ'
+                        }
                         linkBtn={'/'}
                         textBtn={'Добавить'}
                     />

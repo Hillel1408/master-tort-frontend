@@ -11,7 +11,15 @@ function BodyTable({ settings, index, setSettings }) {
         >
             {Object.keys(settings).map((keyObj) => (
                 <>
-                    <TableCell key={keyObj} disabled={true} thValue={keyObj} />
+                    <TableCell
+                        key={keyObj}
+                        disabled={true}
+                        thValue={
+                            keyObj === 'weightOfCoveredCake' && index === '1'
+                                ? ''
+                                : keyObj
+                        }
+                    />
                     <TableCell
                         key={keyObj + index}
                         value={settings[keyObj][index]}

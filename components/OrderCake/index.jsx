@@ -90,12 +90,16 @@ function OrderCake({
                 onClick={(e) => deleteOrder(e)}
             ></i>
             <div className={styles.img}>
-                <Image
-                    src={`${IMAGE_URL}${item.imagesUrl[0]}`}
-                    alt=""
-                    draggable="false"
-                    fill
-                />
+                {item.imagesUrl[0] ? (
+                    <Image
+                        src={`${IMAGE_URL}${item.imagesUrl[0]}`}
+                        alt=""
+                        draggable="false"
+                        fill
+                    />
+                ) : (
+                    <Image src="/1.png" alt="" draggable="false" fill />
+                )}
             </div>
             <div className={styles.content}>
                 <span className={classNames(styles.contentNumber, 'icon-27')}>

@@ -22,7 +22,7 @@ export default function Home() {
         date: '',
         time: '',
         info: '',
-        range: '',
+        range: 125,
         standWidth: '',
         standLength: '',
         price: '',

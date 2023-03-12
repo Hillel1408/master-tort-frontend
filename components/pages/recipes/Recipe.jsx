@@ -14,9 +14,11 @@ function Recipe({
 }) {
     return (
         <div className={styles.cakesItem}>
-            <span className={classNames('small-text', styles.smallText)}>
-                {recipeName}
-            </span>
+            <Link href={`/recipe/${recipeId}`}>
+                <span className={classNames('small-text', styles.smallText)}>
+                    {recipeName}
+                </span>
+            </Link>
             <Link href={`/recipe/${recipeId}`}>
                 <div className={styles.cakesImage}>
                     <Image src={recipeUrl} alt="" fill />

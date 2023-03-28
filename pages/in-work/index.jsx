@@ -48,7 +48,7 @@ export default function Purchase() {
 
     const saveSettings = async () => {
         try {
-            //сохраняем закупку пользователя
+            //сохраняем рецепты пользователя
             const response = await OrdersService.updateTable(
                 dataUser.id,
                 orders

@@ -76,7 +76,7 @@ export default function PersonalSettings() {
     };
 
     const onSubmit = async () => {
-        //отправляем основную информацию на сервер
+        //отправляем основную информацию на сервер и редакс
         try {
             const response = await AuthService.update({
                 userId: dataUser.id,
@@ -158,7 +158,7 @@ export default function PersonalSettings() {
     };
 
     const handleChangeFile = async (e) => {
-        //получаем картинку рецепта
+        //получаем аватар
         const file = e.target.files[0];
         sendImage(file);
     };

@@ -2,13 +2,12 @@
 const nextConfig = {
     reactStrictMode: false,
     swcMinify: true,
+    webp: {
+        preset: 'default',
+        quality: 100,
+    },
     images: {
-        remotePatterns: [
-            {
-                protocol: 'http',
-                hostname: '**',
-            },
-        ],
+        domains: ['master-tort.pro'],
     },
 };
 

@@ -48,7 +48,7 @@ export default function Home() {
             //получаем рецепты пользователя
             try {
                 const response = await RecipeService.getRecipes(id);
-                //формируем значения выпадающего списка с рецептами
+                //формируем значения выпадающего списка с рецептами и кремами
                 const select = [];
                 const select2 = [];
                 response.data.map((item) => {

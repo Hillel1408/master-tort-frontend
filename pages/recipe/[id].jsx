@@ -116,7 +116,7 @@ export default function Recipe() {
     };
 
     const sendImage = async (file) => {
-        //отправляем аватар на сервер
+        //отправляем картинку на сервер
         try {
             const formData = new FormData();
             formData.append('image', file);

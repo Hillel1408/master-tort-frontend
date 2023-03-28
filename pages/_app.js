@@ -11,6 +11,7 @@ import 'overlayscrollbars/overlayscrollbars.css';
 
 function MyApp({ Component, pageProps }) {
     const [checkAuth, setCheckAuth] = useState('');
+
     const dispatch = useDispatch();
 
     useEffect(() => {

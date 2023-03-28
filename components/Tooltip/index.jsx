@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import { useEffect } from 'react';
+import classNames from 'classnames';
 import styles from './Tooltip.module.scss';
 
 function Tooltip({ children, visiblePopup, style, setVisiblePopup, close }) {

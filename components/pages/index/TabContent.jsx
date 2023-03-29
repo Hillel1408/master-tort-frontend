@@ -225,11 +225,8 @@ function TabContent({
             if (item.products) {
                 item.products.map((pr) => {
                     pr.products.map((item) => {
-                        //проверяем есть ли в нашем объекте продукт
                         if (newPr[item.product.value])
-                            //если да, то считаем общее количество
                             newPr[item.product.value] += item.net;
-                        //если нет, то создаем его
                         else newPr[item.product.value] = item.net;
                     });
                 });

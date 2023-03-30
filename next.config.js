@@ -7,7 +7,7 @@ const nextConfig = {
         quality: 100,
     },
     images: {
-        domains: ['master-tort.pro'],
+        domains: ['master-tort.pro', 'localhost'],
     },
 };
 

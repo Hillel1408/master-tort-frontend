@@ -4,7 +4,7 @@ function Checkbox({ checkbox, clickHandler }) {
     return (
         <label className={stylesCheckbox.customCheckbox}>
             <input type="checkbox" checked={checkbox} readOnly />
-            <span onClick={(e) => clickHandler()}></span>
+            <span onClick={() => clickHandler()}></span>
         </label>
     );
 }

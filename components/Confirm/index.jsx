@@ -1,5 +1,7 @@
 import classNames from 'classnames';
+
 import { Modal } from '../Modal';
+
 import styles from './Confirm.module.scss';
 import stylesBtn from '../Btn/Btn.module.scss';
 

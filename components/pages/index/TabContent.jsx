@@ -13,7 +13,7 @@ import { Total } from './Total';
 import { Modal } from '../../Modal';
 import { CustomSelect } from '../../CustomSelect/';
 import { Canvas } from './Canvas';
-import { IMAGE_URL } from '../../../http';
+import { API_URL } from '../../../http';
 import UploadService from '../../../services/UploadService';
 import OrdersService from '../../../services/OrdersService';
 import { setAlert } from '../../../redux/cakeSlice';
@@ -880,7 +880,7 @@ function TabContent({
                                                     }
                                                 >
                                                     <Image
-                                                        src={`${IMAGE_URL}${item}`}
+                                                        src={`${API_URL}${item}`}
                                                         alt=""
                                                         fill
                                                     />

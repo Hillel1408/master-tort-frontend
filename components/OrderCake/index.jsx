@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import dateFormat, { masks } from 'dateformat';
+import dateFormat from 'dateformat';
 import Link from 'next/link';
-import classNames from 'classnames';
 import Image from 'next/image';
-import { IMAGE_URL } from '../../http';
+import classNames from 'classnames';
+
+import { API_URL } from '../../http';
+
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 
@@ -31,6 +33,7 @@ function OrderCake({
     const updateKanban = (index) => {
         const currentIndex = board.items.indexOf(item);
         let clone = JSON.parse(JSON.stringify(boards[index]));
+
         board.items.splice(currentIndex, 1);
         clone.items.unshift(item);
         setBoards(
@@ -62,6 +65,7 @@ function OrderCake({
             );
             const today = new Date();
             const a = (date - today) / (1000 * 3600 * 24);
+
             if (a < 0) setTypeOrder('normal');
             else if (a < rushOrder) setTypeOrder('urgent');
         }
@@ -92,7 +96,7 @@ function OrderCake({
             <div className={styles.img}>
                 {item.imagesUrl[0] ? (
                     <Image
-                        src={`${IMAGE_URL}${item.imagesUrl[0]}`}
+                        src={`${API_URL}${item.imagesUrl[0]}`}
                         alt=""
                         draggable="false"
                         fill

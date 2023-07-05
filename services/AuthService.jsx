@@ -1,6 +1,6 @@
-import $api from '../http';
-import { API_URL } from '../http';
 import axios from 'axios';
+
+import $api, { API_URL } from '../http';
 
 export default class AuthService {
     static async login(values) {
@@ -13,7 +13,7 @@ export default class AuthService {
         return $api.post('/logout');
     }
     static async refresh() {
-        return axios.get(`${API_URL}/refresh`, {
+        return axios.get(`${API_URL}/api/refresh`, {
             withCredentials: true,
         });
     }

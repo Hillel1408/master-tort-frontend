@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { parseCookies, setCookie } from 'nookies';
 
-export const API_URL = `http://localhost:5000/api`;
-export const IMAGE_URL = `http://localhost:5000`;
+export const API_URL = `http://localhost:5000`;
 
 const $api = axios.create({
     withCredentials: true,
-    baseURL: API_URL,
+    baseURL: API_URL + '/api',
 });
 
 $api.interceptors.request.use((config) => {
@@ -28,7 +27,7 @@ $api.interceptors.response.use(
         ) {
             originalRequest._isRetry = true;
             try {
-                const response = await axios.get(`${API_URL}/refresh`, {
+                const response = await axios.get(`${API_URL}/api/refresh`, {
                     withCredentials: true,
                 });
                 setCookie(null, 'token', response.data.accessToken, {

@@ -10,7 +10,7 @@ import { Tooltip } from '../../components/Tooltip';
 import { Checkbox } from '../../components/CustomCheckbox';
 import { NoAccess } from '../../components/NoAccess';
 import { Alert } from '../../components/Alert';
-import { IMAGE_URL } from '../../http';
+import { API_URL } from '../../http';
 import RecipeService from '../../services/RecipeService';
 import ProductsService from '../../services/ProductsService';
 import UploadService from '../../services/UploadService';
@@ -78,7 +78,7 @@ export default function Recipe() {
                 exit,
                 height,
                 diameter,
-                recipeUrl: image && `${IMAGE_URL}${image}`,
+                recipeUrl: image && `${API_URL}${image}`,
             };
             const id = window.location.pathname.split('/recipe/')[1];
             const response = await RecipeService.updateRecipe(id, values);
@@ -374,7 +374,7 @@ export default function Recipe() {
                                 <div className={styles.imageBlock}>
                                     {image ? (
                                         <Image
-                                            src={`${IMAGE_URL}${image}`}
+                                            src={`${API_URL}${image}`}
                                             fill
                                             alt=""
                                         />

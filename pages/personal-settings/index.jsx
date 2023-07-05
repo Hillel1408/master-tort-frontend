@@ -9,7 +9,7 @@ import Layout from '../../components/Layout';
 import { CustomSelect } from '../../components/CustomSelect';
 import { Tooltip } from '../../components/Tooltip';
 import AuthService from '../../services/AuthService';
-import { IMAGE_URL } from '../../http';
+import { API_URL } from '../../http';
 import UploadService from '../../services/UploadService';
 import styles from './PersonalSettings.module.scss';
 import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
@@ -82,12 +82,12 @@ export default function PersonalSettings() {
                 userId: dataUser.id,
                 fullName,
                 email,
-                image: image && `${IMAGE_URL}${image}`,
+                image: image && `${API_URL}${image}`,
             });
             dispatch(
                 setDataUser_2({
                     ...dataUser,
-                    avatar: image && `${IMAGE_URL}${image}`,
+                    avatar: image && `${API_URL}${image}`,
                     fullName: fullName,
                 })
             );
@@ -216,7 +216,7 @@ export default function PersonalSettings() {
                             <div className={styles.infoAvatar}>
                                 {image ? (
                                     <Image
-                                        src={`${IMAGE_URL}${image}`}
+                                        src={`${API_URL}${image}`}
                                         alt="avatar"
                                         fill
                                     />

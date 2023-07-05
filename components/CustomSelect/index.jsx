@@ -71,6 +71,8 @@ function CustomSelect(props) {
         }),
     };
 
+    const table = document.querySelector('.table');
+
     return (
         <Select
             styles={customStyles}
@@ -83,11 +85,9 @@ function CustomSelect(props) {
             onChange={props.setGroupIcon}
             defaultValue={props.default}
             onMenuClose={() => {
-                const table = document.querySelector('.table');
                 table && table.classList.remove('lock');
             }}
             onMenuOpen={() => {
-                const table = document.querySelector('.table');
                 table && table.classList.add('lock');
             }}
             noOptionsMessage={() => 'Ничего не найдено'}

@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { destroyCookie } from 'nookies';
 import { useDispatch } from 'react-redux';
-import { setDataUser_2 } from '../../redux/cakeSlice';
+import classNames from 'classnames';
 import Link from 'next/link';
 import Image from 'next/image';
+
 import { Tooltip } from '../Tooltip';
+
+import { setDataUser_2 } from '../../redux/cakeSlice';
+
 import styles from './Header.module.scss';
 import AuthService from '../../services/AuthService';
-import classNames from 'classnames';
 
 function Header({ isAuth, setIsAuth, userName, avatar }) {
     const [tooltipActive, setTooltipActive] = useState('');
@@ -39,7 +42,7 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                         </div>
                     </Link>
                     <div
-                        className={classNames(styles.block)}
+                        className={styles.block}
                         onClick={(e) => setTooltipActive(e)}
                     >
                         <span className={classNames('text', styles.userName)}>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import classNames from 'classnames';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';

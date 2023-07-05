@@ -1,7 +1,9 @@
 import { Oval } from 'react-loader-spinner';
 import classNames from 'classnames';
+
 import { NoAccess } from '../components/NoAccess';
 import { Header } from '../components/Header';
+
 import stylesLogin from '../pages/login/Login.module.scss';
 import stylesHeader from '../components/Header/Header.module.scss';
 

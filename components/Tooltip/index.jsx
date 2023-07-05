@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import classNames from 'classnames';
+
 import styles from './Tooltip.module.scss';
 
 function Tooltip({ children, visiblePopup, style, setVisiblePopup, close }) {
@@ -9,6 +10,7 @@ function Tooltip({ children, visiblePopup, style, setVisiblePopup, close }) {
                 if (e.target === visiblePopup.target) return;
                 setVisiblePopup('');
             };
+
             window.addEventListener('click', clickHandler);
             return () => window.removeEventListener('click', clickHandler);
         }

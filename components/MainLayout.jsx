@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+
 import { Sidebar } from '../components/Sidebar';
 
 const MainLayout = ({ children }) => (

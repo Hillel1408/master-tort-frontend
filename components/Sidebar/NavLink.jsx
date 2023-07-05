@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
+
 import styles from './Sidebar.module.scss';
 
 function NavLink({ item, setNavActive }) {

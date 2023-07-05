@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import classNames from 'classnames';
+
 import styles from './OrdersNav.module.scss';
 
 function OrdersNav({ visibleTabs }) {

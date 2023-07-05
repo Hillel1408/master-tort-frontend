@@ -1,8 +1,10 @@
-import Link from 'next/link';
 import { useState } from 'react';
 import classNames from 'classnames';
+import Link from 'next/link';
+
 import { NavLink } from './NavLink';
 import { Modal } from '../Modal';
+
 import styles from './Sidebar.module.scss';
 
 function Sidebar() {

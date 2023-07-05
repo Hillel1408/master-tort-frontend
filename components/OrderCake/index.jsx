@@ -102,7 +102,13 @@ function OrderCake({
                         fill
                     />
                 ) : (
-                    <Image src="/1.png" alt="" draggable="false" fill />
+                    <Image
+                        src="/1.png"
+                        alt=""
+                        draggable="false"
+                        fill
+                        style={{ border: '2px solid #f4f2f1' }}
+                    />
                 )}
             </div>
             <div className={styles.content}>

@@ -17,6 +17,7 @@ function NoAccess({ title, text, linkBtn, textBtn, isLogin, setIsAuth }) {
     const logout = async () => {
         try {
             const response = await AuthService.logout();
+
             destroyCookie(null, 'token');
             dispatch(setDataUser_2(''));
             setIsAuth(false);

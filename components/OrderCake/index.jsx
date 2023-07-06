@@ -6,6 +6,8 @@ import classNames from 'classnames';
 
 import { API_URL } from '../../http';
 
+import updateKanban from './helpers';
+
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
 
@@ -30,30 +32,14 @@ function OrderCake({
 }) {
     const [typeOrder, setTypeOrder] = useState(type);
 
-    const updateKanban = (index) => {
-        const currentIndex = board.items.indexOf(item);
-        let clone = JSON.parse(JSON.stringify(boards[index]));
-
-        board.items.splice(currentIndex, 1);
-        clone.items.unshift(item);
-        setBoards(
-            boards.map((b) => {
-                if (b.id === board.id) {
-                    return board;
-                }
-                if (b.id === clone.id) {
-                    return clone;
-                }
-                return b;
-            })
-        );
-        updateStatusOrder(clone, board);
-    };
-
     const deleteOrder = (e) => {
         e.preventDefault();
         setModal(true);
         setItemId(item._id);
+    };
+
+    const update = (index) => {
+        updateKanban(index, board, boards, updateStatusOrder, setBoards);
     };
 
     useEffect(() => {
@@ -154,7 +140,7 @@ function OrderCake({
                                         index = 2;
                                         break;
                                 }
-                                updateKanban(index);
+                                update(index);
                             }}
                         >
                             ←
@@ -177,7 +163,7 @@ function OrderCake({
                                         index = 3;
                                         break;
                                 }
-                                updateKanban(index);
+                                update(index);
                             }}
                         >
                             →

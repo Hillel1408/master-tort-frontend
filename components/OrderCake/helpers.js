@@ -3,7 +3,8 @@ export const updateKanban = (
     board,
     boards,
     updateStatusOrder,
-    setBoards
+    setBoards,
+    item
 ) => {
     const currentIndex = board.items.indexOf(item);
     let clone = JSON.parse(JSON.stringify(boards[index]));

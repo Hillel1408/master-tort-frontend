@@ -5,10 +5,9 @@ import Image from 'next/image';
 import classNames from 'classnames';
 
 import { Content } from './Content';
+import { Buttons } from './Buttons';
 
 import { API_URL } from '../../http';
-
-import updateKanban from './helpers';
 
 import styles from './OrderCake.module.scss';
 import stylesOrders from '../../pages/orders/Orders.module.scss';
@@ -38,10 +37,6 @@ function OrderCake({
         e.preventDefault();
         setModal(true);
         setItemId(item._id);
-    };
-
-    const update = (index) => {
-        updateKanban(index, board, boards, updateStatusOrder, setBoards);
     };
 
     useEffect(() => {
@@ -102,54 +97,13 @@ function OrderCake({
             <div className={styles.content}>
                 <Content item={item} />
                 {draggable && (
-                    <div className={styles.contentButton}>
-                        <button
-                            title="Назад"
-                            className={classNames('small-text')}
-                            disabled={board.title === 'Предстоящие'}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                let index = '';
-                                switch (board.title) {
-                                    case 'Закупка':
-                                        index = 0;
-                                        break;
-                                    case 'В работе':
-                                        index = 1;
-                                        break;
-                                    case 'Готово':
-                                        index = 2;
-                                        break;
-                                }
-                                update(index);
-                            }}
-                        >
-                            ←
-                        </button>
-                        <button
-                            title="Вперед"
-                            className={classNames('small-text')}
-                            disabled={board.title === 'Готово'}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                let index = '';
-                                switch (board.title) {
-                                    case 'Предстоящие':
-                                        index = 1;
-                                        break;
-                                    case 'Закупка':
-                                        index = 2;
-                                        break;
-                                    case 'В работе':
-                                        index = 3;
-                                        break;
-                                }
-                                update(index);
-                            }}
-                        >
-                            →
-                        </button>
-                    </div>
+                    <Buttons
+                        board={board}
+                        boards={boards}
+                        updateStatusOrder={updateStatusOrder}
+                        setBoards={setBoards}
+                        item={item}
+                    />
                 )}
             </div>
         </Link>

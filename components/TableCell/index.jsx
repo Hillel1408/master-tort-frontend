@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+
 import styles from '../../components/Table/Table.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
+
 import { settingsTh } from '../../data/settings';
 
 function TableCell({

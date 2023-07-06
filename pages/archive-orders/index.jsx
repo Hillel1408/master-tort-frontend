@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Head from 'next/head';
+
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { OrdersNav } from '../../components/OrdersNav';
 import { NoAccess } from '../../components/NoAccess';
 import { Confirm } from '../../components/Confirm';
+
 import OrdersService from '../../services/OrdersService';
+
 import styles from '../purchase/Purchase.module.scss';
 
 export default function ArchiveOrders() {
@@ -48,7 +51,6 @@ export default function ArchiveOrders() {
                 ? setOrders(archiveOrders.sort((a, b) => b.number - a.number))
                 : setOrders('');
         };
-
         const getOrders = async (userId) => {
             //получаем заказы пользователя
             try {
@@ -60,13 +62,12 @@ export default function ArchiveOrders() {
                 console.log(e.response?.data?.message);
             }
         };
-
         const checkAuth = () => {
             setDataUser(dataUser_2);
             getOrders(dataUser_2.id);
         };
-        if (dataUser_2) checkAuth();
-        else setIsAuth(false);
+
+        dataUser_2 ? checkAuth() : setIsAuth(false);
     }, []);
 
     return (

@@ -2,10 +2,14 @@ import NextNprogress from 'nextjs-progressbar';
 import { setCookie, parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setDataUser_2 } from '../redux/cakeSlice';
-import AuthService from '../services/AuthService';
-import { wrapper } from '../redux/store';
+
 import MainLayout from '../components/MainLayout';
+
+import { setDataUser_2 } from '../redux/cakeSlice';
+import { wrapper } from '../redux/store';
+
+import AuthService from '../services/AuthService';
+
 import '../styles/globals.scss';
 import 'overlayscrollbars/overlayscrollbars.css';
 
@@ -19,6 +23,7 @@ function MyApp({ Component, pageProps }) {
             try {
                 //проверяем авторизован ли пользователь
                 const response = await AuthService.refresh();
+
                 setCookie(null, 'token', response.data.accessToken, {
                     maxAge: 30 * 24 * 60 * 60,
                     path: '/',

@@ -4,6 +4,7 @@ import uuid from 'react-uuid';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Link from 'next/link';
+
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Alert } from '../../components/Alert';
@@ -11,7 +12,9 @@ import { setAlert } from '../../redux/cakeSlice';
 import { Tr } from '../../components/pages/in-work/Tr';
 import { NoAccess } from '../../components/NoAccess';
 import { Confirm } from '../../components/Confirm';
+
 import OrdersService from '../../services/OrdersService';
+
 import styles from '../purchase/Purchase.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
 
@@ -69,6 +72,7 @@ export default function Purchase() {
         const sumProducts = (data) => {
             //считаем сумму продуктов по ярусам
             const obj = {};
+
             data.map((order) => {
                 order.table.map((tableItem, index) => {
                     const a = tableItem.recipe.value;
@@ -142,8 +146,8 @@ export default function Purchase() {
             setDataUser(dataUser_2);
             getOrders(dataUser_2.id);
         };
-        if (dataUser_2) checkAuth();
-        else setIsAuth(false);
+
+        dataUser_2 ? checkAuth() : setIsAuth(false);
     }, []);
 
     return (
@@ -224,17 +228,6 @@ export default function Purchase() {
                             </div>
                         </div>
                         <div className={styles.buttons}>
-                            {/*<button
-                                className={classNames(
-                                    stylesBtn.btn,
-                                    'small-text'
-                                )}
-                                onClick={() => {
-                                    window.print();
-                                }}
-                            >
-                                Печать
-                            </button>*/}
                             <button
                                 className={classNames(
                                     stylesBtn.btn,

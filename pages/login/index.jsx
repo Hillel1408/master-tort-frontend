@@ -6,11 +6,14 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { setDataUser_2 } from '../../redux/cakeSlice';
+
 import Layout from '../../components/Layout';
-import { SocialLinks } from '../../components/SocialLinks';
 import { EmailForm } from '../../components/pages/login/EmailForm';
+
+import { setDataUser_2 } from '../../redux/cakeSlice';
+
 import AuthService from '../../services/AuthService';
+
 import styles from './Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
@@ -42,6 +45,7 @@ export default function Login() {
         //выполняем вход
         try {
             const response = await AuthService.login(values);
+
             setCookie(null, 'token', response.data.accessToken, {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/',
@@ -59,8 +63,8 @@ export default function Login() {
             setDataUser(dataUser_2);
             setIsAuth(true);
         };
-        if (dataUser_2) checkAuth();
-        else setIsAuth(false);
+
+        dataUser_2 ? checkAuth() : setIsAuth(false);
     }, []);
 
     return (
@@ -142,18 +146,6 @@ export default function Login() {
                         >
                             Забыли пароль?
                         </a>
-                        {/*<div className={styles.or}>
-                            <span>или</span>
-                        </div>
-                        <p
-                            className={classNames(
-                                'small-text',
-                                styles.textBottom
-                            )}
-                        >
-                            Вход с помощью:
-                        </p>
-                            <SocialLinks />*/}
                     </div>
                 </div>
             ) : (

@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import { setCookie } from 'nookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDataUser_2 } from '../../redux/cakeSlice';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import classNames from 'classnames';
+
 import Layout from '../../components/Layout';
-import { SocialLinks } from '../../components/SocialLinks';
+
+import { setDataUser_2 } from '../../redux/cakeSlice';
+
 import AuthService from '../../services/AuthService';
+
 import styles from '../login/Login.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
 import stylesBtn from '../../components/Btn/Btn.module.scss';
@@ -65,8 +68,8 @@ export default function Registration() {
             setDataUser(dataUser_2);
             setIsAuth(true);
         };
-        if (dataUser_2) checkAuth();
-        else setIsAuth(false);
+
+        dataUser_2 ? checkAuth() : setIsAuth(false);
     }, []);
 
     return (
@@ -152,13 +155,6 @@ export default function Registration() {
                                 : 'Зарегистрироваться'}
                         </button>
                     </form>
-                    {/*<div className={styles.or}>
-                        <span>или</span>
-                    </div>
-                    <p className={classNames('small-text', styles.textBottom)}>
-                        Регистрация с помощью:
-                    </p>
-                            <SocialLinks />*/}
                 </div>
             </div>
         </Layout>

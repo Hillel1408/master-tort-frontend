@@ -1,16 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { setDataUser_2 } from '../../redux/cakeSlice';
 import Image from 'next/image';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
+
+import { setDataUser_2 } from '../../redux/cakeSlice';
+
 import Layout from '../../components/Layout';
 import { CustomSelect } from '../../components/CustomSelect';
 import { Tooltip } from '../../components/Tooltip';
-import AuthService from '../../services/AuthService';
+
 import { API_URL } from '../../http';
+import AuthService from '../../services/AuthService';
 import UploadService from '../../services/UploadService';
+
 import styles from './PersonalSettings.module.scss';
 import stylesTooltip from '../../components/Tooltip/Tooltip.module.scss';
 import stylesInput from '../../components/Input/Input.module.scss';
@@ -84,6 +88,7 @@ export default function PersonalSettings() {
                 email,
                 image: image && `${API_URL}${image}`,
             });
+
             dispatch(
                 setDataUser_2({
                     ...dataUser,
@@ -130,6 +135,7 @@ export default function PersonalSettings() {
                     userId: dataUser.id,
                     ...values,
                 });
+
                 setSuccessPas('Пароль успешно изменен');
                 resetState(setSuccessPas);
                 reset();
@@ -160,6 +166,7 @@ export default function PersonalSettings() {
     const handleChangeFile = async (e) => {
         //получаем аватар
         const file = e.target.files[0];
+
         sendImage(file);
     };
 
@@ -170,12 +177,13 @@ export default function PersonalSettings() {
             setEmail(dataUser_2.email);
             setIsAuth(true);
         };
-        if (dataUser_2) checkAuth();
-        else setIsAuth(false);
+
+        dataUser_2 ? checkAuth() : setIsAuth(false);
     }, []);
 
     const func = (rushOrder) => {
         let a;
+
         switch (rushOrder) {
             case '1':
                 a = 'день';

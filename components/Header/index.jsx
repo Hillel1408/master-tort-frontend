@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { Tooltip } from '../Tooltip';
+import { Entry } from './Entry';
 
 import { setDataUser_2 } from '../../redux/cakeSlice';
 
@@ -20,6 +21,7 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
     const logout = async () => {
         try {
             const response = await AuthService.logout();
+
             destroyCookie(null, 'token');
             dispatch(setDataUser_2(''));
             setIsAuth(false);
@@ -89,21 +91,7 @@ function Header({ isAuth, setIsAuth, userName, avatar }) {
                     )}
                 </div>
             ) : (
-                <div className={styles.login}>
-                    <Link
-                        href="/login"
-                        className={classNames('text', styles.loginLink)}
-                    >
-                        Вход
-                    </Link>
-                    <span className={styles.text}>|</span>
-                    <Link
-                        href="registration"
-                        className={classNames('text', styles.loginLink)}
-                    >
-                        Регистрация
-                    </Link>
-                </div>
+                <Entry />
             )}
         </>
     );

@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import classNames from 'classnames';
 
+import { Content } from './Content';
+
 import { API_URL } from '../../http';
 
 import updateKanban from './helpers';
@@ -98,28 +100,7 @@ function OrderCake({
                 )}
             </div>
             <div className={styles.content}>
-                <span className={classNames(styles.contentNumber, 'icon-27')}>
-                    №{item.number}
-                </span>
-                <p className={classNames(styles.contentText, 'small-text')}>
-                    {item.orderName}
-                </p>
-                <div className={styles.contentBlock}>
-                    <span
-                        className={classNames(
-                            styles.contentDate,
-                            'icon-9',
-                            'small-text'
-                        )}
-                    >
-                        {dateFormat(item.date, 'mm/dd/yyyy')}
-                    </span>
-                    <span
-                        className={classNames(styles.contentTime, 'small-text')}
-                    >
-                        {dateFormat(item.time, 'HH:MM')}
-                    </span>
-                </div>
+                <Content item={item} />
                 {draggable && (
                     <div className={styles.contentButton}>
                         <button

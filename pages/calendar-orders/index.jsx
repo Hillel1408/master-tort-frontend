@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import dateFormat from 'dateformat';
 import Head from 'next/head';
 
 import Layout from '../../components/Layout';
@@ -10,7 +9,7 @@ import { OrdersNav } from '../../components/OrdersNav';
 import { Header } from './Header';
 import { Table } from './Table';
 
-import { draw, monthArr } from './helpers';
+import { draw, monthArr, filterOrders } from './helpers';
 
 import styles from './CalendarOrders.module.scss';
 import OrdersService from '../../services/OrdersService';
@@ -34,14 +33,12 @@ export default function CalendarOrders() {
 
     useEffect(() => {
         const getOrders = async (userId) => {
-            //получаем заказы пользователя
             try {
                 const response = await OrdersService.getOrders(userId);
                 const newOrders = response.data.filter((item) => {
                     return item.status !== 'delete';
                 });
                 setOrders(newOrders);
-                //получаем текущий год, месяц и день
                 const date = new Date();
                 setYear(date.getFullYear());
                 setMonth(date.getMonth());
@@ -60,56 +57,16 @@ export default function CalendarOrders() {
         dataUser_2 ? checkAuth() : setIsAuth(false);
     }, []);
 
-    const filterOrders = (orders, year, month) => {
-        //фильтруем и получаем в стейт заказы текущего месяца на календаре
-        const asd = {};
-        const today = new Date();
-
-        orders.forEach((item) => {
-            const date = new Date(
-                dateFormat(item.date, 'yyyy-mm-dd') +
-                    'T' +
-                    dateFormat(item.time, 'HH:MM')
-            );
-
-            if (date.getMonth() === month && date.getFullYear() === year) {
-                //проверяем является ли заказ срочным
-                const day = date.getDate();
-                const a = (date - today) / (1000 * 3600 * 24);
-                let status = '';
-
-                if (a > 0 && a <= dataUser.rushOrder.value) status = 'urgent';
-                else if (a < 0) status = 'archive';
-                else status = 'ordinary';
-
-                const obj = {
-                    ...item,
-                    isRushOrder: status,
-                };
-
-                asd[day] ? (asd[day] = [...asd[day], obj]) : (asd[day] = [obj]);
-            }
-        });
-        setFilteredOrders(asd);
-    };
-
     const deleteOrder = async () => {
-        //удаляем заказ пользователя
         setModal(false);
         document.body.classList.remove('lock');
         filteredOrders[activeDay].map((item, index) => {
             if (item._id === itemId) {
                 filteredOrders[activeDay].splice(index, 1);
-                if (filteredOrders[activeDay].length === 0) {
-                    setActiveDay('');
-                }
+                filteredOrders[activeDay].length === 0 && setActiveDay('');
             }
         });
-        orders.map((a, index) => {
-            if (a._id === itemId) {
-                orders.splice(index, 1);
-            }
-        });
+        orders.map((a, index) => a._id === itemId && orders.splice(index, 1));
         try {
             const response = await OrdersService.deleteOrder(itemId, {
                 userId: dataUser.id,
@@ -122,10 +79,9 @@ export default function CalendarOrders() {
     useEffect(() => {
         if (month !== undefined) {
             const date = new Date();
-            //записываем в стейт массив с днями месяца для отображения на календаре
+
             setNums(draw(year, month, setDateNow));
-            filterOrders(orders, year, month);
-            //проверяем является ли отображаемые месяц и год текущими, чтобы выделить текущий день
+            filterOrders(orders, year, month, dataUser, setFilteredOrders);
             year === date.getFullYear() && month === date.getMonth()
                 ? setIsActive(true)
                 : setIsActive(false);

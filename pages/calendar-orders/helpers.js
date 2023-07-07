@@ -1,3 +1,5 @@
+import dateFormat from 'dateformat';
+
 export const monthArr = [
     ['январь', 'января'],
     ['февраль', 'февраля'],
@@ -34,6 +36,35 @@ const getLastDay = (year, month) => {
     return date.getDate();
 };
 
+const chunk = (arr, n) => {
+    let result = [];
+    let count = Math.ceil(arr.length / n);
+
+    for (let i = 0; i < count; i++) {
+        let elems = arr.splice(0, n);
+        result.push(elems);
+    }
+    return result;
+};
+
+const toUpperCase = (str) => {
+    let newStr = str[0].toUpperCase() + str.slice(1);
+
+    return newStr;
+};
+
+const normalize = (arr, left, right, year, month) => {
+    const LastDayPrewMonth = getLastDayPrewMonth(year, month);
+
+    for (let i = LastDayPrewMonth; i > LastDayPrewMonth - left; i--) {
+        arr.unshift(i);
+    }
+    for (let i = 1; i <= right; i++) {
+        arr.push(i);
+    }
+    return arr;
+};
+
 export const getFirstWeekDay = (year, month) => {
     let date = new Date(year, month, 1);
     let num = date.getDay();
@@ -56,35 +87,6 @@ export const getLastWeekDay = (year, month) => {
     }
 };
 
-const normalize = (arr, left, right, year, month) => {
-    const LastDayPrewMonth = getLastDayPrewMonth(year, month);
-
-    for (let i = LastDayPrewMonth; i > LastDayPrewMonth - left; i--) {
-        arr.unshift(i);
-    }
-    for (let i = 1; i <= right; i++) {
-        arr.push(i);
-    }
-    return arr;
-};
-
-const chunk = (arr, n) => {
-    let result = [];
-    let count = Math.ceil(arr.length / n);
-
-    for (let i = 0; i < count; i++) {
-        let elems = arr.splice(0, n);
-        result.push(elems);
-    }
-    return result;
-};
-
-const toUpperCase = (str) => {
-    let newStr = str[0].toUpperCase() + str.slice(1);
-
-    return newStr;
-};
-
 export const draw = (year, month, setDateNow) => {
     let arr = range(getLastDay(year, month));
     let firstWeekDay = getFirstWeekDay(year, month);
@@ -103,6 +105,7 @@ export const getNextMonth = (month) => {
     if (month == 11) return 0;
     else return ++month;
 };
+
 export const getPrevYear = (year, month) => {
     if (month == 0) return --year;
     else return year;
@@ -111,4 +114,41 @@ export const getPrevYear = (year, month) => {
 export const getPrevMonth = (month) => {
     if (month == 0) return 11;
     else return --month;
+};
+
+export const filterOrders = (
+    orders,
+    year,
+    month,
+    dataUser,
+    setFilteredOrders
+) => {
+    const asd = {};
+    const today = new Date();
+
+    orders.forEach((item) => {
+        const date = new Date(
+            dateFormat(item.date, 'yyyy-mm-dd') +
+                'T' +
+                dateFormat(item.time, 'HH:MM')
+        );
+
+        if (date.getMonth() === month && date.getFullYear() === year) {
+            const day = date.getDate();
+            const a = (date - today) / (1000 * 3600 * 24);
+            let status = '';
+
+            if (a > 0 && a <= dataUser.rushOrder.value) status = 'urgent';
+            else if (a < 0) status = 'archive';
+            else status = 'ordinary';
+
+            const obj = {
+                ...item,
+                isRushOrder: status,
+            };
+
+            asd[day] ? (asd[day] = [...asd[day], obj]) : (asd[day] = [obj]);
+        }
+    });
+    setFilteredOrders(asd);
 };

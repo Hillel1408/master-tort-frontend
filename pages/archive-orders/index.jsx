@@ -24,11 +24,7 @@ export default function ArchiveOrders() {
     const deleteOrder = async () => {
         setModal(false);
         document.body.classList.remove('lock');
-        orders.map((a, index) => {
-            if (a._id === itemId) {
-                orders.splice(index, 1);
-            }
-        });
+        orders.map((a, index) => a._id === itemId && orders.splice(index, 1));
         if (orders.length === 0) setOrders('');
         try {
             const response = await OrdersService.deleteOrder(itemId, {

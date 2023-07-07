@@ -1,25 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import dateFormat from 'dateformat';
-import classNames from 'classnames';
 import Head from 'next/head';
 
 import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Confirm } from '../../components/Confirm';
 import { OrdersNav } from '../../components/OrdersNav';
-import { Td } from '../../components/pages/calendar-orders/Td';
+import { Header } from './Header';
+import { Table } from './Table';
 
-import {
-    getFirstWeekDay,
-    getLastWeekDay,
-    draw,
-    monthArr,
-    getNextYear,
-    getNextMonth,
-    getPrevYear,
-    getPrevMonth,
-} from './helpers';
+import { draw, monthArr } from './helpers';
 
 import styles from './CalendarOrders.module.scss';
 import OrdersService from '../../services/OrdersService';
@@ -40,21 +31,6 @@ export default function CalendarOrders() {
     const [itemId, setItemId] = useState('');
 
     const { dataUser_2 } = useSelector((state) => state.cakes);
-
-    const nextClickHandler = () => {
-        //получаем следующий месяц, и когда нужно меняем год
-        const month2 = getNextMonth(month);
-        setYear(getNextYear(year, month));
-        setMonth(month2);
-        setActiveDay('');
-    };
-
-    const prevClickHandler = () => {
-        //получаем предыдущий месяц, и когда нужно меняем год
-        setYear(getPrevYear(year, month));
-        setMonth(getPrevMonth(month));
-        setActiveDay('');
-    };
 
     useEffect(() => {
         const getOrders = async (userId) => {
@@ -101,13 +77,16 @@ export default function CalendarOrders() {
                 const day = date.getDate();
                 const a = (date - today) / (1000 * 3600 * 24);
                 let status = '';
+
                 if (a > 0 && a <= dataUser.rushOrder.value) status = 'urgent';
                 else if (a < 0) status = 'archive';
                 else status = 'ordinary';
+
                 const obj = {
                     ...item,
                     isRushOrder: status,
                 };
+
                 asd[day] ? (asd[day] = [...asd[day], obj]) : (asd[day] = [obj]);
             }
         });
@@ -169,112 +148,24 @@ export default function CalendarOrders() {
                     <div className={styles.container}>
                         {nums && (
                             <>
-                                <div className={styles.header}>
-                                    <span
-                                        className={classNames(
-                                            'text',
-                                            styles.title
-                                        )}
-                                    >
-                                        {dateNow}
-                                    </span>
-                                    <div className={styles.nav}>
-                                        <span
-                                            className={classNames(
-                                                'icon-29',
-                                                styles.prev
-                                            )}
-                                            onClick={() => prevClickHandler()}
-                                        ></span>
-                                        <span
-                                            className={classNames(
-                                                'icon-30',
-                                                styles.next
-                                            )}
-                                            onClick={() => nextClickHandler()}
-                                        ></span>
-                                    </div>
-                                </div>
-                                <table className={styles.table}>
-                                    <thead className={styles.thead}>
-                                        <tr
-                                            className={classNames(
-                                                'small-text',
-                                                styles.smallText
-                                            )}
-                                        >
-                                            <th>пн</th>
-                                            <th>вт</th>
-                                            <th>ср</th>
-                                            <th>чт</th>
-                                            <th>пт</th>
-                                            <th>сб</th>
-                                            <th>вс</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {nums.map((item, indexTr) => (
-                                            <tr key={indexTr}>
-                                                {item.map((amount, indexTd) => (
-                                                    <Td
-                                                        key={indexTd}
-                                                        st={
-                                                            (indexTr === 0 &&
-                                                                indexTd <
-                                                                    getFirstWeekDay(
-                                                                        year,
-                                                                        month
-                                                                    )) ||
-                                                            (indexTr ===
-                                                                nums.length -
-                                                                    1 &&
-                                                                indexTd >=
-                                                                    item.length -
-                                                                        (6 -
-                                                                            getLastWeekDay(
-                                                                                year,
-                                                                                month
-                                                                            )))
-                                                                ? true
-                                                                : false
-                                                        }
-                                                        amount={amount}
-                                                        count={
-                                                            filteredOrders[
-                                                                amount
-                                                            ] &&
-                                                            filteredOrders[
-                                                                amount
-                                                            ].length > 0 &&
-                                                            filteredOrders[
-                                                                amount
-                                                            ].length
-                                                        }
-                                                        isRushOrder={
-                                                            filteredOrders[
-                                                                amount
-                                                            ] &&
-                                                            filteredOrders[
-                                                                amount
-                                                            ].length > 0 &&
-                                                            filteredOrders[
-                                                                amount
-                                                            ][0].isRushOrder
-                                                        }
-                                                        today={
-                                                            amount === day &&
-                                                            isActive
-                                                        }
-                                                        activeDay={activeDay}
-                                                        setActiveDay={
-                                                            setActiveDay
-                                                        }
-                                                    />
-                                                ))}
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                <Header
+                                    dateNow={dateNow}
+                                    month={month}
+                                    setYear={setYear}
+                                    year={year}
+                                    setMonth={setMonth}
+                                    setActiveDay={setActiveDay}
+                                />
+                                <Table
+                                    nums={nums}
+                                    year={year}
+                                    month={month}
+                                    filteredOrders={filteredOrders}
+                                    day={day}
+                                    activeDay={activeDay}
+                                    setActiveDay={setActiveDay}
+                                    isActive={isActive}
+                                />
                             </>
                         )}
                     </div>

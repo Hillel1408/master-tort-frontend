@@ -22,7 +22,6 @@ export default function ArchiveOrders() {
     const { dataUser_2 } = useSelector((state) => state.cakes);
 
     const deleteOrder = async () => {
-        //удаляем заказ пользователя
         setModal(false);
         document.body.classList.remove('lock');
         orders.map((a, index) => {
@@ -42,21 +41,18 @@ export default function ArchiveOrders() {
 
     useEffect(() => {
         const filterOrders = async (orders) => {
-            //забираем в стейт только архивные заказы
             const archiveOrders = orders.filter((item) => {
                 return item.status === 'archive';
             });
-            //сортируем по убыванию номера заказа
+
             archiveOrders.length > 0
                 ? setOrders(archiveOrders.sort((a, b) => b.number - a.number))
                 : setOrders('');
         };
         const getOrders = async (userId) => {
-            //получаем заказы пользователя
             try {
                 const response = await OrdersService.getOrders(userId);
                 filterOrders(response.data);
-                console.log(response.data);
                 setIsAuth(true);
             } catch (e) {
                 console.log(e.response?.data?.message);

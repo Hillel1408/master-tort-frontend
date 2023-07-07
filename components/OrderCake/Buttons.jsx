@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { updateKanban } from './helpers';
 
 import styles from './OrderCake.module.scss';
@@ -12,7 +11,7 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
         <div className={styles.contentButton}>
             <button
                 title="Назад"
-                className={classNames('small-text')}
+                className="small-text"
                 disabled={board.title === 'Предстоящие'}
                 onClick={(e) => {
                     e.preventDefault();
@@ -35,7 +34,7 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
             </button>
             <button
                 title="Вперед"
-                className={classNames('small-text')}
+                className="small-text"
                 disabled={board.title === 'Готово'}
                 onClick={(e) => {
                     e.preventDefault();

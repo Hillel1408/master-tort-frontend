@@ -10,6 +10,17 @@ import { Confirm } from '../../components/Confirm';
 import { OrdersNav } from '../../components/OrdersNav';
 import { Td } from '../../components/pages/calendar-orders/Td';
 
+import {
+    getFirstWeekDay,
+    getLastWeekDay,
+    draw,
+    monthArr,
+    getNextYear,
+    getNextMonth,
+    getPrevYear,
+    getPrevMonth,
+} from './helpers';
+
 import styles from './CalendarOrders.module.scss';
 import OrdersService from '../../services/OrdersService';
 
@@ -29,126 +40,6 @@ export default function CalendarOrders() {
     const [itemId, setItemId] = useState('');
 
     const { dataUser_2 } = useSelector((state) => state.cakes);
-
-    const monthArr = [
-        ['январь', 'января'],
-        ['февраль', 'февраля'],
-        ['март', 'марта'],
-        ['апрель', 'апреля'],
-        ['май', 'мая'],
-        ['июнь', 'июня'],
-        ['июль', 'июля'],
-        ['август', 'августа'],
-        ['сентябрь', 'сентября'],
-        ['октябрь', 'октября'],
-        ['ноябрь', 'ноября'],
-        ['декабрь', 'декабря'],
-    ];
-
-    //формируем массив с днями месяца
-    const range = (count) => {
-        let mas = [];
-        for (let i = 1; i <= count; i++) {
-            mas.push(i);
-        }
-        return mas;
-    };
-
-    //получаем последний день предыдущего месяца
-    const getLastDayPrewMonth = (year, month) => {
-        let date = new Date(year, month, 0);
-        return date.getDate();
-    };
-
-    //получаем последний день месяца
-    const getLastDay = (year, month) => {
-        let date = new Date(year, month + 1, 0);
-        return date.getDate();
-    };
-
-    //получаем номер дня недели первого дня месяца
-    const getFirstWeekDay = (year, month) => {
-        let date = new Date(year, month, 1);
-        let num = date.getDay();
-        if (num == 0) {
-            return 6;
-        } else {
-            return num - 1;
-        }
-    };
-
-    //получаем номер дня недели последнего дня месяца
-    const getLastWeekDay = (year, month) => {
-        let date = new Date(year, month + 1, 0);
-        let num = date.getDay();
-        if (num == 0) {
-            return 6;
-        } else {
-            return num - 1;
-        }
-    };
-
-    const normalize = (arr, left, right) => {
-        const LastDayPrewMonth = getLastDayPrewMonth(year, month);
-        //добавляем в массив с днями месяца дни предыдущего месяца и последующего
-        for (let i = LastDayPrewMonth; i > LastDayPrewMonth - left; i--) {
-            arr.unshift(i);
-        }
-        for (let i = 1; i <= right; i++) {
-            arr.push(i);
-        }
-        return arr;
-    };
-
-    const chunk = (arr, n) => {
-        //формируем двумерный массив с днями месяца по 7 дней в строку
-        let result = [];
-        let count = Math.ceil(arr.length / n);
-        for (let i = 0; i < count; i++) {
-            let elems = arr.splice(0, n);
-            result.push(elems);
-        }
-        return result;
-    };
-
-    const toUpperCase = (str) => {
-        //делаем первую букву заглавной
-        let newStr = str[0].toUpperCase() + str.slice(1);
-        return newStr;
-    };
-
-    const draw = (year, month) => {
-        let arr = range(getLastDay(year, month));
-        let firstWeekDay = getFirstWeekDay(year, month);
-        let lastWeekDay = getLastWeekDay(year, month);
-        //записываем в стейт текущий месяц и год для отображения на календаре
-        setDateNow(toUpperCase(monthArr[month][0]) + ' ' + year);
-        return chunk(normalize(arr, firstWeekDay, 6 - lastWeekDay), 7);
-    };
-
-    const getNextYear = (year, month) => {
-        //следующий год
-        if (month == 11) return ++year;
-        else return year;
-    };
-
-    const getNextMonth = (month) => {
-        //следующий месяц
-        if (month == 11) return 0;
-        else return ++month;
-    };
-
-    const getPrevYear = (year, month) => {
-        //предыдущий год
-        if (month == 0) return --year;
-        else return year;
-    };
-
-    const getPrevMonth = (month) => {
-        //предыдущий месяц
-        if (month == 0) return 11;
-        else return --month;
-    };
 
     const nextClickHandler = () => {
         //получаем следующий месяц, и когда нужно меняем год
@@ -189,20 +80,22 @@ export default function CalendarOrders() {
             setDataUser(dataUser_2);
             getOrders(dataUser_2.id);
         };
-        if (dataUser_2) checkAuth();
-        else setIsAuth(false);
+
+        dataUser_2 ? checkAuth() : setIsAuth(false);
     }, []);
 
     const filterOrders = (orders, year, month) => {
         //фильтруем и получаем в стейт заказы текущего месяца на календаре
         const asd = {};
         const today = new Date();
+
         orders.forEach((item) => {
             const date = new Date(
                 dateFormat(item.date, 'yyyy-mm-dd') +
                     'T' +
                     dateFormat(item.time, 'HH:MM')
             );
+
             if (date.getMonth() === month && date.getFullYear() === year) {
                 //проверяем является ли заказ срочным
                 const day = date.getDate();
@@ -251,7 +144,7 @@ export default function CalendarOrders() {
         if (month !== undefined) {
             const date = new Date();
             //записываем в стейт массив с днями месяца для отображения на календаре
-            setNums(draw(year, month));
+            setNums(draw(year, month, setDateNow));
             filterOrders(orders, year, month);
             //проверяем является ли отображаемые месяц и год текущими, чтобы выделить текущий день
             year === date.getFullYear() && month === date.getMonth()

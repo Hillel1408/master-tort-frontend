@@ -7,6 +7,38 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
         updateKanban(index, board, boards, updateStatusOrder, setBoards, item);
     };
 
+    const prev = () => {
+        let index = '';
+        switch (board.title) {
+            case 'Закупка':
+                index = 0;
+                break;
+            case 'В работе':
+                index = 1;
+                break;
+            case 'Готово':
+                index = 2;
+                break;
+        }
+        update(index);
+    };
+
+    const next = () => {
+        let index = '';
+        switch (board.title) {
+            case 'Предстоящие':
+                index = 1;
+                break;
+            case 'Закупка':
+                index = 2;
+                break;
+            case 'В работе':
+                index = 3;
+                break;
+        }
+        update(index);
+    };
+
     return (
         <div className={styles.contentButton}>
             <button
@@ -15,19 +47,7 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
                 disabled={board.title === 'Предстоящие'}
                 onClick={(e) => {
                     e.preventDefault();
-                    let index = '';
-                    switch (board.title) {
-                        case 'Закупка':
-                            index = 0;
-                            break;
-                        case 'В работе':
-                            index = 1;
-                            break;
-                        case 'Готово':
-                            index = 2;
-                            break;
-                    }
-                    update(index);
+                    prev();
                 }}
             >
                 ←
@@ -38,19 +58,7 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
                 disabled={board.title === 'Готово'}
                 onClick={(e) => {
                     e.preventDefault();
-                    let index = '';
-                    switch (board.title) {
-                        case 'Предстоящие':
-                            index = 1;
-                            break;
-                        case 'Закупка':
-                            index = 2;
-                            break;
-                        case 'В работе':
-                            index = 3;
-                            break;
-                    }
-                    update(index);
+                    next();
                 }}
             >
                 →

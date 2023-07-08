@@ -8,14 +8,13 @@ import Link from 'next/link';
 import classNames from 'classnames';
 
 import Layout from '../../components/Layout';
+import { Form } from './Form';
 
 import { setDataUser_2 } from '../../redux/cakeSlice';
 
 import AuthService from '../../services/AuthService';
 
 import styles from '../login/Login.module.scss';
-import stylesInput from '../../components/Input/Input.module.scss';
-import stylesBtn from '../../components/Btn/Btn.module.scss';
 
 export default function Registration() {
     const [error, setError] = useState('');
@@ -43,10 +42,10 @@ export default function Registration() {
     });
 
     const onSubmit = async (values) => {
-        //обработчик формы, отправляем регистрационные данные
         try {
             setIsLoading(true);
             const response = await AuthService.registration(values);
+
             setCookie(null, 'token', response.data.accessToken, {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/',
@@ -63,7 +62,6 @@ export default function Registration() {
     };
 
     useEffect(() => {
-        //проверяем авторизован ли пользовтель
         const checkAuth = () => {
             setDataUser(dataUser_2);
             setIsAuth(true);
@@ -94,67 +92,14 @@ export default function Registration() {
                             <Link href="/login">Войти</Link>
                         </span>
                     </p>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <input
-                            className={classNames(
-                                stylesInput.input,
-                                styles.input
-                            )}
-                            placeholder="Имя"
-                            {...register('fullName', {
-                                required: true,
-                            })}
-                        />
-                        <input
-                            placeholder="Город"
-                            className={classNames(
-                                stylesInput.input,
-                                styles.input
-                            )}
-                            {...register('city', {
-                                required: true,
-                            })}
-                        />
-                        <input
-                            placeholder="Электронная почта"
-                            type="email"
-                            className={classNames(
-                                stylesInput.input,
-                                styles.input
-                            )}
-                            {...register('email', {
-                                required: true,
-                            })}
-                        />
-                        <input
-                            placeholder="Пароль"
-                            type="password"
-                            className={classNames(
-                                stylesInput.input,
-                                styles.input
-                            )}
-                            {...register('password', {
-                                required: true,
-                            })}
-                        />
-                        <p className={classNames(styles.error, 'small-text')}>
-                            {error}
-                        </p>
-                        <button
-                            className={classNames(
-                                'small-text',
-                                stylesBtn.btn,
-                                styles.btn,
-                                stylesBtn.btn__secondary
-                            )}
-                            type="submit"
-                            disabled={!isValid}
-                        >
-                            {isLoading
-                                ? 'Регистрация...'
-                                : 'Зарегистрироваться'}
-                        </button>
-                    </form>
+                    <Form
+                        onSubmit={onSubmit}
+                        register={register}
+                        error={error}
+                        isValid={isValid}
+                        handleSubmit={handleSubmit}
+                        isLoading={isLoading}
+                    />
                 </div>
             </div>
         </Layout>

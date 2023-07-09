@@ -7,7 +7,7 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
         updateKanban(index, board, boards, updateStatusOrder, setBoards, item);
     };
 
-    const prev = () => {
+    const prevClickHandler = () => {
         let index = '';
         switch (board.title) {
             case 'Закупка':
@@ -23,7 +23,7 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
         update(index);
     };
 
-    const next = () => {
+    const nextClickHandler = () => {
         let index = '';
         switch (board.title) {
             case 'Предстоящие':
@@ -47,7 +47,7 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
                 disabled={board.title === 'Предстоящие'}
                 onClick={(e) => {
                     e.preventDefault();
-                    prev();
+                    prevClickHandler();
                 }}
             >
                 ←
@@ -58,7 +58,7 @@ function Buttons({ board, boards, updateStatusOrder, setBoards, item }) {
                 disabled={board.title === 'Готово'}
                 onClick={(e) => {
                     e.preventDefault();
-                    next();
+                    nextClickHandler();
                 }}
             >
                 →

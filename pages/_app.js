@@ -21,7 +21,6 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                //проверяем авторизован ли пользователь
                 const response = await AuthService.refresh();
 
                 setCookie(null, 'token', response.data.accessToken, {

@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Head from 'next/head';
 import classNames from 'classnames';
+
 import Layout from '../components/Layout';
+
 import stylesNoAccess from '../components/NoAccess/NoAccess.module.scss';
 
 export default function Home() {
@@ -12,13 +14,12 @@ export default function Home() {
     const { dataUser_2 } = useSelector((state) => state.cakes);
 
     useEffect(() => {
-        //проверяем авторизован ли пользователь
         const checkAuth = () => {
             setDataUser(dataUser_2);
             setIsAuth(true);
         };
-        if (dataUser_2) checkAuth();
-        else setIsAuth(false);
+
+        dataUser_2 ? checkAuth() : setIsAuth(false);
     }, []);
 
     return (

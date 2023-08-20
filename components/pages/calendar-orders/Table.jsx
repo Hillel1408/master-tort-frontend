@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 
-import { Td } from '../../components/pages/calendar-orders/Td';
+import { Td } from './Td';
 
 import { getFirstWeekDay, getLastWeekDay } from './helpers';
 
-import styles from './CalendarOrders.module.scss';
+import styles from '../../../pages/calendar-orders/CalendarOrders.module.scss';
 
 const Table = ({
     nums,

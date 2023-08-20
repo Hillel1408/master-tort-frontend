@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 
 import Layout from '../../components/Layout';
 import { EmailForm } from '../../components/pages/login/EmailForm';
-import { Form } from './Form';
+import { Form } from '../../components/pages/login/Form';
 
 import { setDataUser_2 } from '../../redux/cakeSlice';
 

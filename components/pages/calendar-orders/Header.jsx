@@ -7,7 +7,7 @@ import {
     getPrevMonth,
 } from './helpers';
 
-import styles from './CalendarOrders.module.scss';
+import styles from '../../../pages/calendar-orders/CalendarOrders.module.scss';
 
 function Header({ dateNow, month, setYear, year, setMonth, setActiveDay }) {
     const nextClickHandler = () => {

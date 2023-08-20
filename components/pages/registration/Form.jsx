@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 
-import styles from '../login/Login.module.scss';
-import stylesInput from '../../components/Input/Input.module.scss';
-import stylesBtn from '../../components/Btn/Btn.module.scss';
+import styles from '../../../pages/login/Login.module.scss';
+import stylesInput from '../../Input/Input.module.scss';
+import stylesBtn from '../../Btn/Btn.module.scss';
 
 function Form({ onSubmit, register, error, isValid, handleSubmit, isLoading }) {
     return (

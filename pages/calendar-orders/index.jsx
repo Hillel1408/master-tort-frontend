@@ -6,10 +6,14 @@ import Layout from '../../components/Layout';
 import { OrderCake } from '../../components/OrderCake';
 import { Confirm } from '../../components/Confirm';
 import { OrdersNav } from '../../components/OrdersNav';
-import { Header } from './Header';
-import { Table } from './Table';
+import { Header } from '../../components/pages/calendar-orders/Header';
+import { Table } from '../../components/pages/calendar-orders/Table';
 
-import { draw, monthArr, filterOrders } from './helpers';
+import {
+    draw,
+    monthArr,
+    filterOrders,
+} from '../../components/pages/calendar-orders/helpers';
 
 import styles from './CalendarOrders.module.scss';
 import OrdersService from '../../services/OrdersService';

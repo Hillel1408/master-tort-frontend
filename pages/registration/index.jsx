@@ -8,7 +8,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 
 import Layout from '../../components/Layout';
-import { Form } from './Form';
+import { Form } from '../../components/pages/registration/Form';
 
 import { setDataUser_2 } from '../../redux/cakeSlice';
 
